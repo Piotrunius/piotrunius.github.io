@@ -5,12 +5,32 @@ let analyser = null;
 let audioPlaying = false;
 const githubUsername = 'Piotrunius';
 
-// Lightweight defaults (no external config.json)
+// --- DATA: Setup & Gear (Hardcoded for stability) ---
+const setupData = {
+    pc: [
+        { icon: 'microchip', label: 'CPU', value: 'Intel Core i5-13400F', url: 'https://www.google.com/search?q=Intel+Core+i5-13400F' },
+        { icon: 'video', label: 'GPU', value: 'Nvidia GeForce RTX 4060 Ti (16GB)', url: 'https://www.google.com/search?q=Nvidia+GeForce+RTX+4060+Ti' },
+        { icon: 'network-wired', label: 'Motherboard', value: 'Gigabyte B760 GAMING X DDR4', url: 'https://www.google.com/search?q=Gigabyte+B760+GAMING+X+DDR4' },
+        { icon: 'memory', label: 'RAM', value: 'Kingston Fury Beast RGB (32GB DDR4)', url: 'https://www.google.com/search?q=Kingston+Fury+Beast+RGB+DDR4' },
+        { icon: 'hard-drive', label: 'Storage', value: 'Samsung 980 NVMe (1TB) + Seagate (2TB HDD)', urls: ['https://www.google.com/search?q=Samsung+980+NVMe+SSD', 'https://www.google.com/search?q=Seagate+2TB+HDD'] },
+        { icon: 'bolt', label: 'PSU', value: 'Endorfy Vero L5 Bronze (700W)', url: 'https://www.google.com/search?q=Endorfy+Vero+L5+Bronze+700W' }
+    ],
+    gear: [
+        { icon: 'display', label: 'Displays', value: 'Lenovo L2251p (75Hz) + AOC 27G2G8 (240Hz)', urls: ['https://www.google.com/search?q=Lenovo+L2251p', 'https://www.google.com/search?q=AOC+27G2G8+240Hz'] },
+        { icon: 'keyboard', label: 'Keyboard', value: 'Dark Project Terra Nova (Wireless)', url: 'https://www.google.com/search?q=Dark+Project+Terra+Nova+keyboard' },
+        { icon: 'mouse', label: 'Mouse', value: 'Dark Project Novus (Wireless)', url: 'https://www.google.com/search?q=Dark+Project+Novus+mouse' },
+        { icon: 'microphone', label: 'Microphone', value: 'Fifine AM8 RGB', url: 'https://www.google.com/search?q=Fifine+AM8+RGB+microphone' },
+        { icon: 'headset', label: 'Headphones', value: 'SteelSeries Arctis 9 (Wireless)', url: 'https://www.google.com/search?q=SteelSeries+Arctis+9+wireless' },
+        { icon: 'vr-cardboard', label: 'VR', value: 'Meta Quest 3 (128GB)', url: 'https://www.google.com/search?q=Meta+Quest+3+128GB' }
+    ]
+};
+
+// --- DATA: Profile & Socials ---
 function getDefaultConfig() {
     return {
         profile: {
             name: 'Piotrunius',
-            bio: 'Tech enthusiast from Poland. I love tinkering with systems and building tools to simplify my digital life.',
+            bio: 'Minimalist designer & developer. Linux enthusiast from Katowice.',
             avatar: 'assets/pfp.png'
         },
         socials: [
@@ -32,36 +52,13 @@ function getDefaultConfig() {
         audio: {
             src: 'assets/audio.mp3',
             volume: 0.4
-        },
-        setup: {
-            pc: [
-                { icon: 'microchip', label: 'CPU', value: 'Intel Core i5-13400F', url: 'https://www.google.com/search?q=Intel+Core+i5-13400F' },
-                { icon: 'video', label: 'GPU', value: 'Nvidia GeForce RTX 4060 Ti (16GB)', url: 'https://www.google.com/search?q=Nvidia+GeForce+RTX+4060+Ti' },
-                { icon: 'network-wired', label: 'Motherboard', value: 'Gigabyte B760 GAMING X DDR4', url: 'https://www.google.com/search?q=Gigabyte+B760+GAMING+X+DDR4' },
-                { icon: 'memory', label: 'RAM', value: 'Kingston Fury Beast RGB (32GB DDR4)', url: 'https://www.google.com/search?q=Kingston+Fury+Beast+RGB+DDR4' },
-                { icon: 'hard-drive', label: 'Storage', value: 'Samsung 980 NVMe (1TB) + Seagate (2TB HDD)', urls: ['https://www.google.com/search?q=Samsung+980+NVMe+SSD', 'https://www.google.com/search?q=Seagate+2TB+HDD'] },
-                { icon: 'bolt', label: 'PSU', value: 'Endorfy Vero L5 Bronze (700W)', url: 'https://www.google.com/search?q=Endorfy+Vero+L5+Bronze+700W' }
-            ],
-            gear: [
-                { icon: 'display', label: 'Displays', value: 'Lenovo L2251p (75Hz) + AOC 27G2G8 (240Hz)', urls: ['https://www.google.com/search?q=Lenovo+L2251p', 'https://www.google.com/search?q=AOC+27G2G8+240Hz'] },
-                { icon: 'keyboard', label: 'Keyboard', value: 'Dark Project Terra Nova (Wireless)', url: 'https://www.google.com/search?q=Dark+Project+Terra+Nova+keyboard' },
-                { icon: 'mouse', label: 'Mouse', value: 'Dark Project Novus (Wireless)', url: 'https://www.google.com/search?q=Dark+Project+Novus+mouse' },
-                { icon: 'microphone', label: 'Microphone', value: 'Fifine AM8 RGB', url: 'https://www.google.com/search?q=Fifine+AM8+RGB+microphone' },
-                { icon: 'headset', label: 'Headphones', value: 'SteelSeries Arctis 9 (Wireless)', url: 'https://www.google.com/search?q=SteelSeries+Arctis+9+wireless' },
-                { icon: 'vr-cardboard', label: 'VR', value: 'Meta Quest 3 (128GB)', url: 'https://www.google.com/search?q=Meta+Quest+3+128GB' }
-            ]
         }
     };
 }
 
 async function loadConfig() {
-    // No file fetch; just defaults
     config = getDefaultConfig();
     return config;
-}
-
-function applyTheme() {
-    // Theme is already defined in CSS variables; placeholder for future
 }
 
 function initProfile() {
@@ -70,14 +67,14 @@ function initProfile() {
     const bioEl = document.getElementById('profile-bio');
     if (avatar) avatar.src = config.profile?.avatar || 'assets/pfp.png';
     if (nameEl) nameEl.textContent = config.profile?.name || 'Piotrunius';
-    if (bioEl) bioEl.textContent = config.profile?.bio || 'Minimalist designer & developer';
+    if (bioEl) bioEl.textContent = config.profile?.bio || 'Bio';
 }
 
 function initSocials() {
     const container = document.getElementById('socials-container');
     if (!container) return;
     container.innerHTML = '';
-    const socials = Array.isArray(config.socials) ? config.socials : [];
+    const socials = config.socials || [];
     socials.forEach((s, index) => {
         const a = document.createElement('a');
         a.className = 'social-link';
@@ -85,11 +82,11 @@ function initSocials() {
         a.target = '_blank';
         a.rel = 'noreferrer';
         a.style.setProperty('--social-color', s.color || '#00ff88');
-        a.style.animationDelay = `${index * 0.08}s`;
+        a.style.animationDelay = `${index * 0.05}s`;
         const isBrand = ['github', 'discord', 'instagram', 'spotify', 'steam', 'twitch'].includes((s.icon || '').toLowerCase());
         a.innerHTML = `
             <i class="${isBrand ? 'fa-brands' : 'fas'} fa-${s.icon || 'link'}"></i>
-            <span>${s.label || 'Link'}</span>
+            <span>${s.label}</span>
         `;
         container.appendChild(a);
     });
@@ -105,6 +102,7 @@ function initMusicMeta() {
     if (artistEl) artistEl.textContent = config.music?.artist || '';
 }
 
+// --- CORE FUNCTION: Render Activity Feed (20 items, specific fields) ---
 async function updateGitHubStats() {
     const projectsEl = document.getElementById('stat-projects');
     const commitsEl = document.getElementById('stat-commits');
@@ -114,7 +112,6 @@ async function updateGitHubStats() {
     const activityCommitsEl = document.getElementById('activity-commits');
 
     try {
-        // Fetch stats: prefer root file, fallback to assets/
         let response = await fetch('github-stats.json?t=' + Date.now());
         if (!response.ok) {
             response = await fetch('assets/github-stats.json?t=' + Date.now());
@@ -122,194 +119,126 @@ async function updateGitHubStats() {
         const stats = await response.json();
         const summary = stats.summary || {};
 
-        // Display total statistics
-        if (projectsEl) projectsEl.textContent = summary.projects || '—';
-        if (starsEl) starsEl.textContent = summary.starredCount || '—';
-        if (commitsEl) commitsEl.textContent = summary.commits || '—';
+        // 1. Render Summary Stats
+        if (projectsEl) projectsEl.textContent = summary.projects || '0';
+        if (starsEl) starsEl.textContent = summary.starredCount || '0';
+        if (commitsEl) commitsEl.textContent = summary.commits || '0';
+        
+        if (lastUpdateEl && stats.lastUpdate) {
+            lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(stats.lastUpdate)}`;
+        }
 
-        // Recent Starred: data.starred (slice 0..5), name as title, description as desc
-        if (activityStarsEl) {
-            const recentStars = (stats.starred || []).slice(0, 5);
+        // 2. Render Recent Starred (Top 20)
+        if (activityStarsEl && stats.starred) {
             activityStarsEl.innerHTML = '';
-            recentStars.forEach((star) => {
+            const starsData = stats.starred.slice(0, 20); // LIMIT TO 20
+
+            starsData.forEach((star, index) => {
                 const item = document.createElement('div');
                 item.className = 'activity-item';
-                const title = star.name || '';
-                const desc = star.description || '';
+                item.style.animationDelay = `${index * 0.05}s`; // Stagger animation
+
+                const name = star.name || 'Unknown Repo';
                 const owner = star.owner || 'Unknown';
-                const starsCount = star.stars !== undefined ? star.stars : 0;
+                const starCount = star.stars || 0;
+                const lang = star.language || 'N/A';
+                const desc = star.description || 'No description provided.';
                 
                 item.innerHTML = `
-                    <div class="activity-content">
-                        <a class="activity-link" href="${star.url}" target="_blank" rel="noreferrer">${title}</a>
-                        <div class="activity-meta">
-                            <span class="meta-item"><i class="fas fa-user"></i> ${owner}</span>
-                            <span class="meta-item"><i class="fas fa-star"></i> ${starsCount}</span>
+                    <div class="activity-header">
+                        <a href="${star.url}" class="activity-link" target="_blank" rel="noreferrer">${name}</a>
+                        <div class="meta-badge" title="Stars">
+                            <i class="fas fa-star"></i> ${starCount}
                         </div>
-                        <p class="activity-desc">${desc}</p>
                     </div>
-                    <div class="activity-info">
-                        <span class="activity-date">${formatPLDateTime(star.starredAt || Date.now())}</span>
+                    <div class="activity-desc">${desc}</div>
+                    <div class="activity-meta-row">
+                        <div class="meta-badge"><i class="fas fa-user"></i> ${owner}</div>
+                        <div class="meta-badge"><i class="fas fa-code"></i> ${lang}</div>
+                        <span class="meta-date">${formatPLDateTime(star.starredAt, true)}</span>
                     </div>
                 `;
                 activityStarsEl.appendChild(item);
             });
         }
 
-        // Recent Commits: data.recentCommits (slice 0..5), message as title, repo as desc
-        if (activityCommitsEl) {
-            const recentCommits = (stats.recentCommits || []).slice(0, 5);
+        // 3. Render Recent Commits (Top 20)
+        if (activityCommitsEl && stats.recentCommits) {
             activityCommitsEl.innerHTML = '';
-            recentCommits.forEach((commit) => {
+            const commitsData = stats.recentCommits.slice(0, 20); // LIMIT TO 20
+
+            commitsData.forEach((commit, index) => {
                 const item = document.createElement('div');
                 item.className = 'activity-item';
-                const title = (commit.message || '').split('\n')[0] || 'Commit';
-                const desc = commit.repo || '';
+                item.style.animationDelay = `${index * 0.05}s`;
+
+                const msg = (commit.message || 'No message').split('\n')[0];
+                const repo = commit.repo || 'Unknown';
+                const author = commit.author || 'Piotrunius';
+                
                 item.innerHTML = `
-                    <div class="activity-content">
-                        <a class="activity-link" href="${commit.url}" target="_blank" rel="noreferrer">${title}</a>
-                        <p class="activity-desc">${desc}</p>
+                    <div class="activity-header">
+                        <a href="${commit.url}" class="activity-link" target="_blank" rel="noreferrer">${msg}</a>
                     </div>
-                    <div class="activity-info">
-                        <span class="activity-date">${formatPLDateTime(commit.date || Date.now())}</span>
+                    <div class="activity-desc">Repository: ${repo}</div>
+                    <div class="activity-meta-row">
+                        <div class="meta-badge"><i class="fas fa-user-circle"></i> ${author}</div>
+                        <span class="meta-date">${formatPLDateTime(commit.date, true)}</span>
                     </div>
                 `;
                 activityCommitsEl.appendChild(item);
             });
         }
 
-        // Display last update timestamp
-        if (lastUpdateEl && stats.lastUpdate) {
-            const updateDate = new Date(stats.lastUpdate);
-            const day = String(updateDate.getDate()).padStart(2, '0');
-            const month = String(updateDate.getMonth() + 1).padStart(2, '0');
-            const year = updateDate.getFullYear();
-            const hours = String(updateDate.getHours()).padStart(2, '0');
-            const minutes = String(updateDate.getMinutes()).padStart(2, '0');
-            lastUpdateEl.textContent = `Last updated: ${day}/${month}/${year}, ${hours}:${minutes}`;
-        }
+        console.log('GitHub Stats updated successfully.');
 
-        // Log stats to console for debugging
-        console.log('GitHub Stats:', stats);
     } catch (e) {
-        console.warn('Could not load GitHub stats:', e.message);
-        // Keep placeholders on error; do not clear dynamic containers
-        if (projectsEl) projectsEl.textContent = '—';
-        if (starsEl) starsEl.textContent = '—';
-        if (commitsEl) commitsEl.textContent = '—';
+        console.warn('Error loading GitHub stats:', e);
+        if (lastUpdateEl) lastUpdateEl.textContent = 'Failed to load stats';
     }
 }
 
+// --- CORE FUNCTION: Render Setup (Safe from overwrites) ---
 function initSetup() {
     const pcSpecs = document.getElementById('pc-specs');
     const setupSpecs = document.getElementById('setup-specs');
-    if (pcSpecs) {
-        pcSpecs.innerHTML = '';
-        (config.setup?.pc || []).forEach((spec, index) => {
-            const specEl = document.createElement('a');
-            specEl.className = 'spec-item';
-            if (spec.urls && Array.isArray(spec.urls)) {
-                specEl.href = '#';
-                specEl.style.cursor = 'pointer';
-                specEl.addEventListener('click', (e) => {
+    
+    // Helper to render lists
+    const renderList = (container, items) => {
+        if (!container) return;
+        container.innerHTML = '';
+        items.forEach((item, index) => {
+            const el = document.createElement('a');
+            el.className = 'spec-item';
+            el.style.animationDelay = `${index * 0.05}s`;
+            
+            // Handle multiple URLs or single URL
+            if (item.urls && Array.isArray(item.urls)) {
+                el.href = '#';
+                el.addEventListener('click', (e) => {
                     e.preventDefault();
-                    spec.urls.forEach(url => window.open(url, '_blank'));
+                    item.urls.forEach(url => window.open(url, '_blank'));
                 });
             } else {
-                specEl.href = spec.url || '#';
-                specEl.target = '_blank';
-                specEl.rel = 'noreferrer';
+                el.href = item.url || '#';
+                el.target = '_blank';
+                el.rel = 'noreferrer';
             }
-            specEl.style.animationDelay = `${index * 0.12}s`;
-            specEl.innerHTML = `
-                <i class="fas fa-${spec.icon}"></i>
-                <span>${spec.label}${spec.value ? `<small> - ${spec.value}</small>` : ''}</span>
+
+            el.innerHTML = `
+                <i class="fas fa-${item.icon}"></i>
+                <span>${item.label}${item.value ? `<small> - ${item.value}</small>` : ''}</span>
             `;
-            pcSpecs.appendChild(specEl);
+            container.appendChild(el);
         });
-    }
-    if (setupSpecs) {
-        setupSpecs.innerHTML = '';
-        (config.setup?.gear || []).forEach((spec, index) => {
-            const specEl = document.createElement('a');
-            specEl.className = 'spec-item';
-            if (spec.urls && Array.isArray(spec.urls)) {
-                specEl.href = '#';
-                specEl.style.cursor = 'pointer';
-                specEl.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    spec.urls.forEach(url => window.open(url, '_blank'));
-                });
-            } else {
-                specEl.href = spec.url || '#';
-                specEl.target = '_blank';
-                specEl.rel = 'noreferrer';
-            }
-            specEl.style.animationDelay = `${index * 0.12}s`;
-            specEl.innerHTML = `
-                <i class="fas fa-${spec.icon}"></i>
-                <span>${spec.label}${spec.value ? `<small> - ${spec.value}</small>` : ''}</span>
-            `;
-            setupSpecs.appendChild(specEl);
-        });
-    }
+    };
+
+    renderList(pcSpecs, setupData.pc);
+    renderList(setupSpecs, setupData.gear);
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    await loadConfig();
-    applyTheme();
-    initProfile();
-    initSocials();
-    initMusicMeta();
-    updateGitHubStats();
-    initSetup();
-    initControls();
-    initMouseEffects();
-});
-
-async function initActivityFeed() {
-    const starsEl = document.getElementById('activity-stars');
-    const commitsEl = document.getElementById('activity-commits');
-    if (!starsEl || !commitsEl) return;
-
-    starsEl.innerHTML = '';
-    commitsEl.innerHTML = '';
-
-    try {
-        // Read from pre-generated stats file (GitHub Actions)
-        const resp = await fetch('assets/github-stats.json?' + Date.now());
-        const stats = await resp.json();
-
-        const starred = Array.isArray(stats.starred) ? stats.starred.slice(0, 5) : [];
-        const recentCommits = Array.isArray(stats.recentCommits) ? stats.recentCommits.slice(0, 5) : [];
-
-        const stars = starred.map(r => ({
-            icon: 'star',
-            title: r.name,
-            meta: `by ${r.owner} • ${Number(r.stars || 0).toLocaleString()} stars • ${formatPLDateTime(r.starredAt)}`
-        }));
-
-        const commits = recentCommits.map(c => {
-            const msg = (c.message || '').split('\n')[0];
-            const shortMsg = msg.length > 50 ? msg.slice(0, 50) + '…' : msg || 'Commit';
-            return {
-                icon: 'code',
-                title: shortMsg,
-                meta: `${c.repo || ''} · ${formatPLDateTime(c.date || Date.now())}`
-            };
-        });
-
-        renderFeed(starsEl, stars.length ? stars : [{ icon: 'circle-exclamation', title: 'No recent stars', meta: '' }], 'fa-github');
-        renderFeed(commitsEl, commits.length ? commits : [{ icon: 'circle-exclamation', title: 'No recent commits', meta: '' }], 'fa-github');
-    } catch (error) {
-        console.error('Activity feed error:', error);
-        renderFeed(starsEl, [{ icon: 'circle-exclamation', title: 'Unable to load starred repos', meta: '' }], 'fa-github');
-        renderFeed(commitsEl, [{ icon: 'circle-exclamation', title: 'Unable to load commits', meta: '' }], 'fa-github');
-    }
-}
-
-// Formats date to Polish style dd/mm/yyyy, HH:MM (24h)
-function formatPLDateTime(dateInput) {
+// --- UTILS ---
+function formatPLDateTime(dateInput, short = false) {
     const d = new Date(dateInput);
     if (Number.isNaN(d.getTime())) return '';
     const day = String(d.getDate()).padStart(2, '0');
@@ -317,30 +246,16 @@ function formatPLDateTime(dateInput) {
     const year = d.getFullYear();
     const hours = String(d.getHours()).padStart(2, '0');
     const mins = String(d.getMinutes()).padStart(2, '0');
+    
+    if (short) return `${day}/${month} ${hours}:${mins}`;
     return `${day}/${month}/${year}, ${hours}:${mins}`;
 }
 
-function renderFeed(container, items, fallbackIcon) {
-    container.innerHTML = '';
-    items.forEach((item) => {
-        const el = document.createElement('div');
-        el.className = 'feed-item';
-        el.innerHTML = `
-            <div class="feed-icon"><i class="fas ${item.icon ? 'fa-' + item.icon : fallbackIcon}"></i></div>
-            <div class="feed-content">
-                <div class="feed-title">${item.title}</div>
-                <div class="feed-meta">${item.meta || ''}</div>
-            </div>
-        `;
-        container.appendChild(el);
-    });
-}
-
+// --- AUDIO & VISUALIZER ---
 function initControls() {
     const audioToggle = document.getElementById('audio-toggle');
     if (audioToggle) {
         audioToggle.addEventListener('click', toggleAudio);
-        updateAudioButton();
     }
     const audio = document.getElementById('bg-audio');
     if (audio) {
@@ -352,9 +267,8 @@ function initControls() {
 function toggleAudio() {
     const audio = document.getElementById('bg-audio');
     if (!audio) return;
-
     if (config.audio?.src) audio.src = config.audio.src;
-    audio.volume = typeof config.audio?.volume === 'number' ? config.audio.volume : 0.4;
+    audio.volume = config.audio?.volume || 0.4;
 
     if (!audioPlaying) {
         audio.play().then(() => {
@@ -376,13 +290,11 @@ function updateAudioButton() {
     const label = btn.querySelector('span');
     if (icon) icon.className = audioPlaying ? 'fas fa-pause' : 'fas fa-play';
     if (label) label.textContent = audioPlaying ? 'Pause' : 'Play';
-    btn.setAttribute('aria-pressed', audioPlaying ? 'true' : 'false');
 }
 
 function initAudioVisualizer() {
     const audio = document.getElementById('bg-audio');
     const canvas = document.getElementById('visualizer');
-
     if (!audio || !canvas) return;
 
     if (!audioContext) {
@@ -398,72 +310,53 @@ function initAudioVisualizer() {
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
 
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    window.addEventListener('resize', () => {
+    // Resize handling
+    const resizeCanvas = () => {
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
-    });
+    };
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
     function drawVisualizer() {
         if (!audioPlaying) return;
-
         requestAnimationFrame(drawVisualizer);
-
         analyser.getByteFrequencyData(dataArray);
-
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const barWidth = Math.max(2, (canvas.width / bufferLength) * 1.6);
+        const barWidth = (canvas.width / bufferLength) * 1.5;
         let x = 0;
 
         for (let i = 0; i < bufferLength; i++) {
-            const barHeight = (dataArray[i] / 255) * canvas.height * 0.8;
-
+            const barHeight = (dataArray[i] / 255) * canvas.height * 0.85;
             const gradient = ctx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);
             gradient.addColorStop(0, '#00ff88');
-            gradient.addColorStop(0.7, '#00cc88');
             gradient.addColorStop(1, 'rgba(0,255,136,0.1)');
-
             ctx.fillStyle = gradient;
             ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-
             x += barWidth + 1;
         }
     }
-
     drawVisualizer();
 }
 
-// Background has been fully removed per user request
-
 function initMouseEffects() {
-    // Card hover effects only; custom cursor removed.
     const cards = document.querySelectorAll('.glass-card');
     cards.forEach(card => {
-        card.addEventListener('mouseenter', function () {
-            this.style.transform = 'translateY(-12px) scale(1.02)';
-        });
-
-        card.addEventListener('mouseleave', function () {
-            this.style.transform = '';
-        });
-
-        card.addEventListener('mousemove', function (e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-
-            this.style.transform = `translateY(-12px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-        });
+        card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-8px) scale(1.01)');
+        card.addEventListener('mouseleave', () => card.style.transform = '');
     });
 }
 
-console.log('Bio page initialized.');
+// --- INIT ---
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadConfig();
+    initProfile();
+    initSocials();
+    initMusicMeta();
+    initSetup();          // Now safe!
+    updateGitHubStats();  // Now rich & limited to 20!
+    initControls();
+    initMouseEffects();
+    console.log('Bio initialized.');
+});
