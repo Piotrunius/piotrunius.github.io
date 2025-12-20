@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Piotrunius - Bio</title>
+        <link rel="icon" type="image/png" href="assets/pfp.png">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </head>
+
+    <body>
+
+
+        <audio id="bg-audio" loop>
+            <source src="assets/audio.mp3" type="audio/mpeg">
+        </audio>
+
+        <main class="main-container">
+            <section class="profile-section glass-card animate-fade-in">
+                <div class="avatar-container">
+                    <img id="avatar" src="assets/pfp.png" alt="Avatar" class="avatar">
+                    <div class="avatar-ring"></div>
+                </div>
+                <h2 id="profile-name" class="profile-name">Piotrunius</h2>
+                <p id="profile-bio" class="profile-bio">Minimalist designer & developer</p>
+            </section>
+
+            <section id="visualizer-section" class="visualizer-section glass-card animate-slide-up">
+                <div class="visualizer-header">
+                    <i class="fas fa-music"></i>
+                    <span>MUSIC</span>
+                    <div class="music-meta">
+                        <a id="music-title" class="music-link" href="https://www.youtube.com/watch?v=sWcLccMuCA8"
+                            target="_blank" rel="noreferrer">Xtal</a>
+                        <div id="music-artist">Aphex Twin</div>
+                    </div>
+                    <button id="audio-toggle" class="music-btn" title="Toggle Music">
+                        <i class="fas fa-play"></i>
+                        <span>Play</span>
+                    </button>
+                </div>
+                <canvas id="visualizer" class="visualizer-canvas"></canvas>
+            </section>
+
+            <section class="about-section glass-card animate-slide-right">
+                <h3 class="section-title">
+                    <i class="fas fa-id-card"></i>
+                    ABOUT ME
+                </h3>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <div class="about-title">Who am I?</div>
+                        <div class="about-value">I’m a Linux enthusiast from Katowice driven by curiosity. I’d rather
+                            spend hours fine-tuning my Bazzite setup than stick
+                            to the defaults. While still early in my coding journey, I love deconstructing software and
+                            exploring how things work
+                            under the hood.
+
+                            When I’m not in the terminal, I’m usually gaming or diving into a new project. I value
+                            transparency, clean setups, and
+                            open-source tools that actually work.</div>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-title">Languages</div>
+                        <div class="lang-slider" data-level="100">
+                            <div class="lang-label"><span>Polish</span><span class="lvl">Native</span></div>
+                            <div class="lang-track">
+                                <div class="lang-fill"></div>
+                            </div>
+                        </div>
+                        <div class="lang-slider" data-level="90">
+                            <div class="lang-label"><span>English</span><span class="lvl">C1/C2</span></div>
+                            <div class="lang-track">
+                                <div class="lang-fill"></div>
+                            </div>
+                        </div>
+                        <div class="lang-slider" data-level="25">
+                            <div class="lang-label"><span>German</span><span class="lvl">A1</span></div>
+                            <div class="lang-track">
+                                <div class="lang-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="social-section glass-card animate-slide-right">
+                <h3 class="section-title">
+                    <i class="fas fa-link"></i>
+                    CONNECT
+                </h3>
+                <div id="socials-container" class="socials-grid"></div>
+            </section>
+
+            <section class="stats-section glass-card animate-slide-left">
+                <h3 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    ACTIVITY
+                </h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-fire"></i>
+                        <div class="stat-value" id="stat-projects">0</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-code"></i>
+                        <div class="stat-value" id="stat-commits">0</div>
+                        <div class="stat-label">Commits</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <div class="stat-value" id="stat-stars">0</div>
+                        <div class="stat-label">Starred</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="activity-section glass-card animate-slide-up">
+                <h3 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    LIVE FEED
+                </h3>
+                <div class="activity-grid">
+                    <div class="feed-card">
+                        <div class="feed-header">
+                            <i class="fas fa-star"></i>
+                            Recent Starred
+                        </div>
+                        <div id="activity-stars" class="feed-list"></div>
+                    </div>
+                    <div class="feed-card">
+                        <div class="feed-header">
+                            <i class="fas fa-code"></i>
+                            Recent Commits
+                        </div>
+                        <div id="activity-commits" class="feed-list"></div>
+                    </div>
+                </div>
+                <div class="last-update-info">
+                    <small id="stats-last-update">Updating...</small>
+                </div>
+            </section>
+
+            <section class="gaming-section glass-card animate-slide-left">
+                <h3 class="section-title">
+                    <i class="fas fa-desktop"></i>
+                    SETUP
+                </h3>
+                <div class="gaming-content">
+                    <div class="pc-specs-container">
+                        <h4 class="specs-title">
+                            <i class="fas fa-microchip"></i>
+                            PC BUILD
+                        </h4>
+                        <div id="pc-specs" class="pc-specs"></div>
+                    </div>
+                    <div class="pc-specs-container">
+                        <h4 class="specs-title">
+                            <i class="fas fa-headset"></i>
+                            SETUP GEAR
+                        </h4>
+                        <div id="setup-specs" class="pc-specs"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact-section" class="contact-section glass-card animate-fade-in">
+                <h3 class="section-title">
+                    <i class="fas fa-envelope"></i>
+                    GET IN TOUCH
+                </h3>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-card-header">
+                            <i class="fa-brands fa-discord"></i>
+                            Discord
+                        </div>
+                        <a id="discord-button" href="https://discord.gg/wsQujjvk" class="contact-btn" target="_blank"
+                            rel="noreferrer">
+                            <span class="btn-label">Add me</span>
+                        </a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-card-header">
+                            <i class="fas fa-paper-plane"></i>
+                            Email
+                        </div>
+                        <a id="contact-button" href="mailto:piotrunius.v2@gmail.com" class="contact-btn">
+                            <span class="btn-label">Send Email</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="system-section glass-card animate-slide-left">
+                <h3 class="section-title">
+                    <i class="fas fa-microchip"></i>
+                    SYSTEM
+                </h3>
+                <div class="system-card">
+                    <div class="system-left">
+                        <img src="assets/Bazzite_Logo.png" alt="Bazzite" class="system-logo">
+                        <div>
+                            <div class="system-name">Bazzite (KDE Plasma)</div>
+                            <a class="system-link" href="https://bazzite.gg" target="_blank"
+                                rel="noreferrer">bazzite.gg</a>
+                        </div>
+                    </div>
+                    <p class="system-desc">Fedora Atomic base with KDE Plasma tuned for gaming and workstation
+                        stability.</p>
+                </div>
+            </section>
+        </main>
+
+        <div class="copyright-bar">© 2025 Piotrunius - All Rights Reserved</div>
+
+        <script src="app.js"></script>
+    </body>
+
+</html>
