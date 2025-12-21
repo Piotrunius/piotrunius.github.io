@@ -231,6 +231,49 @@ async function updateGitHubStats() {
         
         console.log('GitHub Stats rendered successfully.');
 
+        // 4. Render Steam Status
+        const steamPanel = document.getElementById('steam-status-panel');
+        if (steamPanel && stats.steam) {
+            const s = stats.steam;
+            const statusText = document.getElementById('steam-status-text');
+            const gameInfo = document.getElementById('steam-game-info');
+            const dotContainer = document.getElementById('steam-dot').parentElement; // The wrapper
+            
+            // Reset wrapper classes for colors
+            dotContainer.className = 'steam-avatar-wrapper';
+            
+            if (s.gameextrainfo) {
+                dotContainer.classList.add('in-game');
+                statusText.textContent = 'In-game';
+                gameInfo.textContent = `Playing: ${s.gameextrainfo}`;
+                gameInfo.style.color = '#90ff47';
+            } else {
+                gameInfo.style.color = ''; // Reset
+                switch (s.personastate) {
+                    case 1: 
+                        dotContainer.classList.add('online');
+                        statusText.textContent = 'Online';
+                        gameInfo.textContent = 'Not playing anything right now';
+                        break;
+                    case 2:
+                        dotContainer.classList.add('busy');
+                        statusText.textContent = 'Busy';
+                        gameInfo.textContent = 'Busy';
+                        break;
+                    case 3:
+                    case 4:
+                        dotContainer.classList.add('away');
+                        statusText.textContent = 'Away';
+                        gameInfo.textContent = 'Away from keyboard';
+                        break;
+                    default:
+                        dotContainer.classList.add('offline');
+                        statusText.textContent = 'Offline';
+                        gameInfo.textContent = 'Currently offline';
+                }
+            }
+        }
+
     } catch (renderErr) {
         console.error('Error rendering stats:', renderErr);
         if (lastUpdateEl) lastUpdateEl.textContent = 'Data error';
