@@ -1,6 +1,6 @@
 {
   "steam": {
-    "personastate": 3,
+    "personastate": 1,
     "gameextrainfo": null,
     "avatar": "https://avatars.steamstatic.com/a7b85c1debc6db3cb342f4f0a14f3bbe2d564f6d_medium.jpg",
     "timecreated": 1584306745,
@@ -16,6 +16,13 @@
     "following": 3
   },
   "recentCommits": [
+    {
+      "message": "chore: update github stats",
+      "repo": "Bio",
+      "author": "GitHub Action",
+      "date": "2025-12-21T05:51:44Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/50b338c1b3e94e4f0a06bedbad17bb523b3a62c1"
+    },
     {
       "message": "chore: update github stats",
       "repo": "Bio",
@@ -43,13 +50,6 @@
       "author": "GitHub Action",
       "date": "2025-12-21T04:50:47Z",
       "url": "https://github.com/Piotrunius/Bio/commit/fdb58446423d68610e7ca9f87ba5caa6886090de"
-    },
-    {
-      "message": "Update update-stats.yml",
-      "repo": "Bio",
-      "author": "Piotrunius",
-      "date": "2025-12-21T04:50:07Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/7825a9358b41d5b5cca3b1367f21aca31d548a9e"
     },
     {
       "message": "Update AutoClicker.py",
@@ -101,7 +101,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 118332,
+      "stars": 118334,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -128,7 +128,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 18508,
+      "stars": 18509,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -182,7 +182,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 159999,
+      "stars": 160000,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -269,5 +269,5 @@
       "starredAt": "2023-08-09T22:42:02Z"
     }
   ],
-  "lastUpdate": "2025-12-21T05:51:44.562Z"
+  "lastUpdate": "2025-12-21T06:23:10.453Z"
 }
