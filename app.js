@@ -287,9 +287,10 @@ async function updateGitHubStats() {
                 statusText.textContent = 'In-game';
                 gameInfo.textContent = `Playing: ${s.gameextrainfo}`;
                 gameInfo.style.color = '#90ff47';
+                gameInfo.style.display = 'block';
             } else {
+                gameInfo.style.display = 'none';
                 gameInfo.style.color = ''; 
-                gameInfo.textContent = 'Not playing anything right now';
                 
                 if (s.personastate > 0) {
                     dotContainer.classList.add('online');
