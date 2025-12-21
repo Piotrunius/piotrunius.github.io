@@ -611,10 +611,14 @@ function initVisibilityOptimization() {
 }
 
 // --- SPOTIFY LIVE STATUS (Lanyard API) ---
+let lastSpotifyTrackId = null;
+
 async function updateSpotifyStatus() {
     const titleEl = document.getElementById('music-title');
     const artistEl = document.getElementById('music-artist');
     const labelEl = document.querySelector('.music-label span');
+    const metaContainer = document.querySelector('.music-meta');
+    const visualizer = document.getElementById('visualizer');
     const discordId = '1166309729371439104';
 
     try {
@@ -623,29 +627,57 @@ async function updateSpotifyStatus() {
 
         if (data.success && data.data.spotify) {
             const spotify = data.data.spotify;
-            if (titleEl) {
-                titleEl.textContent = spotify.track;
-                titleEl.href = `https://open.spotify.com/track/${spotify.track_id}`;
-                titleEl.target = '_blank';
+            
+            // If track changed, handle transitions and audio
+            if (spotify.track_id !== lastSpotifyTrackId) {
+                lastSpotifyTrackId = spotify.track_id;
+
+                // Stop local audio if it's playing
+                const audio = document.getElementById('bg-audio');
+                if (audio && !audio.paused) {
+                    audio.pause();
+                    audioPlaying = false;
+                    updateAudioButton();
+                }
+
+                // Smoothly update UI
+                if (metaContainer) metaContainer.classList.add('changing');
+                
+                setTimeout(() => {
+                    if (titleEl) {
+                        titleEl.innerHTML = `<i class="fa-brands fa-spotify"></i> ${spotify.track}`;
+                        titleEl.href = `https://open.spotify.com/track/${spotify.track_id}`;
+                        titleEl.target = '_blank';
+                    }
+                    if (artistEl) artistEl.textContent = spotify.artist;
+                    if (labelEl) labelEl.textContent = 'LISTENING TO';
+                    if (metaContainer) metaContainer.classList.remove('changing');
+                }, 300);
             }
-            if (artistEl) {
-                artistEl.textContent = spotify.artist;
-            }
-            if (labelEl) {
-                labelEl.textContent = 'LISTENING TO';
-            }
+
+            // Hide visualizer when Spotify is playing (can't visualize external audio)
+            if (visualizer) visualizer.classList.add('hidden');
+
         } else {
-            // Fallback to default config
-            if (titleEl) {
-                titleEl.textContent = config.music?.title || 'Smoking Alone';
-                titleEl.href = config.music?.url || '#';
+            // No Spotify detected
+            if (lastSpotifyTrackId !== null) {
+                lastSpotifyTrackId = null;
+                
+                if (metaContainer) metaContainer.classList.add('changing');
+                
+                setTimeout(() => {
+                    if (titleEl) {
+                        titleEl.textContent = config.music?.title || 'Smoking Alone';
+                        titleEl.href = config.music?.url || '#';
+                    }
+                    if (artistEl) artistEl.textContent = config.music?.artist || 'BackDrop';
+                    if (labelEl) labelEl.textContent = 'MUSIC';
+                    if (metaContainer) metaContainer.classList.remove('changing');
+                }, 300);
             }
-            if (artistEl) {
-                artistEl.textContent = config.music?.artist || 'BackDrop';
-            }
-            if (labelEl) {
-                labelEl.textContent = 'MUSIC';
-            }
+            
+            // Show visualizer if audio is playing or could be played
+            if (visualizer) visualizer.classList.remove('hidden');
         }
     } catch (err) {
         console.error('Spotify status error:', err);
