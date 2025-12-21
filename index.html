@@ -19,6 +19,21 @@
         </audio>
 
         <main class="main-container">
+            <!-- LEFT: Spotify Status -->
+            <section class="spotify-status-card glass-card animate-slide-right">
+                <div class="music-label spotify-brand">
+                    <i class="fa-brands fa-spotify"></i>
+                    <span>SPOTIFY STATUS</span>
+                </div>
+                <div id="spotify-content" class="spotify-content empty">
+                    <div class="spotify-placeholder">
+                        <i class="fas fa-headphones"></i>
+                        <span>Not listening right now</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CENTER: Profile Section -->
             <section class="profile-section glass-card animate-fade-in">
                 <div class="avatar-container">
                     <img id="avatar" src="assets/pfp.png" alt="Avatar" class="avatar">
@@ -28,25 +43,23 @@
                 <p id="profile-bio" class="profile-bio">Minimalist designer & developer</p>
             </section>
 
-            <section id="visualizer-section" class="visualizer-section glass-card animate-slide-up">
-                <div class="visualizer-header">
-                    <div class="music-label">
-                        <i class="fas fa-music"></i>
-                        <span>MUSIC</span>
-                    </div>
-                    <div class="music-meta">
-                        <a id="music-title" class="music-link" href="https://pixabay.com/music/ambient-dark-ambient-background-music-smoking-alone-328352/"
-                            target="_blank" rel="noreferrer">Smoking Alone</a>
-                        <div id="music-artist">BackDrop</div>
-                    </div>
-                    <div class="music-controls">
-                        <button id="audio-toggle" class="music-btn" title="Toggle Music">
-                            <i class="fas fa-play"></i>
-                            <span>Play</span>
-                        </button>
-                    </div>
+            <!-- RIGHT: Local Player -->
+            <section class="music-player-card glass-card animate-slide-left">
+                <div class="music-label">
+                    <i class="fas fa-music"></i>
+                    <span>LOCAL PLAYER</span>
                 </div>
                 <canvas id="visualizer" class="visualizer-canvas"></canvas>
+                <div class="music-meta">
+                    <span id="music-title" class="music-link">Smoking Alone</span>
+                    <div id="music-artist">BackDrop</div>
+                </div>
+                <div class="music-controls">
+                    <button id="audio-toggle" class="music-btn">
+                        <i class="fas fa-play"></i>
+                        <span>Play</span>
+                    </button>
+                </div>
             </section>
 
             <section class="about-section glass-card animate-slide-right">

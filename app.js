@@ -610,15 +610,12 @@ function initVisibilityOptimization() {
     });
 }
 
-// --- SPOTIFY LIVE STATUS (Lanyard API) ---
-let lastSpotifyTrackId = null;
+// --- SPOTIFY HUB LOGIC (Lanyard API) ---
+let lastSpotifyData = null;
+let spotifyPredictorInterval = null;
 
 async function updateSpotifyStatus() {
-    const titleEl = document.getElementById('music-title');
-    const artistEl = document.getElementById('music-artist');
-    const labelEl = document.querySelector('.music-label span');
-    const metaContainer = document.querySelector('.music-meta');
-    const visualizer = document.getElementById('visualizer');
+    const container = document.getElementById('spotify-content');
     const discordId = '1166309729371439104';
 
     try {
@@ -628,60 +625,108 @@ async function updateSpotifyStatus() {
         if (data.success && data.data.spotify) {
             const spotify = data.data.spotify;
             
-            // If track changed, handle transitions and audio
-            if (spotify.track_id !== lastSpotifyTrackId) {
-                lastSpotifyTrackId = spotify.track_id;
-
-                // Stop local audio if it's playing
+            // Render initial or updated state
+            renderSpotifyActive(container, spotify);
+            
+            // Auto-stop local audio on new track
+            if (!lastSpotifyData || lastSpotifyData.track_id !== spotify.track_id) {
                 const audio = document.getElementById('bg-audio');
                 if (audio && !audio.paused) {
                     audio.pause();
                     audioPlaying = false;
                     updateAudioButton();
                 }
-
-                // Smoothly update UI
-                if (metaContainer) metaContainer.classList.add('changing');
-                
-                setTimeout(() => {
-                    if (titleEl) {
-                        titleEl.innerHTML = `<i class="fa-brands fa-spotify"></i> ${spotify.track}`;
-                        titleEl.href = `https://open.spotify.com/track/${spotify.track_id}`;
-                        titleEl.target = '_blank';
-                    }
-                    if (artistEl) artistEl.textContent = spotify.artist;
-                    if (labelEl) labelEl.textContent = 'LISTENING TO';
-                    if (metaContainer) metaContainer.classList.remove('changing');
-                }, 300);
             }
+            lastSpotifyData = spotify;
 
-            // Hide visualizer when Spotify is playing (can't visualize external audio)
-            if (visualizer) visualizer.classList.add('hidden');
-
+            // Start prediction loop if not running
+            if (!spotifyPredictorInterval) {
+                spotifyPredictorInterval = setInterval(predictSpotifyProgress, 1000);
+            }
         } else {
-            // No Spotify detected
-            if (lastSpotifyTrackId !== null) {
-                lastSpotifyTrackId = null;
-                
-                if (metaContainer) metaContainer.classList.add('changing');
-                
-                setTimeout(() => {
-                    if (titleEl) {
-                        titleEl.textContent = config.music?.title || 'Smoking Alone';
-                        titleEl.href = config.music?.url || '#';
-                    }
-                    if (artistEl) artistEl.textContent = config.music?.artist || 'BackDrop';
-                    if (labelEl) labelEl.textContent = 'MUSIC';
-                    if (metaContainer) metaContainer.classList.remove('changing');
-                }, 300);
+            renderSpotifyEmpty(container);
+            lastSpotifyData = null;
+            if (spotifyPredictorInterval) {
+                clearInterval(spotifyPredictorInterval);
+                spotifyPredictorInterval = null;
             }
-            
-            // Show visualizer if audio is playing or could be played
-            if (visualizer) visualizer.classList.remove('hidden');
         }
     } catch (err) {
         console.error('Spotify status error:', err);
     }
+}
+
+function predictSpotifyProgress() {
+    if (!lastSpotifyData) return;
+    const container = document.getElementById('spotify-content');
+    if (!container) return;
+    renderSpotifyActive(container, lastSpotifyData);
+}
+
+function renderSpotifyActive(container, spotify) {
+    const start = spotify.timestamps.start;
+    const end = spotify.timestamps.end;
+    const now = Date.now();
+    const total = end - start;
+    const elapsed = Math.min(Math.max(now - start, 0), total);
+    const progress = (elapsed / total) * 100;
+
+    const formatTime = (ms) => {
+        const s = Math.floor(ms / 1000);
+        const m = Math.floor(s / 60);
+        return `${m}:${String(s % 60).padStart(2, '0')}`;
+    };
+
+    // Use a simplified render to avoid heavy DOM reconstruction every second
+    const bar = container.querySelector('.spotify-progress-bar');
+    const timeStart = container.querySelector('.spotify-time span:first-child');
+    
+    if (bar && timeStart && container.dataset.trackId === spotify.track_id) {
+        bar.style.width = `${progress}%`;
+        timeStart.textContent = formatTime(elapsed);
+        return;
+    }
+
+    container.dataset.trackId = spotify.track_id;
+    container.innerHTML = `
+        <div class="spotify-active-layout">
+            <div class="spotify-art-wrapper">
+                <img src="${spotify.album_art_url}" alt="Album Art">
+            </div>
+            <div class="spotify-details">
+                <div class="spotify-track-name">${spotify.song}</div>
+                <div class="spotify-artist-name">${spotify.artist}</div>
+                ${spotify.album && spotify.album !== spotify.song ? `<div class="spotify-album-name">${spotify.album}</div>` : ''}
+                
+                <div class="spotify-progress-container">
+                    <div class="spotify-progress-bar" style="width: ${progress}%"></div>
+                </div>
+                <div class="spotify-time">
+                    <span>${formatTime(elapsed)}</span>
+                    <span>${formatTime(total)}</span>
+                </div>
+            </div>
+            <div class="music-controls">
+                <a href="https://open.spotify.com/track/${spotify.track_id}" target="_blank" rel="noreferrer" class="music-btn spotify-btn">
+                    <i class="fa-brands fa-spotify"></i>
+                    <span>Open in Spotify</span>
+                </a>
+            </div>
+        </div>
+    `;
+    container.className = 'spotify-content';
+}
+
+function renderSpotifyEmpty(container) {
+    if (container.classList.contains('empty')) return;
+    container.innerHTML = `
+        <div class="spotify-placeholder">
+            <i class="fas fa-headphones"></i>
+            <span>Not listening right now</span>
+        </div>
+    `;
+    container.className = 'spotify-content empty';
+    delete container.dataset.trackId;
 }
 
 // --- INIT ---
@@ -702,6 +747,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Auto-refresh stats every 2 minutes
     setInterval(updateGitHubStats, 120000);
-    // Refresh Spotify more frequently (every 30 seconds)
+    // Refresh Spotify API only every 30 seconds
     setInterval(updateSpotifyStatus, 30000);
 });
