@@ -1,8 +1,11 @@
 let config = {};
 let bgAnimationFrame = null;
+let visualizerAnimationFrame = null; // New variable to control visualizer loop
+let particlesAnimationFrame = null; // New variable to control particle loop
 let audioContext = null;
 let analyser = null;
 let audioPlaying = false;
+let wasAudioPlaying = false; // Track audio state before tab switch
 const githubUsername = 'Piotrunius';
 
 // --- DATA: Setup & Gear (Hardcoded - FIX FOR INVISIBLE BUTTONS) ---
@@ -36,11 +39,11 @@ function getDefaultConfig() {
         },
         socials: [
             { label: 'GitHub', icon: 'github', url: 'https://github.com/Piotrunius', color: '#ffffff' },
-            { label: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/piotrunius0/', color: '#E1306C' },
+            { label: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/piotrunius0/', color: '#ff00d4ff' },
             { label: 'Spotify', icon: 'spotify', url: 'https://stats.fm/piotrunius', color: '#1DB954' },
             { label: 'Steam', icon: 'steam', url: 'https://steamcommunity.com/id/Piotrunius/', color: '#00adee' },
-            { label: 'AniList', icon: 'circle-play', url: 'https://anilist.co/user/Piotrunius/', color: '#00A3FF' },
-            { label: 'Roblox', icon: 'cubes', url: 'https://www.roblox.com/users/962249141/profile', color: '#FF4757' }
+            { label: 'AniList', icon: 'circle-play', url: 'https://anilist.co/user/Piotrunius/', color: '#e5ff00ff' },
+            { label: 'Roblox', icon: 'cube', url: 'https://www.roblox.com/users/962249141/profile', color: '#ff0000ff' }
         ],
         music: {
             title: 'Smoking Alone',
@@ -107,9 +110,9 @@ async function updateGitHubStats() {
     const commitsEl = document.getElementById('stat-commits');
     const starsEl = document.getElementById('stat-stars');
     const lastUpdateEl = document.getElementById('stats-last-update');
-    
+
     // Używamy nazw z poprzedniego prompta (activity-stars/commits)
-    const activityStarsEl = document.getElementById('starred-list'); 
+    const activityStarsEl = document.getElementById('starred-list');
     const activityCommitsEl = document.getElementById('commits-list');
 
     try {
@@ -124,7 +127,7 @@ async function updateGitHubStats() {
         if (projectsEl) projectsEl.textContent = summary.projects || '0';
         if (starsEl) starsEl.textContent = summary.starredCount || '0';
         if (commitsEl) commitsEl.textContent = summary.commits || '0';
-        
+
         if (lastUpdateEl && stats.lastUpdate) {
             lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(stats.lastUpdate)}`;
         }
@@ -138,14 +141,14 @@ async function updateGitHubStats() {
                 const item = document.createElement('div');
                 item.className = 'activity-item';
                 // Usunięcie opacity: 0 z JS (handled by CSS animation keyframes)
-                item.style.animationDelay = `${index * 0.05}s`; 
+                item.style.animationDelay = `${index * 0.05}s`;
 
                 const name = star.name || 'Unknown Repo';
                 const owner = star.owner || 'Unknown';
                 const starCount = star.stars || 0;
                 const lang = star.language || 'Code';
                 const desc = star.description || 'No description provided.';
-                
+
                 // Struktura HTML dla bogatej karty
                 item.innerHTML = `
                     <div class="activity-header">
@@ -178,7 +181,7 @@ async function updateGitHubStats() {
                 const msg = (commit.message || 'No message').split('\n')[0];
                 const repo = commit.repo || 'Unknown';
                 const author = commit.author || 'Piotrunius';
-                
+
                 item.innerHTML = `
                     <div class="activity-header">
                         <a href="${commit.url}" class="activity-link" target="_blank" rel="noreferrer">${msg}</a>
@@ -205,7 +208,7 @@ async function updateGitHubStats() {
 function initSetup() {
     const pcSpecs = document.getElementById('pc-specs');
     const setupSpecs = document.getElementById('setup-specs');
-    
+
     // Helper to render lists
     const renderList = (container, items) => {
         if (!container) return;
@@ -214,7 +217,7 @@ function initSetup() {
             const el = document.createElement('a');
             el.className = 'spec-item'; // Ta klasa musi mieć opacity: 1 !important w CSS jeśli są problemy
             el.style.animationDelay = `${index * 0.05}s`;
-            
+
             // Handle multiple URLs or single URL
             if (item.urls && Array.isArray(item.urls)) {
                 el.href = '#';
@@ -249,7 +252,7 @@ function formatPLDateTime(dateInput, short = false) {
     const year = d.getFullYear();
     const hours = String(d.getHours()).padStart(2, '0');
     const mins = String(d.getMinutes()).padStart(2, '0');
-    
+
     if (short) return `${day}.${month} ${hours}:${mins}`;
     return `${day}.${month}.${year}, ${hours}:${mins}`;
 }
@@ -321,9 +324,13 @@ function initAudioVisualizer() {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    function drawVisualizer() {
-        if (!audioPlaying) return;
-        requestAnimationFrame(drawVisualizer);
+    // Store the animate function to reuse it when resuming
+    window.visualizerAnimate = function() {
+        if (!audioPlaying || document.hidden) {
+            cancelAnimationFrame(visualizerAnimationFrame);
+            return;
+        }
+        visualizerAnimationFrame = requestAnimationFrame(window.visualizerAnimate);
         analyser.getByteFrequencyData(dataArray);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -339,8 +346,10 @@ function initAudioVisualizer() {
             ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
             x += barWidth + 1;
         }
-    }
-    drawVisualizer();
+    };
+    
+    // Start animation if not already running
+    window.visualizerAnimate();
 }
 
 function initParticles() {
@@ -384,15 +393,21 @@ function initParticles() {
 
     for (let i = 0; i < 120; i++) particles.push(new Particle()); // More particles (120)
 
-    function animate() {
+    // Store animate function globally (or in a wider scope) to access it for visibility change
+    window.particlesAnimate = function() {
+        if (document.hidden) {
+            cancelAnimationFrame(particlesAnimationFrame);
+            return;
+        }
         ctx.clearRect(0, 0, width, height);
         particles.forEach(p => {
             p.update();
             p.draw();
         });
-        requestAnimationFrame(animate);
-    }
-    animate();
+        particlesAnimationFrame = requestAnimationFrame(window.particlesAnimate);
+    };
+    
+    window.particlesAnimate();
 }
 
 function initScrollReveal() {
@@ -415,7 +430,7 @@ function initTypingEffect() {
     const text = config.profile?.bio || bioEl.textContent;
     bioEl.textContent = '';
     bioEl.classList.add('typing-cursor');
-    
+
     let i = 0;
     const type = () => {
         if (i < text.length) {
@@ -437,26 +452,55 @@ function initMouseEffects() {
     });
 }
 
-function initAutoplay() {
-    const startAudio = () => {
-        if (!audioPlaying) {
-            const audio = document.getElementById('bg-audio');
-            if (audio) {
-                audio.volume = config.audio?.volume || 0.4;
-                audio.play().then(() => {
-                    audioPlaying = true;
-                    initAudioVisualizer();
-                    updateAudioButton();
-                }).catch(err => console.log('Autoplay blocked or failed:', err));
+// --- VISIBILITY & PERFORMANCE OPTIMIZATION ---
+function initVisibilityOptimization() {
+    document.addEventListener('visibilitychange', () => {
+        const audio = document.getElementById('bg-audio');
+        
+        if (document.hidden) {
+            // PAGE HIDDEN: Freeze everything
+            console.log('Page hidden: Freezing resources...');
+            
+            // 1. Pause Audio
+            if (audioPlaying) {
+                wasAudioPlaying = true;
+                if (audio) audio.pause();
+                // We keep audioPlaying = true logic visually, but pause underlying audio
+                // to resume it correctly later without changing UI state
+            } else {
+                wasAudioPlaying = false;
+            }
+
+            // 2. Stop Visualizer Loop
+            if (visualizerAnimationFrame) {
+                cancelAnimationFrame(visualizerAnimationFrame);
+            }
+
+            // 3. Stop Particles Loop
+            if (particlesAnimationFrame) {
+                cancelAnimationFrame(particlesAnimationFrame);
+            }
+
+        } else {
+            // PAGE VISIBLE: Resume
+            console.log('Page visible: Resuming resources...');
+            
+            // 1. Resume Audio if it was playing
+            if (wasAudioPlaying && audio) {
+                audio.play().catch(e => console.log('Resume play failed:', e));
+            }
+
+            // 2. Resume Visualizer if audio is playing
+            if (audioPlaying && window.visualizerAnimate) {
+                window.visualizerAnimate();
+            }
+
+            // 3. Resume Particles
+            if (window.particlesAnimate) {
+                window.particlesAnimate();
             }
         }
-        // Remove listeners after first interaction to prevent constant toggling
-        document.removeEventListener('click', startAudio);
-        document.removeEventListener('keydown', startAudio);
-    };
-
-    document.addEventListener('click', startAudio);
-    document.addEventListener('keydown', startAudio);
+    });
 }
 
 // --- INIT ---
@@ -472,6 +516,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initScrollReveal();   // New Scroll Animations
     initTypingEffect();   // New Typing Effect
     initMouseEffects();
-
+    initVisibilityOptimization(); // New Performance Optimization
     console.log('Bio initialized.');
 });
