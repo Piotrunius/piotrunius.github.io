@@ -268,12 +268,6 @@ async function updateGitHubStats() {
                 gameCount.innerHTML = `<i class="fas fa-gamepad"></i> ${s.game_count} Games`;
             }
             
-            if (lastOnline && s.lastlogoff) {
-                const date = new Date(s.lastlogoff * 1000);
-                lastOnline.innerHTML = `<i class="fas fa-clock"></i> Seen ${date.toLocaleDateString()}`;
-                lastOnline.style.display = 'flex';
-            }
-            
             // Reset wrapper classes for colors
             dotContainer.className = 'steam-avatar-wrapper';
             

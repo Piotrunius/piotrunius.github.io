@@ -92,13 +92,6 @@ body::-webkit-scrollbar-thumb {
     z-index: -2;
 }
 
-/* Disable decorative blobs to avoid color-only background overlay */
-.bg-layer::before,
-.bg-layer::after {
-    content: none !important;
-    display: none !important;
-}
-
 .bg-layer::before,
 .bg-layer::after {
     content: '';
@@ -1696,6 +1689,21 @@ i:not(.social-link i) {
 }
 
 .steam-profile-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.4rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text);
+    text-decoration: none !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
 
 .steam-profile-link:hover {
     background: var(--primary) !important;
