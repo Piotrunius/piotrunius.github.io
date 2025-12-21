@@ -253,6 +253,24 @@ async function updateGitHubStats() {
             if (s.avatar && steamPfp) {
                 steamPfp.src = s.avatar;
             }
+
+            // Update Extra Info
+            const memberSince = document.getElementById('steam-member-since');
+            const lastOnline = document.getElementById('steam-last-online');
+            
+            if (s.timecreated && memberSince) {
+                const year = new Date(s.timecreated * 1000).getFullYear();
+                memberSince.textContent = `Since ${year}`;
+            }
+            
+            if (lastOnline) {
+                if (s.personastate > 0 || s.gameextrainfo) {
+                    lastOnline.textContent = 'Active now';
+                } else if (s.lastlogoff) {
+                    const date = new Date(s.lastlogoff * 1000);
+                    lastOnline.textContent = `Seen ${date.toLocaleDateString()}`;
+                }
+            }
             
             // Reset wrapper classes for colors
             dotContainer.className = 'steam-avatar-wrapper';

@@ -109,7 +109,9 @@ jobs:
                     steamData = {
                       personastate: p.personastate,
                       gameextrainfo: p.gameextrainfo || null,
-                      avatar: p.avatarmedium
+                      avatar: p.avatarmedium,
+                      timecreated: p.timecreated,
+                      lastlogoff: p.lastlogoff
                     };
                   }
                 } catch (se) { console.error('Steam fetch error:', se.message); }
