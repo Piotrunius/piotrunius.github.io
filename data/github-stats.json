@@ -1,6 +1,297 @@
 {
-  "summary": { "projects": 0, "starredCount": 0, "commits": 0 },
-  "recentCommits": [],
-  "starred": [],
-  "lastUpdate": "2025-12-21T00:00:00Z"
+  "summary": {
+    "projects": 3,
+    "starredCount": 20,
+    "commits": 62
+  },
+  "starred": [
+    {
+      "name": "qwen-code",
+      "owner": "QwenLM",
+      "url": "https://github.com/QwenLM/qwen-code",
+      "stars": 16601,
+      "language": "TypeScript",
+      "description": "Qwen Code is a coding agent that lives in the digital world.",
+      "starredAt": "2025-12-09T15:58:30Z"
+    },
+    {
+      "name": "open-webui",
+      "owner": "open-webui",
+      "url": "https://github.com/open-webui/open-webui",
+      "stars": 118338,
+      "language": "Svelte",
+      "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
+      "starredAt": "2025-12-09T13:44:06Z"
+    },
+    {
+      "name": "arcraiders-data",
+      "owner": "RaidTheory",
+      "url": "https://github.com/RaidTheory/arcraiders-data",
+      "stars": 196,
+      "language": null,
+      "description": "Free to use ARC Raiders game data in JSON Format.",
+      "starredAt": "2025-11-30T11:02:20Z"
+    },
+    {
+      "name": "RaiderCache",
+      "owner": "otdavies",
+      "url": "https://github.com/otdavies/RaiderCache",
+      "stars": 8,
+      "language": "TypeScript",
+      "description": "Searchable Arc Raider loot tiers",
+      "starredAt": "2025-11-30T09:40:52Z"
+    },
+    {
+      "name": "omarchy",
+      "owner": "basecamp",
+      "url": "https://github.com/basecamp/omarchy",
+      "stars": 18509,
+      "language": "Shell",
+      "description": "Beautiful, Modern & Opinionated Linux",
+      "starredAt": "2025-11-14T20:28:21Z"
+    },
+    {
+      "name": "krohnkite",
+      "owner": "esjeon",
+      "url": "https://github.com/esjeon/krohnkite",
+      "stars": 1993,
+      "language": "TypeScript",
+      "description": "A dynamic tiling extension for KWin",
+      "starredAt": "2025-11-03T18:09:23Z"
+    },
+    {
+      "name": "powerlevel10k",
+      "owner": "romkatv",
+      "url": "https://github.com/romkatv/powerlevel10k",
+      "stars": 52034,
+      "language": "Shell",
+      "description": "A Zsh theme",
+      "starredAt": "2025-10-22T19:34:06Z"
+    },
+    {
+      "name": "steam-presence",
+      "owner": "JustTemmie",
+      "url": "https://github.com/JustTemmie/steam-presence",
+      "stars": 372,
+      "language": "Python",
+      "description": "A script that actually displays the game you're playing on discord",
+      "starredAt": "2025-10-14T16:33:26Z"
+    },
+    {
+      "name": "winutil",
+      "owner": "ChrisTitusTech",
+      "url": "https://github.com/ChrisTitusTech/winutil",
+      "stars": 44323,
+      "language": "PowerShell",
+      "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
+      "starredAt": "2025-09-29T20:42:42Z"
+    },
+    {
+      "name": "WinPwnage",
+      "owner": "rootm0s",
+      "url": "https://github.com/rootm0s/WinPwnage",
+      "stars": 2729,
+      "language": "Python",
+      "description": "UAC bypass, Elevate, Persistence methods",
+      "starredAt": "2025-09-29T20:41:42Z"
+    },
+    {
+      "name": "Microsoft-Activation-Scripts",
+      "owner": "massgravel",
+      "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
+      "stars": 160004,
+      "language": "Batchfile",
+      "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
+      "starredAt": "2025-09-29T20:41:38Z"
+    },
+    {
+      "name": "RoValra",
+      "owner": "NotValra",
+      "url": "https://github.com/NotValra/RoValra",
+      "stars": 67,
+      "language": "JavaScript",
+      "description": "A forever free Roblox extension",
+      "starredAt": "2025-09-29T20:41:22Z"
+    },
+    {
+      "name": "gemini-cli",
+      "owner": "google-gemini",
+      "url": "https://github.com/google-gemini/gemini-cli",
+      "stars": 88134,
+      "language": "TypeScript",
+      "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
+      "starredAt": "2025-09-23T16:15:36Z"
+    },
+    {
+      "name": "moodist",
+      "owner": "remvze",
+      "url": "https://github.com/remvze/moodist",
+      "stars": 3140,
+      "language": "TypeScript",
+      "description": "🌲 Ambient sounds for focus and calm.",
+      "starredAt": "2025-09-04T00:18:52Z"
+    },
+    {
+      "name": "FMTransactionTriggerer",
+      "owner": "YimMenu-Lua",
+      "url": "https://github.com/YimMenu-Lua/FMTransactionTriggerer",
+      "stars": 6,
+      "language": "Lua",
+      "description": "Allows you to trigger transactions via the freemode script. Experimental only, use at your own risk.",
+      "starredAt": "2025-07-07T06:47:35Z"
+    },
+    {
+      "name": "YimMenuV2",
+      "owner": "YimMenu",
+      "url": "https://github.com/YimMenu/YimMenuV2",
+      "stars": 911,
+      "language": "C++",
+      "description": "Experimental menu for GTA 5: Enhanced",
+      "starredAt": "2025-07-07T06:47:19Z"
+    },
+    {
+      "name": "glazewm",
+      "owner": "glzr-io",
+      "url": "https://github.com/glzr-io/glazewm",
+      "stars": 10894,
+      "language": "Rust",
+      "description": "GlazeWM is a tiling window manager for Windows inspired by i3wm.",
+      "starredAt": "2025-06-17T03:39:52Z"
+    },
+    {
+      "name": "yasb",
+      "owner": "amnweb",
+      "url": "https://github.com/amnweb/yasb",
+      "stars": 3744,
+      "language": "Python",
+      "description": "A highly configurable Windows status bar written in Python. ",
+      "starredAt": "2025-06-17T03:39:25Z"
+    },
+    {
+      "name": "Malware-Database",
+      "owner": "cryptwareapps",
+      "url": "https://github.com/cryptwareapps/Malware-Database",
+      "stars": 507,
+      "language": "Assembly",
+      "description": "A large repository of malware samples with 2500+ malware samples & source codes for a variety of platforms by Cryptware Apps.",
+      "starredAt": "2023-09-26T20:04:24Z"
+    },
+    {
+      "name": "PeaZip",
+      "owner": "peazip",
+      "url": "https://github.com/peazip/PeaZip",
+      "stars": 6638,
+      "language": "Pascal",
+      "description": "Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager. Features volume spanning, compression, authenticated encryption. Supports 7Z, 7-Zip sfx, ACE, ARJ, Brotli, BZ2, CAB, CHM, CPIO, DEB, GZ, ISO, JAR, LHA/LZH, NSIS, OOo, PAQ/LPAQ, PEA, QUAD, RAR, RPM, split, TAR, Z, ZIP, ZIPX, Zstandard.",
+      "starredAt": "2023-08-09T22:42:02Z"
+    }
+  ],
+  "recentCommits": [
+    {
+      "message": "fix: correct yaml indentation and formatting in workflows",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T07:52:06Z",
+      "url": "https://github.com/Piotrunius/bio/commit/7fe5a546e793467d6247f6177896cd43c52c52bd"
+    },
+    {
+      "message": "feat: add concurrency queuing to workflows",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T07:47:57Z",
+      "url": "https://github.com/Piotrunius/bio/commit/e7280aa986cd7451e7863bc09720c89c6d94ff9c"
+    },
+    {
+      "message": "fix: add rebase to handle concurrent workflow pushes",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T07:46:35Z",
+      "url": "https://github.com/Piotrunius/bio/commit/2e30ac5860f399786b2b7a85e4be6afda15a6f13"
+    },
+    {
+      "message": "chore: update steam status",
+      "repo": "bio",
+      "author": "GitHub Action",
+      "date": "2025-12-21T07:45:25Z",
+      "url": "https://github.com/Piotrunius/bio/commit/b84bd7101302faf8d565c80613f67aee9e8e901e"
+    },
+    {
+      "message": "fix: resolve shell expansion issues in workflows by using heredocs",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T07:43:24Z",
+      "url": "https://github.com/Piotrunius/bio/commit/94a6f893e8da993516838d85c5045d10c7aa9490"
+    },
+    {
+      "message": "Update AutoClicker.py",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-20T06:58:21Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/cfc0fde6955262c8ef4f68482c69ea50edd84764"
+    },
+    {
+      "message": "Update README.md",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-20T06:47:18Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/166c4c37720d97c588e4498a307dd1ae24650741"
+    },
+    {
+      "message": "Update AutoClicker.py",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-20T06:47:08Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/84f927d9c306397a5bff381769ad8e960d18eb4b"
+    },
+    {
+      "message": "Update README.md",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-19T19:03:07Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/ae65b85096f41368576bb43a80153f5585a1978a"
+    },
+    {
+      "message": "Update README.md",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-19T19:01:27Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/4bbc5ca3eaf595058c816fe43b1e83c8c6bd5478"
+    },
+    {
+      "message": "Sync latest core scripts (#1061)",
+      "repo": "Core-Scripts",
+      "author": "Tiffany Bennett",
+      "date": "2018-08-14T00:03:05Z",
+      "url": "https://github.com/Piotrunius/Core-Scripts/commit/425d2d641bdc4b6c1104a9d5f6c53c9ea758c5cb"
+    },
+    {
+      "message": "Sync latest changes (#1057)",
+      "repo": "Core-Scripts",
+      "author": "Tiffany Bennett",
+      "date": "2018-05-11T18:15:50Z",
+      "url": "https://github.com/Piotrunius/Core-Scripts/commit/f2965847c9eac9715af9323d76b9ef36d40619bb"
+    },
+    {
+      "message": "Update to latest internal version of core scripts. (#1052)",
+      "repo": "Core-Scripts",
+      "author": "Tiffany Bennett",
+      "date": "2018-03-19T20:23:46Z",
+      "url": "https://github.com/Piotrunius/Core-Scripts/commit/c40eb19bdd6f2949d66aa020e12b7a6d7d5ffe45"
+    },
+    {
+      "message": "Update FreeCamera.lua (#1031)",
+      "repo": "Core-Scripts",
+      "author": "Conor Griffin",
+      "date": "2017-08-22T20:55:20Z",
+      "url": "https://github.com/Piotrunius/Core-Scripts/commit/a16b5faf59976b0029be7f8897d0475ec82e5ec5"
+    },
+    {
+      "message": "Fix team score not updating when a member leaves (#1009)",
+      "repo": "Core-Scripts",
+      "author": "boyned//Kampfkarren",
+      "date": "2017-08-14T23:37:38Z",
+      "url": "https://github.com/Piotrunius/Core-Scripts/commit/f100fd2f72589f5b83cfd1f325441859901cb9b7"
+    }
+  ],
+  "lastUpdate": "2025-12-21T07:52:56.809Z"
 }
