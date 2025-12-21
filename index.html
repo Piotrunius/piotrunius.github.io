@@ -30,17 +30,21 @@
 
             <section id="visualizer-section" class="visualizer-section glass-card animate-slide-up">
                 <div class="visualizer-header">
-                    <i class="fas fa-music"></i>
-                    <span>MUSIC</span>
-                    <div class="music-meta">
-                        <a id="music-title" class="music-link" href="https://www.youtube.com/watch?v=sWcLccMuCA8"
-                            target="_blank" rel="noreferrer">Xtal</a>
-                        <div id="music-artist">Aphex Twin</div>
+                    <div class="music-label">
+                        <i class="fas fa-music"></i>
+                        <span>MUSIC</span>
                     </div>
-                    <button id="audio-toggle" class="music-btn" title="Toggle Music">
-                        <i class="fas fa-play"></i>
-                        <span>Play</span>
-                    </button>
+                    <div class="music-meta">
+                        <a id="music-title" class="music-link" href="https://pixabay.com/music/ambient-dark-ambient-background-music-smoking-alone-328352/"
+                            target="_blank" rel="noreferrer">Smoking Alone</a>
+                        <div id="music-artist">BackDrop</div>
+                    </div>
+                    <div class="music-controls">
+                        <button id="audio-toggle" class="music-btn" title="Toggle Music">
+                            <i class="fas fa-play"></i>
+                            <span>Play</span>
+                        </button>
+                    </div>
                 </div>
                 <canvas id="visualizer" class="visualizer-canvas"></canvas>
             </section>
@@ -107,9 +111,9 @@
                                 Not playing anything right now
                             </div>
                             <div class="steam-extra-info">
-                                <span id="steam-member-since"></span>
-                                <span id="steam-game-count"></span>
-                                <span id="steam-last-online"></span>
+                                <span id="steam-member-since"><i class="fas fa-calendar-alt"></i> </span>
+                                <span id="steam-game-count"><i class="fas fa-gamepad"></i> </span>
+                                <span id="steam-last-online"><i class="fas fa-clock"></i> </span>
                             </div>
                         </div>
                     </div>

@@ -261,24 +261,17 @@ async function updateGitHubStats() {
             
             if (s.timecreated && memberSince) {
                 const year = new Date(s.timecreated * 1000).getFullYear();
-                memberSince.textContent = `Since ${year}`;
+                memberSince.innerHTML = `<i class="fas fa-calendar-alt"></i> Since ${year}`;
             }
 
             if (s.game_count !== undefined && gameCount) {
-                gameCount.textContent = `${s.game_count} Games`;
+                gameCount.innerHTML = `<i class="fas fa-gamepad"></i> ${s.game_count} Games`;
             }
             
-            if (lastOnline) {
-                // Only show if NOT active and lastlogoff exists
-                const isActive = s.personastate > 0 || s.gameextrainfo;
-                if (!isActive && s.lastlogoff) {
-                    const date = new Date(s.lastlogoff * 1000);
-                    lastOnline.textContent = `Seen ${date.toLocaleDateString()}`;
-                    lastOnline.style.display = 'flex';
-                } else {
-                    lastOnline.textContent = '';
-                    lastOnline.style.display = 'none';
-                }
+            if (lastOnline && s.lastlogoff) {
+                const date = new Date(s.lastlogoff * 1000);
+                lastOnline.innerHTML = `<i class="fas fa-clock"></i> Seen ${date.toLocaleDateString()}`;
+                lastOnline.style.display = 'flex';
             }
             
             // Reset wrapper classes for colors
@@ -290,28 +283,15 @@ async function updateGitHubStats() {
                 gameInfo.textContent = `Playing: ${s.gameextrainfo}`;
                 gameInfo.style.color = '#90ff47';
             } else {
-                gameInfo.style.color = ''; // Reset
-                switch (s.personastate) {
-                    case 1: 
-                        dotContainer.classList.add('online');
-                        statusText.textContent = 'Online';
-                        gameInfo.textContent = 'Not playing anything right now';
-                        break;
-                    case 2:
-                        dotContainer.classList.add('busy');
-                        statusText.textContent = 'Busy';
-                        gameInfo.textContent = 'Busy';
-                        break;
-                    case 3:
-                    case 4:
-                        dotContainer.classList.add('away');
-                        statusText.textContent = 'Away';
-                        gameInfo.textContent = 'Away from keyboard';
-                        break;
-                    default:
-                        dotContainer.classList.add('offline');
-                        statusText.textContent = 'Offline';
-                        gameInfo.textContent = 'Currently offline';
+                gameInfo.style.color = ''; 
+                gameInfo.textContent = 'Not playing anything right now';
+                
+                if (s.personastate > 0) {
+                    dotContainer.classList.add('online');
+                    statusText.textContent = 'Online';
+                } else {
+                    dotContainer.classList.add('offline');
+                    statusText.textContent = 'Offline';
                 }
             }
         }
