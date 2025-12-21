@@ -1,7 +1,7 @@
 {
   "steam": {
     "personastate": 1,
-    "gameextrainfo": null,
+    "gameextrainfo": "Slime Rancher 2",
     "avatar": "https://avatars.steamstatic.com/a7b85c1debc6db3cb342f4f0a14f3bbe2d564f6d_medium.jpg",
     "timecreated": 1584306745,
     "lastlogoff": 1766285987,
@@ -11,45 +11,45 @@
   "summary": {
     "projects": 3,
     "starredCount": 20,
-    "commits": 44,
+    "commits": 47,
     "followers": 0,
     "following": 3
   },
   "recentCommits": [
+    {
+      "message": "refactor: polished spotify integration with audio auto-stop and visualizer toggle",
+      "repo": "Bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T03:47:11Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/20b3b7f3f1a47c00814ee3a5715d49315ac0537e"
+    },
+    {
+      "message": "feat: exclusive spotify live status integration",
+      "repo": "Bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T03:45:01Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/6df3523366da5dcdc70bd711cf282e779a6cbf99"
+    },
+    {
+      "message": "steam: hide game info when not playing",
+      "repo": "Bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T03:33:54Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/6e13b3ca5d2a6f80375377ddcf1f6f9c8dad6979"
+    },
+    {
+      "message": "chore: update github stats",
+      "repo": "Bio",
+      "author": "GitHub Action",
+      "date": "2025-12-21T03:27:47Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/8546f006207d787e5511b9a12f61af514db12fca"
+    },
     {
       "message": "final polish: restore background blobs and clean up CSS duplicates",
       "repo": "Bio",
       "author": "Piotrunius",
       "date": "2025-12-21T03:25:46Z",
       "url": "https://github.com/Piotrunius/Bio/commit/396d16484484648f07f9624465c0fb2a9c7ba710"
-    },
-    {
-      "message": "final fix: centered music, steam panel overhaul with playtime and fixed styling",
-      "repo": "Bio",
-      "author": "Piotrunius",
-      "date": "2025-12-21T03:14:27Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/a0431ed6aaf272b77473f65a07523957b4d96a8f"
-    },
-    {
-      "message": "final: fixed music centering, steam avatar size and button readability",
-      "repo": "Bio",
-      "author": "Piotrunius",
-      "date": "2025-12-21T03:07:09Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/d41c899606c529d4e8a133ad413f0901a4ee7551"
-    },
-    {
-      "message": "feat: disable automatic stats update on push",
-      "repo": "Bio",
-      "author": "Piotrunius",
-      "date": "2025-12-21T03:02:47Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/2240c55b83e8e111e302e3c359b5ac7cfce1ccb3"
-    },
-    {
-      "message": "fix: remove last seen info, fix steam profile button and restore background blobs",
-      "repo": "Bio",
-      "author": "Piotrunius",
-      "date": "2025-12-21T02:58:54Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/cd125766c7b50faaed99ad8645e59787078dc72c"
     },
     {
       "message": "Update AutoClicker.py",
@@ -101,7 +101,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 118320,
+      "stars": 118321,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -128,7 +128,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 18504,
+      "stars": 18505,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -146,7 +146,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52033,
+      "stars": 52032,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -182,7 +182,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 159990,
+      "stars": 159992,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -263,11 +263,11 @@
       "name": "PeaZip",
       "owner": "peazip",
       "url": "https://github.com/peazip/PeaZip",
-      "stars": 6635,
+      "stars": 6636,
       "language": "Pascal",
       "description": "Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager. Features volume spanning, compression, authenticated encryption. Supports 7Z, 7-Zip sfx, ACE, ARJ, Brotli, BZ2, CAB, CHM, CPIO, DEB, GZ, ISO, JAR, LHA/LZH, NSIS, OOo, PAQ/LPAQ, PEA, QUAD, RAR, RPM, split, TAR, Z, ZIP, ZIPX, Zstandard.",
       "starredAt": "2023-08-09T22:42:02Z"
     }
   ],
-  "lastUpdate": "2025-12-21T03:27:47.535Z"
+  "lastUpdate": "2025-12-21T03:47:48.716Z"
 }
