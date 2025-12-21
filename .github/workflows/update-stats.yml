@@ -118,7 +118,10 @@ jobs:
               };
 
               const fs = require('fs');
+              // Save to both locations to ensure compatibility
               fs.writeFileSync('assets/github-stats.json', JSON.stringify(stats, null, 2));
+              fs.writeFileSync('github-stats.json', JSON.stringify(stats, null, 2));
+              
               console.log('Stats updated successfully');
               console.log('Projects:', stats.summary.projects);
               console.log('Starred repos:', stats.summary.starredCount);
@@ -136,6 +139,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add assets/github-stats.json
+          # Add both files
+          git add assets/github-stats.json github-stats.json
           git commit -m "chore: update github stats" || echo "No changes to commit"
           git push
