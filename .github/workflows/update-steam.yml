@@ -14,16 +14,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Fetch Steam
         env:
           STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
           STEAM_ID64: ${{ secrets.STEAM_ID64 }}
         run: |
-          node -e "
+          cat << 'EOF' > update.js
           const fs = require('fs');
           const key = process.env.STEAM_API_KEY;
           const id = process.env.STEAM_ID64 || '76561199034113344';
-          if (!key) process.exit(1);
+          if (!key) {
+            console.error('STEAM_API_KEY is missing');
+            process.exit(1);
+          }
 
           async function run() {
             try {
@@ -32,6 +40,11 @@ jobs:
               const gR = await fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${id}&include_appinfo=0&include_played_free_games=1`);
               const gJ = await gR.json();
               
+              if (!sJ.response?.players?.[0]) {
+                console.error('No player data found');
+                process.exit(1);
+              }
+
               const p = sJ.response.players[0];
               const stats = {
                 steam: {
@@ -59,7 +72,8 @@ jobs:
             } catch (e) { console.error(e); process.exit(1); }
           }
           run();
-          "
+          EOF
+          node update.js
 
       - name: Commit
         run: |
