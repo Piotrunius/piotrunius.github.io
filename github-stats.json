@@ -1,55 +1,55 @@
 {
   "steam": {
-    "personastate": 1,
+    "personastate": 0,
     "gameextrainfo": null,
     "avatar": "https://avatars.steamstatic.com/a7b85c1debc6db3cb342f4f0a14f3bbe2d564f6d_medium.jpg",
     "timecreated": 1584306745,
-    "lastlogoff": 1766285987,
+    "lastlogoff": 1766292157,
     "game_count": 276,
     "total_playtime": 2698
   },
   "summary": {
     "projects": 3,
     "starredCount": 20,
-    "commits": 47,
+    "commits": 50,
     "followers": 0,
     "following": 3
   },
   "recentCommits": [
+    {
+      "message": "style: update social media links and clean up whitespace in app.js",
+      "repo": "Bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T04:47:35Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/bc57915d3bc3b2de18e336d203fa6cd5dd15d6ff"
+    },
+    {
+      "message": "style: final music panel refinements and layout fixes",
+      "repo": "Bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T04:41:05Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/de2d51606e0fb019a4c64c9390d698e61196c1d9"
+    },
+    {
+      "message": "style: ensure 1:1 color and border match for music panels",
+      "repo": "Bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T04:40:37Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/4a856cac9f4792b559d52fa02db7b3412c440992"
+    },
+    {
+      "message": "chore: update github stats",
+      "repo": "Bio",
+      "author": "GitHub Action",
+      "date": "2025-12-21T04:11:49Z",
+      "url": "https://github.com/Piotrunius/Bio/commit/2d2977c1087d4537f2d710843452f2c33d61bc72"
+    },
     {
       "message": "chore: update github stats",
       "repo": "Bio",
       "author": "GitHub Action",
       "date": "2025-12-21T03:49:35Z",
       "url": "https://github.com/Piotrunius/Bio/commit/0e3b212a1e7daab97d547bb0346f5b7f29dad218"
-    },
-    {
-      "message": "chore: update github stats",
-      "repo": "Bio",
-      "author": "GitHub Action",
-      "date": "2025-12-21T03:47:48Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/ecab745a0c7bbf7a00076e669ee273e6b94eca5b"
-    },
-    {
-      "message": "refactor: polished spotify integration with audio auto-stop and visualizer toggle",
-      "repo": "Bio",
-      "author": "Piotrunius",
-      "date": "2025-12-21T03:47:11Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/20b3b7f3f1a47c00814ee3a5715d49315ac0537e"
-    },
-    {
-      "message": "feat: exclusive spotify live status integration",
-      "repo": "Bio",
-      "author": "Piotrunius",
-      "date": "2025-12-21T03:45:01Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/6df3523366da5dcdc70bd711cf282e779a6cbf99"
-    },
-    {
-      "message": "steam: hide game info when not playing",
-      "repo": "Bio",
-      "author": "Piotrunius",
-      "date": "2025-12-21T03:33:54Z",
-      "url": "https://github.com/Piotrunius/Bio/commit/6e13b3ca5d2a6f80375377ddcf1f6f9c8dad6979"
     },
     {
       "message": "Update AutoClicker.py",
@@ -92,7 +92,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 16596,
+      "stars": 16600,
       "language": "TypeScript",
       "description": "Qwen Code is a coding agent that lives in the digital world.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -101,7 +101,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 118325,
+      "stars": 118328,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -164,7 +164,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 44319,
+      "stars": 44321,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -182,7 +182,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 159993,
+      "stars": 159994,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -200,7 +200,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 88116,
+      "stars": 88122,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -269,5 +269,5 @@
       "starredAt": "2023-08-09T22:42:02Z"
     }
   ],
-  "lastUpdate": "2025-12-21T04:11:49.669Z"
+  "lastUpdate": "2025-12-21T04:49:18.004Z"
 }
