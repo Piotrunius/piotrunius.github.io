@@ -104,207 +104,140 @@ function initMusicMeta() {
     if (artistEl) artistEl.textContent = config.music?.artist || '';
 }
 
-// --- CORE FUNCTION: Render Activity Feed (BOGATE DANE, SCROLL, 20 LIMIT) ---
-async function updateGitHubStats() {
+// --- CORE FUNCTION: Render GitHub Activity ---
+async function refreshGitHubStats() {
     const projectsEl = document.getElementById('stat-projects');
     const commitsEl = document.getElementById('stat-commits');
     const starsEl = document.getElementById('stat-stars');
     const lastUpdateEl = document.getElementById('stats-last-update');
-
-    // Używamy nazw z poprzedniego prompta (activity-stars/commits)
     const activityStarsEl = document.getElementById('starred-list');
     const activityCommitsEl = document.getElementById('commits-list');
 
-    // Fallback data to ensure UI works even if fetch fails (e.g. CORS on file://)
-    const fallbackStats = {
-        "steam": { "personastate": 0, "gameextrainfo": null },
-        "summary": {
-            "projects": 3,
-            "starredCount": 21,
-            "commits": 33
-        },
-        "repos": [],
-        "recentCommits": [
-            { "message": "refactor: rewrite updateGitHubStats...", "repo": "Bio", "author": "Piotrunius", "date": "2025-12-20T22:07:38Z", "url": "#" },
-            { "message": "chore: update github stats", "repo": "Bio", "author": "GitHub Action", "date": "2025-12-20T22:01:22Z", "url": "#" }
-        ],
-        "starred": [
-            { "name": "Graphs", "owner": "bloominstituteoftechnology", "stars": 77, "language": "Python", "description": "Graphs, BFS, DFS...", "starredAt": "2025-12-20T22:08:58.151Z", "url": "#" },
-            { "name": "qwen-code", "owner": "QwenLM", "stars": 16590, "language": "TypeScript", "description": "Qwen Code is a coding agent...", "starredAt": "2025-12-20T22:08:58.151Z", "url": "#" }
-        ],
-        "lastUpdate": "2025-12-20T22:08:58.151Z"
+    const fallback = {
+        "summary": { "projects": 0, "starredCount": 0, "commits": 0 },
+        "recentCommits": [],
+        "starred": [],
+        "lastUpdate": new Date().toISOString()
     };
 
-    let stats = fallbackStats;
-
+    let stats = fallback;
     try {
-        // Use cache busting to ensure we get fresh data from the server
-        const cacheBuster = Date.now();
-        let response = await fetch(`github-stats.json?t=${cacheBuster}`);
-        if (!response.ok) {
-            response = await fetch(`assets/github-stats.json?t=${cacheBuster}`);
-        }
-
-        if (response.ok) {
-            stats = await response.json();
-        }
+        const resp = await fetch(`data/github-stats.json?t=${Date.now()}`);
+        if (resp.ok) stats = await resp.json();
     } catch (e) {
-        console.warn('Error loading GitHub stats, using fallback:', e);
+        console.warn('Error loading GitHub stats:', e);
     }
 
-    try {
-        const summary = stats.summary || {};
+    const summary = stats.summary || {};
+    if (projectsEl) projectsEl.textContent = summary.projects || '0';
+    if (starsEl) starsEl.textContent = summary.starredCount || '0';
+    if (commitsEl) commitsEl.textContent = summary.commits || '0';
+    if (lastUpdateEl) {
+        lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(stats.lastUpdate || new Date().toISOString())}`;
+    }
 
-        // 1. Render Summary Stats
-        if (projectsEl) projectsEl.textContent = summary.projects || '0';
-        if (starsEl) starsEl.textContent = summary.starredCount || '0';
-        if (commitsEl) commitsEl.textContent = summary.commits || '0';
+    if (activityStarsEl && stats.starred) {
+        activityStarsEl.innerHTML = '';
+        stats.starred.slice(0, 20).forEach((star, index) => {
+            const item = document.createElement('div');
+            item.className = 'activity-item';
+            item.style.animationDelay = `${index * 0.05}s`;
+            item.innerHTML = `
+                <div class="activity-header">
+                    <a href="${star.url}" class="activity-link" target="_blank" rel="noreferrer">${star.name}</a>
+                    <div class="meta-badge" title="Stars"><i class="fas fa-star"></i> ${star.stars}</div>
+                </div>
+                <div class="activity-desc">${star.description || 'No description.'}</div>
+                <div class="activity-meta-row">
+                    <div class="meta-badge"><i class="fas fa-user"></i> ${star.owner}</div>
+                    <div class="meta-badge"><i class="fas fa-code"></i> ${star.language || 'Code'}</div>
+                    <span class="meta-date">${formatPLDateTime(star.starredAt, true)}</span>
+                </div>
+            `;
+            activityStarsEl.appendChild(item);
+        });
+    }
 
-        // Fix: Ensure lastUpdate is handled safely
-        if (lastUpdateEl) {
-            const dateStr = stats.lastUpdate || new Date().toISOString();
-            lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(dateStr)}`;
-        }
-
-        // 2. Render Recent Starred (Top 20, RICH DATA)
-        if (activityStarsEl && stats.starred) {
-            activityStarsEl.innerHTML = '';
-            const starsData = stats.starred.slice(0, 20); // LIMIT 20
-
-            starsData.forEach((star, index) => {
+    if (activityCommitsEl && stats.recentCommits) {
+        activityCommitsEl.innerHTML = '';
+        stats.recentCommits
+            .filter(c => !((c.author || '').toLowerCase().includes('bot') || (c.message || '').toLowerCase().includes('chore:')))
+            .slice(0, 20)
+            .forEach((commit, index) => {
                 const item = document.createElement('div');
                 item.className = 'activity-item';
                 item.style.animationDelay = `${index * 0.05}s`;
-
-                const name = star.name || 'Unknown Repo';
-                const owner = star.owner || 'Unknown';
-                const starCount = star.stars || 0;
-                const lang = star.language || 'Code';
-                const desc = star.description || 'No description provided.';
-
                 item.innerHTML = `
                     <div class="activity-header">
-                        <a href="${star.url}" class="activity-link" target="_blank" rel="noreferrer">${name}</a>
-                        <div class="meta-badge" title="Stars">
-                            <i class="fas fa-star"></i> ${starCount}
-                        </div>
+                        <a href="${commit.url}" class="activity-link" target="_blank" rel="noreferrer">${commit.message}</a>
                     </div>
-                    <div class="activity-desc">${desc}</div>
+                    <div class="activity-desc">Repository: ${commit.repo}</div>
                     <div class="activity-meta-row">
-                        <div class="meta-badge"><i class="fas fa-user"></i> ${owner}</div>
-                        <div class="meta-badge"><i class="fas fa-code"></i> ${lang}</div>
-                        <span class="meta-date">${formatPLDateTime(star.starredAt, true)}</span>
-                    </div>
-                `;
-                activityStarsEl.appendChild(item);
-            });
-        }
-
-        // 3. Render Recent Commits (Top 20, RICH DATA)
-        if (activityCommitsEl && stats.recentCommits) {
-            activityCommitsEl.innerHTML = '';
-
-            // Filter out automated commits (bots and chores)
-            const filteredCommits = stats.recentCommits.filter(commit => {
-                const author = (commit.author || '').toLowerCase();
-                const msg = (commit.message || '').toLowerCase();
-                const isBot = author === 'github-actions[bot]' || author === 'github action';
-                const isChore = msg.includes('chore:');
-                return !isBot && !isChore;
-            });
-
-            const commitsData = filteredCommits.slice(0, 20); // LIMIT 20
-
-            commitsData.forEach((commit, index) => {
-                const item = document.createElement('div');
-                item.className = 'activity-item';
-                item.style.animationDelay = `${index * 0.05}s`;
-
-                const msg = (commit.message || 'No message').split('\n')[0];
-                const repo = commit.repo || 'Unknown';
-                const author = commit.author || 'Piotrunius';
-
-                item.innerHTML = `
-                    <div class="activity-header">
-                        <a href="${commit.url}" class="activity-link" target="_blank" rel="noreferrer">${msg}</a>
-                    </div>
-                    <div class="activity-desc">Repository: ${repo}</div>
-                    <div class="activity-meta-row">
-                        <div class="meta-badge"><i class="fas fa-user-circle"></i> ${author}</div>
+                        <div class="meta-badge"><i class="fas fa-user-circle"></i> ${commit.author}</div>
                         <span class="meta-date">${formatPLDateTime(commit.date, true)}</span>
                     </div>
                 `;
                 activityCommitsEl.appendChild(item);
             });
+    }
+}
+
+// --- CORE FUNCTION: Render Steam Status ---
+async function refreshSteamStatus() {
+    const steamPanel = document.getElementById('steam-status-panel');
+    if (!steamPanel) return;
+
+    let stats = { steam: { personastate: 0, gameextrainfo: null } };
+    try {
+        const resp = await fetch(`data/steam-status.json?t=${Date.now()}`);
+        if (resp.ok) stats = await resp.json();
+    } catch (e) {
+        console.warn('Error loading Steam status:', e);
+    }
+
+    const s = stats.steam || {};
+    const statusText = document.getElementById('steam-status-text');
+    const gameInfo = document.getElementById('steam-game-info');
+    const dotContainer = document.getElementById('steam-dot').parentElement;
+    const steamPfp = document.getElementById('steam-pfp');
+
+    if (s.avatar && steamPfp) steamPfp.src = s.avatar;
+
+    const memberSince = document.getElementById('steam-member-since');
+    const gameCount = document.getElementById('steam-game-count');
+    const playtime = document.getElementById('steam-total-playtime');
+    const lastOnline = document.getElementById('steam-last-online');
+
+    if (s.timecreated && memberSince) {
+        memberSince.innerHTML = `<i class="fas fa-calendar-alt"></i> Since ${new Date(s.timecreated * 1000).getFullYear()}`;
+    }
+    if (s.game_count !== undefined && gameCount) {
+        gameCount.innerHTML = `<i class="fas fa-gamepad"></i> ${s.game_count} Games`;
+    }
+    if (s.total_playtime !== undefined && playtime) {
+        playtime.innerHTML = `<i class="fas fa-hourglass-half"></i> ${s.total_playtime} hrs`;
+    }
+    if (lastOnline && s.lastlogoff) {
+        lastOnline.innerHTML = `<i class="fas fa-clock"></i> Seen ${new Date(s.lastlogoff * 1000).toLocaleDateString()}`;
+        lastOnline.style.display = 'flex';
+    }
+
+    dotContainer.className = 'steam-avatar-wrapper';
+    if (s.gameextrainfo) {
+        dotContainer.classList.add('in-game');
+        statusText.textContent = 'In-game';
+        gameInfo.textContent = `Playing: ${s.gameextrainfo}`;
+        gameInfo.style.color = '#90ff47';
+        gameInfo.style.display = 'block';
+    } else {
+        gameInfo.style.display = 'none';
+        if (s.personastate > 0) {
+            dotContainer.classList.add('online');
+            statusText.textContent = 'Online';
+        } else {
+            dotContainer.classList.add('offline');
+            statusText.textContent = 'Offline';
         }
-
-        console.log('GitHub Stats rendered successfully.');
-
-        // 4. Render Steam Status
-        const steamPanel = document.getElementById('steam-status-panel');
-        if (steamPanel && stats.steam) {
-            const s = stats.steam;
-            const statusText = document.getElementById('steam-status-text');
-            const gameInfo = document.getElementById('steam-game-info');
-            const dotContainer = document.getElementById('steam-dot').parentElement; // The wrapper
-            const steamPfp = document.getElementById('steam-pfp');
-
-            // Update Avatar if available
-            if (s.avatar && steamPfp) {
-                steamPfp.src = s.avatar;
-            }
-
-            // Update Extra Info
-            const memberSince = document.getElementById('steam-member-since');
-            const gameCount = document.getElementById('steam-game-count');
-            const playtime = document.getElementById('steam-total-playtime');
-            const lastOnline = document.getElementById('steam-last-online');
-
-            if (s.timecreated && memberSince) {
-                const year = new Date(s.timecreated * 1000).getFullYear();
-                memberSince.innerHTML = `<i class="fas fa-calendar-alt"></i> Since ${year}`;
-            }
-
-            if (s.game_count !== undefined && gameCount) {
-                gameCount.innerHTML = `<i class="fas fa-gamepad"></i> ${s.game_count} Games`;
-            }
-
-            if (s.total_playtime !== undefined && playtime) {
-                playtime.innerHTML = `<i class="fas fa-hourglass-half"></i> ${s.total_playtime} hrs`;
-            }
-
-            if (lastOnline && s.lastlogoff) {
-                const date = new Date(s.lastlogoff * 1000);
-                lastOnline.innerHTML = `<i class="fas fa-clock"></i> Seen ${date.toLocaleDateString()}`;
-                lastOnline.style.display = 'flex';
-            }
-
-            // Reset wrapper classes for colors
-            dotContainer.className = 'steam-avatar-wrapper';
-
-            if (s.gameextrainfo) {
-                dotContainer.classList.add('in-game');
-                statusText.textContent = 'In-game';
-                gameInfo.textContent = `Playing: ${s.gameextrainfo}`;
-                gameInfo.style.color = '#90ff47';
-                gameInfo.style.display = 'block';
-            } else {
-                gameInfo.style.display = 'none';
-                gameInfo.style.color = '';
-
-                if (s.personastate > 0) {
-                    dotContainer.classList.add('online');
-                    statusText.textContent = 'Online';
-                } else {
-                    dotContainer.classList.add('offline');
-                    statusText.textContent = 'Offline';
-                }
-            }
-        }
-
-    } catch (renderErr) {
-        console.error('Error rendering stats:', renderErr);
-        if (lastUpdateEl) lastUpdateEl.textContent = 'Data error';
     }
 }
 
@@ -605,7 +538,8 @@ function initVisibilityOptimization() {
             }
 
             // 4. Refresh stats immediately on return
-            updateGitHubStats();
+            refreshGitHubStats();
+            refreshSteamStatus();
         }
     });
 }
@@ -735,18 +669,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     initProfile();
     initSocials();
     initMusicMeta();
-    initSetup();          // Restore Setup Items
-    updateGitHubStats();  // Restore Rich GitHub Feed
-    updateSpotifyStatus(); // Fetch Spotify initial
+    initSetup();          
+    refreshGitHubStats(); 
+    refreshSteamStatus();
+    updateSpotifyStatus();
     initControls();
-    initParticles();      // New Particle Effect
-    initScrollReveal();   // New Scroll Animations
-    initTypingEffect();   // New Typing Effect
+    initParticles();      
+    initScrollReveal();   
+    initTypingEffect();   
     initMouseEffects();
-    initVisibilityOptimization(); // New Performance Optimization
+    initVisibilityOptimization();
 
-    // Auto-refresh stats every 2 minutes
-    setInterval(updateGitHubStats, 120000);
-    // Refresh Spotify API only every 30 seconds
+    // Auto-refresh stats
+    setInterval(refreshGitHubStats, 300000); // GitHub co 5 minut
+    setInterval(refreshSteamStatus, 60000);  // Steam co 1 minutę
     setInterval(updateSpotifyStatus, 30000);
 });
