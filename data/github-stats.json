@@ -9,7 +9,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 16736,
+      "stars": 16738,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -18,7 +18,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 118934,
+      "stars": 118939,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -45,7 +45,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 18613,
+      "stars": 18616,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -63,7 +63,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52077,
+      "stars": 52079,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -81,7 +81,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 44593,
+      "stars": 44600,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -99,7 +99,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 160444,
+      "stars": 160455,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -117,7 +117,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 88621,
+      "stars": 88623,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -162,7 +162,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 3769,
+      "stars": 3767,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python. ",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -191,6 +191,13 @@
       "message": "chore: automated stats update",
       "repo": "bio",
       "author": "GitHub Action",
+      "date": "2025-12-25T18:37:24Z",
+      "url": "https://github.com/Piotrunius/bio/commit/fa580c098f65eae863412ff52b4429a14ba19fa3"
+    },
+    {
+      "message": "chore: automated stats update",
+      "repo": "bio",
+      "author": "GitHub Action",
       "date": "2025-12-25T11:22:32Z",
       "url": "https://github.com/Piotrunius/bio/commit/d0917c3ae7df510793ae0134f27f04d012e11059"
     },
@@ -214,13 +221,6 @@
       "author": "GitHub Action",
       "date": "2025-12-25T09:53:55Z",
       "url": "https://github.com/Piotrunius/bio/commit/311206d36462801b25f3eae0940b4b5eabba4970"
-    },
-    {
-      "message": "chore: automated stats update",
-      "repo": "bio",
-      "author": "GitHub Action",
-      "date": "2025-12-25T09:32:56Z",
-      "url": "https://github.com/Piotrunius/bio/commit/f7ebed3bf836bed59ed8af78565ee43daf5576b9"
     },
     {
       "message": "Update AutoClicker.py",
@@ -293,5 +293,5 @@
       "url": "https://github.com/Piotrunius/Core-Scripts/commit/f100fd2f72589f5b83cfd1f325441859901cb9b7"
     }
   ],
-  "lastUpdate": "2025-12-25T18:37:23.466Z"
+  "lastUpdate": "2025-12-25T21:21:06.566Z"
 }
