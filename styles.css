@@ -2053,19 +2053,20 @@ i:not(.social-link i) {
     font-weight: 600;
 }
 
-/* WIP Notice Banner */
+/* WIP Notice Banner - Glassmorphism Design */
 .wip-notice {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, rgba(255, 193, 7, 0.95), rgba(255, 152, 0, 0.95));
-    backdrop-filter: blur(10px);
-    border-bottom: 2px solid rgba(255, 193, 7, 0.5);
+    background: rgba(20, 24, 30, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 255, 136, 0.3);
     z-index: 10000;
     padding: 1rem 2rem;
     animation: slideDown 0.5s ease-out;
-    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.15), 0 0 40px rgba(0, 255, 136, 0.1);
 }
 
 .wip-notice.hidden {
@@ -2078,29 +2079,33 @@ i:not(.social-link i) {
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: #1a1a1a;
+    color: var(--text);
     font-weight: 600;
 }
 
 .wip-content i {
     font-size: 1.5rem;
-    color: #ff6f00;
-    animation: pulse 2s ease-in-out infinite;
+    background: linear-gradient(135deg, #00ff88, #00b8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: iconPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.6));
 }
 
 .wip-content span {
     flex: 1;
     font-size: 0.95rem;
     line-height: 1.4;
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .wip-close {
-    background: rgba(0, 0, 0, 0.2);
-    border: none;
-    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    color: var(--text);
     width: 32px;
     height: 32px;
-    border-radius: 50%;
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -2110,8 +2115,11 @@ i:not(.social-link i) {
 }
 
 .wip-close:hover {
-    background: rgba(0, 0, 0, 0.4);
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
     transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
 }
 
 @keyframes slideDown {
