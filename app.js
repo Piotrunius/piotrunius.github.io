@@ -707,9 +707,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     initWipNotice();
 
     // Auto-refresh stats
-    setInterval(refreshGitHubStats, 300000); // GitHub co 5 minut
-    setInterval(refreshSteamStatus, 60000);  // Steam co 1 minutę
-    setInterval(updateSpotifyStatus, 30000);
+    setInterval(refreshGitHubStats, 300000); // GitHub every 5 minutes
+    setInterval(refreshSteamStatus, 60000);  // Steam every 1 minute
+    setInterval(updateSpotifyStatus, 30000); // Spotify every 30 seconds
 });
 
 // --- WIP Notice Handler ---
