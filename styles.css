@@ -1613,18 +1613,22 @@ a:where(:not(.social-link, .contact-btn, .music-btn, .spec-item, .activity-link,
 }
 
 .in-view.animate-fade-in {
+    visibility: visible;
     animation: scaleIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .in-view.animate-slide-up {
+    visibility: visible;
     animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .in-view.animate-slide-right {
+    visibility: visible;
     animation: slideInFromLeft 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 .in-view.animate-slide-left {
+    visibility: visible;
     animation: slideInFromRight 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
