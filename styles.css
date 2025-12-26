@@ -135,15 +135,14 @@ body::-webkit-scrollbar-thumb:hover {
 .bg-layer::before,
 .bg-layer::after {
     content: '';
-    position: fixed;
+    position: absolute;
     width: 60vmax;
     height: 60vmax;
     filter: blur(60px) saturate(160%);
     opacity: 0.35;
     border-radius: 50%;
-    pointer-events: none;
+    pointer-events: none; /* Ensure no interaction */
     z-index: -10;
-    will-change: transform;
 }
 
 .bg-layer::before {
