@@ -27,7 +27,7 @@
       "name": "arcraiders-data",
       "owner": "RaidTheory",
       "url": "https://github.com/RaidTheory/arcraiders-data",
-      "stars": 203,
+      "stars": 204,
       "language": "Code",
       "description": "Free to use ARC Raiders game data in JSON Format.",
       "starredAt": "2025-11-30T11:02:20Z"
@@ -45,7 +45,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 18628,
+      "stars": 18629,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -81,7 +81,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 44654,
+      "stars": 44656,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -99,7 +99,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 160550,
+      "stars": 160552,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -117,7 +117,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 88736,
+      "stars": 88738,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -180,7 +180,7 @@
       "name": "PeaZip",
       "owner": "peazip",
       "url": "https://github.com/peazip/PeaZip",
-      "stars": 6657,
+      "stars": 6659,
       "language": "Pascal",
       "description": "Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager. Features volume spanning, compression, authenticated encryption. Supports 7Z, 7-Zip sfx, ACE, ARJ, Brotli, BZ",
       "starredAt": "2023-08-09T22:42:02Z"
@@ -300,5 +300,68 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2025-12-26T17:59:28.718Z"
+  "lastUpdate": "2025-12-26T18:30:43.733Z",
+  "security": {
+    "dependabot": {
+      "open": 0,
+      "closed": 0,
+      "alerts": []
+    },
+    "codeScanning": {
+      "open": 0,
+      "closed": 0,
+      "alerts": []
+    },
+    "secretScanning": {
+      "open": 0,
+      "closed": 0,
+      "alerts": []
+    },
+    "totalOpen": 0,
+    "lastChecked": "2025-12-26T18:30:44.052Z"
+  },
+  "pullRequests": {
+    "total": 1,
+    "recent": [
+      {
+        "title": "Merge pull request #2 from Piotrunius/copilot/remove-time-condition-github-data\n\n[WIP] Remove time condition for data fetching from GitHub",
+        "repo": "bio",
+        "state": "closed",
+        "url": "https://github.com/Piotrunius/bio/pull/3",
+        "created": "2025-12-26T00:38:44Z",
+        "updated": "2025-12-26T17:13:29Z"
+      }
+    ]
+  },
+  "issues": {
+    "total": 2,
+    "recent": [
+      {
+        "title": "Support for dark project",
+        "repo": "libratbag",
+        "state": "open",
+        "url": "https://github.com/libratbag/libratbag/issues/1765",
+        "created": "2025-10-15T19:32:21Z",
+        "updated": "2025-10-15T19:32:21Z"
+      },
+      {
+        "title": "Minimizing to tray button does not work",
+        "repo": "AutoClicker-AntiAFK",
+        "state": "closed",
+        "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/issues/1",
+        "created": "2025-08-20T06:51:24Z",
+        "updated": "2025-08-20T06:53:50Z"
+      }
+    ]
+  },
+  "languages": [
+    {
+      "name": "CSS",
+      "repos": 1
+    },
+    {
+      "name": "Python",
+      "repos": 1
+    }
+  ]
 }
