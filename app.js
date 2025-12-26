@@ -347,15 +347,23 @@ async function refreshSteamStatus() {
     if (!steamPanel) return;
 
     let stats = { steam: { personastate: 0, gameextrainfo: null } };
+    let hasError = false;
     try {
         const resp = await fetch(`data/steam-status.json?t=${Date.now()}`);
         if (resp.ok) {
             stats = await resp.json();
+            // Check if the data contains an error from the API
+            if (stats.error) {
+                hasError = true;
+                console.warn('Steam API error:', stats.error);
+            }
         } else {
             console.warn('Steam status request failed:', resp.status);
+            hasError = true;
         }
     } catch (e) {
         console.warn('Error loading Steam status:', e.message);
+        hasError = true;
     }
 
     const s = stats.steam || {};
@@ -391,16 +399,27 @@ async function refreshSteamStatus() {
     if (!dotContainer) return;
     
     dotContainer.className = 'steam-avatar-wrapper';
+    
+    // Show error indicator if Steam API is having issues
+    if (hasError && stats.error) {
+        if (gameInfo) {
+            gameInfo.textContent = `⚠️ Steam API issue - showing cached status`;
+            gameInfo.style.color = '#ff6b6b';
+            gameInfo.style.display = 'block';
+            gameInfo.title = stats.error || 'Unable to fetch Steam status';
+        }
+    }
+    
     if (s.gameextrainfo) {
         dotContainer.classList.add('in-game');
         if (statusText) statusText.textContent = 'In-game';
-        if (gameInfo) {
+        if (gameInfo && !hasError) {
             gameInfo.textContent = `Playing: ${s.gameextrainfo}`;
             gameInfo.style.color = '#90ff47';
             gameInfo.style.display = 'block';
         }
     } else {
-        if (gameInfo) gameInfo.style.display = 'none';
+        if (gameInfo && !hasError) gameInfo.style.display = 'none';
         // Map personastate values properly:
         // 0 = Offline, 1 = Online, 2 = Busy, 3 = Away, 4 = Snooze, 5 = Looking to trade, 6 = Looking to play
         switch(s.personastate) {
