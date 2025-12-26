@@ -45,7 +45,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 18627,
+      "stars": 18628,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -81,7 +81,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 44643,
+      "stars": 44646,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -99,7 +99,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 160543,
+      "stars": 160545,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -117,7 +117,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 88727,
+      "stars": 88729,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -188,39 +188,74 @@
   ],
   "recentCommits": [
     {
-      "message": "chore: automated stats update",
+      "message": "Update main.yml",
       "repo": "bio",
-      "author": "GitHub Action",
-      "date": "2025-12-26T15:27:02Z",
-      "url": "https://github.com/Piotrunius/bio/commit/519c019f4f4bfebee174bb1e501b5e99b92173d7"
+      "author": "Piotrunius",
+      "date": "2025-12-26T00:47:12Z",
+      "url": "https://github.com/Piotrunius/bio/commit/00e29e343c00c1360995d2caaf6722268c45882f"
     },
     {
-      "message": "chore: automated stats update",
+      "message": "Update main.yml",
       "repo": "bio",
-      "author": "GitHub Action",
-      "date": "2025-12-26T14:48:08Z",
-      "url": "https://github.com/Piotrunius/bio/commit/73dba7ffb3eedc5aa1a998b4562ec285cf1453ef"
+      "author": "Piotrunius",
+      "date": "2025-12-26T00:45:08Z",
+      "url": "https://github.com/Piotrunius/bio/commit/e4d8ef981eb409acc5b4ffed585c0965ff27a358"
     },
     {
-      "message": "chore: automated stats update",
+      "message": "Merge pull request #2 from Piotrunius/copilot/remove-time-condition-github-data",
       "repo": "bio",
-      "author": "GitHub Action",
-      "date": "2025-12-26T14:28:22Z",
-      "url": "https://github.com/Piotrunius/bio/commit/1fc82f0a792e0b681900f93b58c355ee92c6662c"
+      "author": "Piotrunius",
+      "date": "2025-12-26T00:37:35Z",
+      "url": "https://github.com/Piotrunius/bio/commit/719d220626d04f678853a754033acebd268b563d"
     },
     {
-      "message": "chore: automated stats update",
+      "message": "Update main.yml",
       "repo": "bio",
-      "author": "GitHub Action",
-      "date": "2025-12-26T13:56:03Z",
-      "url": "https://github.com/Piotrunius/bio/commit/f59a0fb1b5e07ccbac693f28f477abd2b7ec0531"
+      "author": "Piotrunius",
+      "date": "2025-12-26T00:31:08Z",
+      "url": "https://github.com/Piotrunius/bio/commit/d8d7f73a43a257911f0b2837cc94e5b4fa4eda68"
     },
     {
-      "message": "chore: automated stats update",
+      "message": "fix",
       "repo": "bio",
-      "author": "GitHub Action",
-      "date": "2025-12-26T13:36:24Z",
-      "url": "https://github.com/Piotrunius/bio/commit/1d084a78e15efa9afcc1903d3405dae52f300a18"
+      "author": "Piotrunius",
+      "date": "2025-12-22T23:41:56Z",
+      "url": "https://github.com/Piotrunius/bio/commit/c48f4b40b71f4d7cd73e2f986a17047e6ec4df73"
+    },
+    {
+      "message": "Merge pull request #1 from Piotrunius/copilot/revert-to-commit-80cacc1",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-22T23:11:56Z",
+      "url": "https://github.com/Piotrunius/bio/commit/d6ce22c4b0226ef267a2d125cfbc340891c7b933"
+    },
+    {
+      "message": "Dodanie Cloudflare Web Analytics tuż przed </head> w index.html",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-22T23:06:04Z",
+      "url": "https://github.com/Piotrunius/bio/commit/77c4cc9f4c0f394f65f0b6f5ed7808d43ae343ec"
+    },
+    {
+      "message": "feat: trigger workflow on push (excluding data folder)",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T08:17:39Z",
+      "url": "https://github.com/Piotrunius/bio/commit/80cacc14d98b67f8eb7a27533efa64a5540745f3"
+    },
+    {
+      "message": "Remove total playtime span from steam extra info",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T08:16:06Z",
+      "url": "https://github.com/Piotrunius/bio/commit/4fe58f1885d0d1afb997767e2ceb14e500604c72"
+    },
+    {
+      "message": "fix: add missing environment to main workflow",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2025-12-21T08:11:54Z",
+      "url": "https://github.com/Piotrunius/bio/commit/28393bfcf8972bb1bb26a7d742600dc644bec8f3"
     },
     {
       "message": "Update AutoClicker.py",
@@ -258,40 +293,40 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/4bbc5ca3eaf595058c816fe43b1e83c8c6bd5478"
     },
     {
-      "message": "Sync latest core scripts (#1061)",
-      "repo": "Core-Scripts",
-      "author": "Tiffany Bennett",
-      "date": "2018-08-14T00:03:05Z",
-      "url": "https://github.com/Piotrunius/Core-Scripts/commit/425d2d641bdc4b6c1104a9d5f6c53c9ea758c5cb"
+      "message": "Update README.md",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-19T19:01:11Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/36d27fc51a74bdfb36b704a37d150c0749296680"
     },
     {
-      "message": "Sync latest changes (#1057)",
-      "repo": "Core-Scripts",
-      "author": "Tiffany Bennett",
-      "date": "2018-05-11T18:15:50Z",
-      "url": "https://github.com/Piotrunius/Core-Scripts/commit/f2965847c9eac9715af9323d76b9ef36d40619bb"
+      "message": "Update AutoClicker.py",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-19T18:43:03Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/22d505bd49cb0fddacf890070997e3791d40322d"
     },
     {
-      "message": "Update to latest internal version of core scripts. (#1052)",
-      "repo": "Core-Scripts",
-      "author": "Tiffany Bennett",
-      "date": "2018-03-19T20:23:46Z",
-      "url": "https://github.com/Piotrunius/Core-Scripts/commit/c40eb19bdd6f2949d66aa020e12b7a6d7d5ffe45"
+      "message": "Update AutoClicker.py",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-19T17:26:05Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     },
     {
-      "message": "Update FreeCamera.lua (#1031)",
-      "repo": "Core-Scripts",
-      "author": "Conor Griffin",
-      "date": "2017-08-22T20:55:20Z",
-      "url": "https://github.com/Piotrunius/Core-Scripts/commit/a16b5faf59976b0029be7f8897d0475ec82e5ec5"
+      "message": "Update README.md",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-19T17:00:16Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/804365ec99df3f06a7ad3bda866a0b215be36ecd"
     },
     {
-      "message": "Fix team score not updating when a member leaves (#1009)",
-      "repo": "Core-Scripts",
-      "author": "boyned//Kampfkarren",
-      "date": "2017-08-14T23:37:38Z",
-      "url": "https://github.com/Piotrunius/Core-Scripts/commit/f100fd2f72589f5b83cfd1f325441859901cb9b7"
+      "message": "Update README.md",
+      "repo": "AutoClicker-AntiAFK",
+      "author": "Piotrunius",
+      "date": "2025-08-19T16:59:43Z",
+      "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/848b50c4a2a8d5a4bcfaf423a6a88760fb7478be"
     }
   ],
-  "lastUpdate": "2025-12-26T15:45:19.221Z"
+  "lastUpdate": "2025-12-26T16:20:50.954Z"
 }
