@@ -9,7 +9,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 16742,
+      "stars": 16744,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -18,7 +18,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 118951,
+      "stars": 118958,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -63,7 +63,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52083,
+      "stars": 52084,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -81,7 +81,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 44611,
+      "stars": 44614,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -99,7 +99,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 160465,
+      "stars": 160470,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -117,7 +117,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 88645,
+      "stars": 88657,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -162,7 +162,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 3767,
+      "stars": 3768,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python. ",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -180,13 +180,20 @@
       "name": "PeaZip",
       "owner": "peazip",
       "url": "https://github.com/peazip/PeaZip",
-      "stars": 6650,
+      "stars": 6652,
       "language": "Pascal",
       "description": "Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager. Features volume spanning, compression, authenticated encryption. Supports 7Z, 7-Zip sfx, ACE, ARJ, Brotli, BZ2, CAB, CHM, CPIO, DEB, GZ, ISO, JAR, LHA/LZH, NSIS, OOo, PAQ/LPAQ, PEA, QUAD, RAR, RPM, split, TAR, Z, ZIP, ZIPX, Zstandard.",
       "starredAt": "2023-08-09T22:42:02Z"
     }
   ],
   "recentCommits": [
+    {
+      "message": "chore: automated stats update",
+      "repo": "bio",
+      "author": "GitHub Action",
+      "date": "2025-12-26T02:20:14Z",
+      "url": "https://github.com/Piotrunius/bio/commit/02f0292d4c5e9a6aa0b7a0ae3dadfa90a23ae82a"
+    },
     {
       "message": "chore: automated stats update",
       "repo": "bio",
@@ -214,13 +221,6 @@
       "author": "Piotrunius",
       "date": "2025-12-26T00:45:08Z",
       "url": "https://github.com/Piotrunius/bio/commit/e4d8ef981eb409acc5b4ffed585c0965ff27a358"
-    },
-    {
-      "message": "Merge pull request #2 from Piotrunius/copilot/remove-time-condition-github-data",
-      "repo": "bio",
-      "author": "Piotrunius",
-      "date": "2025-12-26T00:37:35Z",
-      "url": "https://github.com/Piotrunius/bio/commit/719d220626d04f678853a754033acebd268b563d"
     },
     {
       "message": "Update AutoClicker.py",
@@ -293,5 +293,5 @@
       "url": "https://github.com/Piotrunius/Core-Scripts/commit/f100fd2f72589f5b83cfd1f325441859901cb9b7"
     }
   ],
-  "lastUpdate": "2025-12-26T02:20:13.906Z"
+  "lastUpdate": "2025-12-26T03:46:20.698Z"
 }
