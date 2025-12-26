@@ -2,7 +2,7 @@
   "summary": {
     "projects": 3,
     "starredCount": 20,
-    "commits": 74
+    "commits": 75
   },
   "starred": [
     {
@@ -99,7 +99,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 160461,
+      "stars": 160462,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -188,6 +188,13 @@
   ],
   "recentCommits": [
     {
+      "message": "chore: automated stats update",
+      "repo": "bio",
+      "author": "GitHub Action",
+      "date": "2025-12-26T00:47:28Z",
+      "url": "https://github.com/Piotrunius/bio/commit/4ee96da3222486d6db8fdc70f1be8a4f8c859766"
+    },
+    {
       "message": "Update main.yml",
       "repo": "bio",
       "author": "Piotrunius",
@@ -214,13 +221,6 @@
       "author": "copilot-swe-agent[bot]",
       "date": "2025-12-26T00:35:11Z",
       "url": "https://github.com/Piotrunius/bio/commit/291a5a2267db0b5f5d6bcac296bdd3a6f774657d"
-    },
-    {
-      "message": "chore: automated stats update",
-      "repo": "bio",
-      "author": "GitHub Action",
-      "date": "2025-12-26T00:33:33Z",
-      "url": "https://github.com/Piotrunius/bio/commit/68405a04596ce1ad6ff816853cb4fd207b093e3e"
     },
     {
       "message": "Update AutoClicker.py",
@@ -293,5 +293,5 @@
       "url": "https://github.com/Piotrunius/Core-Scripts/commit/f100fd2f72589f5b83cfd1f325441859901cb9b7"
     }
   ],
-  "lastUpdate": "2025-12-26T00:47:27.309Z"
+  "lastUpdate": "2025-12-26T00:53:47.678Z"
 }
