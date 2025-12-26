@@ -47,6 +47,13 @@ jobs:
           
           // Utility: Retry logic with exponential backoff
           async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
+            // Add User-Agent header for all requests to prevent blocks
+            const defaultHeaders = {
+              'User-Agent': 'Mozilla/5.0 (compatible; GitHubActions/1.0; +https://github.com/Piotrunius/bio)',
+              ...options.headers
+            };
+            options = { ...options, headers: defaultHeaders };
+            
             for (let i = 0; i < retries; i++) {
               try {
                 const response = await fetch(url, options);
@@ -110,14 +117,15 @@ jobs:
             const sId = process.env.STEAM_ID64 || '76561199034113344';
             if (sKey) {
               try {
-                const r1 = await fetchWithRetry(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${sKey}&steamids=${sId}`);
+                console.log(`Fetching Steam data for user ${sId}...`);
+                const r1 = await fetchWithRetry(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${sKey}&steamids=${sId}`, {}, 3, 2000);
                 const j1 = await r1.json();
                 
                 if (!j1.response || !j1.response.players || j1.response.players.length === 0) {
-                  throw new Error('Invalid Steam API response');
+                  throw new Error('Invalid Steam API response - no player data returned');
                 }
                 
-                const r2 = await fetchWithRetry(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${sKey}&steamid=${sId}&include_appinfo=0&include_played_free_games=1`);
+                const r2 = await fetchWithRetry(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${sKey}&steamid=${sId}&include_appinfo=0&include_played_free_games=1`, {}, 3, 2000);
                 const j2 = await r2.json();
                 const p = j1.response.players[0];
                 
@@ -134,17 +142,45 @@ jobs:
                   lastUpdate: new Date().toISOString()
                 };
                 fs.writeFileSync('./data/steam-status.json', JSON.stringify(stats, null, 2));
-                console.log('Steam data updated successfully');
+                console.log('✅ Steam data updated successfully');
+                console.log(`   Status: ${['Offline','Online','Busy','Away','Snooze','Looking to trade','Looking to play'][stats.steam.personastate] || 'Unknown'}`);
+                console.log(`   Game count: ${stats.steam.game_count}`);
               } catch (e) {
-                console.error('Steam error:', e.message);
+                console.error('❌ Steam API error:', e.message);
+                console.log('Troubleshooting tips:');
+                console.log('  1. Check if STEAM_API_KEY secret is set correctly');
+                console.log('  2. Verify Steam profile is set to Public');
+                console.log('  3. Confirm API key is valid at https://steamcommunity.com/dev/apikey');
+                console.log('  4. Check if Steam Web API is experiencing outages');
+                
                 // Keep previous data if update fails
                 if (previousSteamData.steam) {
                   previousSteamData.lastUpdate = new Date().toISOString();
                   previousSteamData.error = e.message;
                   fs.writeFileSync('./data/steam-status.json', JSON.stringify(previousSteamData, null, 2));
-                  console.log('Using previous Steam data as fallback');
+                  console.log('ℹ️  Using previous Steam data as fallback');
+                } else {
+                  // Create minimal fallback data if no previous data exists
+                  const fallbackStats = {
+                    steam: {
+                      personastate: 0,
+                      gameextrainfo: null,
+                      avatar: '',
+                      timecreated: 0,
+                      lastlogoff: 0,
+                      game_count: 0,
+                      total_playtime: 0
+                    },
+                    lastUpdate: new Date().toISOString(),
+                    error: e.message
+                  };
+                  fs.writeFileSync('./data/steam-status.json', JSON.stringify(fallbackStats, null, 2));
+                  console.log('ℹ️  Created fallback Steam data');
                 }
               }
+            } else {
+              console.warn('⚠️  STEAM_API_KEY not configured. Skipping Steam data fetch.');
+              console.log('   To enable: Add STEAM_API_KEY and STEAM_ID64 as repository secrets');
             }
 
             // --- GITHUB ---
