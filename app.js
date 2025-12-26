@@ -17,6 +17,13 @@ const deviceCapabilities = {
     connectionSpeed: 'fast'
 };
 
+// Particle count constants
+const PARTICLE_COUNTS = {
+    LOW_END: 40,
+    MOBILE: 60,
+    DESKTOP: 120
+};
+
 // Performance monitoring
 function initPerformanceMonitoring() {
     if (!window.performance || !window.PerformanceObserver) return;
@@ -25,23 +32,24 @@ function initPerformanceMonitoring() {
         // Monitor long tasks (tasks taking >50ms)
         const observer = new PerformanceObserver((list) => {
             for (const entry of list.getEntries()) {
-                if (entry.duration > 50) {
+                // Only check duration for measure entries
+                if (entry.entryType === 'measure' && entry.duration > 50) {
                     console.warn('Long task detected:', entry.name, `${entry.duration.toFixed(2)}ms`);
                 }
             }
         });
         
-        observer.observe({ entryTypes: ['measure', 'navigation'] });
+        observer.observe({ entryTypes: ['measure'] });
         
-        // Log initial load performance
+        // Log initial load performance separately
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const perfData = performance.getEntriesByType('navigation')[0];
                 if (perfData) {
                     console.log('Performance Metrics:', {
-                        'DOM Content Loaded': `${perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart}ms`,
-                        'Load Complete': `${perfData.loadEventEnd - perfData.loadEventStart}ms`,
-                        'Total Load Time': `${perfData.loadEventEnd - perfData.fetchStart}ms`
+                        'DOM Content Loaded': `${(perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart).toFixed(2)}ms`,
+                        'Load Complete': `${(perfData.loadEventEnd - perfData.loadEventStart).toFixed(2)}ms`,
+                        'Total Load Time': `${(perfData.loadEventEnd - perfData.fetchStart).toFixed(2)}ms`
                     });
                 }
             }, 0);
@@ -107,28 +115,28 @@ function applyPerformanceOptimizations() {
         style.textContent = `
             .low-performance .bg-layer::before,
             .low-performance .bg-layer::after {
-                animation: none !important;
-                opacity: 0.2 !important;
+                animation: none;
+                opacity: 0.2;
             }
             .low-performance .glass-card {
-                backdrop-filter: blur(10px) !important;
-                -webkit-backdrop-filter: blur(10px) !important;
-                will-change: auto !important;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                will-change: auto;
             }
             .low-performance .avatar {
-                animation: none !important;
+                animation: none;
             }
             .low-performance .avatar-ring {
-                animation: none !important;
+                animation: none;
             }
             .low-performance .stat-card i {
-                animation: none !important;
+                animation: none;
             }
             .low-performance .social-link i {
-                animation: none !important;
+                animation: none;
             }
             .low-performance * {
-                transition-duration: 0.15s !important;
+                transition-duration: 0.15s;
             }
         `;
         document.head.appendChild(style);
@@ -354,9 +362,18 @@ async function refreshSteamStatus() {
     const dotContainer = document.getElementById('steam-dot')?.parentElement;
     const steamPfp = document.getElementById('steam-pfp');
 
+    // Validate and sanitize Steam avatar URL
     if (s.avatar && steamPfp) {
-        steamPfp.src = s.avatar;
-        steamPfp.onerror = () => { steamPfp.src = 'assets/pfp.png'; };
+        const avatarUrl = s.avatar;
+        // Validate that URL is from Steam CDN
+        if (avatarUrl.startsWith('https://avatars.akamai.steamstatic.com/') || 
+            avatarUrl.startsWith('https://steamcdn-a.akamaihd.net/')) {
+            steamPfp.src = avatarUrl;
+            steamPfp.onerror = () => { steamPfp.src = 'assets/pfp.png'; };
+        } else {
+            console.warn('Invalid Steam avatar URL detected:', avatarUrl);
+            steamPfp.src = 'assets/pfp.png';
+        }
     }
 
     const memberSince = document.getElementById('steam-member-since');
@@ -598,8 +615,9 @@ function initParticles() {
     }
 
     // Adaptive particle count based on device
-    const particleCount = deviceCapabilities.isLowEnd ? 40 : 
-                         deviceCapabilities.isMobile ? 60 : 120;
+    const particleCount = deviceCapabilities.isLowEnd ? PARTICLE_COUNTS.LOW_END : 
+                         deviceCapabilities.isMobile ? PARTICLE_COUNTS.MOBILE : 
+                         PARTICLE_COUNTS.DESKTOP;
     
     for (let i = 0; i < particleCount; i++) particles.push(new Particle());
 

@@ -84,6 +84,8 @@ self.addEventListener('fetch', (event) => {
           fetch(request).then((response) => {
             caches.open(CACHE_NAME).then((cache) => {
               cache.put(request, response);
+            }).catch((error) => {
+              console.warn('[SW] Cache update failed:', error);
             });
           }).catch(() => {}); // Silently fail if network is unavailable
           
@@ -103,6 +105,8 @@ self.addEventListener('fetch', (event) => {
           // Cache the fetched response
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, responseClone);
+          }).catch((error) => {
+            console.warn('[SW] Failed to cache response:', error);
           });
 
           return response;
