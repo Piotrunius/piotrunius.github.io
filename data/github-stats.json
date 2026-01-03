@@ -27,7 +27,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 119559,
+      "stars": 119565,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -54,7 +54,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 18796,
+      "stars": 18797,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -90,7 +90,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 45070,
+      "stars": 45074,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -108,7 +108,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 161269,
+      "stars": 161273,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -171,7 +171,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 3839,
+      "stars": 3838,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python.",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -309,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-03T17:55:42.336Z",
+  "lastUpdate": "2026-01-03T18:37:30.390Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -327,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-03T17:55:42.703Z"
+    "lastChecked": "2026-01-03T18:37:30.691Z"
   },
   "pullRequests": {
     "total": 4,
