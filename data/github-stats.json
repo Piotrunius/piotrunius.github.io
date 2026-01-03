@@ -197,6 +197,13 @@
   ],
   "recentCommits": [
     {
+      "message": "Update bio in default config",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2026-01-03T15:05:30Z",
+      "url": "https://github.com/Piotrunius/bio/commit/e456cd7ac523e6c41ab388929a85bf5b6817bde7"
+    },
+    {
       "message": "Update description in manifest.json",
       "repo": "bio",
       "author": "Piotrunius",
@@ -244,13 +251,6 @@
       "author": "Piotrunius",
       "date": "2025-12-28T13:53:56Z",
       "url": "https://github.com/Piotrunius/bio/commit/b17a008b94dfb3f53d9e10d7cb421aed045a12eb"
-    },
-    {
-      "message": "Delete SECURITY_FEATURES.md",
-      "repo": "bio",
-      "author": "Piotrunius",
-      "date": "2025-12-28T13:53:48Z",
-      "url": "https://github.com/Piotrunius/bio/commit/4a5a8f0639e53b30255278c91eed9e19a3823983"
     },
     {
       "message": "Update AutoClicker.py",
@@ -309,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-03T15:04:32.788Z",
+  "lastUpdate": "2026-01-03T15:05:43.485Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -327,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-03T15:04:33.103Z"
+    "lastChecked": "2026-01-03T15:05:43.828Z"
   },
   "pullRequests": {
     "total": 4,
