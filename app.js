@@ -175,7 +175,7 @@ function getDefaultConfig() {
     return {
         profile: {
             name: 'Piotrunius',
-            bio: 'Minimalist designer & developer. Linux enthusiast from Katowice.',
+            bio: 'Developer & tech enthusiast from Poland.',
             avatar: 'assets/pfp.png'
         },
         socials: [
