@@ -126,7 +126,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 89512,
+      "stars": 89513,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -197,6 +197,13 @@
   ],
   "recentCommits": [
     {
+      "message": "Revise profile bio and about section content",
+      "repo": "bio",
+      "author": "Piotrunius",
+      "date": "2026-01-03T15:03:33Z",
+      "url": "https://github.com/Piotrunius/bio/commit/74ca208beab6ab6b0e766933ba97c51502d30d2b"
+    },
+    {
       "message": "Replace Simple Analytics script with Umami script",
       "repo": "bio",
       "author": "Piotrunius",
@@ -244,13 +251,6 @@
       "author": "Piotrunius",
       "date": "2025-12-28T13:53:39Z",
       "url": "https://github.com/Piotrunius/bio/commit/84447f1d4b571374ecbc0e72a32c2573c43b3a00"
-    },
-    {
-      "message": "Merge pull request #22 from Piotrunius/copilot/improve-responsiveness-and-animations",
-      "repo": "bio",
-      "author": "Piotrunius",
-      "date": "2025-12-26T22:36:15Z",
-      "url": "https://github.com/Piotrunius/bio/commit/6d09619ddbb56294742918788cf54d86138d16a0"
     },
     {
       "message": "Update AutoClicker.py",
@@ -309,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-03T14:56:36.767Z",
+  "lastUpdate": "2026-01-03T15:03:46.533Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -327,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-03T14:56:37.271Z"
+    "lastChecked": "2026-01-03T15:03:46.813Z"
   },
   "pullRequests": {
     "total": 4,
