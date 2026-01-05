@@ -282,9 +282,23 @@ async function refreshGitHubStats() {
     const summary = stats.summary || {};
     if (projectsEl) projectsEl.textContent = summary.projects || '0';
     if (starsEl) starsEl.textContent = summary.starredCount || '0';
-    if (commitsEl) commitsEl.textContent = summary.commits || '0';
+
+    // Fetch all commits from GitHub API
+    let allCommits = [];
+    try {
+        const userName = 'Piotrunius';
+        const commitsResp = await fetch(`https://api.github.com/search/commits?q=author:${userName}&sort=committer-date&order=desc&per_page=100`);
+        if (commitsResp.ok) {
+            const commitsData = await commitsResp.json();
+            allCommits = commitsData.items || [];
+        }
+    } catch (e) {
+        console.warn('Error fetching commits from GitHub API:', e.message);
+    }
+
+    if (commitsEl) commitsEl.textContent = allCommits.length || '0';
     if (lastUpdateEl) {
-        lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(stats.lastUpdate || new Date().toISOString())}`;
+        lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(new Date().toISOString())}`;
     }
 
     // Use DocumentFragment for better performance
@@ -312,30 +326,31 @@ async function refreshGitHubStats() {
         activityStarsEl.appendChild(fragment);
     }
 
-    if (activityCommitsEl && Array.isArray(stats.recentCommits)) {
+    // Display all commits from GitHub API
+    if (activityCommitsEl && allCommits.length > 0) {
         const fragment = document.createDocumentFragment();
-        stats.recentCommits
-            .filter(c => {
-                const msg = (c.message || '').toLowerCase();
-                const author = (c.author || '').toLowerCase();
-                // Filter out bot commits and automated chore commits
-                return !author.includes('bot') &&
-                    !author.includes('action') &&
-                    !msg.startsWith('chore: automated');
-            })
-            .slice(0, 20)
+        allCommits
+            .slice(0, 50) // Show up to 50 commits
             .forEach((commit, index) => {
                 const item = document.createElement('div');
                 item.className = 'activity-item';
                 item.style.animationDelay = `${index * 0.05}s`;
+
+                const message = commit.commit?.message?.split('\n')[0] || 'No message';
+                const author = commit.commit?.author?.name || 'Unknown';
+                const date = commit.commit?.author?.date || new Date().toISOString();
+                const repoName = commit.repository?.name || 'Unknown';
+                const repoUrl = commit.repository?.html_url || '#';
+                const commitUrl = commit.html_url || '#';
+
                 item.innerHTML = `
                     <div class="activity-header">
-                        <a href="${commit.url || '#'}" class="activity-link" target="_blank" rel="noreferrer">${commit.message || 'No message'}</a>
+                        <a href="${commitUrl}" class="activity-link" target="_blank" rel="noreferrer">${message}</a>
                     </div>
-                    <div class="activity-desc">Repository: ${commit.repo || 'Unknown'}</div>
+                    <div class="activity-desc"><a href="${repoUrl}" target="_blank" rel="noreferrer" style="color: var(--primary); text-decoration: none;">${repoName}</a></div>
                     <div class="activity-meta-row">
-                        <div class="meta-badge"><i class="fas fa-user-circle"></i> ${commit.author || 'Unknown'}</div>
-                        <span class="meta-date">${formatPLDateTime(commit.date, true)}</span>
+                        <div class="meta-badge"><i class="fas fa-user-circle"></i> ${author}</div>
+                        <span class="meta-date">${formatPLDateTime(date, true)}</span>
                     </div>
                 `;
                 fragment.appendChild(item);
@@ -434,6 +449,89 @@ async function refreshSteamStatus() {
         }
     }
 }
+
+// --- DISCORD STATUS ---
+async function refreshDiscordStatus() {
+    const discordDot = document.getElementById('discord-dot');
+    const discordStatus = document.getElementById('discord-status-text');
+    const discordActivityInfo = document.getElementById('discord-activity-info');
+    const discordPlaying = document.getElementById('discord-playing');
+    const discordAvatarWrapper = document.querySelector('.discord-avatar-wrapper');
+    const discordUsernameEl = document.querySelector('.discord-username');
+
+    // Your Discord User ID
+    const discordUserId = '1166309729371439104';
+
+    try {
+        const response = await fetch(`https://api.lanyard.rest/v1/users/${discordUserId}`);
+        if (response.ok) {
+            const data = await response.json();
+            const user = data.data;
+
+            // Update status
+            const statusMap = {
+                'online': 'Online',
+                'idle': 'Idle',
+                'dnd': 'Do Not Disturb',
+                'offline': 'Offline'
+            };
+
+            const statusText = statusMap[user.discord_status] || user.discord_status;
+            const statusClass = user.discord_status || 'offline';
+            const username = (user.discord_user && user.discord_user.username) ? user.discord_user.username : 'Piotrunius';
+
+            if (discordStatus) {
+                discordStatus.textContent = statusText;
+            }
+
+            if (discordUsernameEl) {
+                discordUsernameEl.textContent = username;
+            }
+
+            if (discordAvatarWrapper) {
+                discordAvatarWrapper.className = `discord-avatar-wrapper ${statusClass}`;
+            }
+
+            if (discordDot) {
+                discordDot.className = `status-dot`;
+            }
+
+            // Update activity info
+            if (discordActivityInfo) {
+                if (user.activities && user.activities.length > 0) {
+                    const activity = user.activities.find(a => a.type !== 4); // Exclude custom status
+                    if (activity) {
+                        const activityTypeMap = {
+                            0: 'Playing',
+                            1: 'Streaming',
+                            2: 'Listening',
+                            3: 'Watching',
+                            5: 'Competing'
+                        };
+
+                        const activityType = activityTypeMap[activity.type] || 'Activity';
+                        discordActivityInfo.textContent = `${activityType}: ${activity.name}`;
+                        discordActivityInfo.style.display = 'block';
+                        discordPlaying.textContent = '';
+                    } else {
+                        discordActivityInfo.style.display = 'none';
+                        discordPlaying.textContent = '';
+                    }
+                } else {
+                    discordActivityInfo.style.display = 'none';
+                    discordPlaying.textContent = '';
+                }
+            }
+        }
+    } catch (e) {
+        console.warn('Error fetching Discord status from Lanyard:', e.message);
+        // Fallback
+        if (discordStatus) discordStatus.textContent = 'Offline';
+        if (discordAvatarWrapper) discordAvatarWrapper.className = 'discord-avatar-wrapper offline';
+        if (discordDot) discordDot.className = 'status-dot';
+    }
+}
+
 
 // --- CORE FUNCTION: Render Setup (Safe & Visible) ---
 function initSetup() {
@@ -903,6 +1001,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initSetup();
     refreshGitHubStats();
     refreshSteamStatus();
+    refreshDiscordStatus();
     updateSpotifyStatus();
     initControls();
 
@@ -917,7 +1016,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initThemeToggle();
     updateCopyrightYear();
     initBackToTop();
-    loadGitHubTimeline();
     updateVisitorCount();
 
     // Auto-refresh stats with adaptive intervals
@@ -926,8 +1024,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const spotifyInterval = deviceCapabilities.isLowEnd ? 45000 : 30000;  // 45 or 30 seconds
 
     setInterval(refreshGitHubStats, statsInterval);
-    setInterval(loadGitHubTimeline, statsInterval);
     setInterval(refreshSteamStatus, steamInterval);
+    setInterval(refreshDiscordStatus, 15000); // Update Discord status every 15 seconds
     setInterval(updateSpotifyStatus, spotifyInterval);
 
     // Load projects
@@ -1160,7 +1258,7 @@ function updateCopyrightYear() {
     const copyrightEl = document.getElementById('copyright-year');
     if (!copyrightEl) return;
     const currentYear = new Date().getFullYear();
-    copyrightEl.querySelector('.copyright-content span:first-child').textContent = `© ${currentYear} Piotrunius - All Rights Reserved`;
+    copyrightEl.textContent = `© ${currentYear} Piotrunius - All Rights Reserved`;
 }
 
 // --- BACK TO TOP BUTTON ---
@@ -1194,7 +1292,7 @@ async function loadGitHubTimeline() {
     try {
         const resp = await fetch(`data/github-stats.json?t=${Date.now()}`);
         if (!resp.ok) throw new Error('Failed to load stats');
-        
+
         const stats = await resp.json();
         const activities = [];
 
@@ -1243,9 +1341,9 @@ async function loadGitHubTimeline() {
             const item = document.createElement('div');
             item.className = 'timeline-item';
             item.style.animationDelay = `${index * 0.05}s`;
-            
+
             const timeAgo = getTimeAgo(activity.time);
-            
+
             item.innerHTML = `
                 <div class="timeline-icon">
                     <i class="fas ${activity.icon}"></i>
@@ -1259,14 +1357,14 @@ async function loadGitHubTimeline() {
                     ${activity.repo ? `<div class="timeline-repo"><i class="fas fa-code-branch"></i>${escapeHtml(activity.repo)}</div>` : ''}
                 </div>
             `;
-            
+
             if (activity.url) {
                 item.style.cursor = 'pointer';
                 item.addEventListener('click', () => {
                     window.open(activity.url, '_blank', 'noreferrer');
                 });
             }
-            
+
             fragment.appendChild(item);
         });
 
@@ -1287,7 +1385,7 @@ function getTimeAgo(dateString) {
     const date = new Date(dateString);
     const now = new Date();
     const seconds = Math.floor((now - date) / 1000);
-    
+
     if (seconds < 60) return 'just now';
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
     if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
@@ -1298,7 +1396,7 @@ function getTimeAgo(dateString) {
 
 // --- VISITOR COUNTER ---
 async function updateVisitorCount() {
-    const visitorCountEl = document.getElementById('visitor-count');
+    const visitorCountEl = document.getElementById('visitor-count-floating');
     if (!visitorCountEl) return;
 
     try {
@@ -1326,19 +1424,19 @@ function animateCounter(element, target) {
     const duration = 2000;
     const start = 0;
     const startTime = performance.now();
-    
+
     function update(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const easeOut = 1 - Math.pow(1 - progress, 3);
         const current = Math.floor(start + (target - start) * easeOut);
-        
+
         element.textContent = current.toLocaleString();
-        
+
         if (progress < 1) {
             requestAnimationFrame(update);
         }
     }
-    
+
     requestAnimationFrame(update);
 }
