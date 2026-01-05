@@ -417,7 +417,7 @@ async function refreshSteamStatus() {
         if (statusText) statusText.textContent = 'In-game';
         if (gameInfo) {
             gameInfo.textContent = `Playing: ${s.gameextrainfo}`;
-            gameInfo.style.color = '#90ff47';
+            gameInfo.style.color = '#43b581';
             gameInfo.style.display = 'block';
         }
     } else {
