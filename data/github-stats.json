@@ -90,7 +90,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 45188,
+      "stars": 45189,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -108,7 +108,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 161495,
+      "stars": 161496,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -126,7 +126,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 89758,
+      "stars": 89759,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -153,7 +153,7 @@
       "name": "YimMenuV2",
       "owner": "YimMenu",
       "url": "https://github.com/YimMenu/YimMenuV2",
-      "stars": 976,
+      "stars": 977,
       "language": "C++",
       "description": "Experimental menu for GTA 5: Enhanced",
       "starredAt": "2025-07-07T06:47:19Z"
@@ -171,7 +171,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 3853,
+      "stars": 3854,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python.",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -196,6 +196,13 @@
     }
   ],
   "recentCommits": [
+    {
+      "message": "Update copyright year in LICENSE file",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T20:42:33Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/3888eba3e3924a09cf6662b781df70574a088903"
+    },
     {
       "message": "Update Umami script URL to use Cloudflare proxy",
       "repo": "piotrunius.github.io",
@@ -244,13 +251,6 @@
       "author": "Piotrunius",
       "date": "2026-01-05T09:13:15Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/4d295b5cb294b3bb3429a402b4253f56dd7a2c9a"
-    },
-    {
-      "message": "Add files via upload",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-05T09:02:11Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/f180d2a43744a48267966d648d1108fc8d1c02b1"
     },
     {
       "message": "Update AutoClicker.py",
@@ -309,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-05T20:31:57.552Z",
+  "lastUpdate": "2026-01-05T20:42:48.060Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -327,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-05T20:31:57.998Z"
+    "lastChecked": "2026-01-05T20:42:48.362Z"
   },
   "pullRequests": {
     "total": 4,
