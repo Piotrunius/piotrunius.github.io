@@ -1,8 +1,8 @@
 {
   "summary": {
-    "projects": 4,
+    "projects": 5,
     "starredCount": 21,
-    "commits": 182
+    "commits": 186
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 17066,
+      "stars": 17067,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -27,7 +27,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 119749,
+      "stars": 119751,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -108,7 +108,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 161496,
+      "stars": 161495,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -196,6 +196,27 @@
     }
   ],
   "recentCommits": [
+    {
+      "message": "Add files via upload",
+      "repo": "Piotrunius",
+      "author": "Piotrunius",
+      "date": "2026-01-05T20:55:40Z",
+      "url": "https://github.com/Piotrunius/Piotrunius/commit/193464dcee9d08811afe7e0f20e15bd1a1de76eb"
+    },
+    {
+      "message": "Delete README.md",
+      "repo": "Piotrunius",
+      "author": "Piotrunius",
+      "date": "2026-01-05T20:55:10Z",
+      "url": "https://github.com/Piotrunius/Piotrunius/commit/51b9a319dc2fcba4c5e4570c14818fd5c6a55171"
+    },
+    {
+      "message": "Initial commit",
+      "repo": "Piotrunius",
+      "author": "Piotrunius",
+      "date": "2026-01-05T20:54:54Z",
+      "url": "https://github.com/Piotrunius/Piotrunius/commit/20d668a3eb36ca0503f48d91bccacbceb6192f7e"
+    },
     {
       "message": "Update copyright year to 2026",
       "repo": "piotrunius.github.io",
@@ -309,7 +330,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-05T20:43:33.444Z",
+  "lastUpdate": "2026-01-05T20:56:36.277Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -327,7 +348,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-05T20:43:33.932Z"
+    "lastChecked": "2026-01-05T20:56:36.606Z"
   },
   "pullRequests": {
     "total": 4,
