@@ -27,7 +27,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 119719,
+      "stars": 119718,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -108,7 +108,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 161440,
+      "stars": 161439,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -197,6 +197,13 @@
   ],
   "recentCommits": [
     {
+      "message": "feat: update project loading to include external repository",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T09:13:15Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/4d295b5cb294b3bb3429a402b4253f56dd7a2c9a"
+    },
+    {
       "message": "Add files via upload",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
@@ -244,13 +251,6 @@
       "author": "Piotrunius",
       "date": "2026-01-05T09:00:57Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/1390340b97c3f8d856023f23a7864a96cc95bc0a"
-    },
-    {
-      "message": "Delete LICENSE",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-05T09:00:51Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/71a8f7de48be685a0dafcff28bcf2370fb649883"
     },
     {
       "message": "Update AutoClicker.py",
@@ -309,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-05T09:02:44.637Z",
+  "lastUpdate": "2026-01-05T09:13:31.166Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -327,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-05T09:02:45.036Z"
+    "lastChecked": "2026-01-05T09:13:31.684Z"
   },
   "pullRequests": {
     "total": 4,
