@@ -650,23 +650,6 @@ function initParticles() {
         console.log('Particles disabled for low-end device');
     }
 }
-
-function initScrollReveal() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                // Track section view
-                const sectionTitle = entry.target.querySelector('.section-title');
-                if (sectionTitle && window.umami) {
-                    const sectionName = sectionTitle.textContent.trim();
-                    window.umami.track('Section Viewed', { section: sectionName });
-                }
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
     const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-right, .animate-slide-left');
     animatedElements.forEach(el => observer.observe(el));
 }
