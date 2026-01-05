@@ -626,27 +626,27 @@ a:where(:not(.social-link, .contact-btn, .music-btn, .spec-item, .activity-link,
 }
 
 .online .status-dot {
-    background: #57cbff;
-    box-shadow: 0 0 10px #57cbff;
+    background: #43b581;
+    box-shadow: 0 0 10px rgba(67, 181, 129, 0.6);
 }
 
 .away .status-dot {
-    background: #ffc82c;
-    box-shadow: 0 0 10px #ffc82c;
+    background: #faa61a;
+    box-shadow: 0 0 10px rgba(250, 166, 26, 0.6);
 }
 
 .busy .status-dot {
-    background: #ff4b4b;
-    box-shadow: 0 0 10px #ff4b4b;
+    background: #f04747;
+    box-shadow: 0 0 10px rgba(240, 71, 71, 0.6);
 }
 
 .in-game .status-dot {
-    background: #90ff47;
-    box-shadow: 0 0 12px #90ff47;
+    background: #43b581;
+    box-shadow: 0 0 10px rgba(67, 181, 129, 0.6);
 }
 
 .offline .status-dot {
-    background: #3a3f44;
+    background: #747f8d;
     box-shadow: none;
 }
 
@@ -2745,27 +2745,27 @@ i:not(.social-link i) {
 }
 
 .online .status-dot {
-    background: #57cbff;
-    box-shadow: 0 0 10px #57cbff;
+    background: #43b581;
+    box-shadow: 0 0 10px rgba(67, 181, 129, 0.6);
 }
 
 .away .status-dot {
-    background: #ffc82c;
-    box-shadow: 0 0 10px #ffc82c;
+    background: #faa61a;
+    box-shadow: 0 0 10px rgba(250, 166, 26, 0.6);
 }
 
 .busy .status-dot {
-    background: #ff4b4b;
-    box-shadow: 0 0 10px #ff4b4b;
+    background: #f04747;
+    box-shadow: 0 0 10px rgba(240, 71, 71, 0.6);
 }
 
 .in-game .status-dot {
-    background: #90ff47;
-    box-shadow: 0 0 12px #90ff47;
+    background: #43b581;
+    box-shadow: 0 0 10px rgba(67, 181, 129, 0.6);
 }
 
 .offline .status-dot {
-    background: #3a3f44;
+    background: #747f8d;
     box-shadow: none;
 }
 
