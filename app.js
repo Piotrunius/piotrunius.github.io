@@ -955,8 +955,23 @@ async function loadProjects() {
         const repos = await response.json();
 
         // Target specific repositories
-        const targetNames = ['AutoClicker-AntiAFK', 'broadcast-generator'];
-        const allRepos = repos.filter(r => targetNames.includes(r.name));
+        const targetNames = ['AutoClicker-AntiAFK'];
+        let allRepos = repos.filter(r => targetNames.includes(r.name));
+
+        // Add external project from aresysite
+        try {
+            const externalResponse = await fetch('https://api.github.com/repos/aresysite/aresysite.github.io', {
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            if (externalResponse.ok) {
+                const externalRepo = await externalResponse.json();
+                allRepos.push(externalRepo);
+            }
+        } catch (e) {
+            console.warn('Failed to fetch external project:', e);
+        }
 
         if (allRepos.length === 0) {
             container.innerHTML = `
@@ -986,7 +1001,7 @@ async function loadProjects() {
             let badgeClass = '';
             let projectLink = repo.html_url; // default link
 
-            if (repo.name === 'broadcast-generator') {
+            if (repo.name === 'aresysite.github.io') {
                 badge = 'active';
                 badgeClass = 'project-badge-active';
                 projectLink = 'https://cloud.umami.is/q/2SQPbwqnb';
