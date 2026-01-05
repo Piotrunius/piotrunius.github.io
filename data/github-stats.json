@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 21,
-    "commits": 181
+    "commits": 182
   },
   "starred": [
     {
@@ -197,6 +197,13 @@
   ],
   "recentCommits": [
     {
+      "message": "Update copyright year to 2026",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T20:43:18Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/0fd2cfc31d3571e9798444a1b0f2d9e78717b805"
+    },
+    {
       "message": "Update copyright year in LICENSE file",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
@@ -244,13 +251,6 @@
       "author": "Piotrunius",
       "date": "2026-01-05T09:18:27Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/a64fbfbabbb045579ee857dd836ca929b380a59a"
-    },
-    {
-      "message": "feat: update project loading to include external repository",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-05T09:13:15Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/4d295b5cb294b3bb3429a402b4253f56dd7a2c9a"
     },
     {
       "message": "Update AutoClicker.py",
@@ -309,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-05T20:42:48.060Z",
+  "lastUpdate": "2026-01-05T20:43:33.444Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -327,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-05T20:42:48.362Z"
+    "lastChecked": "2026-01-05T20:43:33.932Z"
   },
   "pullRequests": {
     "total": 4,
