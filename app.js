@@ -862,7 +862,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initPerformanceMonitoring();
 
     // Register Service Worker for offline support
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && false) { // Disabled temporarily
         try {
             const registration = await navigator.serviceWorker.register('/sw.js');
             console.log('Service Worker registered:', registration.scope);
