@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 21,
-    "commits": 100
+    "commits": 102
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 17052,
+      "stars": 17054,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -27,7 +27,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 119713,
+      "stars": 119714,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -54,7 +54,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 18894,
+      "stars": 18895,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -72,7 +72,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52210,
+      "stars": 52211,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -90,7 +90,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 45150,
+      "stars": 45151,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -108,7 +108,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 161429,
+      "stars": 161430,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -126,7 +126,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 89691,
+      "stars": 89697,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -197,6 +197,20 @@
   ],
   "recentCommits": [
     {
+      "message": "chore: add Discord configuration file",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T07:49:46Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/e464a8a0af1199e2bd3248cac81800bbd239d654"
+    },
+    {
+      "message": "Add files via upload",
+      "repo": "test",
+      "author": "Piotrunius",
+      "date": "2026-01-05T07:34:08Z",
+      "url": "https://github.com/Piotrunius/test/commit/45b525139758f5b9d0aa36212adfd028234fb425"
+    },
+    {
       "message": "Delete index.html",
       "repo": "test",
       "author": "Piotrunius",
@@ -246,67 +260,53 @@
       "url": "https://github.com/Piotrunius/test/commit/c818099ed9c685ba4902624fec5282ddd0065454"
     },
     {
-      "message": "Delete pages directory",
-      "repo": "test",
-      "author": "Piotrunius",
-      "date": "2026-01-05T06:44:24Z",
-      "url": "https://github.com/Piotrunius/test/commit/d822e1894ac0b8aebb0ad765d22cd0561c9e453b"
-    },
-    {
       "message": "Update meta description in index.html",
-      "repo": "bio",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
       "date": "2026-01-03T15:09:32Z",
-      "url": "https://github.com/Piotrunius/bio/commit/cda74477327d9e3420f987af01b84dcfd5101121"
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/cda74477327d9e3420f987af01b84dcfd5101121"
     },
     {
       "message": "Update bio in default config",
-      "repo": "bio",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
       "date": "2026-01-03T15:05:30Z",
-      "url": "https://github.com/Piotrunius/bio/commit/e456cd7ac523e6c41ab388929a85bf5b6817bde7"
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/e456cd7ac523e6c41ab388929a85bf5b6817bde7"
     },
     {
       "message": "Update description in manifest.json",
-      "repo": "bio",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
       "date": "2026-01-03T15:04:21Z",
-      "url": "https://github.com/Piotrunius/bio/commit/693b00ffcfd86100e8964be274d2baed5da3812d"
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/693b00ffcfd86100e8964be274d2baed5da3812d"
     },
     {
       "message": "Revise profile bio and about section content",
-      "repo": "bio",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
       "date": "2026-01-03T15:03:33Z",
-      "url": "https://github.com/Piotrunius/bio/commit/74ca208beab6ab6b0e766933ba97c51502d30d2b"
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/74ca208beab6ab6b0e766933ba97c51502d30d2b"
     },
     {
       "message": "Replace Simple Analytics script with Umami script",
-      "repo": "bio",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
       "date": "2025-12-28T16:19:07Z",
-      "url": "https://github.com/Piotrunius/bio/commit/9f10cb78633b6eac2f786fbd802ae681e46ed751"
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/9f10cb78633b6eac2f786fbd802ae681e46ed751"
     },
     {
       "message": "Replace Umami script with Simple Analytics script",
-      "repo": "bio",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
       "date": "2025-12-28T16:06:32Z",
-      "url": "https://github.com/Piotrunius/bio/commit/fdc71918fd66f8e11b784fcc08ee92d49b8d6412"
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/fdc71918fd66f8e11b784fcc08ee92d49b8d6412"
     },
     {
       "message": "Update Discord link in contact card",
-      "repo": "bio",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
       "date": "2025-12-28T16:01:02Z",
-      "url": "https://github.com/Piotrunius/bio/commit/6c6a7feaf94660bd0122d813be42a48fdcdeebc9"
-    },
-    {
-      "message": "Delete IMPROVEMENTS.md",
-      "repo": "bio",
-      "author": "Piotrunius",
-      "date": "2025-12-28T13:54:03Z",
-      "url": "https://github.com/Piotrunius/bio/commit/6ba5ee5551f91e04b79a4c08870c3e95b1e3dd09"
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/6c6a7feaf94660bd0122d813be42a48fdcdeebc9"
     },
     {
       "message": "Update AutoClicker.py",
@@ -365,7 +365,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-05T07:33:45.314Z",
+  "lastUpdate": "2026-01-05T07:50:03.040Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -383,40 +383,40 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-05T07:33:45.715Z"
+    "lastChecked": "2026-01-05T07:50:03.649Z"
   },
   "pullRequests": {
     "total": 4,
     "recent": [
       {
         "title": "Add blur effects and improved gradient to feed-card background animations\n\nCo-authored-by: Piotrunius <93887193+Piotrunius@users.noreply.github.com>",
-        "repo": "bio",
+        "repo": "piotrunius.github.io",
         "state": "closed",
-        "url": "https://github.com/Piotrunius/bio/pull/20",
+        "url": "https://github.com/Piotrunius/piotrunius.github.io/pull/20",
         "created": "2025-12-26T21:50:40Z",
         "updated": "2025-12-26T21:51:12Z"
       },
       {
         "title": "chore: automated stats update",
-        "repo": "bio",
+        "repo": "piotrunius.github.io",
         "state": "closed",
-        "url": "https://github.com/Piotrunius/bio/pull/17",
+        "url": "https://github.com/Piotrunius/piotrunius.github.io/pull/17",
         "created": "2025-12-26T21:46:19Z",
         "updated": "2025-12-26T21:47:48Z"
       },
       {
         "title": "Add blur effects and improved gradient to feed-card background animations\n\nCo-authored-by: Piotrunius <93887193+Piotrunius@users.noreply.github.com>",
-        "repo": "bio",
+        "repo": "piotrunius.github.io",
         "state": "closed",
-        "url": "https://github.com/Piotrunius/bio/pull/18",
+        "url": "https://github.com/Piotrunius/piotrunius.github.io/pull/18",
         "created": "2025-12-26T21:47:05Z",
         "updated": "2025-12-26T21:47:44Z"
       },
       {
         "title": "Merge pull request #2 from Piotrunius/copilot/remove-time-condition-github-data\n\n[WIP] Remove time condition for data fetching from GitHub",
-        "repo": "bio",
+        "repo": "piotrunius.github.io",
         "state": "closed",
-        "url": "https://github.com/Piotrunius/bio/pull/3",
+        "url": "https://github.com/Piotrunius/piotrunius.github.io/pull/3",
         "created": "2025-12-26T00:38:44Z",
         "updated": "2025-12-26T17:13:29Z"
       }
@@ -446,6 +446,10 @@
   "languages": [
     {
       "name": "CSS",
+      "repos": 1
+    },
+    {
+      "name": "JavaScript",
       "repos": 1
     },
     {
