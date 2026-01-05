@@ -1,8 +1,8 @@
 {
   "summary": {
-    "projects": 4,
+    "projects": 3,
     "starredCount": 21,
-    "commits": 102
+    "commits": 119
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 17054,
+      "stars": 17057,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -27,7 +27,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 119714,
+      "stars": 119719,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -54,7 +54,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 18895,
+      "stars": 18897,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -72,7 +72,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52211,
+      "stars": 52212,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -90,7 +90,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 45151,
+      "stars": 45154,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -108,7 +108,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 161431,
+      "stars": 161440,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -126,7 +126,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 89697,
+      "stars": 89703,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -197,116 +197,60 @@
   ],
   "recentCommits": [
     {
-      "message": "Delete .well-known directory",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:50:39Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/3aa5143ee4b57c4d43e220ee40ed29a56aee92c6"
-    },
-    {
-      "message": "chore: add Discord configuration file",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:49:46Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/e464a8a0af1199e2bd3248cac81800bbd239d654"
-    },
-    {
       "message": "Add files via upload",
-      "repo": "test",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
-      "date": "2026-01-05T07:34:08Z",
-      "url": "https://github.com/Piotrunius/test/commit/45b525139758f5b9d0aa36212adfd028234fb425"
+      "date": "2026-01-05T09:02:11Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/f180d2a43744a48267966d648d1108fc8d1c02b1"
+    },
+    {
+      "message": "Delete sw.js",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T09:01:56Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/875d4c188ecf3fc2d0cc4ed250235fdceeefea2f"
+    },
+    {
+      "message": "Delete data directory",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T09:01:50Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/26663d4263f1d4dcf151745f8917884fad1a96cd"
+    },
+    {
+      "message": "Delete styles.css",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T09:01:44Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/0af3685c23946f75fb0a732daf459bcdd134152a"
+    },
+    {
+      "message": "Delete manifest.json",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T09:01:09Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/f4bce18f9be8704089189fdd2a52e2bc0d90c555"
     },
     {
       "message": "Delete index.html",
-      "repo": "test",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:33:33Z",
-      "url": "https://github.com/Piotrunius/test/commit/2d0c4e91f368a598eb640433e4c0a1c4b1ca86a9"
-    },
-    {
-      "message": "Delete src directory",
-      "repo": "test",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:33:26Z",
-      "url": "https://github.com/Piotrunius/test/commit/d70fa454f1519822fc8df1c9c19161774842738b"
-    },
-    {
-      "message": "Delete pages directory",
-      "repo": "test",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:33:19Z",
-      "url": "https://github.com/Piotrunius/test/commit/13f2af676845ef48c2e3bd23513c41a9b2b79f56"
-    },
-    {
-      "message": "Delete assets/icons directory",
-      "repo": "test",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:33:02Z",
-      "url": "https://github.com/Piotrunius/test/commit/7be744b555cd68ee5243ed516e9713f4d8122961"
-    },
-    {
-      "message": "Add files via upload",
-      "repo": "test",
-      "author": "Piotrunius",
-      "date": "2026-01-05T06:46:43Z",
-      "url": "https://github.com/Piotrunius/test/commit/36261836757f8c2a4690c2c1469f56c7f3c597d0"
-    },
-    {
-      "message": "Delete index.html",
-      "repo": "test",
-      "author": "Piotrunius",
-      "date": "2026-01-05T06:45:07Z",
-      "url": "https://github.com/Piotrunius/test/commit/8268c5b4d885161b5f6936013e129dab00e673f4"
-    },
-    {
-      "message": "Delete src directory",
-      "repo": "test",
-      "author": "Piotrunius",
-      "date": "2026-01-05T06:44:30Z",
-      "url": "https://github.com/Piotrunius/test/commit/c818099ed9c685ba4902624fec5282ddd0065454"
-    },
-    {
-      "message": "Update meta description in index.html",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
-      "date": "2026-01-03T15:09:32Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/cda74477327d9e3420f987af01b84dcfd5101121"
+      "date": "2026-01-05T09:01:03Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/dc3a3063c69816245fe418e037b7f1ac842d548e"
     },
     {
-      "message": "Update bio in default config",
+      "message": "Delete app.js",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
-      "date": "2026-01-03T15:05:30Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/e456cd7ac523e6c41ab388929a85bf5b6817bde7"
+      "date": "2026-01-05T09:00:57Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/1390340b97c3f8d856023f23a7864a96cc95bc0a"
     },
     {
-      "message": "Update description in manifest.json",
+      "message": "Delete LICENSE",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
-      "date": "2026-01-03T15:04:21Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/693b00ffcfd86100e8964be274d2baed5da3812d"
-    },
-    {
-      "message": "Revise profile bio and about section content",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-03T15:03:33Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/74ca208beab6ab6b0e766933ba97c51502d30d2b"
-    },
-    {
-      "message": "Replace Simple Analytics script with Umami script",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2025-12-28T16:19:07Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/9f10cb78633b6eac2f786fbd802ae681e46ed751"
-    },
-    {
-      "message": "Replace Umami script with Simple Analytics script",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2025-12-28T16:06:32Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/fdc71918fd66f8e11b784fcc08ee92d49b8d6412"
+      "date": "2026-01-05T09:00:51Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/71a8f7de48be685a0dafcff28bcf2370fb649883"
     },
     {
       "message": "Update AutoClicker.py",
@@ -365,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-05T07:50:53.365Z",
+  "lastUpdate": "2026-01-05T09:02:44.637Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -383,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-05T07:50:53.698Z"
+    "lastChecked": "2026-01-05T09:02:45.036Z"
   },
   "pullRequests": {
     "total": 4,
@@ -446,10 +390,6 @@
   "languages": [
     {
       "name": "CSS",
-      "repos": 1
-    },
-    {
-      "name": "JavaScript",
       "repos": 1
     },
     {
