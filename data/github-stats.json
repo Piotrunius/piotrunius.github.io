@@ -1,6 +1,6 @@
 {
   "summary": {
-    "projects": 4,
+    "projects": 3,
     "starredCount": 21,
     "commits": 109
   },
@@ -27,7 +27,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 119718,
+      "stars": 119719,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -90,7 +90,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 45153,
+      "stars": 45154,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -108,7 +108,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 161436,
+      "stars": 161440,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -197,39 +197,11 @@
   ],
   "recentCommits": [
     {
-      "message": "Add files via upload",
-      "repo": "broadcast-generator",
+      "message": "Delete assets directory",
+      "repo": "piotrunius.github.io",
       "author": "Piotrunius",
-      "date": "2026-01-05T07:53:59Z",
-      "url": "https://github.com/Piotrunius/broadcast-generator/commit/2baf865dac0411b3e0323fad7f8261de4ee88c89"
-    },
-    {
-      "message": "Delete index.html",
-      "repo": "broadcast-generator",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:53:29Z",
-      "url": "https://github.com/Piotrunius/broadcast-generator/commit/00edd9a857749314dd8c8f361b362113324bba87"
-    },
-    {
-      "message": "Delete src directory",
-      "repo": "broadcast-generator",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:53:22Z",
-      "url": "https://github.com/Piotrunius/broadcast-generator/commit/6aec943fb369267a3065bdefde21d249319635a9"
-    },
-    {
-      "message": "Delete pages directory",
-      "repo": "broadcast-generator",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:53:16Z",
-      "url": "https://github.com/Piotrunius/broadcast-generator/commit/bfdc2cf51556ad8a1eadc737ec8ebf52187ea88e"
-    },
-    {
-      "message": "Delete assets/icons directory",
-      "repo": "broadcast-generator",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:53:10Z",
-      "url": "https://github.com/Piotrunius/broadcast-generator/commit/ac6cfff228369673488de47876311e618f90091c"
+      "date": "2026-01-05T08:59:37Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/85a52cfea7148acb7979745e3b1e0ca220de2d9c"
     },
     {
       "message": "Delete .well-known directory",
@@ -244,27 +216,6 @@
       "author": "Piotrunius",
       "date": "2026-01-05T07:49:46Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/e464a8a0af1199e2bd3248cac81800bbd239d654"
-    },
-    {
-      "message": "Add files via upload",
-      "repo": "broadcast-generator",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:34:08Z",
-      "url": "https://github.com/Piotrunius/broadcast-generator/commit/45b525139758f5b9d0aa36212adfd028234fb425"
-    },
-    {
-      "message": "Delete index.html",
-      "repo": "broadcast-generator",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:33:33Z",
-      "url": "https://github.com/Piotrunius/broadcast-generator/commit/2d0c4e91f368a598eb640433e4c0a1c4b1ca86a9"
-    },
-    {
-      "message": "Delete src directory",
-      "repo": "broadcast-generator",
-      "author": "Piotrunius",
-      "date": "2026-01-05T07:33:26Z",
-      "url": "https://github.com/Piotrunius/broadcast-generator/commit/d70fa454f1519822fc8df1c9c19161774842738b"
     },
     {
       "message": "Update meta description in index.html",
@@ -300,13 +251,6 @@
       "author": "Piotrunius",
       "date": "2025-12-28T16:19:07Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/9f10cb78633b6eac2f786fbd802ae681e46ed751"
-    },
-    {
-      "message": "Replace Umami script with Simple Analytics script",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2025-12-28T16:06:32Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/fdc71918fd66f8e11b784fcc08ee92d49b8d6412"
     },
     {
       "message": "Update AutoClicker.py",
@@ -365,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-05T08:46:31.028Z",
+  "lastUpdate": "2026-01-05T08:59:48.882Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -383,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-05T08:46:31.411Z"
+    "lastChecked": "2026-01-05T08:59:49.259Z"
   },
   "pullRequests": {
     "total": 4,
@@ -444,10 +388,6 @@
     ]
   },
   "languages": [
-    {
-      "name": "JavaScript",
-      "repos": 1
-    },
     {
       "name": "CSS",
       "repos": 1
