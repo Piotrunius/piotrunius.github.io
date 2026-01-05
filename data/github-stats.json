@@ -2,7 +2,7 @@
   "summary": {
     "projects": 3,
     "starredCount": 21,
-    "commits": 121
+    "commits": 122
   },
   "starred": [
     {
@@ -108,7 +108,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 161440,
+      "stars": 161441,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -135,7 +135,7 @@
       "name": "moodist",
       "owner": "remvze",
       "url": "https://github.com/remvze/moodist",
-      "stars": 3194,
+      "stars": 3195,
       "language": "TypeScript",
       "description": "🌲 Ambient sounds for focus and calm.",
       "starredAt": "2025-09-04T00:18:52Z"
@@ -197,6 +197,20 @@
   ],
   "recentCommits": [
     {
+      "message": "Disable service worker",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T09:29:53Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/c999fbfb164e25a7624769f4fe432f60e43e13c2"
+    },
+    {
+      "message": "Disable service worker temporarily",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T09:29:38Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/45dded25c643c221cf57467513b9c83816aef42a"
+    },
+    {
       "message": "feat: update external project reference to Broadcast-generator",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
@@ -237,20 +251,6 @@
       "author": "Piotrunius",
       "date": "2026-01-05T09:01:50Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/26663d4263f1d4dcf151745f8917884fad1a96cd"
-    },
-    {
-      "message": "Delete styles.css",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-05T09:01:44Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/0af3685c23946f75fb0a732daf459bcdd134152a"
-    },
-    {
-      "message": "Delete manifest.json",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-05T09:01:09Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/f4bce18f9be8704089189fdd2a52e2bc0d90c555"
     },
     {
       "message": "Update AutoClicker.py",
@@ -309,7 +309,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-05T09:27:07.419Z",
+  "lastUpdate": "2026-01-05T09:30:08.043Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -327,7 +327,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-05T09:27:07.825Z"
+    "lastChecked": "2026-01-05T09:30:08.504Z"
   },
   "pullRequests": {
     "total": 4,
