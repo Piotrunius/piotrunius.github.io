@@ -11,6 +11,26 @@
     --shadow: rgba(0, 0, 0, 0.45);
 }
 
+/* Skip to main content link for accessibility */
+.skip-to-main {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--primary);
+    color: #000;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    z-index: 10001;
+    border-radius: 0 0 8px 0;
+}
+
+.skip-to-main:focus {
+    top: 0;
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
 /* Light Mode Colors */
 body.light-mode {
     --primary: #00a859;
@@ -1337,6 +1357,100 @@ a:where(:not(.social-link, .contact-btn, .music-btn, .spec-item, .activity-link,
     grid-column: 1 / 13;
     padding: 2rem;
     animation-delay: 0.5s;
+}
+
+/* Project Filters */
+.project-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-group {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.project-search {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.project-search:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+.filter-btn.active i {
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .project-filters {
+        flex-direction: column;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .filter-buttons {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 .projects-grid {

@@ -8,6 +8,60 @@ let audioPlaying = false;
 let wasAudioPlaying = false; // Track audio state before tab switch
 const githubUsername = 'Piotrunius';
 
+// API Cache implementation
+const apiCache = {
+    data: new Map(),
+    expiryTimes: new Map(),
+    
+    set(key, value, ttlMinutes = 5) {
+        this.data.set(key, value);
+        this.expiryTimes.set(key, Date.now() + (ttlMinutes * 60 * 1000));
+    },
+    
+    get(key) {
+        if (!this.data.has(key)) return null;
+        
+        const expiry = this.expiryTimes.get(key);
+        if (Date.now() > expiry) {
+            this.data.delete(key);
+            this.expiryTimes.delete(key);
+            return null;
+        }
+        
+        return this.data.get(key);
+    },
+    
+    clear() {
+        this.data.clear();
+        this.expiryTimes.clear();
+    }
+};
+
+// Enhanced fetch with caching
+async function cachedFetch(url, options = {}, ttlMinutes = 5) {
+    const cacheKey = `${url}_${JSON.stringify(options)}`;
+    
+    // Check cache first
+    const cached = apiCache.get(cacheKey);
+    if (cached) {
+        console.log(`Cache hit for ${url}`);
+        return cached;
+    }
+    
+    // Fetch from network
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const data = await response.json();
+        apiCache.set(cacheKey, data, ttlMinutes);
+        return data;
+    } catch (error) {
+        console.error(`Fetch error for ${url}:`, error);
+        throw error;
+    }
+}
+
 // Performance detection and adaptive configuration
 const deviceCapabilities = {
     isLowEnd: false,
@@ -269,12 +323,8 @@ async function refreshGitHubStats() {
 
     let stats = fallback;
     try {
-        const resp = await fetch(`data/github-stats.json?t=${Date.now()}`);
-        if (resp.ok) {
-            stats = await resp.json();
-        } else {
-            console.warn('GitHub stats request failed:', resp.status);
-        }
+        // Use cached fetch
+        stats = await cachedFetch(`data/github-stats.json?t=${Date.now()}`, {}, 10);
     } catch (e) {
         console.warn('Error loading GitHub stats:', e.message);
     }
@@ -283,15 +333,16 @@ async function refreshGitHubStats() {
     if (projectsEl) projectsEl.textContent = summary.projects || '0';
     if (starsEl) starsEl.textContent = summary.starredCount || '0';
 
-    // Fetch all commits from GitHub API
+    // Fetch all commits from GitHub API with caching
     let allCommits = [];
     try {
         const userName = 'Piotrunius';
-        const commitsResp = await fetch(`https://api.github.com/search/commits?q=author:${userName}&sort=committer-date&order=desc&per_page=100`);
-        if (commitsResp.ok) {
-            const commitsData = await commitsResp.json();
-            allCommits = commitsData.items || [];
-        }
+        const commitsData = await cachedFetch(
+            `https://api.github.com/search/commits?q=author:${userName}&sort=committer-date&order=desc&per_page=100`,
+            { headers: { 'Accept': 'application/vnd.github.v3+json' } },
+            15 // 15 minute cache
+        );
+        allCommits = commitsData.items || [];
     } catch (e) {
         console.warn('Error fetching commits from GitHub API:', e.message);
     }
@@ -1032,6 +1083,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // --- PROJECTS SECTION ---
+let allProjectsData = [];
+
 async function loadProjects() {
     const container = document.getElementById('projects-container');
     if (!container) return;
@@ -1081,85 +1134,14 @@ async function loadProjects() {
 
         console.log('Projects loaded:', allRepos.map(r => r.name));
 
-        const fragment = document.createDocumentFragment();
-
-        allRepos.forEach((repo, index) => {
-            const card = document.createElement('div');
-            card.className = 'project-card animate-slide-up';
-            card.style.animationDelay = `${index * 0.1}s`;
-
-            const description = repo.description || 'No description available';
-            const language = repo.language || 'Unknown';
-            const author = repo.owner?.login || 'Unknown';
-
-            // Determine badge based on repo name
-            let badge = '';
-            let badgeClass = '';
-            let projectLink = repo.html_url; // default link
-
-            if (repo.name === 'Broadcast-generator') {
-                badge = 'active';
-                badgeClass = 'project-badge-active';
-                projectLink = 'https://cloud.umami.is/q/2SQPbwqnb';
-            } else if (repo.name === 'AutoClicker-AntiAFK') {
-                badge = 'archive';
-                badgeClass = 'project-badge-archive';
-                projectLink = 'https://cloud.umami.is/q/aC6gpCW2H';
-            }
-
-            card.innerHTML = `
-                <div class="project-header">
-                    <div class="project-title">${escapeHtml(repo.name)}</div>
-                    ${badge ? `<span class="project-badge ${badgeClass}">${badge}</span>` : ''}
-                </div>
-                <div class="project-description">${escapeHtml(description)}</div>
-                <div class="project-footer">
-                    <div class="project-stats">
-                        <div class="project-stat" title="Author">
-                            <i class="fas fa-user"></i>
-                            <span>${escapeHtml(author)}</span>
-                        </div>
-                        <div class="project-stat" title="Language">
-                            <i class="fas fa-code"></i>
-                            <span>${escapeHtml(language)}</span>
-                        </div>
-                    </div>
-                    <a href="${projectLink}" target="_blank" rel="noreferrer" class="project-link">
-                        <span>View</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-            `;
-
-            fragment.appendChild(card);
-        });
-
-        container.innerHTML = '';
-        container.appendChild(fragment);
-
-        // Add click tracking to project links
-        document.querySelectorAll('.project-link').forEach(link => {
-            link.addEventListener('click', () => {
-                const projectName = link.closest('.project-card')?.querySelector('.project-title')?.textContent || 'Unknown';
-                if (window.umami) {
-                    window.umami.track('Project Viewed', { project: projectName });
-                }
-            });
-        });
-
-        // Observe project cards with IntersectionObserver (same logic as initScrollReveal)
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.project-card').forEach(card => {
-            observer.observe(card);
-        });
+        // Store all projects for filtering
+        allProjectsData = allRepos;
+        
+        // Initial render
+        renderProjects(allProjectsData);
+        
+        // Initialize filters
+        initProjectFilters();
 
     } catch (error) {
         console.error('Error loading projects:', error);
@@ -1171,6 +1153,159 @@ async function loadProjects() {
             </div>
         `;
     }
+}
+
+function renderProjects(projects) {
+    const container = document.getElementById('projects-container');
+    if (!container) return;
+    
+    if (projects.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.5;"></i>
+                <p>No projects match your search</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const fragment = document.createDocumentFragment();
+
+    projects.forEach((repo, index) => {
+        const card = document.createElement('div');
+        card.className = 'project-card animate-slide-up';
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.setAttribute('role', 'listitem');
+
+        const description = repo.description || 'No description available';
+        const language = repo.language || 'Unknown';
+        const author = repo.owner?.login || 'Unknown';
+
+        // Determine badge based on repo name
+        let badge = '';
+        let badgeClass = '';
+        let projectLink = repo.html_url; // default link
+        let filterType = 'other';
+
+        if (repo.name === 'Broadcast-generator') {
+            badge = 'active';
+            badgeClass = 'project-badge-active';
+            projectLink = 'https://cloud.umami.is/q/2SQPbwqnb';
+            filterType = 'active';
+        } else if (repo.name === 'AutoClicker-AntiAFK') {
+            badge = 'archive';
+            badgeClass = 'project-badge-archive';
+            projectLink = 'https://cloud.umami.is/q/aC6gpCW2H';
+            filterType = 'archive';
+        }
+        
+        card.dataset.filter = filterType;
+        card.dataset.name = repo.name.toLowerCase();
+        card.dataset.description = description.toLowerCase();
+
+        card.innerHTML = `
+            <div class="project-header">
+                <div class="project-title">${escapeHtml(repo.name)}</div>
+                ${badge ? `<span class="project-badge ${badgeClass}">${badge}</span>` : ''}
+            </div>
+            <div class="project-description">${escapeHtml(description)}</div>
+            <div class="project-footer">
+                <div class="project-stats">
+                    <div class="project-stat" title="Author">
+                        <i class="fas fa-user"></i>
+                        <span>${escapeHtml(author)}</span>
+                    </div>
+                    <div class="project-stat" title="Language">
+                        <i class="fas fa-code"></i>
+                        <span>${escapeHtml(language)}</span>
+                    </div>
+                </div>
+                <a href="${projectLink}" target="_blank" rel="noreferrer" class="project-link">
+                    <span>View</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        `;
+
+        fragment.appendChild(card);
+    });
+
+    container.innerHTML = '';
+    container.appendChild(fragment);
+
+    // Add click tracking to project links
+    document.querySelectorAll('.project-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const projectName = link.closest('.project-card')?.querySelector('.project-title')?.textContent || 'Unknown';
+            if (window.umami) {
+                window.umami.track('Project Viewed', { project: projectName });
+            }
+        });
+    });
+
+    // Observe project cards with IntersectionObserver (same logic as initScrollReveal)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.project-card').forEach(card => {
+        observer.observe(card);
+    });
+}
+
+function initProjectFilters() {
+    const searchInput = document.getElementById('project-search');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    let currentFilter = 'all';
+    let currentSearch = '';
+    
+    // Search functionality
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.toLowerCase();
+            filterProjects(currentFilter, currentSearch);
+        });
+    }
+    
+    // Filter buttons
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            filterProjects(currentFilter, currentSearch);
+        });
+    });
+}
+
+function filterProjects(filter, search) {
+    let filtered = allProjectsData;
+    
+    // Apply category filter
+    if (filter !== 'all') {
+        filtered = filtered.filter(repo => {
+            if (filter === 'active') return repo.name === 'Broadcast-generator';
+            if (filter === 'archive') return repo.name === 'AutoClicker-AntiAFK';
+            return false;
+        });
+    }
+    
+    // Apply search filter
+    if (search) {
+        filtered = filtered.filter(repo => {
+            const name = repo.name.toLowerCase();
+            const description = (repo.description || '').toLowerCase();
+            return name.includes(search) || description.includes(search);
+        });
+    }
+    
+    renderProjects(filtered);
 }
 
 // Helper function to escape HTML

@@ -4,9 +4,29 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Piotrunius - Bio</title>
-        <meta name="description" content="Developer & tech enthusiast from Poland.">
+        <title>Piotrunius - Developer & Tech Enthusiast | Portfolio</title>
+        <meta name="description" content="Piotrunius - Developer & tech enthusiast from Poland. Explore my projects, skills, and tech stack. Specializing in Python, JavaScript, React, and Docker.">
+        <meta name="keywords" content="Piotrunius, developer, programmer, tech enthusiast, Python, JavaScript, React, Docker, portfolio, GitHub">
+        <meta name="author" content="Piotrunius">
         <meta name="theme-color" content="#00ff88">
+        
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content="Piotrunius - Developer & Tech Enthusiast">
+        <meta property="og:description" content="Developer & tech enthusiast from Poland. Check out my projects and tech stack.">
+        <meta property="og:image" content="https://piotrunius.github.io/assets/pfp.png">
+        <meta property="og:url" content="https://piotrunius.github.io/">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Piotrunius Portfolio">
+        
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Piotrunius - Developer & Tech Enthusiast">
+        <meta name="twitter:description" content="Developer & tech enthusiast from Poland. Check out my projects and tech stack.">
+        <meta name="twitter:image" content="https://piotrunius.github.io/assets/pfp.png">
+        
+        <!-- Canonical URL -->
+        <link rel="canonical" href="https://piotrunius.github.io/">
+        
         <link rel="icon" type="image/png" href="assets/pfp.png">
         <link rel="manifest" href="manifest.json">
         <link rel="stylesheet" href="styles.css">
@@ -16,13 +36,36 @@
         <noscript>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         </noscript>
+        
+        <!-- JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Piotrunius",
+            "url": "https://piotrunius.github.io/",
+            "image": "https://piotrunius.github.io/assets/pfp.png",
+            "description": "Developer & tech enthusiast from Poland",
+            "jobTitle": "Developer",
+            "sameAs": [
+                "https://github.com/Piotrunius",
+                "https://instagram.com/piotrunius",
+                "https://open.spotify.com/user/piotrunius"
+            ],
+            "knowsAbout": ["Python", "JavaScript", "HTML5", "CSS3", "React", "Go", "Docker", "Node.js"]
+        }
+        </script>
+        
         <script defer src="https://umami-proxy.piotrunius.workers.dev/script.js"
             data-website-id="6fe44ce6-f537-41a6-9f7f-227556b3ba84"></script>
     </head>
 
     <body>
+        <!-- Skip to main content for keyboard navigation -->
+        <a href="#main-content" class="skip-to-main">Skip to main content</a>
+        
         <div class="bg-layer"></div>
-        <canvas id="bg-canvas" class="bg-canvas"></canvas>
+        <canvas id="bg-canvas" class="bg-canvas" aria-hidden="true"></canvas>
 
         <!-- WIP Notice Banner -->
         <div class="wip-notice" id="wip-notice">
@@ -50,29 +93,29 @@
             <source src="assets/audio.mp3" type="audio/mpeg">
         </audio>
 
-        <main class="main-container">
+        <main class="main-container" id="main-content" role="main">
             <!-- LEFT: Spotify Status -->
-            <section class="spotify-status-card glass-card animate-slide-right">
+            <section class="spotify-status-card glass-card animate-slide-right" aria-label="Spotify Status">
                 <div class="music-label spotify-brand">
-                    <i class="fa-brands fa-spotify"></i>
+                    <i class="fa-brands fa-spotify" aria-hidden="true"></i>
                     <span>SPOTIFY STATUS</span>
                 </div>
-                <div id="spotify-content" class="spotify-content empty">
+                <div id="spotify-content" class="spotify-content empty" role="status" aria-live="polite">
                     <div class="spotify-placeholder">
-                        <i class="fas fa-headphones"></i>
+                        <i class="fas fa-headphones" aria-hidden="true"></i>
                         <span>Not listening right now</span>
                     </div>
                 </div>
             </section>
 
             <!-- CENTER: Profile Section -->
-            <section class="profile-section glass-card animate-fade-in">
+            <section class="profile-section glass-card animate-fade-in" aria-label="Profile Information">
                 <div class="avatar-container">
-                    <img id="avatar" src="assets/pfp.png" alt="Avatar" class="avatar" loading="lazy" width="180"
+                    <img id="avatar" src="assets/pfp.png" alt="Piotrunius profile picture" class="avatar" loading="lazy" width="180"
                         height="180">
-                    <div class="avatar-ring"></div>
+                    <div class="avatar-ring" aria-hidden="true"></div>
                 </div>
-                <h2 id="profile-name" class="profile-name">Piotrunius</h2>
+                <h1 id="profile-name" class="profile-name">Piotrunius</h1>
                 <p id="profile-bio" class="profile-bio">Developer & tech enthusiast</p>
             </section>
 
@@ -320,7 +363,27 @@
                     <i class="fas fa-code-branch"></i>
                     PROJECTS
                 </h3>
-                <div id="projects-container" class="projects-grid">
+                
+                <!-- Project Filters -->
+                <div class="project-filters">
+                    <div class="filter-group">
+                        <input type="search" id="project-search" class="project-search" placeholder="Search projects..." aria-label="Search projects">
+                        <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all" aria-label="Show all projects">
+                            <i class="fas fa-th" aria-hidden="true"></i> All
+                        </button>
+                        <button class="filter-btn" data-filter="active" aria-label="Show active projects">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i> Active
+                        </button>
+                        <button class="filter-btn" data-filter="archive" aria-label="Show archived projects">
+                            <i class="fas fa-archive" aria-hidden="true"></i> Archive
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="projects-container" class="projects-grid" role="list">
                     <div class="project-card-skeleton">
                         <div class="skeleton-header"></div>
                         <div class="skeleton-desc"></div>
