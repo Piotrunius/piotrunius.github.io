@@ -17,7 +17,7 @@
     "lint": "npm run lint:css && npm run lint:js",
     "lint:css": "stylelint '**/*.css' --fix",
     "lint:js": "eslint '**/*.js' --fix",
-    "dev": "browser-sync start --server --files '*.html, *.css, *.js'",
+    "dev": "browser-sync start --server --files '*.html,*.css,*.js'",
     "validate": "npm run test",
     "clean": "rm -rf dist node_modules .cache"
   },

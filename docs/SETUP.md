@@ -145,7 +145,7 @@ git pull origin main
 git checkout -b dev
 git push origin dev
 
-# Protect the dev branch (see step 4)
+# Note: Check each command for errors before proceeding
 ```
 
 ## 9. Test the Setup
@@ -159,7 +159,8 @@ git add test.md
 git commit -m "test: verify workflow"
 git push origin main
 
-# Check Actions tab for workflow run
+# Monitor the workflow run
+gh run watch
 ```
 
 ### Test Development Workflow
