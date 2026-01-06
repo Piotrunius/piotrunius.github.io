@@ -135,7 +135,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 💬 Contact
 
-- **Email**: piotrunius. v2@gmail.com
+- **Email**: piotrunius.v2@gmail.com
 - **Discord**: Available on the website
 - **GitHub**: [@Piotrunius](https://github.com/Piotrunius)
 
