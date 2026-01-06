@@ -74,7 +74,7 @@ async function cachedFetch(url, options = {}, ttlMinutes = 5) {
     }
     
     // All retries failed
-    if (window.showToast && attempt > 0) {
+    if (typeof showToast === 'function' && attempt > 0) {
         showToast('Connection Issue', 'Some data may not be up to date', 'warning', 3000);
     }
     throw lastError;
@@ -1227,9 +1227,15 @@ function initShareButton() {
                 await navigator.share(shareData);
                 showToast('Shared!', 'Thanks for sharing!', 'success');
             } else {
-                // Fallback to clipboard
-                await navigator.clipboard.writeText(window.location.href);
-                showToast('Link Copied!', 'Link copied to clipboard', 'success');
+                // Fallback to clipboard with better error handling
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    showToast('Link Copied!', 'Link copied to clipboard', 'success');
+                } catch (clipboardError) {
+                    // Final fallback - show URL in alert
+                    console.error('Clipboard error:', clipboardError);
+                    showToast('Share Link', window.location.href, 'info', 8000);
+                }
             }
             
             // Track share event
@@ -1730,7 +1736,16 @@ function initKeyboardShortcuts() {
         // Ignore if user is typing in input
         if (e.target.matches('input, textarea')) return;
         
-        switch(e.key.toLowerCase()) {
+        const key = e.key.toLowerCase();
+        
+        // Track keyboard shortcut usage
+        if (['?', 't', 's', 'p'].includes(key)) {
+            if (window.umami) {
+                window.umami.track('Keyboard Shortcut Used', { key: e.key.toUpperCase() });
+            }
+        }
+        
+        switch(key) {
             case '?':
                 e.preventDefault();
                 showModal();
@@ -1761,15 +1776,6 @@ function initKeyboardShortcuts() {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
                 break;
-        }
-    });
-    
-    // Track keyboard shortcut usage
-    document.addEventListener('keydown', (e) => {
-        if (['?', 't', 's', 'p'].includes(e.key.toLowerCase()) && !e.target.matches('input, textarea')) {
-            if (window.umami) {
-                window.umami.track('Keyboard Shortcut Used', { key: e.key.toUpperCase() });
-            }
         }
     });
 }
