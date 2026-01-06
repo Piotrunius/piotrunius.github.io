@@ -9,7 +9,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7487,
+      "stars": 7488,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -45,7 +45,7 @@
       "name": "arcraiders-data",
       "owner": "RaidTheory",
       "url": "https://github.com/RaidTheory/arcraiders-data",
-      "stars": 226,
+      "stars": 227,
       "language": "Code",
       "description": "Free to use ARC Raiders game data in JSON Format.",
       "starredAt": "2025-11-30T11:02:20Z"
@@ -318,7 +318,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-06T17:41:20.150Z",
+  "lastUpdate": "2026-01-06T17:57:06.123Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -336,7 +336,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-06T17:41:20.563Z"
+    "lastChecked": "2026-01-06T17:57:06.704Z"
   },
   "pullRequests": {
     "total": 5,
