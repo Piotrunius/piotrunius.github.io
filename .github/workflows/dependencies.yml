@@ -1,0 +1,187 @@
+name: Dependency Management
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  security-events: write
+
+jobs:
+  vulnerability-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install Dependencies
+        run: npm ci || npm install
+      
+      - name: Run npm audit
+        id: audit
+        run: |
+          echo "### 🔍 NPM Audit Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          npm audit --json > audit-results.json || true
+          
+          CRITICAL=$(cat audit-results.json | jq '.metadata.vulnerabilities.critical // 0')
+          HIGH=$(cat audit-results.json | jq '.metadata.vulnerabilities.high // 0')
+          MODERATE=$(cat audit-results.json | jq '.metadata.vulnerabilities.moderate // 0')
+          LOW=$(cat audit-results.json | jq '.metadata.vulnerabilities.low // 0')
+          
+          echo "**Vulnerability Summary:**" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔴 Critical: $CRITICAL" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟠 High: $HIGH" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟡 Moderate: $MODERATE" >> $GITHUB_STEP_SUMMARY
+          echo "- 🟢 Low: $LOW" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
+            echo "critical_found=true" >> $GITHUB_OUTPUT
+            echo "⚠️ **Action Required:** Critical or High severity vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "critical_found=false" >> $GITHUB_OUTPUT
+            echo "✅ No critical or high severity vulnerabilities found." >> $GITHUB_STEP_SUMMARY
+          fi
+        continue-on-error: true
+      
+      - name: Run Trivy Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+      
+      - name: Upload Trivy results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+      
+      - name: Create Issue for Critical Vulnerabilities
+        if: steps.audit.outputs.critical_found == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '🚨 Critical Security Vulnerabilities Detected';
+            const body = `## Security Alert
+            
+            Critical or high severity vulnerabilities have been detected in project dependencies.
+            
+            **Detection Time:** ${new Date().toISOString()}
+            **Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            ### Action Required
+            
+            1. Review the workflow logs for detailed vulnerability information
+            2. Update affected dependencies
+            3. Test the updates thoroughly
+            4. Deploy the fixes as soon as possible
+            
+            ### Commands to Fix
+            
+            \`\`\`bash
+            # Review vulnerabilities
+            npm audit
+            
+            # Attempt automatic fix
+            npm audit fix
+            
+            # For breaking changes
+            npm audit fix --force
+            \`\`\`
+            
+            This issue was automatically created by the Dependency Management workflow.`;
+            
+            // Check if there's already an open issue
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'security,dependencies'
+            });
+            
+            if (issues.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['security', 'dependencies', 'priority-high']
+              });
+            }
+
+  dependency-update-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Check for Outdated Dependencies
+        run: |
+          npm ci || npm install
+          
+          echo "### 📦 Dependency Update Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          npm outdated --json > outdated.json || true
+          
+          if [ -s outdated.json ]; then
+            echo "**Outdated Dependencies Found:**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
+            cat outdated.json >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Consider updating these dependencies in a future maintenance cycle." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ All dependencies are up to date!" >> $GITHUB_STEP_SUMMARY
+          fi
+        continue-on-error: true
+
+  license-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install license checker
+        run: npm install -g license-checker
+      
+      - name: Check Licenses
+        run: |
+          npm ci || npm install
+          
+          echo "### 📜 License Compliance Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          license-checker --summary > licenses.txt || true
+          
+          if [ -f licenses.txt ]; then
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            cat licenses.txt >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Review licenses to ensure compliance with project requirements." >> $GITHUB_STEP_SUMMARY
+        continue-on-error: true

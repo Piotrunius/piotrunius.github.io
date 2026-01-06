@@ -1,0 +1,56 @@
+{
+  "name": "piotrunius-github-io",
+  "version": "1.0.0",
+  "description": "Piotrunius Personal Website with Advanced CI/CD",
+  "main": "index.html",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js && npm run optimize:images",
+    "build:css": "sass styles.scss styles.css --style=compressed",
+    "build:js": "terser app.js -o app.min.js --compress --mangle",
+    "optimize:images": "imagemin assets/*.{jpg,png,gif,svg} --out-dir=assets/optimized",
+    "test": "npm run test:html && npm run test:css && npm run test:links && npm run test:a11y",
+    "test:html": "html-validate '*.html'",
+    "test:css": "stylelint '**/*.css'",
+    "test:links": "linkinator . --recurse --skip node_modules",
+    "test:a11y": "pa11y-ci",
+    "test:lighthouse": "lhci autorun",
+    "lint": "npm run lint:css && npm run lint:js",
+    "lint:css": "stylelint '**/*.css' --fix",
+    "lint:js": "eslint '**/*.js' --fix",
+    "dev": "browser-sync start --server --files '*.html, *.css, *.js'",
+    "validate": "npm run test",
+    "clean": "rm -rf dist node_modules .cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Piotrunius/piotrunius.github.io.git"
+  },
+  "keywords": [
+    "portfolio",
+    "github-pages",
+    "bio"
+  ],
+  "author": "Piotrunius",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Piotrunius/piotrunius.github.io/issues"
+  },
+  "homepage": "https://piotrunius.github.io",
+  "devDependencies": {
+    "@lhci/cli": "^0.13.0",
+    "browser-sync": "^3.0.2",
+    "eslint": "^8.57.0",
+    "html-validate": "^8.11.1",
+    "imagemin-cli": "^7.0.0",
+    "linkinator": "^6.0.4",
+    "pa11y-ci": "^3.1.0",
+    "sass": "^1.70.0",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "terser": "^5.27.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

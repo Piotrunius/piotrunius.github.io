@@ -1,0 +1,88 @@
+name: Branch Cleanup
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  delete-merged-branch:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Delete Merged Branch
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          
+          # Don't delete protected branches
+          if [[ "$BRANCH_NAME" == "main" ]] || [[ "$BRANCH_NAME" == "dev" ]] || [[ "$BRANCH_NAME" == "master" ]]; then
+            echo "⚠️  Skipping deletion of protected branch: $BRANCH_NAME"
+            exit 0
+          fi
+          
+          # Delete the branch
+          if [[ "$BRANCH_NAME" == feature/* ]] || [[ "$BRANCH_NAME" == bugfix/* ]] || [[ "$BRANCH_NAME" == hotfix/* ]]; then
+            echo "🗑️  Deleting merged branch: $BRANCH_NAME"
+            gh api \
+              --method DELETE \
+              -H "Accept: application/vnd.github+json" \
+              "/repos/${{ github.repository }}/git/refs/heads/$BRANCH_NAME" \
+              || echo "Branch already deleted or doesn't exist"
+            echo "✅ Branch cleanup completed"
+          else
+            echo "ℹ️  Branch $BRANCH_NAME doesn't match cleanup patterns, keeping it"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branchName = '${{ github.head_ref }}';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🧹 Branch \`${branchName}\` has been automatically deleted after merge.`
+            });
+
+  cleanup-stale-branches:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Find Stale Branches
+        run: |
+          echo "### 🔍 Stale Branch Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Branches not updated in the last 60 days:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Get branches older than 60 days
+          for branch in $(git branch -r | grep -v HEAD | sed 's/origin\///'); do
+            # Skip protected branches
+            if [[ "$branch" == "main" ]] || [[ "$branch" == "dev" ]] || [[ "$branch" == "master" ]]; then
+              continue
+            fi
+            
+            LAST_COMMIT_DATE=$(git log -1 --format=%ci origin/$branch 2>/dev/null || echo "")
+            
+            if [ -n "$LAST_COMMIT_DATE" ]; then
+              DAYS_OLD=$(( ($(date +%s) - $(date -d "$LAST_COMMIT_DATE" +%s)) / 86400 ))
+              
+              if [ $DAYS_OLD -gt 60 ]; then
+                echo "- \`$branch\` (Last update: $DAYS_OLD days ago)" >> $GITHUB_STEP_SUMMARY
+              fi
+            fi
+          done
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Note: Manual review recommended before deleting these branches" >> $GITHUB_STEP_SUMMARY

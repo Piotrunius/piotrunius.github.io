@@ -1,0 +1,150 @@
+name: Health Check & Monitoring
+
+on:
+  schedule:
+    # Run every hour
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  uptime-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Production Site
+        id: check
+        run: |
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://piotrunius.github.io/)
+          RESPONSE_TIME=$(curl -o /dev/null -s -w "%{time_total}" https://piotrunius.github.io/)
+          
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+          echo "response_time=$RESPONSE_TIME" >> $GITHUB_OUTPUT
+          
+          if [ $STATUS -eq 200 ]; then
+            echo "✅ Site is UP (Status: $STATUS, Response Time: ${RESPONSE_TIME}s)"
+            exit 0
+          else
+            echo "❌ Site is DOWN (Status: $STATUS)"
+            exit 1
+          fi
+      
+      - name: Create Issue on Failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '🚨 Site Down Alert';
+            const body = `## Site Health Check Failed
+            
+            **Time:** ${new Date().toISOString()}
+            **Status Code:** ${{ steps.check.outputs.status }}
+            **URL:** https://piotrunius.github.io/
+            
+            The production site appears to be down or unreachable. Please investigate immediately.
+            
+            ### Troubleshooting Steps
+            1. Check GitHub Pages status
+            2. Verify DNS configuration
+            3. Review recent deployments
+            4. Check workflow logs
+            
+            This issue was automatically created by the health check workflow.`;
+            
+            // Check if there's already an open issue
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'monitoring,site-down'
+            });
+            
+            if (issues.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['monitoring', 'site-down', 'priority-high']
+              });
+            }
+  
+  performance-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Check Performance Metrics
+        run: |
+          echo "### 📊 Performance Metrics" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Check page load time
+          LOAD_TIME=$(curl -o /dev/null -s -w "%{time_total}" https://piotrunius.github.io/)
+          echo "**Page Load Time:** ${LOAD_TIME}s" >> $GITHUB_STEP_SUMMARY
+          
+          # Check if load time is acceptable (< 3 seconds)
+          if (( $(echo "$LOAD_TIME < 3" | bc -l) )); then
+            echo "✅ Performance OK" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Performance Warning: Page load time exceeds 3 seconds" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          # Check file sizes
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**File Sizes:**" >> $GITHUB_STEP_SUMMARY
+          for file in index.html styles.css app.js; do
+            if [ -f "$file" ]; then
+              size=$(du -h "$file" | cut -f1)
+              echo "- $file: $size" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+  security-headers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Security Headers
+        run: |
+          echo "### 🔒 Security Headers Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          HEADERS=$(curl -s -I https://piotrunius.github.io/)
+          
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "$HEADERS" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Recommended Security Headers:**" >> $GITHUB_STEP_SUMMARY
+          echo "- X-Content-Type-Options" >> $GITHUB_STEP_SUMMARY
+          echo "- X-Frame-Options" >> $GITHUB_STEP_SUMMARY
+          echo "- Content-Security-Policy" >> $GITHUB_STEP_SUMMARY
+          echo "- Referrer-Policy" >> $GITHUB_STEP_SUMMARY
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Note: Configure these headers in your hosting provider or via meta tags" >> $GITHUB_STEP_SUMMARY
+
+  broken-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install Dependencies
+        run: npm ci || npm install
+      
+      - name: Check for Broken Links
+        run: |
+          npm run test:links || echo "Link check completed with warnings"
+        continue-on-error: true
