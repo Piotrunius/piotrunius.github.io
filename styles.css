@@ -2042,8 +2042,16 @@ i:not(.social-link i) {
     --fill: 90%;
 }
 
+.lang-slider[data-level="35"] {
+    --fill: 35%;
+}
+
 .lang-slider[data-level="25"] {
     --fill: 25%;
+}
+
+.lang-slider[data-level="20"] {
+    --fill: 20%;
 }
 
 @keyframes fillSlide {
