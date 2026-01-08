@@ -36,7 +36,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 120002,
+      "stars": 120003,
       "language": "Svelte",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -81,7 +81,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52258,
+      "stars": 52259,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -99,7 +99,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 45273,
+      "stars": 45274,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -135,7 +135,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 90112,
+      "stars": 90115,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -206,6 +206,13 @@
   ],
   "recentCommits": [
     {
+      "message": "Create CNAME",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrek",
+      "date": "2026-01-08T09:15:06Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/e03ac4a94d9858a14290fabdb6754a5df5d02a8b"
+    },
+    {
       "message": "chore: update bio and language proficiency levels",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
@@ -253,13 +260,6 @@
       "author": "Piotrunius",
       "date": "2026-01-05T21:18:58Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/cd606d235a6dd251fb9083af8ebbdee51a903f47"
-    },
-    {
-      "message": "Update Umami script URL to use Cloudflare proxy",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-05T12:34:55Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/da9901ccc5a3b46a38c81b1f88bb9e372c029120"
     },
     {
       "message": "Update AutoClicker.py",
@@ -318,7 +318,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-08T09:03:10.069Z",
+  "lastUpdate": "2026-01-08T09:15:24.367Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -336,7 +336,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-08T09:03:10.415Z"
+    "lastChecked": "2026-01-08T09:15:24.949Z"
   },
   "pullRequests": {
     "total": 5,
