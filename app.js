@@ -1048,6 +1048,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initKeyboardNavigation();
     initSmoothScroll();
     enhanceAccessibility();
+    NotificationManager.init();
 
     // Auto-refresh stats with adaptive intervals
     const statsInterval = deviceCapabilities.isLowEnd ? 600000 : 300000; // 10 or 5 minutes
@@ -1061,6 +1062,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Load projects
     loadProjects();
+    
+    // Log performance metrics after everything loads
+    window.addEventListener('load', () => {
+        setTimeout(logPerformanceMetrics, 100);
+    });
 });
 
 // --- PROJECTS SECTION ---
@@ -1429,7 +1435,28 @@ function getTimeAgo(dateString) {
 // Adds keyboard shortcuts for better accessibility and power user experience
 // Supports: Arrow keys for navigation, Escape to close modals, Space to play/pause audio
 function initKeyboardNavigation() {
+    let shortcutsEnabled = true;
+    
+    // Show keyboard shortcuts help on first visit
+    const hasSeenShortcuts = localStorage.getItem('keyboard-shortcuts-seen');
+    if (!hasSeenShortcuts) {
+        setTimeout(() => {
+            NotificationManager.info(
+                'Keyboard shortcuts enabled! Press ? to see all shortcuts.',
+                6000
+            );
+            localStorage.setItem('keyboard-shortcuts-seen', 'true');
+        }, 2000);
+    }
+    
     document.addEventListener('keydown', (e) => {
+        // ? or /: Show keyboard shortcuts help
+        if ((e.key === '?' || e.key === '/') && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            showKeyboardShortcutsModal();
+            return;
+        }
+        
         // Space or K: Toggle audio playback
         if ((e.code === 'Space' || e.key === 'k') && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
             e.preventDefault();
@@ -1443,6 +1470,11 @@ function initKeyboardNavigation() {
             const closeBtn = document.getElementById('wip-close');
             if (wipNotice && !wipNotice.classList.contains('hidden') && wipNotice.style.display !== 'none') {
                 closeBtn?.click();
+            }
+            // Also close shortcuts modal if open
+            const modal = document.getElementById('shortcuts-modal');
+            if (modal) {
+                modal.remove();
             }
             return;
         }
@@ -1471,7 +1503,73 @@ function initKeyboardNavigation() {
         }
     });
 
-    console.log('Keyboard shortcuts enabled: Space/K (play/pause), T (theme), Esc (close), Ctrl+Home/End (scroll)');
+    console.log('Keyboard shortcuts enabled: Space/K (play/pause), T (theme), Esc (close), Ctrl+Home/End (scroll), ? (help)');
+}
+
+// Show keyboard shortcuts modal
+function showKeyboardShortcutsModal() {
+    // Remove existing modal if present
+    const existingModal = document.getElementById('shortcuts-modal');
+    if (existingModal) {
+        existingModal.remove();
+        return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.id = 'shortcuts-modal';
+    modal.className = 'shortcuts-modal';
+    modal.innerHTML = `
+        <div class="shortcuts-modal-content glass-card">
+            <div class="shortcuts-modal-header">
+                <h3><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h3>
+                <button class="shortcuts-modal-close" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd>Space</kbd> or <kbd>K</kbd>
+                    <span>Play/Pause audio</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>T</kbd>
+                    <span>Toggle theme</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Esc</kbd>
+                    <span>Close modals/notices</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>Home</kbd>
+                    <span>Scroll to top</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>End</kbd>
+                    <span>Scroll to bottom</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>?</kbd>
+                    <span>Show/hide this help</span>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Add click handlers
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+    
+    modal.querySelector('.shortcuts-modal-close').addEventListener('click', () => {
+        modal.remove();
+    });
+    
+    // Animate in
+    setTimeout(() => modal.classList.add('show'), 10);
 }
 
 // --- LOADING STATES ---
@@ -1623,5 +1721,174 @@ function enhanceAccessibility() {
     const mainContainer = document.querySelector('.main-container');
     if (mainContainer && !mainContainer.id) {
         mainContainer.id = 'main-container';
+    }
+}
+
+// --- NOTIFICATION SYSTEM ---
+// Displays toast notifications for user feedback
+// Types: success, error, info, warning
+const NotificationManager = {
+    container: null,
+    
+    init() {
+        this.container = document.getElementById('notification-container');
+        if (!this.container) {
+            this.container = document.createElement('div');
+            this.container.id = 'notification-container';
+            this.container.className = 'notification-container';
+            this.container.setAttribute('aria-live', 'polite');
+            this.container.setAttribute('aria-atomic', 'true');
+            document.body.appendChild(this.container);
+        }
+    },
+    
+    show(message, type = 'info', duration = 4000) {
+        if (!this.container) this.init();
+        
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.setAttribute('role', 'alert');
+        
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-exclamation-circle',
+            warning: 'fa-exclamation-triangle',
+            info: 'fa-info-circle'
+        };
+        
+        notification.innerHTML = `
+            <i class="fas ${icons[type] || icons.info}"></i>
+            <span>${message}</span>
+            <button class="notification-close" aria-label="Close notification">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
+        // Add to container
+        this.container.appendChild(notification);
+        
+        // Trigger animation
+        setTimeout(() => notification.classList.add('show'), 10);
+        
+        // Close button handler
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', () => this.hide(notification));
+        
+        // Auto-hide after duration
+        if (duration > 0) {
+            setTimeout(() => this.hide(notification), duration);
+        }
+        
+        return notification;
+    },
+    
+    hide(notification) {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    },
+    
+    success(message, duration) {
+        return this.show(message, 'success', duration);
+    },
+    
+    error(message, duration) {
+        return this.show(message, 'error', duration);
+    },
+    
+    warning(message, duration) {
+        return this.show(message, 'warning', duration);
+    },
+    
+    info(message, duration) {
+        return this.show(message, 'info', duration);
+    }
+};
+
+// --- COPY TO CLIPBOARD UTILITY ---
+// Copies text to clipboard with user feedback
+async function copyToClipboard(text, successMessage = 'Copied to clipboard!') {
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            NotificationManager.success(successMessage);
+            return true;
+        } else {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                NotificationManager.success(successMessage);
+                return true;
+            } catch (e) {
+                NotificationManager.error('Failed to copy to clipboard');
+                return false;
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        }
+    } catch (err) {
+        console.error('Copy failed:', err);
+        NotificationManager.error('Failed to copy to clipboard');
+        return false;
+    }
+}
+
+// --- WEB SHARE API ---
+// Enables native sharing on supported devices
+async function shareWebsite() {
+    const shareData = {
+        title: 'Piotrunius - Developer & Tech Enthusiast',
+        text: 'Check out my portfolio! Interactive website with real-time integrations.',
+        url: window.location.href
+    };
+    
+    try {
+        if (navigator.share) {
+            await navigator.share(shareData);
+            NotificationManager.success('Thanks for sharing!');
+        } else {
+            // Fallback: copy URL to clipboard
+            await copyToClipboard(window.location.href, 'Link copied to clipboard!');
+        }
+    } catch (err) {
+        if (err.name !== 'AbortError') {
+            console.error('Share failed:', err);
+            // Fallback: copy URL to clipboard
+            await copyToClipboard(window.location.href, 'Link copied to clipboard!');
+        }
+    }
+}
+
+// --- PERFORMANCE METRICS DISPLAY ---
+// Shows performance information in console for debugging
+function logPerformanceMetrics() {
+    if (!window.performance) return;
+    
+    const perfData = performance.getEntriesByType('navigation')[0];
+    if (perfData) {
+        const metrics = {
+            'DNS Lookup': perfData.domainLookupEnd - perfData.domainLookupStart,
+            'TCP Connection': perfData.connectEnd - perfData.connectStart,
+            'Request Time': perfData.responseStart - perfData.requestStart,
+            'Response Time': perfData.responseEnd - perfData.responseStart,
+            'DOM Processing': perfData.domComplete - perfData.domInteractive,
+            'Load Complete': perfData.loadEventEnd - perfData.loadEventStart,
+            'Total Load Time': perfData.loadEventEnd - perfData.fetchStart
+        };
+        
+        console.group('🚀 Performance Metrics');
+        Object.entries(metrics).forEach(([key, value]) => {
+            console.log(`${key}: ${value.toFixed(2)}ms`);
+        });
+        console.groupEnd();
     }
 }
