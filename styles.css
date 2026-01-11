@@ -1466,6 +1466,7 @@ a:where(:not(.social-link, .contact-btn, .music-btn, .spec-item, .activity-link,
 
 .project-link {
     display: inline-flex;
+    margin-left: auto;
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1rem;
@@ -3030,19 +3031,20 @@ i:not(.social-link i) {
     }
 
     .project-footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 1rem !important;
     }
 
     .project-stats {
-        width: 100%;
-        justify-content: flex-start;
+        width: auto !important;
+        justify-content: flex-start !important;
     }
 
     .project-link {
-        width: 100%;
-        justify-content: center;
+        width: auto !important;
+        justify-content: flex-end !important;
     }
 }
 

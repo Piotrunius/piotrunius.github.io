@@ -1039,7 +1039,7 @@ async function loadProjects() {
     try {
         // Fetch projects data from pre-generated JSON file
         const response = await fetch(`data/projects.json?t=${Date.now()}`);
-        
+
         if (!response.ok) {
             throw new Error(`Failed to load projects: ${response.status}`);
         }
@@ -1081,7 +1081,7 @@ async function loadProjects() {
             } else if (repo.name === 'Broadcast-generator') {
                 badge = 'private';
                 badgeClass = 'project-badge-private';
-                projectLink = 'https://cloud.umami.is/q/2SQPbwqnb';
+                projectLink = 'https://piotrunius.github.io/Broadcast-generator/';
             } else if (repo.private) {
                 badge = 'private';
                 badgeClass = 'project-badge-private';
@@ -1089,7 +1089,7 @@ async function loadProjects() {
             } else if (repo.name === 'AutoClicker-AntiAFK') {
                 badge = 'archive';
                 badgeClass = 'project-badge-archive';
-                projectLink = 'https://cloud.umami.is/q/aC6gpCW2H';
+                projectLink = 'https://github.com/Piotrunius/AutoClicker-AntiAFK';
             }
 
             card.innerHTML = `
@@ -1100,10 +1100,6 @@ async function loadProjects() {
                 <div class="project-description">${escapeHtml(description)}</div>
                 <div class="project-footer">
                     <div class="project-stats">
-                        <div class="project-stat" title="Author">
-                            <i class="fas fa-user"></i>
-                            <span>${escapeHtml(author)}</span>
-                        </div>
                         <div class="project-stat" title="Language">
                             <i class="fas fa-code"></i>
                             <span>${escapeHtml(language)}</span>
