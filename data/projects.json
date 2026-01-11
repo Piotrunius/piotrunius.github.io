@@ -30,11 +30,8 @@
       "forks": 0,
       "updated_at": "2026-01-11T11:24:31Z"
     }
-  ],
-<<<<<<< HEAD
+    },
   "lastUpdate": "2026-01-11T11:24:57.470Z"
 }
-=======
   "lastUpdate": "2026-01-11T11:22:13.416Z"
 }
->>>>>>> c7f057b (Fix: Update projects.json to include Broadcast-generator and remove owner fields)
