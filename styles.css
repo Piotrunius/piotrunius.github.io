@@ -1419,10 +1419,10 @@ a:where(:not(.social-link, .contact-btn, .music-btn, .spec-item, .activity-link,
     color: #ffc107;
 }
 
-.project-badge-public {
-    background: rgba(33, 150, 243, 0.15);
-    border: 1px solid rgba(33, 150, 243, 0.3);
-    color: #2196F3;
+.project-badge-private {
+    background: rgba(244, 67, 54, 0.15);
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    color: #f44336;
 }
 
 .project-description {
