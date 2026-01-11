@@ -5,10 +5,17 @@
       "description": "Piotrunius AutoClicker & More",
       "html_url": "https://github.com/Piotrunius/AutoClicker-AntiAFK",
       "language": "Python",
-      "owner": {
-        "login": "Piotrunius"
-      },
       "private": false,
+      "stars": 0,
+      "forks": 0,
+      "updated_at": "2025-12-10T09:51:26Z"
+    },
+    {
+      "name": "Broadcast-generator",
+      "description": "Tools for Roblox SCP Site Roleplay",
+      "html_url": "https://piotrunius.github.io/Broadcast-generator/",
+      "language": "JavaScript",
+      "private": true,
       "stars": 0,
       "forks": 0,
       "updated_at": "2025-12-10T09:51:26Z"
@@ -18,14 +25,16 @@
       "description": "Personal Bio Page",
       "html_url": "https://github.com/Piotrunius/piotrunius.github.io",
       "language": "CSS",
-      "owner": {
-        "login": "Piotrunius"
-      },
       "private": false,
       "stars": 0,
       "forks": 0,
       "updated_at": "2026-01-11T11:24:31Z"
     }
   ],
+<<<<<<< HEAD
   "lastUpdate": "2026-01-11T11:24:57.470Z"
 }
+=======
+  "lastUpdate": "2026-01-11T11:22:13.416Z"
+}
+>>>>>>> c7f057b (Fix: Update projects.json to include Broadcast-generator and remove owner fields)

@@ -24,10 +24,10 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -44,7 +44,7 @@ jobs:
           const fs = require('fs');
           const https = require('https');
           const isGithubTime = true;
-          
+
           // Utility: Retry logic with exponential backoff
           async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
             for (let i = 0; i < retries; i++) {
@@ -53,7 +53,7 @@ jobs:
                 if (!response.ok) {
                   const rateLimitRemaining = response.headers.get('x-ratelimit-remaining');
                   const rateLimitReset = response.headers.get('x-ratelimit-reset');
-                  
+
                   if (response.status === 403 && rateLimitRemaining === '0') {
                     const resetTime = new Date(rateLimitReset * 1000);
                     console.warn(`Rate limit exceeded. Resets at ${resetTime}`);
@@ -75,20 +75,20 @@ jobs:
               }
             }
           }
-          
+
           // Utility: Validate and sanitize data
           function sanitizeString(str, maxLength = 500) {
             if (typeof str !== 'string') return '';
             return str.slice(0, maxLength).trim();
           }
-          
+
           async function run() {
             if (!fs.existsSync('./data')) fs.mkdirSync('./data');
-            
+
             // Load previous data as fallback
             let previousSteamData = {};
             let previousGithubData = {};
-            
+
             try {
               if (fs.existsSync('./data/steam-status.json')) {
                 previousSteamData = JSON.parse(fs.readFileSync('./data/steam-status.json', 'utf8'));
@@ -96,7 +96,7 @@ jobs:
             } catch (e) {
               console.warn('Could not load previous Steam data:', e.message);
             }
-            
+
             try {
               if (fs.existsSync('./data/github-stats.json')) {
                 previousGithubData = JSON.parse(fs.readFileSync('./data/github-stats.json', 'utf8'));
@@ -104,7 +104,7 @@ jobs:
             } catch (e) {
               console.warn('Could not load previous GitHub data:', e.message);
             }
-            
+
             // --- STEAM ---
             const sKey = process.env.STEAM_API_KEY;
             const sId = process.env.STEAM_ID64 || '76561199034113344';
@@ -112,15 +112,15 @@ jobs:
               try {
                 const r1 = await fetchWithRetry(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${sKey}&steamids=${sId}`);
                 const j1 = await r1.json();
-                
+
                 if (!j1.response || !j1.response.players || j1.response.players.length === 0) {
                   throw new Error('Invalid Steam API response');
                 }
-                
+
                 const r2 = await fetchWithRetry(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${sKey}&steamid=${sId}&include_appinfo=0&include_played_free_games=1`);
                 const j2 = await r2.json();
                 const p = j1.response.players[0];
-                
+
                 const stats = {
                   steam: {
                     personastate: p.personastate || 0,
@@ -154,26 +154,26 @@ jobs:
               try {
                 const uR = await fetchWithRetry(`https://api.github.com/users/${gUser}`, { headers: gHeaders });
                 const uJ = await uR.json();
-                
+
                 if (!uJ.login) {
                   throw new Error('Invalid GitHub user response');
                 }
-                
-                const sR = await fetchWithRetry(`https://api.github.com/users/${gUser}/starred?per_page=100`, { 
-                  headers: {...gHeaders, 'Accept': 'application/vnd.github.star+json'} 
+
+                const sR = await fetchWithRetry(`https://api.github.com/users/${gUser}/starred?per_page=100`, {
+                  headers: {...gHeaders, 'Accept': 'application/vnd.github.star+json'}
                 });
                 const starred = await sR.json();
-                
-                const cR = await fetchWithRetry(`https://api.github.com/search/commits?q=author:${gUser}`, { 
-                  headers: {...gHeaders, 'Accept': 'application/vnd.github.cloak-preview'} 
+
+                const cR = await fetchWithRetry(`https://api.github.com/search/commits?q=author:${gUser}`, {
+                  headers: {...gHeaders, 'Accept': 'application/vnd.github.cloak-preview'}
                 });
                 const cJ = await cR.json();
-                
+
                 const stats = {
-                  summary: { 
-                    projects: uJ.public_repos || 0, 
-                    starredCount: Array.isArray(starred) ? starred.length : 0, 
-                    commits: cJ.total_count || 0 
+                  summary: {
+                    projects: uJ.public_repos || 0,
+                    starredCount: Array.isArray(starred) ? starred.length : 0,
+                    commits: cJ.total_count || 0
                   },
                   starred: Array.isArray(starred) ? starred.slice(0, 30).map(i => ({
                     name: sanitizeString(i.repo?.name || 'Unknown', 100),
@@ -187,20 +187,20 @@ jobs:
                   recentCommits: [],
                   lastUpdate: new Date().toISOString()
                 };
-                
+
                 // Fetch repositories with better error handling
                 const reposR = await fetchWithRetry(`https://api.github.com/users/${gUser}/repos?per_page=100&sort=updated`, { headers: gHeaders });
                 const repos = await reposR.json();
-                
+
                 if (!Array.isArray(repos)) {
                   throw new Error('Invalid repositories response');
                 }
-                
+
                 // Parallel commit fetching with Promise.allSettled for better error handling
                 const commitPromises = repos.slice(0, 15).map(async r => { // Reduced from 20 to 15 for efficiency
                   try {
                     const cr = await fetchWithRetry(
-                      `https://api.github.com/repos/${r.owner.login}/${r.name}/commits?per_page=8&author=${gUser}`, 
+                      `https://api.github.com/repos/${r.owner.login}/${r.name}/commits?per_page=8&author=${gUser}`,
                       { headers: gHeaders }
                     );
                     const cm = await cr.json();
@@ -219,20 +219,20 @@ jobs:
                     return [];
                   }
                 });
-                
+
                 const allCommitsResults = await Promise.allSettled(commitPromises);
                 const allCommits = allCommitsResults
                   .filter(r => r.status === 'fulfilled')
                   .flatMap(r => r.value);
-                
+
                 // Sort and deduplicate commits
                 stats.recentCommits = allCommits
                   .sort((a, b) => new Date(b.date) - new Date(a.date))
-                  .filter((commit, index, self) => 
+                  .filter((commit, index, self) =>
                     index === self.findIndex(c => c.url === commit.url)
                   )
                   .slice(0, 40); // Reduced from 50 to 40 for smaller file size
-                
+
                 // Fetch security alerts (Dependabot, Code Scanning, Secret Scanning)
                 const securityData = {
                   dependabot: { open: 0, closed: 0, alerts: [] },
@@ -241,12 +241,12 @@ jobs:
                   totalOpen: 0,
                   lastChecked: new Date().toISOString()
                 };
-                
+
                 // Fetch vulnerability alerts from all repos
                 const securityPromises = repos.slice(0, 20).map(async r => {
                   const repoFullName = `${r.owner.login}/${r.name}`;
                   const results = { repo: r.name, dependabot: [], codeScanning: [], secretScanning: [] };
-                  
+
                   try {
                     // Dependabot alerts
                     try {
@@ -271,7 +271,7 @@ jobs:
                     } catch (e) {
                       console.log(`Dependabot alerts not available for ${r.name}`);
                     }
-                    
+
                     // Code scanning alerts
                     try {
                       const codeR = await fetchWithRetry(
@@ -295,7 +295,7 @@ jobs:
                     } catch (e) {
                       console.log(`Code scanning alerts not available for ${r.name}`);
                     }
-                    
+
                     // Secret scanning alerts
                     try {
                       const secretR = await fetchWithRetry(
@@ -320,17 +320,17 @@ jobs:
                   } catch (e) {
                     console.log(`Security check failed for ${r.name}: ${e.message}`);
                   }
-                  
+
                   return results;
                 });
-                
+
                 const securityResults = await Promise.allSettled(securityPromises);
-                
+
                 // Aggregate security data
                 securityResults.forEach(result => {
                   if (result.status === 'fulfilled' && result.value) {
                     const data = result.value;
-                    
+
                     data.dependabot.forEach(alert => {
                       securityData.dependabot.open++;
                       securityData.dependabot.alerts.push({
@@ -338,7 +338,7 @@ jobs:
                         repo: data.repo
                       });
                     });
-                    
+
                     data.codeScanning.forEach(alert => {
                       securityData.codeScanning.open++;
                       securityData.codeScanning.alerts.push({
@@ -346,7 +346,7 @@ jobs:
                         repo: data.repo
                       });
                     });
-                    
+
                     data.secretScanning.forEach(alert => {
                       securityData.secretScanning.open++;
                       securityData.secretScanning.alerts.push({
@@ -356,7 +356,7 @@ jobs:
                     });
                   }
                 });
-                
+
                 // Sort alerts by severity and date
                 const severityOrder = { critical: 0, high: 1, medium: 2, low: 3, unknown: 4 };
                 securityData.dependabot.alerts.sort((a, b) => {
@@ -364,28 +364,28 @@ jobs:
                   if (severityDiff !== 0) return severityDiff;
                   return new Date(b.created) - new Date(a.created);
                 });
-                
+
                 securityData.codeScanning.alerts.sort((a, b) => {
                   const severityDiff = (severityOrder[a.severity] || 4) - (severityOrder[b.severity] || 4);
                   if (severityDiff !== 0) return severityDiff;
                   return new Date(b.created) - new Date(a.created);
                 });
-                
-                securityData.secretScanning.alerts.sort((a, b) => 
+
+                securityData.secretScanning.alerts.sort((a, b) =>
                   new Date(b.created) - new Date(a.created)
                 );
-                
+
                 // Limit alerts to top 20 each
                 securityData.dependabot.alerts = securityData.dependabot.alerts.slice(0, 20);
                 securityData.codeScanning.alerts = securityData.codeScanning.alerts.slice(0, 20);
                 securityData.secretScanning.alerts = securityData.secretScanning.alerts.slice(0, 20);
-                
-                securityData.totalOpen = securityData.dependabot.open + 
-                                        securityData.codeScanning.open + 
+
+                securityData.totalOpen = securityData.dependabot.open +
+                                        securityData.codeScanning.open +
                                         securityData.secretScanning.open;
-                
+
                 stats.security = securityData;
-                
+
                 // Fetch pull requests
                 try {
                   const prR = await fetchWithRetry(
@@ -393,7 +393,7 @@ jobs:
                     { headers: gHeaders }
                   );
                   const prData = await prR.json();
-                  
+
                   stats.pullRequests = {
                     total: prData.total_count || 0,
                     recent: Array.isArray(prData.items) ? prData.items.slice(0, 10).map(pr => ({
@@ -409,7 +409,7 @@ jobs:
                   console.log('PR fetch failed:', e.message);
                   stats.pullRequests = { total: 0, recent: [] };
                 }
-                
+
                 // Fetch issues
                 try {
                   const issueR = await fetchWithRetry(
@@ -417,7 +417,7 @@ jobs:
                     { headers: gHeaders }
                   );
                   const issueData = await issueR.json();
-                  
+
                   stats.issues = {
                     total: issueData.total_count || 0,
                     recent: Array.isArray(issueData.items) ? issueData.items.slice(0, 10).map(issue => ({
@@ -433,7 +433,7 @@ jobs:
                   console.log('Issues fetch failed:', e.message);
                   stats.issues = { total: 0, recent: [] };
                 }
-                
+
                 // Calculate language statistics
                 const languageStats = {};
                 repos.forEach(r => {
@@ -441,56 +441,15 @@ jobs:
                     languageStats[r.language] = (languageStats[r.language] || 0) + 1;
                   }
                 });
-                
+
                 stats.languages = Object.entries(languageStats)
                   .sort((a, b) => b[1] - a[1])
                   .slice(0, 10)
                   .map(([lang, count]) => ({ name: lang, repos: count }));
-                
+
                 fs.writeFileSync('./data/github-stats.json', JSON.stringify(stats, null, 2));
                 console.log('GitHub data updated successfully');
-                
-                // --- PROJECTS ---
-                // Fetch specific projects including private ones
-                const projectNames = ['AutoClicker-AntiAFK', 'piotrunius.github.io', 'Broadcast-generator'];
-                const projectsData = [];
-                
-                for (const projectName of projectNames) {
-                  try {
-                    const projR = await fetchWithRetry(
-                      `https://api.github.com/repos/${gUser}/${projectName}`,
-                      { headers: gHeaders }
-                    );
-                    
-                    if (projR.ok) {
-                      const project = await projR.json();
-                      projectsData.push({
-                        name: sanitizeString(project.name || projectName, 100),
-                        description: sanitizeString(project.description || 'No description available', 200),
-                        html_url: sanitizeString(project.html_url || `https://github.com/${gUser}/${projectName}`, 200),
-                        language: sanitizeString(project.language || 'Unknown', 50),
-                        owner: {
-                          login: sanitizeString(project.owner?.login || gUser, 50)
-                        },
-                        private: project.private || false,
-                        stars: project.stargazers_count || 0,
-                        forks: project.forks_count || 0,
-                        updated_at: project.updated_at || new Date().toISOString()
-                      });
-                      console.log(`Fetched project: ${projectName}`);
-                    }
-                  } catch (e) {
-                    console.log(`Failed to fetch project ${projectName}: ${e.message}`);
-                  }
-                }
-                
-                const projectsOutput = {
-                  projects: projectsData,
-                  lastUpdate: new Date().toISOString()
-                };
-                
-                fs.writeFileSync('./data/projects.json', JSON.stringify(projectsOutput, null, 2));
-                console.log('Projects data saved successfully');
+
               } catch (e) {
                 console.error('GitHub error:', e.message);
                 // Keep previous data if update fails
@@ -503,7 +462,7 @@ jobs:
               }
             }
           }
-          
+
           run().catch(error => {
             console.error('Fatal error:', error);
             process.exit(1);
@@ -538,13 +497,13 @@ jobs:
       - name: Setup Pages
         if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         uses: actions/configure-pages@v5
-        
+
       - name: Upload artifact
         if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
