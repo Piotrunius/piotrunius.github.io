@@ -2,7 +2,7 @@
   "summary": {
     "projects": 2,
     "starredCount": 22,
-    "commits": 125
+    "commits": 119
   },
   "starred": [
     {
@@ -36,7 +36,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 120235,
+      "stars": 120233,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -162,7 +162,7 @@
       "name": "YimMenuV2",
       "owner": "YimMenu",
       "url": "https://github.com/YimMenu/YimMenuV2",
-      "stars": 996,
+      "stars": 995,
       "language": "C++",
       "description": "Experimental menu for GTA 5: Enhanced",
       "starredAt": "2025-07-07T06:47:19Z"
@@ -206,48 +206,6 @@
   ],
   "recentCommits": [
     {
-      "message": "fix",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrek",
-      "date": "2026-01-11T11:42:26Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/fe0b6569edffc720f44311e5918d8a19056669bb"
-    },
-    {
-      "message": "Fix: Correct JSON formatting in projects.json",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-11T11:39:40Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/5f6b91d1872821e7ef6613e789542997e4fd2f93"
-    },
-    {
-      "message": "Fix lastUpdate timestamp in projects.json",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrek",
-      "date": "2026-01-11T11:35:41Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/b6c693021d6299d24ef962557f83e28861925e37"
-    },
-    {
-      "message": "Fix JSON formatting in projects.json",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrek",
-      "date": "2026-01-11T11:35:16Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/03b6329ffaf6f54f4ff944334f801b3953683be4"
-    },
-    {
-      "message": "Update projects.json",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrek",
-      "date": "2026-01-11T11:35:07Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/bb2e2f91e93c997f890cf8cde260561460abc262"
-    },
-    {
-      "message": "Fix: Resolve merge conflict in projects.json and update lastUpdate timestamp",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-11T11:33:41Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/5bcdca43a4ae4a717889fd929e3d8d427aececf3"
-    },
-    {
       "message": "Fix: Update projects.json to include Broadcast-generator and remove owner fields",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
@@ -260,6 +218,48 @@
       "author": "Piotrunius",
       "date": "2026-01-11T11:23:42Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/160f51a77ef2b9f51526e0134b10f00d2e1b1415"
+    },
+    {
+      "message": "Delete CNAME",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrek",
+      "date": "2026-01-08T09:15:28Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/67ac6dbf9368da9b447a76712ba93c6bc2bac257"
+    },
+    {
+      "message": "Create CNAME",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrek",
+      "date": "2026-01-08T09:15:06Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/e03ac4a94d9858a14290fabdb6754a5df5d02a8b"
+    },
+    {
+      "message": "chore: update bio and language proficiency levels",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-07T08:38:08Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/5836d8d40da91bec2e3c065b970839848a213d05"
+    },
+    {
+      "message": "Fix email formatting in README",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-06T02:26:23Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/48d571a87288000caab693ac929631f0f2d31cef"
+    },
+    {
+      "message": "Add files via upload",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-06T02:25:12Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/e2abfee2e076e536e54850c1984580f7ed108d65"
+    },
+    {
+      "message": "Update LICENSE",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-01-05T23:05:05Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/26eb3958c44f5c3910de510c1bd1d70efca5dff4"
     },
     {
       "message": "Update AutoClicker.py",
@@ -318,7 +318,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-11T11:42:41.891Z",
+  "lastUpdate": "2026-01-11T11:31:27.836Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -336,7 +336,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-11T11:42:42.308Z"
+    "lastChecked": "2026-01-11T11:31:28.091Z"
   },
   "pullRequests": {
     "total": 5,
