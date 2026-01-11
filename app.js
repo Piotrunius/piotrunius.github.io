@@ -1036,56 +1036,16 @@ async function loadProjects() {
     const container = document.getElementById('projects-container');
     if (!container) return;
 
-    let allRepos = [];
-
     try {
-        // Fetch repositories
-        const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=100&type=owner`, {
-            headers: {
-                'Accept': 'application/vnd.github.v3+json'
-            }
-        });
-
-        if (response.ok) {
-            const repos = await response.json();
-            // Target specific repositories
-            const targetNames = ['AutoClicker-AntiAFK', 'piotrunius.github.io'];
-            allRepos = repos.filter(r => targetNames.includes(r.name));
+        // Fetch projects data from pre-generated JSON file
+        const response = await fetch(`data/projects.json?t=${Date.now()}`);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to load projects: ${response.status}`);
         }
-    } catch (e) {
-        console.warn('Failed to fetch public repos:', e);
-    }
 
-    // Add Broadcast-generator (now owned by Piotrunius, may be private)
-    // Fallback data for private repository
-    const broadcastFallback = {
-        name: 'Broadcast-generator',
-        description: 'A private project for generating broadcasts',
-        html_url: 'https://github.com/Piotrunius/Broadcast-generator',
-        language: 'Python',
-        owner: { login: 'Piotrunius' }
-    };
-
-    try {
-        const broadcastResponse = await fetch(`https://api.github.com/repos/${githubUsername}/Broadcast-generator`, {
-            headers: {
-                'Accept': 'application/vnd.github.v3+json'
-            }
-        });
-        if (broadcastResponse.ok) {
-            const broadcastRepo = await broadcastResponse.json();
-            allRepos.push(broadcastRepo);
-        } else {
-            // Repository is private, use fallback data
-            console.log('Broadcast-generator is private, using fallback data');
-            allRepos.push(broadcastFallback);
-        }
-    } catch (e) {
-        console.warn('Failed to fetch Broadcast-generator project, using fallback:', e);
-        allRepos.push(broadcastFallback);
-    }
-
-    try {
+        const data = await response.json();
+        const allRepos = data.projects || [];
 
         if (allRepos.length === 0) {
             container.innerHTML = `
@@ -1118,8 +1078,7 @@ async function loadProjects() {
             if (repo.name === 'piotrunius.github.io') {
                 badge = 'active';
                 badgeClass = 'project-badge-active';
-                // piotrunius.github.io uses standard GitHub URL (repo.html_url)
-            } else if (repo.name === 'Broadcast-generator') {
+            } else if (repo.name === 'Broadcast-generator' || repo.private) {
                 badge = 'private';
                 badgeClass = 'project-badge-private';
                 projectLink = 'https://cloud.umami.is/q/2SQPbwqnb';

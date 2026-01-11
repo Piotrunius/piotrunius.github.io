@@ -449,6 +449,48 @@ jobs:
                 
                 fs.writeFileSync('./data/github-stats.json', JSON.stringify(stats, null, 2));
                 console.log('GitHub data updated successfully');
+                
+                // --- PROJECTS ---
+                // Fetch specific projects including private ones
+                const projectNames = ['AutoClicker-AntiAFK', 'piotrunius.github.io', 'Broadcast-generator'];
+                const projectsData = [];
+                
+                for (const projectName of projectNames) {
+                  try {
+                    const projR = await fetchWithRetry(
+                      `https://api.github.com/repos/${gUser}/${projectName}`,
+                      { headers: gHeaders }
+                    );
+                    
+                    if (projR.ok) {
+                      const project = await projR.json();
+                      projectsData.push({
+                        name: sanitizeString(project.name || projectName, 100),
+                        description: sanitizeString(project.description || 'No description available', 200),
+                        html_url: sanitizeString(project.html_url || `https://github.com/${gUser}/${projectName}`, 200),
+                        language: sanitizeString(project.language || 'Unknown', 50),
+                        owner: {
+                          login: sanitizeString(project.owner?.login || gUser, 50)
+                        },
+                        private: project.private || false,
+                        stars: project.stargazers_count || 0,
+                        forks: project.forks_count || 0,
+                        updated_at: project.updated_at || new Date().toISOString()
+                      });
+                      console.log(`Fetched project: ${projectName}`);
+                    }
+                  } catch (e) {
+                    console.log(`Failed to fetch project ${projectName}: ${e.message}`);
+                  }
+                }
+                
+                const projectsOutput = {
+                  projects: projectsData,
+                  lastUpdate: new Date().toISOString()
+                };
+                
+                fs.writeFileSync('./data/projects.json', JSON.stringify(projectsOutput, null, 2));
+                console.log('Projects data saved successfully');
               } catch (e) {
                 console.error('GitHub error:', e.message);
                 // Keep previous data if update fails
