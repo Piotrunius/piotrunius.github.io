@@ -9,7 +9,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7547,
+      "stars": 7548,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -99,7 +99,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 45442,
+      "stars": 45443,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -135,7 +135,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 90503,
+      "stars": 90501,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -318,7 +318,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-11T18:37:32.693Z",
+  "lastUpdate": "2026-01-11T18:57:52.215Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -336,7 +336,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-11T18:37:32.944Z"
+    "lastChecked": "2026-01-11T18:57:52.701Z"
   },
   "pullRequests": {
     "total": 5,
