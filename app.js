@@ -1051,22 +1051,22 @@ async function loadProjects() {
         const repos = await response.json();
 
         // Target specific repositories
-        const targetNames = ['AutoClicker-AntiAFK'];
+        const targetNames = ['AutoClicker-AntiAFK', 'Test-Project-Bio'];
         let allRepos = repos.filter(r => targetNames.includes(r.name));
 
-        // Add external project from aresysite
+        // Add Broadcast-generator (now owned by Piotrunius, may be private)
         try {
-            const externalResponse = await fetch('https://api.github.com/repos/aresysite/Broadcast-generator', {
+            const broadcastResponse = await fetch(`https://api.github.com/repos/${githubUsername}/Broadcast-generator`, {
                 headers: {
                     'Accept': 'application/vnd.github.v3+json'
                 }
             });
-            if (externalResponse.ok) {
-                const externalRepo = await externalResponse.json();
-                allRepos.push(externalRepo);
+            if (broadcastResponse.ok) {
+                const broadcastRepo = await broadcastResponse.json();
+                allRepos.push(broadcastRepo);
             }
         } catch (e) {
-            console.warn('Failed to fetch external project:', e);
+            console.warn('Failed to fetch Broadcast-generator project:', e);
         }
 
         if (allRepos.length === 0) {
@@ -1105,6 +1105,10 @@ async function loadProjects() {
                 badge = 'archive';
                 badgeClass = 'project-badge-archive';
                 projectLink = 'https://cloud.umami.is/q/aC6gpCW2H';
+            } else if (repo.name === 'Test-Project-Bio') {
+                badge = 'public';
+                badgeClass = 'project-badge-public';
+                // Use default html_url for Test-Project-Bio
             }
 
             card.innerHTML = `
