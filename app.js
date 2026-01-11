@@ -1051,7 +1051,7 @@ async function loadProjects() {
         const repos = await response.json();
 
         // Target specific repositories
-        const targetNames = ['AutoClicker-AntiAFK', 'Test-Project-Bio'];
+        const targetNames = ['AutoClicker-AntiAFK', 'piotrunius.github.io'];
         let allRepos = repos.filter(r => targetNames.includes(r.name));
 
         // Add Broadcast-generator (now owned by Piotrunius, may be private)
@@ -1097,18 +1097,18 @@ async function loadProjects() {
             let badgeClass = '';
             let projectLink = repo.html_url; // default link
 
-            if (repo.name === 'Broadcast-generator') {
+            if (repo.name === 'piotrunius.github.io') {
                 badge = 'active';
                 badgeClass = 'project-badge-active';
+                // piotrunius.github.io uses standard GitHub URL (repo.html_url)
+            } else if (repo.name === 'Broadcast-generator') {
+                badge = 'private';
+                badgeClass = 'project-badge-private';
                 projectLink = 'https://cloud.umami.is/q/2SQPbwqnb';
             } else if (repo.name === 'AutoClicker-AntiAFK') {
                 badge = 'archive';
                 badgeClass = 'project-badge-archive';
                 projectLink = 'https://cloud.umami.is/q/aC6gpCW2H';
-            } else if (repo.name === 'Test-Project-Bio') {
-                badge = 'public';
-                badgeClass = 'project-badge-public';
-                // Test-Project-Bio uses standard GitHub URL (repo.html_url)
             }
 
             card.innerHTML = `
