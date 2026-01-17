@@ -11,14 +11,14 @@
       "url": "https://github.com/aukspot/dles",
       "stars": 56,
       "language": "Svelte",
-      "description": "A curated collection of over 600 daily games.",
+      "description": "A curated collection of over 600 daily web games.",
       "starredAt": "2026-01-16T06:12:33Z"
     },
     {
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7608,
+      "stars": 7609,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 120984,
+      "stars": 120985,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -72,7 +72,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 19317,
+      "stars": 19318,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -135,7 +135,7 @@
       "name": "RoValra",
       "owner": "NotValra",
       "url": "https://github.com/NotValra/RoValra",
-      "stars": 87,
+      "stars": 88,
       "language": "JavaScript",
       "description": "A forever free Roblox extension",
       "starredAt": "2025-09-29T20:41:22Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 91365,
+      "stars": 91366,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-17T22:45:06.623Z",
+  "lastUpdate": "2026-01-17T22:57:48.825Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-17T22:45:07.127Z"
+    "lastChecked": "2026-01-17T22:57:49.262Z"
   },
   "pullRequests": {
     "total": 5,
