@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 91447,
+      "stars": 91450,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -189,7 +189,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 3962,
+      "stars": 3963,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python.",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-18T11:40:36.194Z",
+  "lastUpdate": "2026-01-18T11:52:47.156Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-18T11:40:36.591Z"
+    "lastChecked": "2026-01-18T11:52:47.500Z"
   },
   "pullRequests": {
     "total": 5,
