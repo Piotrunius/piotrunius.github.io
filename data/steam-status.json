@@ -1,12 +1,12 @@
 {
   "steam": {
     "personastate": 1,
-    "gameextrainfo": "ARC Raiders",
+    "gameextrainfo": null,
     "avatar": "https://avatars.steamstatic.com/a7b85c1debc6db3cb342f4f0a14f3bbe2d564f6d_medium.jpg",
     "timecreated": 1584306745,
     "lastlogoff": 1768860895,
     "game_count": 276,
-    "total_playtime": 2761
+    "total_playtime": 2762
   },
-  "lastUpdate": "2026-01-20T17:54:43.288Z"
+  "lastUpdate": "2026-01-20T18:51:24.548Z"
 }
