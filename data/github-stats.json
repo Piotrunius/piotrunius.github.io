@@ -27,7 +27,7 @@
       "name": "github-profile-readme-generator",
       "owner": "rahuldkjain",
       "url": "https://github.com/rahuldkjain/github-profile-readme-generator",
-      "stars": 23945,
+      "stars": 23946,
       "language": "TypeScript",
       "description": "🚀 Generate GitHub profile README easily with the latest add-ons like visitors count, GitHub stats, etc using minimal UI.",
       "starredAt": "2026-01-03T02:14:42Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 121639,
+      "stars": 121641,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -90,7 +90,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52518,
+      "stars": 52519,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 163532,
+      "stars": 163534,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 92266,
+      "stars": 92268,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -171,7 +171,7 @@
       "name": "YimMenuV2",
       "owner": "YimMenu",
       "url": "https://github.com/YimMenu/YimMenuV2",
-      "stars": 1027,
+      "stars": 1028,
       "language": "C++",
       "description": "Experimental menu for GTA 5: Enhanced",
       "starredAt": "2025-07-07T06:47:19Z"
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-23T18:41:59.982Z",
+  "lastUpdate": "2026-01-23T19:12:35.312Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-23T18:42:00.484Z"
+    "lastChecked": "2026-01-23T19:12:35.701Z"
   },
   "pullRequests": {
     "total": 5,
