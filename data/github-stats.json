@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 121748,
+      "stars": 121749,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -54,7 +54,7 @@
       "name": "arcraiders-data",
       "owner": "RaidTheory",
       "url": "https://github.com/RaidTheory/arcraiders-data",
-      "stars": 258,
+      "stars": 257,
       "language": "JavaScript",
       "description": "Free to use ARC Raiders game data in JSON Format.",
       "starredAt": "2025-11-30T11:02:20Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 163639,
+      "stars": 163640,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-24T19:24:48.014Z",
+  "lastUpdate": "2026-01-24T19:40:14.357Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-24T19:24:48.400Z"
+    "lastChecked": "2026-01-24T19:40:14.768Z"
   },
   "pullRequests": {
     "total": 5,
