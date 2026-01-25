@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-01-25T15:26:28.381Z",
+  "lastUpdate": "2026-01-25T15:31:36.867Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-01-25T15:26:28.650Z"
+    "lastChecked": "2026-01-25T15:31:37.161Z"
   },
   "pullRequests": {
     "total": 5,
