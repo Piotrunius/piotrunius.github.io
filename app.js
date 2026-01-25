@@ -390,6 +390,7 @@ async function refreshSteamStatus() {
         const avatarUrl = s.avatar;
         // Validate that URL is from Steam CDN
         if (avatarUrl.startsWith('https://avatars.akamai.steamstatic.com/') ||
+            avatarUrl.startsWith('https://avatars.steamstatic.com/') ||
             avatarUrl.startsWith('https://steamcdn-a.akamaihd.net/')) {
             steamPfp.src = avatarUrl;
             steamPfp.onerror = () => { steamPfp.src = 'assets/pfp.png'; };
@@ -455,7 +456,6 @@ async function refreshDiscordStatus() {
     const discordDot = document.getElementById('discord-dot');
     const discordStatus = document.getElementById('discord-status-text');
     const discordActivityInfo = document.getElementById('discord-activity-info');
-    const discordPlaying = document.getElementById('discord-playing');
     const discordAvatarWrapper = document.querySelector('.discord-avatar-wrapper');
     const discordUsernameEl = document.querySelector('.discord-username');
 
@@ -512,14 +512,11 @@ async function refreshDiscordStatus() {
                         const activityType = activityTypeMap[activity.type] || 'Activity';
                         discordActivityInfo.textContent = `${activityType}: ${activity.name}`;
                         discordActivityInfo.style.display = 'block';
-                        discordPlaying.textContent = '';
                     } else {
                         discordActivityInfo.style.display = 'none';
-                        discordPlaying.textContent = '';
                     }
                 } else {
                     discordActivityInfo.style.display = 'none';
-                    discordPlaying.textContent = '';
                 }
             }
         }
