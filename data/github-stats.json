@@ -2,7 +2,7 @@
   "summary": {
     "projects": 2,
     "starredCount": 23,
-    "commits": 136
+    "commits": 138
   },
   "starred": [
     {
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18012,
+      "stars": 18014,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -108,7 +108,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 46511,
+      "stars": 46512,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164559,
+      "stars": 164560,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93283,
+      "stars": 93285,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -215,6 +215,13 @@
   ],
   "recentCommits": [
     {
+      "message": "Easter egg: rm -rf * destroys the page piece by piece",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-02-02T08:17:14Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/136f9968347e5c7e416dc30514768c2eaf72c61a"
+    },
+    {
       "message": "Fix: prevent Konami code trigger when terminal input is focused",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
@@ -262,13 +269,6 @@
       "author": "Piotrunius",
       "date": "2026-02-02T06:23:42Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/be3e9e5061cd72f229b3def318fdbfd210043819"
-    },
-    {
-      "message": "Remove INTERACTIVE TERMINAL section and add terminal toggle button to top-left",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrek",
-      "date": "2026-02-02T05:08:05Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/a07a3f2bfa484a26141abfb018fb6edfcf5b9cbd"
     },
     {
       "message": "Update AutoClicker.py",
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-02T08:10:00.762Z",
+  "lastUpdate": "2026-02-02T08:17:36.199Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-02T08:10:01.082Z"
+    "lastChecked": "2026-02-02T08:17:36.540Z"
   },
   "pullRequests": {
     "total": 5,
