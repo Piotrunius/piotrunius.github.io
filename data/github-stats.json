@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122616,
+      "stars": 122617,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164550,
+      "stars": 164551,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93270,
+      "stars": 93271,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -180,7 +180,7 @@
       "name": "glazewm",
       "owner": "glzr-io",
       "url": "https://github.com/glzr-io/glazewm",
-      "stars": 11248,
+      "stars": 11247,
       "language": "Rust",
       "description": "GlazeWM is a tiling window manager for Windows inspired by i3wm.",
       "starredAt": "2025-06-17T03:39:52Z"
@@ -207,13 +207,20 @@
       "name": "PeaZip",
       "owner": "peazip",
       "url": "https://github.com/peazip/PeaZip",
-      "stars": 6834,
+      "stars": 6835,
       "language": "Pascal",
       "description": "Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager. Features volume spanning, compression, authenticated encryption. Supports 7Z, 7-Zip sfx, ACE, ARJ, Brotli, BZ",
       "starredAt": "2023-08-09T22:42:02Z"
     }
   ],
   "recentCommits": [
+    {
+      "message": "feat: add advanced terminal feature with toggle button and styles",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-02-02T06:23:42Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/be3e9e5061cd72f229b3def318fdbfd210043819"
+    },
     {
       "message": "Remove INTERACTIVE TERMINAL section and add terminal toggle button to top-left",
       "repo": "piotrunius.github.io",
@@ -255,13 +262,6 @@
       "author": "Piotrunius",
       "date": "2026-01-11T11:39:40Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/5f6b91d1872821e7ef6613e789542997e4fd2f93"
-    },
-    {
-      "message": "Fix lastUpdate timestamp in projects.json",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrek",
-      "date": "2026-01-11T11:35:41Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/b6c693021d6299d24ef962557f83e28861925e37"
     },
     {
       "message": "Fix: Resolve merge conflict in projects.json and update lastUpdate timestamp",
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-02T06:15:06.727Z",
+  "lastUpdate": "2026-02-02T06:26:14.502Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-02T06:15:07.399Z"
+    "lastChecked": "2026-02-02T06:26:14.853Z"
   },
   "pullRequests": {
     "total": 5,
@@ -415,7 +415,7 @@
   },
   "languages": [
     {
-      "name": "CSS",
+      "name": "JavaScript",
       "repos": 1
     },
     {
