@@ -4042,4 +4042,914 @@ body.light-mode .profile-stat-item:hover {
     background: rgba(0, 168, 89, 0.1);
 }
 
+/* ===========================================
+   ADVANCED TERMINAL STYLES
+   =========================================== */
+
+/* Terminal Toggle Button - Matching theme-toggle and back-to-top style */
+.terminal-toggle {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 255, 136, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    color: var(--primary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.terminal-toggle:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+}
+
+.terminal-toggle.active {
+    background: var(--primary);
+    color: #000;
+}
+
+/* Terminal Container */
+.terminal-container {
+    position: fixed;
+    top: 5rem;
+    left: 1.5rem;
+    width: 700px;
+    max-width: calc(100vw - 3rem);
+    height: 500px;
+    max-height: calc(100vh - 7rem);
+    background: rgba(10, 15, 20, 0.98);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 16px;
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.8),
+        0 0 60px rgba(0, 255, 136, 0.15),
+        inset 0 0 100px rgba(0, 255, 136, 0.02);
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', 'SF Mono', Monaco, 'Courier New', monospace;
+    resize: both;
+    min-width: 400px;
+    min-height: 300px;
+}
+
+.terminal-container.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Terminal Header */
+.terminal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(180deg, rgba(30, 40, 50, 0.95), rgba(20, 28, 35, 0.95));
+    border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+    cursor: move;
+    user-select: none;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.terminal-btn::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.terminal-btn.red {
+    background: #ff5f56;
+    box-shadow: 0 0 8px rgba(255, 95, 86, 0.5);
+}
+
+.terminal-btn.red:hover {
+    background: #ff3b30;
+    box-shadow: 0 0 15px rgba(255, 59, 48, 0.8);
+}
+
+.terminal-btn.yellow {
+    background: #ffbd2e;
+    box-shadow: 0 0 8px rgba(255, 189, 46, 0.5);
+}
+
+.terminal-btn.yellow:hover {
+    background: #ff9500;
+    box-shadow: 0 0 15px rgba(255, 149, 0, 0.8);
+}
+
+.terminal-btn.green {
+    background: #27c93f;
+    box-shadow: 0 0 8px rgba(39, 201, 63, 0.5);
+}
+
+.terminal-btn.green:hover {
+    background: #28cd41;
+    box-shadow: 0 0 15px rgba(40, 205, 65, 0.8);
+}
+
+.terminal-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+.terminal-title i {
+    color: var(--primary);
+}
+
+.terminal-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.terminal-action-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.terminal-action-btn:hover {
+    background: rgba(0, 255, 136, 0.15);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Terminal Body */
+.terminal-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 1rem;
+    position: relative;
+}
+
+/* Terminal Output */
+.terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) rgba(255, 255, 255, 0.05);
+}
+
+.terminal-output::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 3px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+/* Terminal Lines */
+.terminal-line {
+    line-height: 1.6;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    margin-bottom: 0.25rem;
+    animation: lineAppear 0.2s ease-out;
+}
+
+@keyframes lineAppear {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.terminal-line.cmd {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.terminal-line.cmd .cmd-text {
+    color: #fff;
+    font-weight: 500;
+}
+
+.terminal-line.output {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.terminal-line.success {
+    color: #27c93f;
+}
+
+.terminal-line.error {
+    color: #ff5f56;
+}
+
+.terminal-line.warning {
+    color: #ffbd2e;
+}
+
+.terminal-line.info {
+    color: #00b8ff;
+}
+
+.terminal-line.system {
+    color: #bd93f9;
+    font-style: italic;
+}
+
+.terminal-line.highlight {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ASCII Art styling */
+.terminal-ascii {
+    font-family: 'Fira Code', monospace;
+    line-height: 1.2;
+    white-space: pre;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    animation: asciiGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes asciiGlow {
+    0% {
+        text-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
+    }
+
+    100% {
+        text-shadow: 0 0 20px rgba(0, 255, 136, 0.8), 0 0 40px rgba(0, 255, 136, 0.4);
+    }
+}
+
+/* Terminal Links */
+.terminal-link {
+    color: var(--primary);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.terminal-link:hover {
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary);
+}
+
+/* Terminal Tables */
+.terminal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+}
+
+.terminal-table th {
+    text-align: left;
+    color: var(--primary);
+    padding: 0.25rem 0.5rem;
+    border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.terminal-table td {
+    padding: 0.25rem 0.5rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.terminal-table tr:hover td {
+    background: rgba(0, 255, 136, 0.05);
+}
+
+/* Progress Bar */
+.terminal-progress {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+}
+
+.terminal-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #00b8ff);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+/* Terminal Input Line */
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    position: relative;
+}
+
+.terminal-prompt {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.prompt-user {
+    color: #27c93f;
+    font-weight: 600;
+}
+
+.prompt-at {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.prompt-host {
+    color: #00b8ff;
+    font-weight: 600;
+}
+
+.prompt-colon {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.prompt-path {
+    color: #bd93f9;
+    font-weight: 500;
+}
+
+.prompt-symbol {
+    color: var(--primary);
+    font-weight: 700;
+    margin-left: 0.25rem;
+    animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+    caret-color: var(--primary);
+}
+
+.terminal-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Autocomplete Suggestions */
+.terminal-suggestions {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(20, 28, 35, 0.98);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-suggestions.visible {
+    display: block;
+    animation: suggestionsAppear 0.2s ease-out;
+}
+
+@keyframes suggestionsAppear {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.suggestion-item {
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.15s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover,
+.suggestion-item.selected {
+    background: rgba(0, 255, 136, 0.15);
+}
+
+.suggestion-item i {
+    color: var(--primary);
+    font-size: 0.8rem;
+    width: 20px;
+    text-align: center;
+}
+
+.suggestion-cmd {
+    color: #fff;
+    font-weight: 500;
+}
+
+.suggestion-desc {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    margin-left: auto;
+}
+
+/* Terminal Statusbar */
+.terminal-statusbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(180deg, rgba(20, 28, 35, 0.95), rgba(15, 22, 28, 0.95));
+    border-top: 1px solid rgba(0, 255, 136, 0.15);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.status-left,
+.status-center,
+.status-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.status-item i {
+    color: var(--primary);
+    font-size: 0.7rem;
+}
+
+/* Special Terminal Effects */
+.matrix-rain {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.matrix-column {
+    position: absolute;
+    top: -100%;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    color: var(--primary);
+    text-shadow: 0 0 10px var(--primary);
+    animation: matrixFall linear infinite;
+    white-space: nowrap;
+}
+
+@keyframes matrixFall {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(calc(100vh + 100%));
+    }
+}
+
+/* Typing animation for terminal output */
+.typing-effect {
+    overflow: hidden;
+    border-right: 2px solid var(--primary);
+    white-space: nowrap;
+    animation: typingBorder 0.75s step-end infinite;
+}
+
+@keyframes typingBorder {
+
+    0%,
+    100% {
+        border-color: var(--primary);
+    }
+
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* Glitch effect */
+.glitch {
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00ff;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00ffff;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(17px, 9999px, 94px, 0);
+    }
+
+    5% {
+        clip: rect(33px, 9999px, 145px, 0);
+    }
+
+    10% {
+        clip: rect(121px, 9999px, 11px, 0);
+    }
+
+    15% {
+        clip: rect(144px, 9999px, 75px, 0);
+    }
+
+    20% {
+        clip: rect(119px, 9999px, 37px, 0);
+    }
+
+    25% {
+        clip: rect(42px, 9999px, 68px, 0);
+    }
+
+    30% {
+        clip: rect(133px, 9999px, 20px, 0);
+    }
+
+    35% {
+        clip: rect(58px, 9999px, 113px, 0);
+    }
+
+    40% {
+        clip: rect(91px, 9999px, 142px, 0);
+    }
+
+    45% {
+        clip: rect(57px, 9999px, 97px, 0);
+    }
+
+    50% {
+        clip: rect(26px, 9999px, 137px, 0);
+    }
+
+    55% {
+        clip: rect(8px, 9999px, 89px, 0);
+    }
+
+    60% {
+        clip: rect(103px, 9999px, 56px, 0);
+    }
+
+    65% {
+        clip: rect(15px, 9999px, 149px, 0);
+    }
+
+    70% {
+        clip: rect(66px, 9999px, 41px, 0);
+    }
+
+    75% {
+        clip: rect(147px, 9999px, 85px, 0);
+    }
+
+    80% {
+        clip: rect(99px, 9999px, 23px, 0);
+    }
+
+    85% {
+        clip: rect(72px, 9999px, 131px, 0);
+    }
+
+    90% {
+        clip: rect(39px, 9999px, 109px, 0);
+    }
+
+    95% {
+        clip: rect(128px, 9999px, 61px, 0);
+    }
+
+    100% {
+        clip: rect(84px, 9999px, 117px, 0);
+    }
+}
+
+@keyframes glitch-anim-2 {
+    0% {
+        clip: rect(129px, 9999px, 36px, 0);
+    }
+
+    5% {
+        clip: rect(42px, 9999px, 148px, 0);
+    }
+
+    10% {
+        clip: rect(88px, 9999px, 73px, 0);
+    }
+
+    15% {
+        clip: rect(16px, 9999px, 95px, 0);
+    }
+
+    20% {
+        clip: rect(137px, 9999px, 58px, 0);
+    }
+
+    25% {
+        clip: rect(64px, 9999px, 122px, 0);
+    }
+
+    30% {
+        clip: rect(9px, 9999px, 141px, 0);
+    }
+
+    35% {
+        clip: rect(111px, 9999px, 27px, 0);
+    }
+
+    40% {
+        clip: rect(75px, 9999px, 86px, 0);
+    }
+
+    45% {
+        clip: rect(48px, 9999px, 134px, 0);
+    }
+
+    50% {
+        clip: rect(102px, 9999px, 19px, 0);
+    }
+
+    55% {
+        clip: rect(23px, 9999px, 107px, 0);
+    }
+
+    60% {
+        clip: rect(146px, 9999px, 52px, 0);
+    }
+
+    65% {
+        clip: rect(67px, 9999px, 93px, 0);
+    }
+
+    70% {
+        clip: rect(35px, 9999px, 140px, 0);
+    }
+
+    75% {
+        clip: rect(119px, 9999px, 44px, 0);
+    }
+
+    80% {
+        clip: rect(82px, 9999px, 126px, 0);
+    }
+
+    85% {
+        clip: rect(13px, 9999px, 69px, 0);
+    }
+
+    90% {
+        clip: rect(97px, 9999px, 31px, 0);
+    }
+
+    95% {
+        clip: rect(54px, 9999px, 115px, 0);
+    }
+
+    100% {
+        clip: rect(143px, 9999px, 78px, 0);
+    }
+}
+
+/* Hack effect overlay */
+.hack-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.hack-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hack-content {
+    color: var(--primary);
+    font-family: 'Fira Code', monospace;
+    font-size: 1.2rem;
+    text-align: center;
+    text-shadow: 0 0 20px var(--primary);
+}
+
+/* Light mode adjustments */
+body.light-mode .terminal-container {
+    background: rgba(245, 248, 250, 0.98);
+    border-color: rgba(0, 168, 89, 0.3);
+}
+
+body.light-mode .terminal-header {
+    background: linear-gradient(180deg, rgba(235, 240, 245, 0.95), rgba(225, 232, 240, 0.95));
+    border-color: rgba(0, 168, 89, 0.2);
+}
+
+body.light-mode .terminal-title {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+body.light-mode .terminal-line {
+    color: rgba(0, 0, 0, 0.85);
+}
+
+body.light-mode .terminal-line.cmd {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-mode .terminal-line.cmd .cmd-text {
+    color: #000;
+}
+
+body.light-mode .terminal-input {
+    color: #000;
+}
+
+body.light-mode .prompt-user {
+    color: #1a8f4a;
+}
+
+body.light-mode .prompt-host {
+    color: #0080c0;
+}
+
+body.light-mode .prompt-path {
+    color: #8b5cf6;
+}
+
+body.light-mode .terminal-suggestions {
+    background: rgba(245, 248, 250, 0.98);
+}
+
+body.light-mode .suggestion-cmd {
+    color: #000;
+}
+
+body.light-mode .terminal-statusbar {
+    background: linear-gradient(180deg, rgba(235, 240, 245, 0.95), rgba(225, 232, 240, 0.95));
+    border-color: rgba(0, 168, 89, 0.15);
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile responsiveness for terminal */
+@media (max-width: 768px) {
+    .terminal-toggle {
+        top: 1rem;
+        left: 1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    .terminal-container {
+        top: 4rem;
+        left: 0.5rem;
+        width: calc(100vw - 1rem);
+        max-width: none;
+        height: calc(100vh - 5rem);
+        min-width: auto;
+        min-height: 250px;
+        border-radius: 12px;
+    }
+
+    .terminal-header {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .terminal-body {
+        padding: 0.75rem;
+    }
+
+    .terminal-line {
+        font-size: 0.8rem;
+    }
+
+    .terminal-prompt {
+        font-size: 0.8rem;
+    }
+
+    .terminal-input {
+        font-size: 0.8rem;
+    }
+
+    .terminal-actions {
+        display: none;
+    }
+}
+
 /* ==========================================
+
+body.light-mode .profile-stat-item:hover {
+    background: rgba(0, 168, 89, 0.1);
+}

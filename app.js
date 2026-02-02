@@ -1461,3 +1461,2289 @@ function getTimeAgo(dateString) {
     if (seconds < 2592000) return `${Math.floor(seconds / 604800)}w ago`;
     return `${Math.floor(seconds / 2592000)}mo ago`;
 }
+
+// ===========================================
+// ADVANCED TERMINAL SYSTEM
+// ===========================================
+
+const Terminal = {
+    // State
+    isOpen: false,
+    isMinimized: false,
+    isFullscreen: false,
+    commandHistory: [],
+    historyIndex: -1,
+    currentPath: '~',
+    commandCount: 0,
+    todoList: [],
+    aliases: {},
+    env: {},
+    matrixInterval: null,
+
+    // Virtual File System
+    fileSystem: {
+        '~': {
+            type: 'dir',
+            children: {
+                'about.txt': { type: 'file', content: 'Hi! I\'m Piotrunius - a developer and tech enthusiast from Poland.\nI love tinkering with Linux, writing scripts, and exploring new technologies.\nMy daily driver is Bazzite (Fedora Atomic) with KDE Plasma.' },
+                'contact.txt': { type: 'file', content: 'Email: piotrunius.v2@gmail.com\nDiscord: Piotrunius\nGitHub: github.com/Piotrunius' },
+                'skills.txt': { type: 'file', content: 'Languages: Python, JavaScript, HTML/CSS, Go\nFrameworks: React, Node.js\nTools: Docker, Git, Linux\nLearning: Always something new!' },
+                'projects': {
+                    type: 'dir',
+                    children: {
+                        'portfolio.md': { type: 'file', content: '# Portfolio Website\nThis very website you\'re viewing!\nBuilt with vanilla HTML, CSS, and JavaScript.\nFeatures: Glass morphism, particles, Spotify integration, and this terminal!' },
+                        'broadcast-generator.md': { type: 'file', content: '# Broadcast Generator\nA tool for generating broadcast messages.\nStatus: Active Development' },
+                        'autoclicker.md': { type: 'file', content: '# AutoClicker-AntiAFK\nAn auto-clicker utility.\nStatus: Archived' }
+                    }
+                },
+                'secrets': {
+                    type: 'dir',
+                    children: {
+                        '.hidden': { type: 'file', content: 'You found the secret!\nType "konami" for a surprise!' },
+                        'easter_eggs.txt': { type: 'file', content: 'Try these commands:\n- matrix\n- hack\n- fortune\n- cowsay <message>\n- sl\n- cmatrix\n- neofetch\n- weather\n- joke\n- quote' }
+                    }
+                }
+            }
+        }
+    },
+
+    // Commands definition
+    commands: {
+        help: {
+            description: 'Show all available commands',
+            usage: 'help [command]',
+            icon: 'fa-question-circle',
+            fn: function (args) {
+                if (args[0]) {
+                    const cmd = Terminal.commands[args[0]];
+                    if (cmd) {
+                        return [
+                            { text: `Command: ${args[0]}`, class: 'highlight' },
+                            { text: `Description: ${cmd.description}` },
+                            { text: `Usage: ${cmd.usage}` },
+                            cmd.examples ? { text: `Examples: ${cmd.examples}` } : null
+                        ].filter(Boolean);
+                    }
+                    return [{ text: `Command not found: ${args[0]}`, class: 'error' }];
+                }
+
+                const categories = {
+                    'Navigation': ['help', 'clear', 'history', 'pwd', 'cd', 'ls', 'cat', 'tree'],
+                    'Information': ['about', 'skills', 'projects', 'contact', 'social', 'stats', 'time', 'weather', 'neofetch', 'ip'],
+                    'Fun & Games': ['matrix', 'hack', 'fortune', 'joke', 'quote', 'cowsay', 'sl', 'cmatrix', 'rps', 'guess', '8ball', 'dice', 'tictactoe'],
+                    'Utilities': ['calc', 'todo', 'timer', 'stopwatch', 'color', 'echo', 'date', 'whoami', 'uname', 'uptime', 'uuid', 'password', 'hash', 'base64'],
+                    'Text Tools': ['ascii', 'figlet', 'banner', 'binary', 'hex', 'reverse'],
+                    'Network': ['ping', 'curl', 'speedtest', 'qr'],
+                    'Customization': ['theme', 'alias', 'export', 'motd', 'prompt'],
+                    'System': ['reboot', 'exit', 'sudo', 'rm', 'man', 'hostname']
+                };
+
+                const output = [
+                    { text: '+==============================================================+', class: 'highlight' },
+                    { text: '|           PIOTRUNIUS TERMINAL v2.0 - HELP MENU              |', class: 'highlight' },
+                    { text: '+==============================================================+', class: 'highlight' },
+                    { text: '' }
+                ];
+
+                for (const [category, cmds] of Object.entries(categories)) {
+                    output.push({ text: `[${category}]`, class: 'info' });
+                    const cmdLine = cmds.map(c => {
+                        const cmd = Terminal.commands[c];
+                        return `  ${c.padEnd(12)} ${cmd ? cmd.description.substring(0, 35) : ''}`;
+                    });
+                    cmdLine.forEach(line => output.push({ text: line }));
+                    output.push({ text: '' });
+                }
+
+                output.push({ text: 'Type "help <command>" for detailed info on a specific command.', class: 'system' });
+                output.push({ text: 'Use Tab for auto-completion, UP/DOWN for history.', class: 'system' });
+
+                return output;
+            }
+        },
+
+        clear: {
+            description: 'Clear the terminal screen',
+            usage: 'clear',
+            icon: 'fa-eraser',
+            fn: function () {
+                document.getElementById('terminal-output').innerHTML = '';
+                return [];
+            }
+        },
+
+        history: {
+            description: 'Show command history',
+            usage: 'history [clear]',
+            icon: 'fa-history',
+            fn: function (args) {
+                if (args[0] === 'clear') {
+                    Terminal.commandHistory = [];
+                    return [{ text: 'History cleared.', class: 'success' }];
+                }
+                if (Terminal.commandHistory.length === 0) {
+                    return [{ text: 'No commands in history.', class: 'warning' }];
+                }
+                return Terminal.commandHistory.map((cmd, i) => ({
+                    text: `  ${(i + 1).toString().padStart(3)}  ${cmd}`
+                }));
+            }
+        },
+
+        pwd: {
+            description: 'Print working directory',
+            usage: 'pwd',
+            icon: 'fa-folder',
+            fn: function () {
+                return [{ text: Terminal.currentPath }];
+            }
+        },
+
+        cd: {
+            description: 'Change directory',
+            usage: 'cd <directory>',
+            icon: 'fa-folder-open',
+            fn: function (args) {
+                const target = args[0] || '~';
+
+                if (target === '~' || target === '/') {
+                    Terminal.currentPath = '~';
+                    Terminal.updatePromptPath();
+                    return [];
+                }
+
+                if (target === '..') {
+                    const parts = Terminal.currentPath.split('/');
+                    if (parts.length > 1) {
+                        parts.pop();
+                        Terminal.currentPath = parts.join('/') || '~';
+                    }
+                    Terminal.updatePromptPath();
+                    return [];
+                }
+
+                const newPath = Terminal.currentPath === '~' ? `~/${target}` : `${Terminal.currentPath}/${target}`;
+                const node = Terminal.getNode(newPath);
+
+                if (!node) {
+                    return [{ text: `cd: no such directory: ${target}`, class: 'error' }];
+                }
+                if (node.type !== 'dir') {
+                    return [{ text: `cd: not a directory: ${target}`, class: 'error' }];
+                }
+
+                Terminal.currentPath = newPath;
+                Terminal.updatePromptPath();
+                return [];
+            }
+        },
+
+        ls: {
+            description: 'List directory contents',
+            usage: 'ls [-la] [directory]',
+            icon: 'fa-list',
+            fn: function (args) {
+                let showAll = false;
+                let showLong = false;
+                let targetPath = Terminal.currentPath;
+
+                args.forEach(arg => {
+                    if (arg.startsWith('-')) {
+                        if (arg.includes('a')) showAll = true;
+                        if (arg.includes('l')) showLong = true;
+                    } else {
+                        targetPath = arg.startsWith('~') ? arg :
+                            Terminal.currentPath === '~' ? `~/${arg}` : `${Terminal.currentPath}/${arg}`;
+                    }
+                });
+
+                const node = Terminal.getNode(targetPath);
+                if (!node) {
+                    return [{ text: `ls: cannot access '${targetPath}': No such file or directory`, class: 'error' }];
+                }
+
+                if (node.type !== 'dir') {
+                    return [{ text: targetPath.split('/').pop() }];
+                }
+
+                const entries = Object.entries(node.children || {});
+                if (!showAll) {
+                    entries.filter(([name]) => !name.startsWith('.'));
+                }
+
+                if (entries.length === 0) {
+                    return [{ text: '(empty directory)', class: 'system' }];
+                }
+
+                if (showLong) {
+                    return entries.map(([name, item]) => {
+                        const isDir = item.type === 'dir';
+                        const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
+                        const size = item.content ? item.content.length : 4096;
+                        const date = 'Feb  2 12:00';
+                        const displayName = isDir ? `<span class="info">${name}/</span>` : name;
+                        return { text: `${permissions}  1 piotrunius  ${size.toString().padStart(5)}  ${date}  ${displayName}`, html: true };
+                    });
+                }
+
+                const dirs = entries.filter(([, v]) => v.type === 'dir').map(([k]) => `<span class="info">${k}/</span>`);
+                const files = entries.filter(([, v]) => v.type === 'file').map(([k]) => k);
+                return [{ text: [...dirs, ...files].join('  '), html: true }];
+            }
+        },
+
+        cat: {
+            description: 'Display file contents',
+            usage: 'cat <filename>',
+            icon: 'fa-file-alt',
+            fn: function (args) {
+                if (!args[0]) {
+                    return [{ text: 'Usage: cat <filename>', class: 'warning' }];
+                }
+
+                const path = args[0].startsWith('~') ? args[0] :
+                    Terminal.currentPath === '~' ? `~/${args[0]}` : `${Terminal.currentPath}/${args[0]}`;
+                const node = Terminal.getNode(path);
+
+                if (!node) {
+                    return [{ text: `cat: ${args[0]}: No such file or directory`, class: 'error' }];
+                }
+                if (node.type === 'dir') {
+                    return [{ text: `cat: ${args[0]}: Is a directory`, class: 'error' }];
+                }
+
+                return node.content.split('\n').map(line => ({ text: line }));
+            }
+        },
+
+        tree: {
+            description: 'Display directory tree',
+            usage: 'tree [directory]',
+            icon: 'fa-sitemap',
+            fn: function (args) {
+                const targetPath = args[0] || Terminal.currentPath;
+                const node = Terminal.getNode(targetPath);
+
+                if (!node || node.type !== 'dir') {
+                    return [{ text: `tree: ${targetPath}: Not a directory`, class: 'error' }];
+                }
+
+                const output = [{ text: targetPath, class: 'info' }];
+                Terminal.buildTree(node, '', output);
+                return output;
+            }
+        },
+
+        about: {
+            description: 'Display information about me',
+            usage: 'about',
+            icon: 'fa-user',
+            fn: function () {
+                return [
+                    { text: '+-----------------------------------------+', class: 'highlight' },
+                    { text: '|           ABOUT PIOTRUNIUS              |', class: 'highlight' },
+                    { text: '+-----------------------------------------+', class: 'highlight' },
+                    { text: '' },
+                    { text: '  [*] Name:      Piotrunius' },
+                    { text: '  [*] Location:  Poland' },
+                    { text: '  [*] Role:      Developer & Tech Enthusiast' },
+                    { text: '  [*] OS:        Bazzite (Fedora Atomic)' },
+                    { text: '  [*] DE:        KDE Plasma' },
+                    { text: '' },
+                    { text: '  Curious tinkerer who loves to explore how things work.', class: 'system' },
+                    { text: '  I write small scripts, keep a clean Linux workflow,', class: 'system' },
+                    { text: '  and share tweaks with friends.', class: 'system' },
+                    { text: '' },
+                    { text: '  Type "skills" to see my tech stack!', class: 'info' }
+                ];
+            }
+        },
+
+        skills: {
+            description: 'Display my technical skills',
+            usage: 'skills',
+            icon: 'fa-code',
+            fn: function () {
+                const skills = [
+                    { name: 'Python', level: 80 },
+                    { name: 'JavaScript', level: 75 },
+                    { name: 'HTML/CSS', level: 85 },
+                    { name: 'React', level: 60 },
+                    { name: 'Go', level: 40 },
+                    { name: 'Docker', level: 55 },
+                    { name: 'Linux', level: 90 },
+                    { name: 'Git', level: 70 }
+                ];
+
+                const output = [
+                    { text: '+---------------------------------------------------+', class: 'highlight' },
+                    { text: '|               SKILLS & TECH STACK                 |', class: 'highlight' },
+                    { text: '+---------------------------------------------------+', class: 'highlight' },
+                    { text: '' }
+                ];
+
+                skills.forEach(skill => {
+                    const filled = Math.floor(skill.level / 5);
+                    const empty = 20 - filled;
+                    const bar = '='.repeat(filled) + '-'.repeat(empty);
+                    output.push({ text: `  ${skill.name.padEnd(12)} [${bar}] ${skill.level}%` });
+                });
+
+                return output;
+            }
+        },
+
+        projects: {
+            description: 'List my projects',
+            usage: 'projects',
+            icon: 'fa-code-branch',
+            fn: function () {
+                return [
+                    { text: '+---------------------------------------------------+', class: 'highlight' },
+                    { text: '|                   MY PROJECTS                     |', class: 'highlight' },
+                    { text: '+---------------------------------------------------+', class: 'highlight' },
+                    { text: '' },
+                    { text: '  [ACTIVE] piotrunius.github.io', class: 'success' },
+                    { text: '           Personal portfolio website with terminal feature' },
+                    { text: '' },
+                    { text: '  [PRIVATE] Broadcast-generator', class: 'info' },
+                    { text: '            Tool for generating broadcast messages' },
+                    { text: '' },
+                    { text: '  [ARCHIVE] AutoClicker-AntiAFK', class: 'warning' },
+                    { text: '            Auto-clicker utility tool' },
+                    { text: '' },
+                    { text: '  Visit: https://github.com/Piotrunius', class: 'system' }
+                ];
+            }
+        },
+
+        contact: {
+            description: 'Show contact information',
+            usage: 'contact',
+            icon: 'fa-envelope',
+            fn: function () {
+                return [
+                    { text: '+-----------------------------------------+', class: 'highlight' },
+                    { text: '|            CONTACT INFO                 |', class: 'highlight' },
+                    { text: '+-----------------------------------------+', class: 'highlight' },
+                    { text: '' },
+                    { text: '  Email:    piotrunius.v2@gmail.com' },
+                    { text: '  Discord:  Piotrunius' },
+                    { text: '  GitHub:   github.com/Piotrunius' },
+                    { text: '  Insta:    @piotrunius' },
+                    { text: '' },
+                    { text: '  Feel free to reach out!', class: 'success' }
+                ];
+            }
+        },
+
+        social: {
+            description: 'Open social links',
+            usage: 'social [platform]',
+            icon: 'fa-share-alt',
+            fn: function (args) {
+                const links = {
+                    github: 'https://github.com/Piotrunius',
+                    discord: 'https://discord.com/users/1166309729371439104',
+                    instagram: 'https://instagram.com/piotrunius',
+                    spotify: 'https://open.spotify.com/user/piotrunius',
+                    steam: 'https://steamcommunity.com/id/piotrunius'
+                };
+
+                if (args[0]) {
+                    const platform = args[0].toLowerCase();
+                    if (links[platform]) {
+                        window.open(links[platform], '_blank');
+                        return [{ text: `Opening ${platform}...`, class: 'success' }];
+                    }
+                    return [{ text: `Unknown platform: ${args[0]}`, class: 'error' }];
+                }
+
+                return [
+                    { text: 'Available platforms:', class: 'info' },
+                    ...Object.keys(links).map(p => ({ text: `  - ${p}` })),
+                    { text: '' },
+                    { text: 'Usage: social <platform>', class: 'system' }
+                ];
+            }
+        },
+
+        stats: {
+            description: 'Show GitHub statistics',
+            usage: 'stats',
+            icon: 'fa-chart-bar',
+            fn: async function () {
+                const projects = document.getElementById('stat-projects')?.textContent || '?';
+                const commits = document.getElementById('stat-commits')?.textContent || '?';
+                const stars = document.getElementById('stat-stars')?.textContent || '?';
+
+                return [
+                    { text: '+-----------------------------------------+', class: 'highlight' },
+                    { text: '|            GITHUB STATS                 |', class: 'highlight' },
+                    { text: '+-----------------------------------------+', class: 'highlight' },
+                    { text: '' },
+                    { text: `  Projects:  ${projects}` },
+                    { text: `  Commits:   ${commits}` },
+                    { text: `  Starred:   ${stars}` },
+                    { text: '' },
+                    { text: '  Data from GitHub API', class: 'system' }
+                ];
+            }
+        },
+
+        time: {
+            description: 'Show current time and timezone info',
+            usage: 'time',
+            icon: 'fa-clock',
+            fn: function () {
+                const now = new Date();
+                const myTime = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw' });
+                const yourTime = now.toLocaleTimeString('en-GB');
+
+                return [
+                    { text: '+-----------------------------------------+', class: 'highlight' },
+                    { text: '|              TIME INFO                  |', class: 'highlight' },
+                    { text: '+-----------------------------------------+', class: 'highlight' },
+                    { text: '' },
+                    { text: `  My time:    ${myTime} (Europe/Warsaw)` },
+                    { text: `  Your time:  ${yourTime} (${Intl.DateTimeFormat().resolvedOptions().timeZone})` },
+                    { text: `  Date:       ${now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}` }
+                ];
+            }
+        },
+
+        weather: {
+            description: 'Show weather for your location',
+            usage: 'weather [city]',
+            icon: 'fa-cloud-sun',
+            fn: async function (args) {
+                Terminal.print([{ text: 'Fetching weather data...', class: 'system' }]);
+
+                try {
+                    // If city provided, use it; otherwise get location from IP
+                    let city = args.join(' ');
+                    let locationInfo = '';
+
+                    if (!city) {
+                        // Get location from IP using ip-api (no permissions needed)
+                        const geoResp = await fetch('http://ip-api.com/json/?fields=city,country,regionName');
+                        if (geoResp.ok) {
+                            const geoData = await geoResp.json();
+                            city = geoData.city || 'Warsaw';
+                            locationInfo = ` (${geoData.regionName}, ${geoData.country})`;
+                        } else {
+                            city = 'Warsaw';
+                        }
+                    }
+
+                    // Fetch weather from wttr.in
+                    const response = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`);
+
+                    if (!response.ok) {
+                        throw new Error('Weather API error');
+                    }
+
+                    const data = await response.json();
+                    const current = data.current_condition[0];
+                    const area = data.nearest_area[0];
+
+                    const temp = current.temp_C;
+                    const feelsLike = current.FeelsLikeC;
+                    const humidity = current.humidity;
+                    const wind = current.windspeedKmph;
+                    const windDir = current.winddir16Point;
+                    const desc = current.weatherDesc[0].value;
+                    const visibility = current.visibility;
+                    const pressure = current.pressure;
+                    const uvIndex = current.uvIndex;
+                    const cloudCover = current.cloudcover;
+
+                    const cityName = area.areaName[0].value;
+                    const country = area.country[0].value;
+
+                    return [
+                        { text: '+---------------------------------------------------+', class: 'highlight' },
+                        { text: `|  WEATHER: ${cityName}, ${country}`.padEnd(52) + '|', class: 'highlight' },
+                        { text: '+---------------------------------------------------+', class: 'highlight' },
+                        { text: '' },
+                        { text: `  Condition:    ${desc}` },
+                        { text: `  Temperature:  ${temp}C (feels like ${feelsLike}C)` },
+                        { text: `  Humidity:     ${humidity}%` },
+                        { text: `  Wind:         ${wind} km/h ${windDir}` },
+                        { text: `  Pressure:     ${pressure} hPa` },
+                        { text: `  Visibility:   ${visibility} km` },
+                        { text: `  UV Index:     ${uvIndex}` },
+                        { text: `  Cloud Cover:  ${cloudCover}%` },
+                        { text: '' },
+                        { text: '  Data from wttr.in', class: 'system' }
+                    ];
+                } catch (e) {
+                    // Fallback to simple format
+                    const city = args.join(' ') || 'Warsaw';
+                    try {
+                        const response = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=%C+%t+%h+%w`);
+                        const data = await response.text();
+                        return [
+                            { text: `Weather in ${city}:`, class: 'info' },
+                            { text: `  ${data.trim()}` }
+                        ];
+                    } catch (e2) {
+                        return [{ text: 'Unable to fetch weather data.', class: 'error' }];
+                    }
+                }
+            }
+        },
+
+        neofetch: {
+            description: 'Display system information in style',
+            usage: 'neofetch',
+            icon: 'fa-desktop',
+            fn: function () {
+                const ascii = `
+<span class="highlight"> ████████╗███████╗██████╗ ███╗   ███╗</span>
+<span class="highlight"> ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║</span>
+<span class="highlight">    ██║   █████╗  ██████╔╝██╔████╔██║</span>
+<span class="highlight">    ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║</span>
+<span class="highlight">    ██║   ███████╗██║  ██║██║ ╚═╝ ██║</span>
+<span class="highlight">    ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝</span>`;
+
+                const info = [
+                    '',
+                    `<span class="info">guest</span>@<span class="highlight">piotrunius.dev</span>`,
+                    '-'.repeat(25),
+                    `<span class="info">OS:</span> Web Browser`,
+                    `<span class="info">Host:</span> piotrunius.github.io`,
+                    `<span class="info">Kernel:</span> JavaScript ES2024`,
+                    `<span class="info">Uptime:</span> ${Math.floor(performance.now() / 1000)}s`,
+                    `<span class="info">Shell:</span> Piotrunius Terminal v2.0`,
+                    `<span class="info">Resolution:</span> ${window.innerWidth}x${window.innerHeight}`,
+                    `<span class="info">Terminal:</span> Advanced Web Terminal`,
+                    `<span class="info">CPU:</span> ${navigator.hardwareConcurrency || '?'} cores`,
+                    `<span class="info">Memory:</span> ${navigator.deviceMemory || '?'}GB`,
+                    '',
+                    '<span style="background:#ff5f56;color:#ff5f56">###</span><span style="background:#ffbd2e;color:#ffbd2e">###</span><span style="background:#27c93f;color:#27c93f">###</span><span style="background:#00b8ff;color:#00b8ff">###</span><span style="background:#bd93f9;color:#bd93f9">###</span><span style="background:#ff79c6;color:#ff79c6">###</span>'
+                ];
+
+                const asciiLines = ascii.trim().split('\n');
+                const output = [];
+
+                for (let i = 0; i < Math.max(asciiLines.length, info.length); i++) {
+                    const left = asciiLines[i] || ''.padEnd(40);
+                    const right = info[i] || '';
+                    output.push({ text: left + '  ' + right, html: true });
+                }
+
+                return output;
+            }
+        },
+
+        matrix: {
+            description: 'Enter the Matrix',
+            usage: 'matrix [stop]',
+            icon: 'fa-code',
+            fn: function (args) {
+                if (args[0] === 'stop' && Terminal.matrixInterval) {
+                    clearInterval(Terminal.matrixInterval);
+                    Terminal.matrixInterval = null;
+                    const rain = document.querySelector('.matrix-rain');
+                    if (rain) rain.remove();
+                    return [{ text: 'Matrix stopped.', class: 'success' }];
+                }
+
+                if (Terminal.matrixInterval) {
+                    return [{ text: 'Matrix is already running. Use "matrix stop" to stop.', class: 'warning' }];
+                }
+
+                const body = document.getElementById('terminal-body');
+                let rain = document.querySelector('.matrix-rain');
+
+                if (!rain) {
+                    rain = document.createElement('div');
+                    rain.className = 'matrix-rain';
+                    body.insertBefore(rain, body.firstChild);
+                }
+
+                const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+                Terminal.matrixInterval = setInterval(() => {
+                    const column = document.createElement('div');
+                    column.className = 'matrix-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (3 + Math.random() * 4) + 's';
+
+                    let text = '';
+                    for (let i = 0; i < 20; i++) {
+                        text += chars[Math.floor(Math.random() * chars.length)] + '\n';
+                    }
+                    column.textContent = text;
+                    rain.appendChild(column);
+
+                    setTimeout(() => column.remove(), 7000);
+                }, 100);
+
+                return [{ text: 'Welcome to the Matrix... (use "matrix stop" to exit)', class: 'success' }];
+            }
+        },
+
+        hack: {
+            description: 'Simulate a "hacking" sequence',
+            usage: 'hack [target]',
+            icon: 'fa-skull',
+            fn: async function (args) {
+                const target = args.join(' ') || 'mainframe';
+                const output = document.getElementById('terminal-output');
+
+                const hackLines = [
+                    `Initializing hack sequence on ${target}...`,
+                    'Connecting to proxy servers...',
+                    'Bypassing firewall [####............] 40%',
+                    'Bypassing firewall [########........] 60%',
+                    'Bypassing firewall [############....] 80%',
+                    'Bypassing firewall [################] 100%',
+                    'Firewall bypassed!',
+                    'Injecting payload...',
+                    'Accessing secure database...',
+                    'Decrypting files [................]',
+                    'Decrypting files [########........]',
+                    'Decrypting files [############....]',
+                    'Decrypting files [################]',
+                    'Files decrypted!',
+                    'Downloading data...',
+                    '',
+                    '[!] JUST KIDDING! [!]',
+                    'This is just a visual effect.',
+                    'No actual hacking occurred.'
+                ];
+
+                for (const line of hackLines) {
+                    Terminal.print([{ text: line, class: line.includes('KIDDING') ? 'warning' : 'success' }]);
+                    await new Promise(r => setTimeout(r, 200 + Math.random() * 300));
+                }
+
+                return [];
+            }
+        },
+
+        fortune: {
+            description: 'Get a random fortune',
+            usage: 'fortune',
+            icon: 'fa-crystal-ball',
+            fn: function () {
+                const fortunes = [
+                    'You will write bug-free code today! (Just kidding)',
+                    'A Stack Overflow answer will save your day.',
+                    'Your next git commit will be legendary.',
+                    'Today is a good day to refactor that legacy code.',
+                    'A wild bug appears! It\'s super effective!',
+                    'You will discover a new favorite npm package.',
+                    'Your code will compile on the first try. Probably.',
+                    'A mysterious segfault awaits you.',
+                    'You will finally understand that regex.',
+                    'Documentation? Where we\'re going, we don\'t need documentation.',
+                    'Keep calm and git push --force',
+                    'May your builds be fast and your bugs be few.'
+                ];
+
+                return [
+                    { text: '[*] ' + fortunes[Math.floor(Math.random() * fortunes.length)], class: 'highlight' }
+                ];
+            }
+        },
+
+        joke: {
+            description: 'Tell a programming joke',
+            usage: 'joke',
+            icon: 'fa-laugh',
+            fn: function () {
+                const jokes = [
+                    { q: 'Why do programmers prefer dark mode?', a: 'Because light attracts bugs!' },
+                    { q: 'Why do Java developers wear glasses?', a: 'Because they can\'t C#!' },
+                    { q: 'What\'s a programmer\'s favorite hangout place?', a: 'Foo Bar!' },
+                    { q: 'Why was the JavaScript developer sad?', a: 'Because he didn\'t Node how to Express himself!' },
+                    { q: 'How many programmers does it take to change a light bulb?', a: 'None, that\'s a hardware problem!' },
+                    { q: 'Why do programmers hate nature?', a: 'It has too many bugs!' },
+                    { q: 'What\'s a computer\'s least favorite food?', a: 'Spam!' },
+                    { q: '["hip","hip"]', a: '(hip hip array!)' }
+                ];
+
+                const joke = jokes[Math.floor(Math.random() * jokes.length)];
+                return [
+                    { text: joke.q, class: 'info' },
+                    { text: '' },
+                    { text: joke.a, class: 'success' }
+                ];
+            }
+        },
+
+        quote: {
+            description: 'Get an inspirational quote',
+            usage: 'quote',
+            icon: 'fa-quote-left',
+            fn: function () {
+                const quotes = [
+                    { text: 'Code is like humor. When you have to explain it, it\'s bad.', author: 'Cory House' },
+                    { text: 'First, solve the problem. Then, write the code.', author: 'John Johnson' },
+                    { text: 'Experience is the name everyone gives to their mistakes.', author: 'Oscar Wilde' },
+                    { text: 'The best error message is the one that never shows up.', author: 'Thomas Fuchs' },
+                    { text: 'Simplicity is the soul of efficiency.', author: 'Austin Freeman' },
+                    { text: 'Make it work, make it right, make it fast.', author: 'Kent Beck' },
+                    { text: 'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.', author: 'Martin Fowler' },
+                    { text: 'Programming isn\'t about what you know; it\'s about what you can figure out.', author: 'Chris Pine' }
+                ];
+
+                const quote = quotes[Math.floor(Math.random() * quotes.length)];
+                return [
+                    { text: `"${quote.text}"`, class: 'highlight' },
+                    { text: '' },
+                    { text: `  — ${quote.author}`, class: 'system' }
+                ];
+            }
+        },
+
+        cowsay: {
+            description: 'Make a cow say something',
+            usage: 'cowsay <message>',
+            icon: 'fa-horse',
+            fn: function (args) {
+                const message = args.join(' ') || 'Moo!';
+                const border = '_'.repeat(message.length + 2);
+
+                return [
+                    { text: ` ${border}` },
+                    { text: `< ${message} >` },
+                    { text: ` ${'-'.repeat(message.length + 2)}` },
+                    { text: '        \\   ^__^' },
+                    { text: '         \\  (oo)\\_______' },
+                    { text: '            (__)\\       )\\/\\' },
+                    { text: '                ||----w |' },
+                    { text: '                ||     ||' }
+                ];
+            }
+        },
+
+        sl: {
+            description: 'Steam Locomotive',
+            usage: 'sl',
+            icon: 'fa-train',
+            fn: async function () {
+                const frames = [
+                    '      ====        ________                ___________ ',
+                    '  _D _|  |_______/        \\__I_I_____===__|_________| ',
+                    '   |(_)---  |   H\\________/ |   |        =|___ ___|   ',
+                    '   /     |  |   H  |  |     |   |         ||_| |_||   ',
+                    '  |      |  |   H  |__--------------------| [___] |   ',
+                    '  | ________|___H__/__|_____/[][]~\\_______|       |   ',
+                    '  |/ |   |-----------I_____I [][] []  D   |=======|__ ',
+                    '__/ =| o |=-~~\\  /~~\\  /~~\\  /~~\\ ____Y___________|__ ',
+                    ' |/-=|___|=O=====O=====O=====O   |_____/~\\___/        ',
+                    '  \\_/      \\__/  \\__/  \\__/  \\__/      \\_/            '
+                ];
+
+                return frames.map(line => ({ text: line, class: 'highlight' }));
+            }
+        },
+
+        cmatrix: {
+            description: 'Alias for matrix command',
+            usage: 'cmatrix',
+            icon: 'fa-code',
+            fn: function (args) {
+                return Terminal.commands.matrix.fn(args);
+            }
+        },
+
+        rps: {
+            description: 'Play Rock Paper Scissors',
+            usage: 'rps <rock|paper|scissors>',
+            icon: 'fa-hand-rock',
+            fn: function (args) {
+                const choices = ['rock', 'paper', 'scissors'];
+                const player = args[0]?.toLowerCase();
+
+                if (!player || !choices.includes(player)) {
+                    return [{ text: 'Usage: rps <rock|paper|scissors>', class: 'warning' }];
+                }
+
+                const computer = choices[Math.floor(Math.random() * 3)];
+                const icons = { rock: '[ROCK]', paper: '[PAPER]', scissors: '[SCISSORS]' };
+
+                let result;
+                if (player === computer) {
+                    result = { text: 'It\'s a tie!', class: 'warning' };
+                } else if (
+                    (player === 'rock' && computer === 'scissors') ||
+                    (player === 'paper' && computer === 'rock') ||
+                    (player === 'scissors' && computer === 'paper')
+                ) {
+                    result = { text: 'You win!', class: 'success' };
+                } else {
+                    result = { text: 'You lose!', class: 'error' };
+                }
+
+                return [
+                    { text: `You: ${icons[player]} ${player}` },
+                    { text: `Computer: ${icons[computer]} ${computer}` },
+                    { text: '' },
+                    result
+                ];
+            }
+        },
+
+        guess: {
+            description: 'Play number guessing game',
+            usage: 'guess [1-100]',
+            icon: 'fa-question',
+            fn: function (args) {
+                if (!Terminal.guessGame) {
+                    Terminal.guessGame = {
+                        number: Math.floor(Math.random() * 100) + 1,
+                        attempts: 0
+                    };
+                    return [
+                        { text: '[GAME] Number Guessing Game Started!', class: 'success' },
+                        { text: 'I\'m thinking of a number between 1 and 100.' },
+                        { text: 'Use "guess <number>" to make a guess.' }
+                    ];
+                }
+
+                const guess = parseInt(args[0]);
+                if (isNaN(guess) || guess < 1 || guess > 100) {
+                    return [{ text: 'Please guess a number between 1 and 100.', class: 'warning' }];
+                }
+
+                Terminal.guessGame.attempts++;
+
+                if (guess === Terminal.guessGame.number) {
+                    const attempts = Terminal.guessGame.attempts;
+                    Terminal.guessGame = null;
+                    return [
+                        { text: `[WIN] Correct! The number was ${guess}!`, class: 'success' },
+                        { text: `You got it in ${attempts} attempts!` }
+                    ];
+                } else if (guess < Terminal.guessGame.number) {
+                    return [{ text: '[^] Higher!', class: 'info' }];
+                } else {
+                    return [{ text: '[v] Lower!', class: 'info' }];
+                }
+            }
+        },
+
+        '8ball': {
+            description: 'Ask the magic 8-ball',
+            usage: '8ball <question>',
+            icon: 'fa-circle',
+            fn: function (args) {
+                if (args.length === 0) {
+                    return [{ text: 'Ask a question! Usage: 8ball <question>', class: 'warning' }];
+                }
+
+                const responses = [
+                    'It is certain.', 'It is decidedly so.', 'Without a doubt.',
+                    'Yes - definitely.', 'You may rely on it.', 'As I see it, yes.',
+                    'Most likely.', 'Outlook good.', 'Yes.', 'Signs point to yes.',
+                    'Reply hazy, try again.', 'Ask again later.', 'Better not tell you now.',
+                    'Cannot predict now.', 'Concentrate and ask again.',
+                    'Don\'t count on it.', 'My reply is no.', 'My sources say no.',
+                    'Outlook not so good.', 'Very doubtful.'
+                ];
+
+                return [
+                    { text: '[8] ' + responses[Math.floor(Math.random() * responses.length)], class: 'highlight' }
+                ];
+            }
+        },
+
+        dice: {
+            description: 'Roll dice',
+            usage: 'dice [sides] [count]',
+            icon: 'fa-dice',
+            fn: function (args) {
+                const sides = parseInt(args[0]) || 6;
+                const count = parseInt(args[1]) || 1;
+
+                if (count > 10) {
+                    return [{ text: 'Maximum 10 dice allowed!', class: 'warning' }];
+                }
+
+                const rolls = [];
+                for (let i = 0; i < count; i++) {
+                    rolls.push(Math.floor(Math.random() * sides) + 1);
+                }
+
+                return [
+                    { text: `[DICE] Rolling ${count}d${sides}...`, class: 'info' },
+                    { text: `Results: ${rolls.join(', ')}` },
+                    { text: `Total: ${rolls.reduce((a, b) => a + b, 0)}`, class: 'success' }
+                ];
+            }
+        },
+
+        calc: {
+            description: 'Simple calculator',
+            usage: 'calc <expression>',
+            icon: 'fa-calculator',
+            fn: function (args) {
+                const expr = args.join(' ');
+                if (!expr) {
+                    return [{ text: 'Usage: calc <expression>', class: 'warning' }];
+                }
+
+                try {
+                    // Safe evaluation (only math operations)
+                    const sanitized = expr.replace(/[^0-9+\-*/().%\s]/g, '');
+                    if (sanitized !== expr) {
+                        return [{ text: 'Invalid characters in expression!', class: 'error' }];
+                    }
+                    const result = Function('"use strict";return (' + sanitized + ')')();
+                    return [
+                        { text: `${expr} = ${result}`, class: 'success' }
+                    ];
+                } catch (e) {
+                    return [{ text: 'Invalid expression!', class: 'error' }];
+                }
+            }
+        },
+
+        todo: {
+            description: 'Manage todo list',
+            usage: 'todo [add|remove|list|clear] [task]',
+            icon: 'fa-list-check',
+            fn: function (args) {
+                const action = args[0]?.toLowerCase();
+                const task = args.slice(1).join(' ');
+
+                switch (action) {
+                    case 'add':
+                        if (!task) return [{ text: 'Usage: todo add <task>', class: 'warning' }];
+                        Terminal.todoList.push({ text: task, done: false });
+                        return [{ text: `Added: ${task}`, class: 'success' }];
+
+                    case 'remove':
+                    case 'rm':
+                        const idx = parseInt(task) - 1;
+                        if (isNaN(idx) || idx < 0 || idx >= Terminal.todoList.length) {
+                            return [{ text: 'Invalid task number!', class: 'error' }];
+                        }
+                        const removed = Terminal.todoList.splice(idx, 1)[0];
+                        return [{ text: `Removed: ${removed.text}`, class: 'success' }];
+
+                    case 'done':
+                        const doneIdx = parseInt(task) - 1;
+                        if (isNaN(doneIdx) || doneIdx < 0 || doneIdx >= Terminal.todoList.length) {
+                            return [{ text: 'Invalid task number!', class: 'error' }];
+                        }
+                        Terminal.todoList[doneIdx].done = !Terminal.todoList[doneIdx].done;
+                        return [{ text: `Toggled: ${Terminal.todoList[doneIdx].text}`, class: 'success' }];
+
+                    case 'clear':
+                        Terminal.todoList = [];
+                        return [{ text: 'Todo list cleared!', class: 'success' }];
+
+                    case 'list':
+                    default:
+                        if (Terminal.todoList.length === 0) {
+                            return [{ text: 'Todo list is empty!', class: 'system' }];
+                        }
+                        return [
+                            { text: '[TODO] Todo List:', class: 'info' },
+                            ...Terminal.todoList.map((t, i) => ({
+                                text: `  ${i + 1}. ${t.done ? '[x]' : '[ ]'} ${t.text}`,
+                                class: t.done ? 'success' : ''
+                            }))
+                        ];
+                }
+            }
+        },
+
+        timer: {
+            description: 'Set a timer',
+            usage: 'timer <seconds>',
+            icon: 'fa-hourglass',
+            fn: function (args) {
+                const seconds = parseInt(args[0]);
+                if (isNaN(seconds) || seconds <= 0) {
+                    return [{ text: 'Usage: timer <seconds>', class: 'warning' }];
+                }
+
+                setTimeout(() => {
+                    Terminal.print([{ text: `[TIMER] ${seconds}s elapsed!`, class: 'success' }]);
+                    // Play a sound or notification if possible
+                }, seconds * 1000);
+
+                return [{ text: `Timer set for ${seconds} seconds...`, class: 'info' }];
+            }
+        },
+
+        stopwatch: {
+            description: 'Stopwatch utility',
+            usage: 'stopwatch [start|stop|lap|reset]',
+            icon: 'fa-stopwatch',
+            fn: function (args) {
+                const action = args[0]?.toLowerCase() || 'status';
+
+                if (!Terminal.stopwatch) {
+                    Terminal.stopwatch = { running: false, start: 0, elapsed: 0, laps: [] };
+                }
+
+                switch (action) {
+                    case 'start':
+                        if (Terminal.stopwatch.running) {
+                            return [{ text: 'Stopwatch already running!', class: 'warning' }];
+                        }
+                        Terminal.stopwatch.running = true;
+                        Terminal.stopwatch.start = Date.now() - Terminal.stopwatch.elapsed;
+                        return [{ text: '[SW] Stopwatch started!', class: 'success' }];
+
+                    case 'stop':
+                        if (!Terminal.stopwatch.running) {
+                            return [{ text: 'Stopwatch not running!', class: 'warning' }];
+                        }
+                        Terminal.stopwatch.running = false;
+                        Terminal.stopwatch.elapsed = Date.now() - Terminal.stopwatch.start;
+                        return [{ text: `[SW] Stopped at: ${(Terminal.stopwatch.elapsed / 1000).toFixed(2)}s`, class: 'success' }];
+
+                    case 'lap':
+                        if (!Terminal.stopwatch.running) {
+                            return [{ text: 'Stopwatch not running!', class: 'warning' }];
+                        }
+                        const lapTime = Date.now() - Terminal.stopwatch.start;
+                        Terminal.stopwatch.laps.push(lapTime);
+                        return [{ text: `[LAP] Lap ${Terminal.stopwatch.laps.length}: ${(lapTime / 1000).toFixed(2)}s`, class: 'info' }];
+
+                    case 'reset':
+                        Terminal.stopwatch = { running: false, start: 0, elapsed: 0, laps: [] };
+                        return [{ text: '[SW] Stopwatch reset!', class: 'success' }];
+
+                    default:
+                        const current = Terminal.stopwatch.running
+                            ? Date.now() - Terminal.stopwatch.start
+                            : Terminal.stopwatch.elapsed;
+                        return [
+                            { text: `[SW] Time: ${(current / 1000).toFixed(2)}s`, class: 'info' },
+                            { text: `Status: ${Terminal.stopwatch.running ? 'Running' : 'Stopped'}` },
+                            { text: `Laps: ${Terminal.stopwatch.laps.length}` }
+                        ];
+                }
+            }
+        },
+
+        color: {
+            description: 'Show color palette or convert colors',
+            usage: 'color [hex]',
+            icon: 'fa-palette',
+            fn: function (args) {
+                if (args[0]) {
+                    const hex = args[0].replace('#', '');
+                    if (!/^[0-9A-Fa-f]{6}$/.test(hex)) {
+                        return [{ text: 'Invalid hex color!', class: 'error' }];
+                    }
+                    const r = parseInt(hex.substr(0, 2), 16);
+                    const g = parseInt(hex.substr(2, 2), 16);
+                    const b = parseInt(hex.substr(4, 2), 16);
+                    return [
+                        { text: `Color: #${hex}`, html: true },
+                        { text: `RGB: rgb(${r}, ${g}, ${b})` },
+                        { text: `<span style="background:#${hex};padding:2px 20px;border-radius:4px;">████████</span>`, html: true }
+                    ];
+                }
+
+                return [
+                    { text: 'Terminal Color Palette:', class: 'info' },
+                    { text: '<span style="color:#ff5f56">██</span> Red (#ff5f56)', html: true },
+                    { text: '<span style="color:#ffbd2e">██</span> Yellow (#ffbd2e)', html: true },
+                    { text: '<span style="color:#27c93f">██</span> Green (#27c93f)', html: true },
+                    { text: '<span style="color:#00b8ff">██</span> Blue (#00b8ff)', html: true },
+                    { text: '<span style="color:#bd93f9">██</span> Purple (#bd93f9)', html: true },
+                    { text: '<span style="color:#00ff88">██</span> Primary (#00ff88)', html: true }
+                ];
+            }
+        },
+
+        echo: {
+            description: 'Echo text to terminal',
+            usage: 'echo <text>',
+            icon: 'fa-comment',
+            fn: function (args) {
+                return [{ text: args.join(' ') }];
+            }
+        },
+
+        date: {
+            description: 'Show current date and time',
+            usage: 'date',
+            icon: 'fa-calendar',
+            fn: function () {
+                const now = new Date();
+                return [{ text: now.toString() }];
+            }
+        },
+
+        whoami: {
+            description: 'Display current user',
+            usage: 'whoami',
+            icon: 'fa-user',
+            fn: function () {
+                return [{ text: 'guest' }];
+            }
+        },
+
+        uname: {
+            description: 'Print system information',
+            usage: 'uname [-a]',
+            icon: 'fa-info-circle',
+            fn: function (args) {
+                if (args[0] === '-a') {
+                    return [{ text: 'WebOS 2.0.0 piotrunius.dev JavaScript ES2024 Browser' }];
+                }
+                return [{ text: 'WebOS' }];
+            }
+        },
+
+        uptime: {
+            description: 'Show terminal uptime',
+            usage: 'uptime',
+            icon: 'fa-clock',
+            fn: function () {
+                const uptime = Math.floor(performance.now() / 1000);
+                const hours = Math.floor(uptime / 3600);
+                const minutes = Math.floor((uptime % 3600) / 60);
+                const seconds = uptime % 60;
+                return [{ text: `up ${hours}h ${minutes}m ${seconds}s` }];
+            }
+        },
+
+        theme: {
+            description: 'Toggle or set theme',
+            usage: 'theme [dark|light|toggle]',
+            icon: 'fa-moon',
+            fn: function (args) {
+                const action = args[0]?.toLowerCase() || 'toggle';
+                const body = document.body;
+
+                switch (action) {
+                    case 'dark':
+                        body.classList.remove('light-mode');
+                        localStorage.setItem('theme', 'dark');
+                        return [{ text: 'Theme set to dark mode.', class: 'success' }];
+                    case 'light':
+                        body.classList.add('light-mode');
+                        localStorage.setItem('theme', 'light');
+                        return [{ text: 'Theme set to light mode.', class: 'success' }];
+                    default:
+                        body.classList.toggle('light-mode');
+                        const theme = body.classList.contains('light-mode') ? 'light' : 'dark';
+                        localStorage.setItem('theme', theme);
+                        return [{ text: `Theme toggled to ${theme} mode.`, class: 'success' }];
+                }
+            }
+        },
+
+        alias: {
+            description: 'Create command aliases',
+            usage: 'alias [name=command]',
+            icon: 'fa-link',
+            fn: function (args) {
+                if (!args[0]) {
+                    if (Object.keys(Terminal.aliases).length === 0) {
+                        return [{ text: 'No aliases defined.', class: 'system' }];
+                    }
+                    return Object.entries(Terminal.aliases).map(([k, v]) => ({
+                        text: `${k}='${v}'`
+                    }));
+                }
+
+                const match = args.join(' ').match(/^(\w+)=(.+)$/);
+                if (!match) {
+                    return [{ text: 'Usage: alias name=command', class: 'warning' }];
+                }
+
+                Terminal.aliases[match[1]] = match[2];
+                return [{ text: `Alias created: ${match[1]}='${match[2]}'`, class: 'success' }];
+            }
+        },
+
+        export: {
+            description: 'Set environment variables',
+            usage: 'export [NAME=value]',
+            icon: 'fa-cog',
+            fn: function (args) {
+                if (!args[0]) {
+                    return Object.entries(Terminal.env).map(([k, v]) => ({
+                        text: `${k}=${v}`
+                    }));
+                }
+
+                const match = args.join(' ').match(/^(\w+)=(.*)$/);
+                if (!match) {
+                    return [{ text: 'Usage: export NAME=value', class: 'warning' }];
+                }
+
+                Terminal.env[match[1]] = match[2];
+                return [{ text: `${match[1]}=${match[2]}`, class: 'success' }];
+            }
+        },
+
+        motd: {
+            description: 'Show message of the day',
+            usage: 'motd',
+            icon: 'fa-newspaper',
+            fn: function () {
+                return Terminal.getWelcomeMessage();
+            }
+        },
+
+        prompt: {
+            description: 'Customize prompt',
+            usage: 'prompt [user] [host]',
+            icon: 'fa-terminal',
+            fn: function (args) {
+                if (args[0]) {
+                    const userEl = document.querySelector('.prompt-user');
+                    if (userEl) userEl.textContent = args[0];
+                }
+                if (args[1]) {
+                    const hostEl = document.querySelector('.prompt-host');
+                    if (hostEl) hostEl.textContent = args[1];
+                }
+                return [{ text: 'Prompt updated!', class: 'success' }];
+            }
+        },
+
+        reboot: {
+            description: 'Reboot the terminal',
+            usage: 'reboot',
+            icon: 'fa-sync',
+            fn: function () {
+                Terminal.print([{ text: 'Rebooting terminal...', class: 'warning' }]);
+                setTimeout(() => {
+                    document.getElementById('terminal-output').innerHTML = '';
+                    Terminal.commandHistory = [];
+                    Terminal.commandCount = 0;
+                    Terminal.currentPath = '~';
+                    Terminal.updatePromptPath();
+                    Terminal.print(Terminal.getWelcomeMessage());
+                }, 1000);
+                return [];
+            }
+        },
+
+        exit: {
+            description: 'Close the terminal',
+            usage: 'exit',
+            icon: 'fa-sign-out-alt',
+            fn: function () {
+                Terminal.print([{ text: 'Goodbye!', class: 'success' }]);
+                setTimeout(() => Terminal.close(), 500);
+                return [];
+            }
+        },
+
+        sudo: {
+            description: 'Execute command as superuser',
+            usage: 'sudo <command>',
+            icon: 'fa-shield-alt',
+            fn: function (args) {
+                if (args.length === 0) {
+                    return [{ text: 'Usage: sudo <command>', class: 'warning' }];
+                }
+                return [
+                    { text: '[sudo] password for guest: ********', class: 'system' },
+                    { text: 'Sorry, user guest is not in the sudoers file.', class: 'error' },
+                    { text: 'This incident will be reported.', class: 'error' }
+                ];
+            }
+        },
+
+        rm: {
+            description: 'Remove files (simulated)',
+            usage: 'rm [-rf] <file>',
+            icon: 'fa-trash',
+            fn: function (args) {
+                if (args.includes('-rf') && args.includes('/')) {
+                    return [
+                        { text: '[!] Nice try!', class: 'warning' },
+                        { text: 'This is a simulated terminal. No files were harmed.' }
+                    ];
+                }
+                return [{ text: 'rm: permission denied', class: 'error' }];
+            }
+        },
+
+        konami: {
+            description: 'Secret command',
+            usage: 'konami',
+            icon: 'fa-gamepad',
+            hidden: true,
+            fn: function () {
+                return [
+                    { text: '[CODE] UP UP DOWN DOWN LEFT RIGHT LEFT RIGHT B A', class: 'highlight' },
+                    { text: '' },
+                    { text: '  [*] You found an Easter Egg! [*]', class: 'success' },
+                    { text: '  You are now a certified terminal ninja!' },
+                    { text: '' },
+                    { text: '  Try more hidden commands:', class: 'info' },
+                    { text: '  - matrix' },
+                    { text: '  - hack' },
+                    { text: '  - cowsay' },
+                    { text: '  - fortune' }
+                ];
+            }
+        },
+
+        // New advanced commands
+        ip: {
+            description: 'Show your public IP and location info',
+            usage: 'ip',
+            icon: 'fa-network-wired',
+            fn: async function () {
+                Terminal.print([{ text: 'Fetching IP info...', class: 'system' }]);
+                try {
+                    const resp = await fetch('http://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query');
+                    const data = await resp.json();
+                    if (data.status === 'success') {
+                        return [
+                            { text: '+---------------------------------------------------+', class: 'highlight' },
+                            { text: '|                 IP INFORMATION                    |', class: 'highlight' },
+                            { text: '+---------------------------------------------------+', class: 'highlight' },
+                            { text: '' },
+                            { text: `  IP Address:  ${data.query}` },
+                            { text: `  Location:    ${data.city}, ${data.regionName}` },
+                            { text: `  Country:     ${data.country} (${data.countryCode})` },
+                            { text: `  Timezone:    ${data.timezone}` },
+                            { text: `  ISP:         ${data.isp}` },
+                            { text: `  Coords:      ${data.lat}, ${data.lon}` },
+                            { text: '' }
+                        ];
+                    }
+                    throw new Error('API error');
+                } catch (e) {
+                    return [{ text: 'Failed to fetch IP info.', class: 'error' }];
+                }
+            }
+        },
+
+        ping: {
+            description: 'Simulate ping to host',
+            usage: 'ping <host>',
+            icon: 'fa-satellite-dish',
+            fn: async function (args) {
+                const host = args[0] || 'piotrunius.github.io';
+                const results = [];
+                results.push({ text: `PING ${host}`, class: 'info' });
+
+                for (let i = 0; i < 4; i++) {
+                    const time = (Math.random() * 50 + 10).toFixed(2);
+                    Terminal.print([{ text: `64 bytes from ${host}: icmp_seq=${i + 1} time=${time} ms` }]);
+                    await new Promise(r => setTimeout(r, 500));
+                }
+
+                return [
+                    { text: '' },
+                    { text: `--- ${host} ping statistics ---`, class: 'system' },
+                    { text: '4 packets transmitted, 4 received, 0% packet loss' }
+                ];
+            }
+        },
+
+        base64: {
+            description: 'Encode/decode base64',
+            usage: 'base64 [encode|decode] <text>',
+            icon: 'fa-key',
+            fn: function (args) {
+                const action = args[0]?.toLowerCase();
+                const text = args.slice(1).join(' ');
+
+                if (!action || !text) {
+                    return [{ text: 'Usage: base64 [encode|decode] <text>', class: 'warning' }];
+                }
+
+                try {
+                    if (action === 'encode') {
+                        return [{ text: btoa(text), class: 'success' }];
+                    } else if (action === 'decode') {
+                        return [{ text: atob(text), class: 'success' }];
+                    }
+                    return [{ text: 'Use: base64 encode <text> OR base64 decode <text>', class: 'warning' }];
+                } catch (e) {
+                    return [{ text: 'Invalid input for base64 operation.', class: 'error' }];
+                }
+            }
+        },
+
+        hash: {
+            description: 'Generate hash of text',
+            usage: 'hash <text>',
+            icon: 'fa-fingerprint',
+            fn: async function (args) {
+                const text = args.join(' ');
+                if (!text) {
+                    return [{ text: 'Usage: hash <text>', class: 'warning' }];
+                }
+
+                // Simple hash function
+                const simpleHash = str => {
+                    let hash = 0;
+                    for (let i = 0; i < str.length; i++) {
+                        const char = str.charCodeAt(i);
+                        hash = ((hash << 5) - hash) + char;
+                        hash = hash & hash;
+                    }
+                    return Math.abs(hash).toString(16).padStart(8, '0');
+                };
+
+                // Try to use SubtleCrypto for SHA-256
+                try {
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(text);
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    const sha256 = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+                    return [
+                        { text: 'Hash results:', class: 'info' },
+                        { text: `  SHA-256: ${sha256}` },
+                        { text: `  Simple:  ${simpleHash(text)}` }
+                    ];
+                } catch (e) {
+                    return [
+                        { text: 'Hash result:', class: 'info' },
+                        { text: `  Simple: ${simpleHash(text)}` }
+                    ];
+                }
+            }
+        },
+
+        uuid: {
+            description: 'Generate a UUID',
+            usage: 'uuid',
+            icon: 'fa-barcode',
+            fn: function () {
+                const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    const r = Math.random() * 16 | 0;
+                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+                return [
+                    { text: 'Generated UUID:', class: 'info' },
+                    { text: `  ${uuid}`, class: 'success' }
+                ];
+            }
+        },
+
+        password: {
+            description: 'Generate a secure password',
+            usage: 'password [length]',
+            icon: 'fa-lock',
+            fn: function (args) {
+                const length = parseInt(args[0]) || 16;
+                if (length < 8 || length > 64) {
+                    return [{ text: 'Password length must be between 8 and 64.', class: 'warning' }];
+                }
+
+                const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+                let password = '';
+                for (let i = 0; i < length; i++) {
+                    password += chars[Math.floor(Math.random() * chars.length)];
+                }
+
+                return [
+                    { text: 'Generated Password:', class: 'info' },
+                    { text: `  ${password}`, class: 'success' },
+                    { text: '' },
+                    { text: `  Length: ${length} characters`, class: 'system' }
+                ];
+            }
+        },
+
+        qr: {
+            description: 'Generate QR code (text output)',
+            usage: 'qr <text>',
+            icon: 'fa-qrcode',
+            fn: function (args) {
+                const text = args.join(' ');
+                if (!text) {
+                    return [{ text: 'Usage: qr <text>', class: 'warning' }];
+                }
+
+                // Simple ASCII art placeholder (actual QR would need a library)
+                return [
+                    { text: 'QR Code for: ' + text, class: 'info' },
+                    { text: '' },
+                    { text: '  +-----------------------------------------------+' },
+                    { text: '  |  [QR]  Scan with your phone camera            |' },
+                    { text: '  |                                               |' },
+                    { text: '  |  URL: https://api.qrserver.com/v1/           |' },
+                    { text: '  |       create-qr-code/?size=200x200&          |' },
+                    { text: '  |       data=' + encodeURIComponent(text).substring(0, 20) + '...    |' },
+                    { text: '  +-----------------------------------------------+' },
+                    { text: '' },
+                    { text: '  Visit the URL above to get your QR code image.', class: 'system' }
+                ];
+            }
+        },
+
+        speedtest: {
+            description: 'Simulate internet speed test',
+            usage: 'speedtest',
+            icon: 'fa-tachometer-alt',
+            fn: async function () {
+                Terminal.print([{ text: 'Running speed test...', class: 'info' }]);
+
+                const stages = [
+                    { text: 'Testing download speed... [##........] 20%', delay: 400 },
+                    { text: 'Testing download speed... [####......] 40%', delay: 400 },
+                    { text: 'Testing download speed... [######....] 60%', delay: 400 },
+                    { text: 'Testing download speed... [########..] 80%', delay: 400 },
+                    { text: 'Testing download speed... [##########] 100%', delay: 200 },
+                    { text: 'Testing upload speed... [##........] 20%', delay: 400 },
+                    { text: 'Testing upload speed... [####......] 40%', delay: 400 },
+                    { text: 'Testing upload speed... [######....] 60%', delay: 400 },
+                    { text: 'Testing upload speed... [########..] 80%', delay: 400 },
+                    { text: 'Testing upload speed... [##########] 100%', delay: 200 },
+                ];
+
+                for (const stage of stages) {
+                    Terminal.print([{ text: stage.text, class: 'system' }]);
+                    await new Promise(r => setTimeout(r, stage.delay));
+                }
+
+                const download = (Math.random() * 500 + 100).toFixed(2);
+                const upload = (Math.random() * 200 + 50).toFixed(2);
+                const ping = (Math.random() * 30 + 5).toFixed(0);
+
+                return [
+                    { text: '' },
+                    { text: '+-------------------------------------------+', class: 'highlight' },
+                    { text: '|           SPEED TEST RESULTS              |', class: 'highlight' },
+                    { text: '+-------------------------------------------+', class: 'highlight' },
+                    { text: '' },
+                    { text: `  Download:  ${download} Mbps`, class: 'success' },
+                    { text: `  Upload:    ${upload} Mbps`, class: 'success' },
+                    { text: `  Ping:      ${ping} ms`, class: 'info' },
+                    { text: '' },
+                    { text: '  [*] Simulated results', class: 'system' }
+                ];
+            }
+        },
+
+        ascii: {
+            description: 'Convert text to ASCII art',
+            usage: 'ascii <text>',
+            icon: 'fa-font',
+            fn: function (args) {
+                const text = args.join(' ').toUpperCase();
+                if (!text) {
+                    return [{ text: 'Usage: ascii <text>', class: 'warning' }];
+                }
+
+                // Simple block letters for A-Z and 0-9
+                const letters = {
+                    'A': ['  A  ', ' A A ', 'AAAAA', 'A   A', 'A   A'],
+                    'B': ['BBBB ', 'B   B', 'BBBB ', 'B   B', 'BBBB '],
+                    'C': [' CCC ', 'C    ', 'C    ', 'C    ', ' CCC '],
+                    'D': ['DDD  ', 'D  D ', 'D   D', 'D  D ', 'DDD  '],
+                    'E': ['EEEEE', 'E    ', 'EEE  ', 'E    ', 'EEEEE'],
+                    'F': ['FFFFF', 'F    ', 'FFF  ', 'F    ', 'F    '],
+                    'G': [' GGG ', 'G    ', 'G GGG', 'G   G', ' GGG '],
+                    'H': ['H   H', 'H   H', 'HHHHH', 'H   H', 'H   H'],
+                    'I': ['IIIII', '  I  ', '  I  ', '  I  ', 'IIIII'],
+                    'J': ['JJJJJ', '   J ', '   J ', 'J  J ', ' JJ  '],
+                    'K': ['K   K', 'K  K ', 'KK   ', 'K  K ', 'K   K'],
+                    'L': ['L    ', 'L    ', 'L    ', 'L    ', 'LLLLL'],
+                    'M': ['M   M', 'MM MM', 'M M M', 'M   M', 'M   M'],
+                    'N': ['N   N', 'NN  N', 'N N N', 'N  NN', 'N   N'],
+                    'O': [' OOO ', 'O   O', 'O   O', 'O   O', ' OOO '],
+                    'P': ['PPPP ', 'P   P', 'PPPP ', 'P    ', 'P    '],
+                    'Q': [' QQQ ', 'Q   Q', 'Q Q Q', 'Q  QQ', ' QQQQ'],
+                    'R': ['RRRR ', 'R   R', 'RRRR ', 'R  R ', 'R   R'],
+                    'S': [' SSS ', 'S    ', ' SSS ', '    S', 'SSSS '],
+                    'T': ['TTTTT', '  T  ', '  T  ', '  T  ', '  T  '],
+                    'U': ['U   U', 'U   U', 'U   U', 'U   U', ' UUU '],
+                    'V': ['V   V', 'V   V', 'V   V', ' V V ', '  V  '],
+                    'W': ['W   W', 'W   W', 'W W W', 'WW WW', 'W   W'],
+                    'X': ['X   X', ' X X ', '  X  ', ' X X ', 'X   X'],
+                    'Y': ['Y   Y', ' Y Y ', '  Y  ', '  Y  ', '  Y  '],
+                    'Z': ['ZZZZZ', '   Z ', '  Z  ', ' Z   ', 'ZZZZZ'],
+                    ' ': ['     ', '     ', '     ', '     ', '     '],
+                    '!': ['  !  ', '  !  ', '  !  ', '     ', '  !  ']
+                };
+
+                const lines = ['', '', '', '', ''];
+                for (const char of text.substring(0, 10)) {
+                    const letter = letters[char] || letters[' '];
+                    for (let i = 0; i < 5; i++) {
+                        lines[i] += letter[i] + ' ';
+                    }
+                }
+
+                return lines.map(line => ({ text: '  ' + line, class: 'highlight' }));
+            }
+        },
+
+        binary: {
+            description: 'Convert text to binary',
+            usage: 'binary <text>',
+            icon: 'fa-microchip',
+            fn: function (args) {
+                const text = args.join(' ');
+                if (!text) {
+                    return [{ text: 'Usage: binary <text>', class: 'warning' }];
+                }
+
+                const binary = text.split('').map(char => {
+                    return char.charCodeAt(0).toString(2).padStart(8, '0');
+                }).join(' ');
+
+                return [
+                    { text: 'Binary:', class: 'info' },
+                    { text: `  ${binary}` }
+                ];
+            }
+        },
+
+        hex: {
+            description: 'Convert text to hexadecimal',
+            usage: 'hex <text>',
+            icon: 'fa-hashtag',
+            fn: function (args) {
+                const text = args.join(' ');
+                if (!text) {
+                    return [{ text: 'Usage: hex <text>', class: 'warning' }];
+                }
+
+                const hexStr = text.split('').map(char => {
+                    return char.charCodeAt(0).toString(16).padStart(2, '0');
+                }).join(' ');
+
+                return [
+                    { text: 'Hexadecimal:', class: 'info' },
+                    { text: `  ${hexStr}` }
+                ];
+            }
+        },
+
+        reverse: {
+            description: 'Reverse text',
+            usage: 'reverse <text>',
+            icon: 'fa-exchange-alt',
+            fn: function (args) {
+                const text = args.join(' ');
+                if (!text) {
+                    return [{ text: 'Usage: reverse <text>', class: 'warning' }];
+                }
+                return [{ text: text.split('').reverse().join(''), class: 'success' }];
+            }
+        },
+
+        figlet: {
+            description: 'Display text in large ASCII letters',
+            usage: 'figlet <text>',
+            icon: 'fa-heading',
+            fn: function (args) {
+                return Terminal.commands.ascii.fn(args);
+            }
+        },
+
+        banner: {
+            description: 'Display a text banner',
+            usage: 'banner <text>',
+            icon: 'fa-flag',
+            fn: function (args) {
+                const text = args.join(' ') || 'HELLO';
+                const width = Math.max(text.length + 10, 30);
+                const border = '+' + '-'.repeat(width - 2) + '+';
+                const padding = '|' + ' '.repeat(width - 2) + '|';
+                const textLine = '|' + text.toUpperCase().padStart((width + text.length - 2) / 2).padEnd(width - 2) + '|';
+
+                return [
+                    { text: border, class: 'highlight' },
+                    { text: padding, class: 'highlight' },
+                    { text: textLine, class: 'highlight' },
+                    { text: padding, class: 'highlight' },
+                    { text: border, class: 'highlight' }
+                ];
+            }
+        },
+
+        hostname: {
+            description: 'Display system hostname',
+            usage: 'hostname',
+            icon: 'fa-server',
+            fn: function () {
+                return [{ text: 'piotrunius.dev' }];
+            }
+        },
+
+        curl: {
+            description: 'Fetch URL content (simulated)',
+            usage: 'curl <url>',
+            icon: 'fa-download',
+            fn: async function (args) {
+                const url = args[0];
+                if (!url) {
+                    return [{ text: 'Usage: curl <url>', class: 'warning' }];
+                }
+
+                Terminal.print([{ text: `Fetching ${url}...`, class: 'system' }]);
+
+                try {
+                    const response = await fetch(url);
+                    const text = await response.text();
+                    const preview = text.substring(0, 500);
+
+                    return [
+                        { text: `HTTP ${response.status} ${response.statusText}`, class: response.ok ? 'success' : 'error' },
+                        { text: '' },
+                        { text: preview + (text.length > 500 ? '...' : '') }
+                    ];
+                } catch (e) {
+                    return [{ text: `curl: (6) Could not resolve host: ${url}`, class: 'error' }];
+                }
+            }
+        },
+
+        man: {
+            description: 'Display manual for a command',
+            usage: 'man <command>',
+            icon: 'fa-book',
+            fn: function (args) {
+                const cmdName = args[0]?.toLowerCase();
+                if (!cmdName) {
+                    return [{ text: 'What manual page do you want?', class: 'warning' }];
+                }
+
+                const cmd = Terminal.commands[cmdName];
+                if (!cmd) {
+                    return [{ text: `No manual entry for ${cmdName}`, class: 'error' }];
+                }
+
+                return [
+                    { text: `${cmdName.toUpperCase()}(1)`, class: 'highlight' },
+                    { text: '' },
+                    { text: 'NAME', class: 'info' },
+                    { text: `       ${cmdName} - ${cmd.description}` },
+                    { text: '' },
+                    { text: 'SYNOPSIS', class: 'info' },
+                    { text: `       ${cmd.usage}` },
+                    { text: '' },
+                    { text: 'DESCRIPTION', class: 'info' },
+                    { text: `       ${cmd.description}` },
+                    { text: '' }
+                ];
+            }
+        },
+
+        screenfetch: {
+            description: 'Alias for neofetch',
+            usage: 'screenfetch',
+            icon: 'fa-desktop',
+            fn: function () {
+                return Terminal.commands.neofetch.fn();
+            }
+        },
+
+        tictactoe: {
+            description: 'Play Tic Tac Toe',
+            usage: 'tictactoe [1-9]',
+            icon: 'fa-th',
+            fn: function (args) {
+                if (!Terminal.tttGame) {
+                    Terminal.tttGame = {
+                        board: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                        player: 'X',
+                        computer: 'O',
+                        gameOver: false
+                    };
+                    return [
+                        { text: '[GAME] Tic Tac Toe - You are X', class: 'success' },
+                        { text: '' },
+                        { text: '  1 | 2 | 3' },
+                        { text: ' ---+---+---' },
+                        { text: '  4 | 5 | 6' },
+                        { text: ' ---+---+---' },
+                        { text: '  7 | 8 | 9' },
+                        { text: '' },
+                        { text: 'Type "tictactoe <1-9>" to make a move.', class: 'system' }
+                    ];
+                }
+
+                if (args[0] === 'reset') {
+                    Terminal.tttGame = null;
+                    return [{ text: 'Game reset. Type "tictactoe" to start new game.', class: 'success' }];
+                }
+
+                const pos = parseInt(args[0]) - 1;
+                const g = Terminal.tttGame;
+
+                if (g.gameOver) {
+                    return [{ text: 'Game over! Type "tictactoe reset" to play again.', class: 'warning' }];
+                }
+
+                if (isNaN(pos) || pos < 0 || pos > 8 || g.board[pos] !== ' ') {
+                    return [{ text: 'Invalid move! Choose an empty position 1-9.', class: 'error' }];
+                }
+
+                // Player move
+                g.board[pos] = g.player;
+
+                // Check for winner
+                const checkWin = (b, p) => {
+                    const wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+                    return wins.some(w => b[w[0]] === p && b[w[1]] === p && b[w[2]] === p);
+                };
+
+                const displayBoard = () => [
+                    { text: `  ${g.board[0]} | ${g.board[1]} | ${g.board[2]}` },
+                    { text: ' ---+---+---' },
+                    { text: `  ${g.board[3]} | ${g.board[4]} | ${g.board[5]}` },
+                    { text: ' ---+---+---' },
+                    { text: `  ${g.board[6]} | ${g.board[7]} | ${g.board[8]}` }
+                ];
+
+                if (checkWin(g.board, g.player)) {
+                    g.gameOver = true;
+                    return [...displayBoard(), { text: '' }, { text: 'You win!', class: 'success' }];
+                }
+
+                // Computer move
+                const empty = g.board.map((v, i) => v === ' ' ? i : -1).filter(i => i >= 0);
+                if (empty.length === 0) {
+                    g.gameOver = true;
+                    return [...displayBoard(), { text: '' }, { text: 'It\'s a tie!', class: 'warning' }];
+                }
+
+                const compMove = empty[Math.floor(Math.random() * empty.length)];
+                g.board[compMove] = g.computer;
+
+                if (checkWin(g.board, g.computer)) {
+                    g.gameOver = true;
+                    return [...displayBoard(), { text: '' }, { text: 'Computer wins!', class: 'error' }];
+                }
+
+                if (!g.board.includes(' ')) {
+                    g.gameOver = true;
+                    return [...displayBoard(), { text: '' }, { text: 'It\'s a tie!', class: 'warning' }];
+                }
+
+                return displayBoard();
+            }
+        },
+
+        snake: {
+            description: 'Play Snake game info',
+            usage: 'snake',
+            icon: 'fa-worm',
+            fn: function () {
+                return [
+                    { text: '+-------------------------------------------+', class: 'highlight' },
+                    { text: '|              SNAKE GAME                   |', class: 'highlight' },
+                    { text: '+-------------------------------------------+', class: 'highlight' },
+                    { text: '' },
+                    { text: '  Unfortunately, Snake requires a canvas.', class: 'system' },
+                    { text: '  But try these terminal games instead:', class: 'info' },
+                    { text: '' },
+                    { text: '  - guess        Number guessing game' },
+                    { text: '  - rps          Rock Paper Scissors' },
+                    { text: '  - tictactoe    Tic Tac Toe' },
+                    { text: '  - 8ball        Magic 8 Ball' },
+                    { text: '  - dice         Roll dice' },
+                    { text: '' }
+                ];
+            }
+        }
+    },
+
+    // Helper methods
+    getNode: function (path) {
+        const parts = path.split('/').filter(Boolean);
+        let node = this.fileSystem['~'];
+
+        for (const part of parts) {
+            if (part === '~') continue;
+            if (!node.children || !node.children[part]) return null;
+            node = node.children[part];
+        }
+
+        return node;
+    },
+
+    buildTree: function (node, prefix, output) {
+        if (!node.children) return;
+        const entries = Object.entries(node.children);
+        entries.forEach(([name, item], index) => {
+            const isLast = index === entries.length - 1;
+            const connector = isLast ? '└── ' : '├── ';
+            const isDir = item.type === 'dir';
+            output.push({
+                text: prefix + connector + (isDir ? `<span class="info">${name}/</span>` : name),
+                html: true
+            });
+            if (isDir) {
+                this.buildTree(item, prefix + (isLast ? '    ' : '│   '), output);
+            }
+        });
+    },
+
+    updatePromptPath: function () {
+        const pathEl = document.querySelector('.prompt-path');
+        const cwdEl = document.getElementById('terminal-cwd');
+        if (pathEl) pathEl.textContent = this.currentPath;
+        if (cwdEl) cwdEl.textContent = this.currentPath;
+    },
+
+    // Print output to terminal
+    print: function (lines) {
+        const output = document.getElementById('terminal-output');
+        if (!output) return;
+
+        lines.forEach(line => {
+            const div = document.createElement('div');
+            div.className = `terminal-line ${line.class || 'output'}`;
+            if (line.html) {
+                div.innerHTML = line.text;
+            } else {
+                div.textContent = line.text;
+            }
+            output.appendChild(div);
+        });
+
+        // Scroll to bottom
+        output.scrollTop = output.scrollHeight;
+    },
+
+    // Execute command
+    execute: function (input) {
+        const trimmed = input.trim();
+        if (!trimmed) return;
+
+        // Add to history
+        this.commandHistory.push(trimmed);
+        this.historyIndex = this.commandHistory.length;
+        this.commandCount++;
+
+        // Update command count
+        const countEl = document.getElementById('terminal-cmd-count');
+        if (countEl) countEl.textContent = `${this.commandCount} commands`;
+
+        // Print command
+        this.print([{
+            text: `<span class="prompt-user">guest</span><span class="prompt-at">@</span><span class="prompt-host">piotrunius.dev</span><span class="prompt-colon">:</span><span class="prompt-path">${this.currentPath}</span><span class="prompt-symbol">$</span> <span class="cmd-text">${escapeHtml(trimmed)}</span>`,
+            class: 'cmd',
+            html: true
+        }]);
+
+        // Parse command
+        const parts = trimmed.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+        let cmdName = parts[0]?.toLowerCase();
+        const args = parts.slice(1).map(a => a.replace(/^"|"$/g, ''));
+
+        // Check for alias
+        if (this.aliases[cmdName]) {
+            const aliasCmd = this.aliases[cmdName];
+            const aliasParts = aliasCmd.split(' ');
+            cmdName = aliasParts[0];
+            args.unshift(...aliasParts.slice(1));
+        }
+
+        // Execute command
+        const cmd = this.commands[cmdName];
+        if (cmd) {
+            const result = cmd.fn(args);
+            if (result instanceof Promise) {
+                result.then(lines => {
+                    if (lines && lines.length > 0) this.print(lines);
+                });
+            } else if (result && result.length > 0) {
+                this.print(result);
+            }
+        } else {
+            this.print([{ text: `Command not found: ${cmdName}. Type "help" for available commands.`, class: 'error' }]);
+        }
+    },
+
+    // Get welcome message
+    getWelcomeMessage: function () {
+        return [
+            { text: '', class: '' },
+            { text: '+=====================================================================+', class: 'highlight' },
+            { text: '|                                                                     |', class: 'highlight' },
+            { text: '|   ██████╗ ██╗ ██████╗ ████████╗██████╗ ██╗   ██╗███╗   ██╗██╗      |', class: 'highlight' },
+            { text: '|   ██╔══██╗██║██╔═══██╗╚══██╔══╝██╔══██╗██║   ██║████╗  ██║██║      |', class: 'highlight' },
+            { text: '|   ██████╔╝██║██║   ██║   ██║   ██████╔╝██║   ██║██╔██╗ ██║██║      |', class: 'highlight' },
+            { text: '|   ██╔═══╝ ██║██║   ██║   ██║   ██╔══██╗██║   ██║██║╚██╗██║██║      |', class: 'highlight' },
+            { text: '|   ██║     ██║╚██████╔╝   ██║   ██║  ██║╚██████╔╝██║ ╚████║██║      |', class: 'highlight' },
+            { text: '|   ╚═╝     ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝      |', class: 'highlight' },
+            { text: '|                                                                     |', class: 'highlight' },
+            { text: '|                    ADVANCED WEB TERMINAL v2.0                       |', class: 'highlight' },
+            { text: '+=====================================================================+', class: 'highlight' },
+            { text: '' },
+            { text: '  Welcome to Piotrunius\'s interactive terminal!', class: 'success' },
+            { text: '' },
+            { text: '  Quick Start:', class: 'info' },
+            { text: '    - Type "help" to see all available commands' },
+            { text: '    - Type "about" to learn more about me' },
+            { text: '    - Type "projects" to see my work' },
+            { text: '    - Type "skills" to view my tech stack' },
+            { text: '' },
+            { text: '  Tips: Use Tab for autocomplete, UP/DOWN for history', class: 'system' },
+            { text: '        Try "matrix", "hack", or "neofetch" for fun!', class: 'system' },
+            { text: '' }
+        ];
+    },
+
+    // Initialize terminal
+    init: function () {
+        const toggle = document.getElementById('terminal-toggle');
+        const container = document.getElementById('terminal-container');
+        const input = document.getElementById('terminal-input');
+        const closeBtn = document.getElementById('terminal-close');
+        const minimizeBtn = document.getElementById('terminal-minimize');
+        const maximizeBtn = document.getElementById('terminal-maximize');
+        const clearBtn = document.getElementById('terminal-clear-btn');
+        const fullscreenBtn = document.getElementById('terminal-fullscreen-btn');
+        const header = document.querySelector('.terminal-header');
+        const suggestions = document.getElementById('terminal-suggestions');
+
+        if (!toggle || !container || !input) return;
+
+        // Toggle terminal
+        toggle.addEventListener('click', () => {
+            if (this.isOpen) {
+                this.close();
+            } else {
+                this.open();
+            }
+        });
+
+        // Close button
+        closeBtn?.addEventListener('click', () => this.close());
+
+        // Minimize button
+        minimizeBtn?.addEventListener('click', () => {
+            this.isMinimized = !this.isMinimized;
+            container.classList.toggle('minimized', this.isMinimized);
+        });
+
+        // Maximize button
+        maximizeBtn?.addEventListener('click', () => {
+            this.isFullscreen = !this.isFullscreen;
+            container.classList.toggle('fullscreen', this.isFullscreen);
+        });
+
+        // Clear button
+        clearBtn?.addEventListener('click', () => {
+            document.getElementById('terminal-output').innerHTML = '';
+        });
+
+        // Fullscreen button
+        fullscreenBtn?.addEventListener('click', () => {
+            this.isFullscreen = !this.isFullscreen;
+            container.classList.toggle('fullscreen', this.isFullscreen);
+            fullscreenBtn.querySelector('i').className = this.isFullscreen ? 'fas fa-compress' : 'fas fa-expand';
+        });
+
+        // Input handling
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.execute(input.value);
+                input.value = '';
+                this.hideSuggestions();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (this.historyIndex > 0) {
+                    this.historyIndex--;
+                    input.value = this.commandHistory[this.historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (this.historyIndex < this.commandHistory.length - 1) {
+                    this.historyIndex++;
+                    input.value = this.commandHistory[this.historyIndex];
+                } else {
+                    this.historyIndex = this.commandHistory.length;
+                    input.value = '';
+                }
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                this.autocomplete(input.value);
+            } else if (e.key === 'Escape') {
+                this.hideSuggestions();
+            } else if (e.key === 'l' && e.ctrlKey) {
+                e.preventDefault();
+                this.commands.clear.fn();
+            }
+        });
+
+        // Show suggestions on input
+        input.addEventListener('input', () => {
+            this.showSuggestions(input.value);
+        });
+
+        // Draggable header
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+
+        header?.addEventListener('mousedown', (e) => {
+            if (this.isFullscreen) return;
+            isDragging = true;
+            dragOffset.x = e.clientX - container.offsetLeft;
+            dragOffset.y = e.clientY - container.offsetTop;
+            container.style.transition = 'none';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const x = Math.max(0, Math.min(window.innerWidth - container.offsetWidth, e.clientX - dragOffset.x));
+            const y = Math.max(0, Math.min(window.innerHeight - container.offsetHeight, e.clientY - dragOffset.y));
+            container.style.left = x + 'px';
+            container.style.top = y + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            container.style.transition = '';
+        });
+
+        // Update terminal time
+        setInterval(() => {
+            const timeEl = document.getElementById('terminal-time');
+            if (timeEl) {
+                timeEl.textContent = new Date().toLocaleTimeString('en-GB');
+            }
+        }, 1000);
+
+        // Close terminal on Escape if open
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isOpen && !this.isFullscreen) {
+                this.close();
+            }
+            // Open terminal with Ctrl+`
+            if (e.key === '`' && e.ctrlKey) {
+                e.preventDefault();
+                if (this.isOpen) {
+                    this.close();
+                } else {
+                    this.open();
+                }
+            }
+        });
+    },
+
+    open: function () {
+        const container = document.getElementById('terminal-container');
+        const toggle = document.getElementById('terminal-toggle');
+        const input = document.getElementById('terminal-input');
+
+        this.isOpen = true;
+        container?.classList.add('visible');
+        toggle?.classList.add('active');
+
+        // Show welcome message on first open
+        const output = document.getElementById('terminal-output');
+        if (output && output.children.length === 0) {
+            this.print(this.getWelcomeMessage());
+        }
+
+        // Focus input
+        setTimeout(() => input?.focus(), 100);
+    },
+
+    close: function () {
+        const container = document.getElementById('terminal-container');
+        const toggle = document.getElementById('terminal-toggle');
+
+        this.isOpen = false;
+        container?.classList.remove('visible');
+        toggle?.classList.remove('active');
+
+        // Stop matrix if running
+        if (this.matrixInterval) {
+            clearInterval(this.matrixInterval);
+            this.matrixInterval = null;
+            const rain = document.querySelector('.matrix-rain');
+            if (rain) rain.remove();
+        }
+    },
+
+    showSuggestions: function (input) {
+        const suggestionsEl = document.getElementById('terminal-suggestions');
+        if (!suggestionsEl) return;
+
+        if (!input.trim()) {
+            this.hideSuggestions();
+            return;
+        }
+
+        const matches = Object.entries(this.commands)
+            .filter(([name, cmd]) => !cmd.hidden && name.startsWith(input.toLowerCase()))
+            .slice(0, 8);
+
+        if (matches.length === 0) {
+            this.hideSuggestions();
+            return;
+        }
+
+        suggestionsEl.innerHTML = matches.map(([name, cmd]) => `
+            <div class="suggestion-item" data-cmd="${name}">
+                <i class="fas ${cmd.icon || 'fa-terminal'}"></i>
+                <span class="suggestion-cmd">${name}</span>
+                <span class="suggestion-desc">${cmd.description.substring(0, 30)}...</span>
+            </div>
+        `).join('');
+
+        suggestionsEl.classList.add('visible');
+
+        // Click to select suggestion
+        suggestionsEl.querySelectorAll('.suggestion-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const inputEl = document.getElementById('terminal-input');
+                if (inputEl) {
+                    inputEl.value = item.dataset.cmd + ' ';
+                    inputEl.focus();
+                }
+                this.hideSuggestions();
+            });
+        });
+    },
+
+    hideSuggestions: function () {
+        const suggestionsEl = document.getElementById('terminal-suggestions');
+        suggestionsEl?.classList.remove('visible');
+    },
+
+    autocomplete: function (input) {
+        const parts = input.trim().split(' ');
+        const partial = parts[parts.length - 1].toLowerCase();
+
+        if (parts.length === 1) {
+            // Command autocomplete
+            const matches = Object.keys(this.commands).filter(c => c.startsWith(partial));
+            if (matches.length === 1) {
+                document.getElementById('terminal-input').value = matches[0] + ' ';
+            } else if (matches.length > 1) {
+                this.print([{ text: matches.join('  '), class: 'info' }]);
+            }
+        } else {
+            // Path autocomplete
+            const node = this.getNode(this.currentPath);
+            if (node?.children) {
+                const matches = Object.keys(node.children).filter(f => f.startsWith(partial));
+                if (matches.length === 1) {
+                    parts[parts.length - 1] = matches[0];
+                    document.getElementById('terminal-input').value = parts.join(' ') + ' ';
+                } else if (matches.length > 1) {
+                    this.print([{ text: matches.join('  '), class: 'info' }]);
+                }
+            }
+        }
+
+        this.hideSuggestions();
+    }
+};
+
+// Initialize terminal when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    Terminal.init();
+});
+

@@ -41,6 +41,57 @@
             </div>
         </div>
 
+        <!-- Terminal Toggle Button -->
+        <button class="terminal-toggle" id="terminal-toggle" aria-label="Open terminal">
+            <i class="fas fa-terminal"></i>
+        </button>
+
+        <!-- Advanced Terminal -->
+        <div class="terminal-container" id="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <span class="terminal-btn red" id="terminal-close"></span>
+                </div>
+                <div class="terminal-title">
+                    <i class="fas fa-terminal"></i>
+                    <span>piotrunius@portfolio:~</span>
+                </div>
+                <div class="terminal-actions">
+                    <button class="terminal-action-btn" id="terminal-clear-btn" title="Clear">
+                        <i class="fas fa-eraser"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="terminal-output" id="terminal-output"></div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">
+                        <span class="prompt-user">guest</span>
+                        <span class="prompt-at">@</span>
+                        <span class="prompt-host">piotrunius.dev</span>
+                        <span class="prompt-colon">:</span>
+                        <span class="prompt-path">~</span>
+                        <span class="prompt-symbol">$</span>
+                    </span>
+                    <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" autocorrect="off"
+                        autocapitalize="off" spellcheck="false">
+                    <div class="terminal-suggestions" id="terminal-suggestions"></div>
+                </div>
+            </div>
+            <div class="terminal-statusbar">
+                <div class="status-left">
+                    <span class="status-item"><i class="fas fa-folder"></i> <span id="terminal-cwd">~</span></span>
+                </div>
+                <div class="status-center">
+                    <span class="status-item" id="terminal-cmd-count">0 commands</span>
+                </div>
+                <div class="status-right">
+                    <span class="status-item"><i class="fas fa-clock"></i> <span
+                            id="terminal-time">00:00:00</span></span>
+                </div>
+            </div>
+        </div>
+
         <!-- Theme Toggle Button -->
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
             <i class="fas fa-sun"></i>
