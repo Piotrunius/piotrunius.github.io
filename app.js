@@ -1926,7 +1926,7 @@ const Terminal = {
 
                     if (!city) {
                         // Get location from IP using ip-api (no permissions needed)
-                        const geoResp = await fetch('http://ip-api.com/json/?fields=city,country,regionName');
+                        const geoResp = await fetch('https://ip-api.com/json/?fields=city,country,regionName');
                         if (geoResp.ok) {
                             const geoData = await geoResp.json();
                             city = geoData.city || 'Warsaw';
