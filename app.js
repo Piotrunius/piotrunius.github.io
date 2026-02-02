@@ -1007,28 +1007,17 @@ function updateTimeAndTimezone() {
             timeZoneName: 'short'
         }).formatToParts(now).find(part => part.type === 'timeZoneName')?.value || yourTimeZone;
 
-        // Calculate time difference in minutes using proper offset calculation
-        const myOffset = getTimezoneOffset(MY_TIMEZONE, now);
-        const yourOffset = getTimezoneOffset(yourTimeZone, now);
-        const diffMinutes = myOffset - yourOffset;
-        const diffHours = Math.floor(Math.abs(diffMinutes) / 60);
-        const diffMins = Math.abs(diffMinutes) % 60;
-
         // Update display
         myTimeEl.textContent = myTime;
         myTimezoneEl.textContent = `${MY_TIMEZONE} (${myTimezoneName})`;
         yourTimeEl.textContent = yourTime;
         yourTimezoneEl.textContent = `${yourTimeZone} (${yourTimezoneName})`;
 
-        // Update time difference
-        if (diffMinutes === 0) {
+        // Simple timezone comparison
+        if (MY_TIMEZONE === yourTimeZone) {
             timeDiffEl.textContent = "We're in the same timezone!";
         } else {
-            const ahead = diffMinutes > 0;
-            const hoursText = diffHours > 0 ? `${diffHours}h` : '';
-            const minsText = diffMins > 0 ? `${diffMins}m` : '';
-            const timeText = [hoursText, minsText].filter(Boolean).join(' ');
-            timeDiffEl.textContent = `I'm ${timeText} ${ahead ? 'ahead of' : 'behind'} you`;
+            timeDiffEl.textContent = `Your timezone: ${yourTimeZone}`;
         }
     } catch (error) {
         console.error('Error updating time:', error);
@@ -1913,28 +1902,19 @@ const Terminal = {
         },
 
         weather: {
-            description: 'Show weather for your location',
-            usage: 'weather [city]',
+            description: 'Show weather for a city',
+            usage: 'weather <city>',
             icon: 'fa-cloud-sun',
             fn: async function (args) {
-                Terminal.print([{ text: 'Fetching weather data...', class: 'system' }]);
+                const city = args.join(' ');
+
+                if (!city) {
+                    return [{ text: 'Please specify a city. Usage: weather <city>', class: 'error' }];
+                }
+
+                Terminal.print([{ text: `Fetching weather for ${city}...`, class: 'system' }]);
 
                 try {
-                    // If city provided, use it; otherwise get location from IP
-                    let city = args.join(' ');
-                    let locationInfo = '';
-
-                    if (!city) {
-                        // Get location from IP using ip-api (no permissions needed)
-                        const geoResp = await fetch('https://ip-api.com/json/?fields=city,country,regionName');
-                        if (geoResp.ok) {
-                            const geoData = await geoResp.json();
-                            city = geoData.city || 'Warsaw';
-                            locationInfo = ` (${geoData.regionName}, ${geoData.country})`;
-                        } else {
-                            city = 'Warsaw';
-                        }
-                    }
 
                     // Fetch weather from wttr.in
                     const response = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=j1`);
