@@ -2,7 +2,7 @@
   "summary": {
     "projects": 2,
     "starredCount": 23,
-    "commits": 133
+    "commits": 135
   },
   "starred": [
     {
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164557,
+      "stars": 164558,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93278,
+      "stars": 93279,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -215,6 +215,13 @@
   ],
   "recentCommits": [
     {
+      "message": "Fix: weather command IP API to HTTPS",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-02-02T07:49:54Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/52e9f4bc7631c58f4efa5e991c1aa1c1e50e30f9"
+    },
+    {
       "message": "Fix: IP API HTTPS and timezone offset calculation",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
@@ -262,13 +269,6 @@
       "author": "Piotrek",
       "date": "2026-01-16T07:04:53Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/57d01fdcf305f48d4021b193fc8e3caef2d35da7"
-    },
-    {
-      "message": "Reupload fix",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrek",
-      "date": "2026-01-11T11:45:12Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/60fab2a80705e9b8ed725bb0fcd374a1eff98e09"
     },
     {
       "message": "Update AutoClicker.py",
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-02T07:49:10.105Z",
+  "lastUpdate": "2026-02-02T07:50:12.658Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-02T07:49:10.739Z"
+    "lastChecked": "2026-02-02T07:50:13.046Z"
   },
   "pullRequests": {
     "total": 5,
