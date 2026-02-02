@@ -1412,7 +1412,7 @@ const Terminal = {
                     type: 'dir',
                     children: {
                         '.hidden': { type: 'file', content: 'You found the secret!\nType "konami" for a surprise!' },
-                        'easter_eggs.txt': { type: 'file', content: 'Try these commands:\n- matrix\n- hack\n- fortune\n- cowsay <message>\n- sl\n- cmatrix\n- neofetch\n- weather\n- joke\n- quote' }
+                        'easter_eggs.txt': { type: 'file', content: '=== EASTER EGGS ===\n\nTry these hidden commands:\n\n[FUN]\n  - thanos      (snap half the page away)\n  - flip        (flip the entire page)\n  - party       (party mode!)\n  - nyan        (nyan cat)\n  - rickroll    (you know what this does)\n\n[DEV JOKES]\n  - vim         (good luck exiting)\n  - emacs       (the other editor)\n  - bsod        (Windows experience)\n  - make me a sandwich\n\n[DANGEROUS]\n  - rm -rf *    (WARNING: destroys everything)\n\n[CLASSICS]\n  - matrix      (enter the matrix)\n  - hack        (hack the mainframe)\n  - starwars    (a long time ago...)\n  - cowsay      (moo!)\n  - fortune     (wisdom awaits)\n\n[OTHER]\n  - coffee      (get some coffee)\n  - yes         (infinite yes)\n  - konami      (the code)' }
                     }
                 }
             }
@@ -2929,14 +2929,14 @@ const Terminal = {
                     }
 
                     Terminal.print([{ text: '', class: 'system' }]);
-                    Terminal.print([{ text: '⚠️  CRITICAL: System files deleted', class: 'error' }]);
+                    Terminal.print([{ text: '[!] CRITICAL: System files deleted', class: 'error' }]);
                     await new Promise(r => setTimeout(r, 500));
 
                     Terminal.print([{ text: 'rm: removing /usr/bin/terminal...', class: 'warning' }]);
                     await new Promise(r => setTimeout(r, 800));
 
                     Terminal.print([{ text: '', class: 'system' }]);
-                    Terminal.print([{ text: '💀 FATAL: No system remaining 💀', class: 'error' }]);
+                    Terminal.print([{ text: '[X] FATAL: No system remaining', class: 'error' }]);
                     Terminal.print([{ text: 'Goodbye...', class: 'warning' }]);
 
                     await new Promise(r => setTimeout(r, 1500));
@@ -2977,7 +2977,7 @@ const Terminal = {
                         animation: fadeIn 1s ease;
                     `;
                     deathScreen.innerHTML = `
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">💀</div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">[X]</div>
                         <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">SYSTEM DESTROYED</div>
                         <div style="font-size: 0.9rem; color: #666; margin-bottom: 2rem;">All files have been permanently deleted.</div>
                         <div style="font-size: 0.8rem; color: #444;">(Refresh to restore)</div>
@@ -3022,17 +3022,443 @@ const Terminal = {
             hidden: true,
             fn: function () {
                 return [
-                    { text: '[CODE] UP UP DOWN DOWN LEFT RIGHT LEFT RIGHT B A', class: 'highlight' },
-                    { text: '' },
-                    { text: '  [*] You found an Easter Egg! [*]', class: 'success' },
-                    { text: '  You are now a certified terminal ninja!' },
-                    { text: '' },
-                    { text: '  Try more hidden commands:', class: 'info' },
-                    { text: '  - matrix' },
-                    { text: '  - hack' },
-                    { text: '  - cowsay' },
-                    { text: '  - fortune' }
+                    { text: 'Try: up up down down left right left right b a', class: 'highlight' }
                 ];
+            }
+        },
+
+        // Easter egg: sudo make me a sandwich
+        sandwich: {
+            description: 'Make a sandwich',
+            usage: 'sandwich',
+            icon: 'fa-bread-slice',
+            hidden: true,
+            fn: function () {
+                return [{ text: 'What? Make it yourself.', class: 'error' }];
+            }
+        },
+
+        // Easter egg: make command
+        make: {
+            description: 'Make something',
+            usage: 'make <target>',
+            icon: 'fa-hammer',
+            hidden: true,
+            fn: function (args) {
+                const target = args.join(' ').toLowerCase();
+                if (target === 'me a sandwich') {
+                    return [{ text: 'What? Make it yourself.', class: 'error' }];
+                }
+                if (target === 'love') {
+                    return [{ text: 'make: *** No rule to make target \'love\'. Stop.', class: 'error' }];
+                }
+                if (target === 'money') {
+                    return [{ text: 'make: *** Insufficient funds to make \'money\'. Stop.', class: 'error' }];
+                }
+                return [{ text: `make: *** No targets specified. Stop.`, class: 'warning' }];
+            }
+        },
+
+        // Easter egg: Thanos snap
+        thanos: {
+            description: 'Perfectly balanced',
+            usage: 'thanos',
+            icon: 'fa-hand-sparkles',
+            hidden: true,
+            fn: async function () {
+                Terminal.print([{ text: '*snap*', class: 'warning' }]);
+                await new Promise(r => setTimeout(r, 500));
+
+                Terminal.print([{ text: 'Perfectly balanced, as all things should be...', class: 'highlight' }]);
+                await new Promise(r => setTimeout(r, 1000));
+
+                const allElements = document.querySelectorAll('section, .glass-card');
+                const elementsArray = Array.from(allElements);
+
+                // Randomly select half
+                for (let i = elementsArray.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [elementsArray[i], elementsArray[j]] = [elementsArray[j], elementsArray[i]];
+                }
+
+                const halfLength = Math.floor(elementsArray.length / 2);
+                const toRemove = elementsArray.slice(0, halfLength);
+
+                for (const el of toRemove) {
+                    el.style.transition = 'all 1s ease';
+                    el.style.filter = 'blur(3px)';
+                    el.style.opacity = '0';
+                    el.style.transform = 'scale(0.8) translateY(-20px)';
+                }
+
+                await new Promise(r => setTimeout(r, 1500));
+                toRemove.forEach(el => el.remove());
+
+                return [
+                    { text: '', class: 'system' },
+                    { text: `${halfLength} elements have been dusted.`, class: 'warning' },
+                    { text: 'Refresh to restore the universe.', class: 'info' }
+                ];
+            }
+        },
+
+        // Easter egg: Nyan cat
+        nyan: {
+            description: 'Nyan cat',
+            usage: 'nyan',
+            icon: 'fa-cat',
+            hidden: true,
+            fn: async function () {
+                const nyanFrames = [
+                    '≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋╭━━━━━━━━╮',
+                    '≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋┃ ▀ ω ▀  ┃☆',
+                    '≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋╰━━━━━━━━╯',
+                    '≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋  ╱│ │ │╲',
+                ];
+                const colors = ['#ff0000', '#ff9900', '#ffff00', '#33ff00', '#0099ff', '#6633ff'];
+
+                Terminal.print([{ text: '>>> NYAN CAT MODE ACTIVATED <<<', class: 'highlight' }]);
+
+                // Add rainbow trail effect to page
+                document.body.style.transition = 'all 0.3s ease';
+
+                for (let i = 0; i < 10; i++) {
+                    const color = colors[i % colors.length];
+                    document.body.style.boxShadow = `inset 0 0 100px ${color}40`;
+
+                    for (const frame of nyanFrames) {
+                        Terminal.print([{ text: frame, class: 'highlight' }]);
+                    }
+                    Terminal.print([{ text: `${'≋'.repeat(i + 5)} NYAN! ~~~`, class: 'success' }]);
+                    await new Promise(r => setTimeout(r, 200));
+                }
+
+                document.body.style.boxShadow = '';
+
+                return [
+                    { text: '', class: 'system' },
+                    { text: 'Nyan cat has left the building!', class: 'info' }
+                ];
+            }
+        },
+
+        // Easter egg: Rickroll
+        rickroll: {
+            description: 'Never gonna give you up',
+            usage: 'rickroll',
+            icon: 'fa-music',
+            hidden: true,
+            fn: function () {
+                window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+                return [
+                    { text: '[~] Never gonna give you up [~]', class: 'highlight' },
+                    { text: '[~] Never gonna let you down [~]', class: 'highlight' },
+                    { text: '[~] Never gonna run around and desert you [~]', class: 'highlight' },
+                    { text: '', class: 'system' },
+                    { text: 'You just got Rick Rolled!', class: 'success' }
+                ];
+            }
+        },
+
+        // Easter egg: vim (can't exit)
+        vim: {
+            description: 'Open vim editor',
+            usage: 'vim [file]',
+            icon: 'fa-code',
+            hidden: true,
+            fn: async function () {
+                Terminal.print([{ text: '~', class: 'system' }]);
+                Terminal.print([{ text: '~', class: 'system' }]);
+                Terminal.print([{ text: '~', class: 'system' }]);
+                Terminal.print([{ text: '~  VIM - Vi IMproved', class: 'highlight' }]);
+                Terminal.print([{ text: '~', class: 'system' }]);
+                Terminal.print([{ text: '~  How do I exit this thing?!', class: 'warning' }]);
+                Terminal.print([{ text: '~', class: 'system' }]);
+                Terminal.print([{ text: '~  Try: :q! (just kidding, you\'re stuck forever)', class: 'error' }]);
+                Terminal.print([{ text: '~', class: 'system' }]);
+
+                await new Promise(r => setTimeout(r, 2000));
+
+                return [
+                    { text: '', class: 'system' },
+                    { text: 'E492: Not an editor command: escape', class: 'error' },
+                    { text: '(Hint: This is a fake vim. You\'re free!)', class: 'info' }
+                ];
+            }
+        },
+
+        // Easter egg: emacs
+        emacs: {
+            description: 'Open emacs',
+            usage: 'emacs',
+            icon: 'fa-code',
+            hidden: true,
+            fn: function () {
+                return [
+                    { text: 'EMACS: Escape Meta Alt Control Shift', class: 'highlight' },
+                    { text: '', class: 'system' },
+                    { text: 'Eight Megs And Constantly Swapping', class: 'warning' },
+                    { text: 'Eventually Mangles All Computer Storage', class: 'warning' },
+                    { text: '', class: 'system' },
+                    { text: 'Just use vim... wait, no. Use VSCode.', class: 'info' }
+                ];
+            }
+        },
+
+        // Easter egg: Windows BSOD
+        bsod: {
+            description: 'Blue screen of death',
+            usage: 'bsod',
+            icon: 'fa-skull',
+            hidden: true,
+            fn: async function () {
+                Terminal.print([{ text: 'Initiating Windows experience...', class: 'warning' }]);
+                await new Promise(r => setTimeout(r, 1000));
+
+                const bsod = document.createElement('div');
+                bsod.id = 'bsod-screen';
+                bsod.style.cssText = `
+                    position: fixed;
+                    inset: 0;
+                    background: #0078d7;
+                    z-index: 99999999;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: 'Segoe UI', sans-serif;
+                    color: white;
+                    text-align: center;
+                    padding: 2rem;
+                    animation: fadeIn 0.5s ease;
+                `;
+                bsod.innerHTML = `
+                    <div style="font-size: 8rem; margin-bottom: 1rem;">:(</div>
+                    <div style="font-size: 1.5rem; margin-bottom: 1rem;">Your PC ran into a problem and needs to restart.</div>
+                    <div style="font-size: 1rem; margin-bottom: 2rem;">We're just collecting some error info, and then we'll restart for you.</div>
+                    <div style="font-size: 1.2rem; margin-bottom: 0.5rem;"><span id="bsod-percent">0</span>% complete</div>
+                    <div style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 2rem;">Stop code: PIOTRUNIUS_EASTER_EGG</div>
+                    <div style="margin-top: 3rem; font-size: 0.9rem;">
+                        <div>If you call a support person, give them this info:</div>
+                        <div style="font-family: monospace; margin-top: 0.5rem;">Error: USER_CURIOSITY_OVERFLOW</div>
+                    </div>
+                `;
+                document.body.appendChild(bsod);
+
+                // Fake loading
+                const percentEl = bsod.querySelector('#bsod-percent');
+                for (let i = 0; i <= 100; i += Math.random() * 15) {
+                    percentEl.textContent = Math.min(100, Math.floor(i));
+                    await new Promise(r => setTimeout(r, 200 + Math.random() * 300));
+                }
+                percentEl.textContent = '100';
+
+                await new Promise(r => setTimeout(r, 1500));
+
+                // Remove BSOD
+                bsod.style.transition = 'opacity 0.5s ease';
+                bsod.style.opacity = '0';
+                await new Promise(r => setTimeout(r, 500));
+                bsod.remove();
+
+                return [
+                    { text: 'Windows has recovered from an unexpected error.', class: 'success' },
+                    { text: '(Just kidding, this is Linux territory!)', class: 'info' }
+                ];
+            }
+        },
+
+        // Easter egg: Yes infinite
+        yes: {
+            description: 'Print y forever',
+            usage: 'yes [text]',
+            icon: 'fa-repeat',
+            hidden: true,
+            fn: async function (args) {
+                const text = args.join(' ') || 'y';
+                Terminal.print([{ text: `Printing "${text}" forever... (not really)`, class: 'warning' }]);
+
+                for (let i = 0; i < 50; i++) {
+                    Terminal.print([{ text: text, class: 'system' }]);
+                    await new Promise(r => setTimeout(r, 30));
+                }
+
+                return [
+                    { text: '', class: 'system' },
+                    { text: '^C', class: 'error' },
+                    { text: 'Interrupted. (You\'re welcome)', class: 'info' }
+                ];
+            }
+        },
+
+        // Easter egg: Party mode
+        party: {
+            description: 'Party time!',
+            usage: 'party',
+            icon: 'fa-music',
+            hidden: true,
+            fn: async function () {
+                document.body.style.transition = 'all 0.2s ease';
+
+                Terminal.print([{ text: '*** PARTY MODE ACTIVATED! ***', class: 'highlight' }]);
+
+                const colors = ['#ff0066', '#00ff66', '#0066ff', '#ff6600', '#6600ff', '#00ffff', '#ffff00'];
+
+                for (let i = 0; i < 30; i++) {
+                    const color = colors[i % colors.length];
+                    document.body.style.filter = `hue-rotate(${i * 36}deg)`;
+                    document.body.style.transform = `scale(${1 + Math.sin(i * 0.3) * 0.02}) rotate(${Math.sin(i * 0.5) * 2}deg)`;
+
+                    if (i % 5 === 0) {
+                        Terminal.print([{ text: ['~', '*', '+', '#', '=', '-'][i % 6].repeat(20), class: 'success' }]);
+                    }
+
+                    await new Promise(r => setTimeout(r, 100));
+                }
+
+                document.body.style.filter = '';
+                document.body.style.transform = '';
+
+                return [
+                    { text: '', class: 'system' },
+                    { text: 'Party\'s over! Back to work...', class: 'info' }
+                ];
+            }
+        },
+
+        // Easter egg: Flip the page
+        flip: {
+            description: 'Flip the page',
+            usage: 'flip',
+            icon: 'fa-sync',
+            hidden: true,
+            fn: async function () {
+                Terminal.print([{ text: '(╯°□°)╯︵ ┻━┻', class: 'warning' }]);
+
+                document.body.style.transition = 'transform 1s ease';
+                document.body.style.transform = 'rotate(180deg)';
+
+                await new Promise(r => setTimeout(r, 3000));
+
+                Terminal.print([{ text: '┬─┬ノ( º _ ºノ)', class: 'info' }]);
+                document.body.style.transform = 'rotate(0deg)';
+
+                await new Promise(r => setTimeout(r, 1000));
+                document.body.style.transition = '';
+
+                return [
+                    { text: 'Okay, I put it back.', class: 'success' }
+                ];
+            }
+        },
+
+        // Easter egg: Coffee
+        coffee: {
+            description: 'Get some coffee',
+            usage: 'coffee',
+            icon: 'fa-mug-hot',
+            hidden: true,
+            fn: function () {
+                return [
+                    { text: '        ))))', class: 'warning' },
+                    { text: '       ((((', class: 'warning' },
+                    { text: '     +-----+', class: 'highlight' },
+                    { text: '     |     |]', class: 'highlight' },
+                    { text: '     `-----\'', class: 'highlight' },
+                    { text: '_____|_____|_____', class: 'system' },
+                    { text: '', class: 'system' },
+                    { text: 'Here\'s your coffee!', class: 'success' },
+                    { text: 'Now get back to coding...', class: 'info' }
+                ];
+            }
+        },
+
+        // Easter egg: Starwars intro
+        starwars: {
+            description: 'A long time ago in a galaxy far far away',
+            usage: 'starwars',
+            icon: 'fa-jedi',
+            hidden: true,
+            fn: async function () {
+                const intro = [
+                    '',
+                    '          A long time ago in a galaxy far,',
+                    '                     far away....',
+                    '',
+                    '',
+                    '███████╗████████╗ █████╗ ██████╗',
+                    '██╔════╝╚══██╔══╝██╔══██╗██╔══██╗',
+                    '███████╗   ██║   ███████║██████╔╝',
+                    '╚════██║   ██║   ██╔══██║██╔══██╗',
+                    '███████║   ██║   ██║  ██║██║  ██║',
+                    '╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝',
+                    '',
+                    '██╗    ██╗ █████╗ ██████╗ ███████╗',
+                    '██║    ██║██╔══██╗██╔══██╗██╔════╝',
+                    '██║ █╗ ██║███████║██████╔╝███████╗',
+                    '██║███╗██║██╔══██║██╔══██╗╚════██║',
+                    '╚███╔███╔╝██║  ██║██║  ██║███████║',
+                    ' ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝',
+                    '',
+                    '       EPISODE IV: A NEW HOPE',
+                    '',
+                ];
+
+                for (const line of intro) {
+                    Terminal.print([{ text: line, class: 'highlight' }]);
+                    await new Promise(r => setTimeout(r, 150));
+                }
+
+                return [
+                    { text: '', class: 'system' },
+                    { text: 'May the Force be with you.', class: 'success' }
+                ];
+            }
+        },
+
+        // Easter egg: Fake hacking
+        hack: {
+            description: 'Hack the mainframe',
+            usage: 'hack [target]',
+            icon: 'fa-user-secret',
+            hidden: true,
+            fn: async function (args) {
+                const target = args[0] || 'mainframe';
+                const messages = [
+                    `Initializing hack on ${target}...`,
+                    'Bypassing firewall...',
+                    'Injecting SQL...',
+                    'Decrypting passwords...',
+                    'Accessing root...',
+                    'Downloading secret files...',
+                    'Covering tracks...',
+                    'Installing backdoor...',
+                ];
+
+                for (const msg of messages) {
+                    Terminal.print([{ text: `[*] ${msg}`, class: 'warning' }]);
+                    await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
+                    Terminal.print([{ text: `[✓] Done`, class: 'success' }]);
+                }
+
+                return [
+                    { text: '', class: 'system' },
+                    { text: '[+] HACK COMPLETE! [+]', class: 'highlight' },
+                    { text: '', class: 'system' },
+                    { text: 'Just kidding. This is all fake.', class: 'info' },
+                    { text: 'Please don\'t actually hack things.', class: 'warning' }
+                ];
+            }
+        },
+
+        // Easter egg: Exit
+        exit: {
+            description: 'Exit terminal',
+            usage: 'exit',
+            icon: 'fa-door-open',
+            fn: function () {
+                Terminal.close();
+                return [];
             }
         },
 
