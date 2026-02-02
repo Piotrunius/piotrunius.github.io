@@ -49,17 +49,22 @@
         <!-- Advanced Terminal -->
         <div class="terminal-container" id="terminal-container">
             <div class="terminal-header">
-                <div class="terminal-buttons">
-                    <span class="terminal-btn red" id="terminal-close"></span>
+                <div class="terminal-buttons terminal-buttons-left">
+                    <button class="terminal-action-btn" id="terminal-clear-btn" title="Clear terminal">
+                        <i class="fas fa-eraser"></i>
+                    </button>
                 </div>
                 <div class="terminal-title">
                     <i class="fas fa-terminal"></i>
                     <span>piotrunius@portfolio:~</span>
+                    <div class="terminal-opacity-control">
+                        <i class="fas fa-adjust"></i>
+                        <input type="range" id="terminal-opacity-slider" min="50" max="100" value="98" step="1"
+                            title="Adjust opacity">
+                    </div>
                 </div>
-                <div class="terminal-actions">
-                    <button class="terminal-action-btn" id="terminal-clear-btn" title="Clear">
-                        <i class="fas fa-eraser"></i>
-                    </button>
+                <div class="terminal-buttons terminal-buttons-right">
+                    <span class="terminal-btn red" id="terminal-close"></span>
                 </div>
             </div>
             <div class="terminal-body" id="terminal-body">
@@ -95,11 +100,6 @@
         <!-- Theme Toggle Button -->
         <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
             <i class="fas fa-sun"></i>
-        </button>
-
-        <!-- Terminal Toggle Button (Top-Left) -->
-        <button class="terminal-toggle-btn" id="terminal-toggle" aria-label="Open terminal">
-            <i class="fas fa-terminal"></i>
         </button>
 
         <audio id="bg-audio" loop>
@@ -440,25 +440,24 @@
                     <i class="fas fa-envelope"></i>
                     GET IN TOUCH
                 </h3>
-                <div class="contact-grid-three">
-                    <div class="contact-card-large">
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-card-header">
+                            <i class="fa-brands fa-discord"></i>
+                            Discord
+                        </div>
+                        <a id="discord-button" href="https://cloud.umami.is/q/jYQ24LLk0" class="contact-btn"
+                            target="_blank" rel="noreferrer">
+                            <span class="btn-label">Add me</span>
+                        </a>
+                    </div>
+                    <div class="contact-card">
                         <div class="contact-card-header">
                             <i class="fas fa-paper-plane"></i>
-                            Quick Message
-                        </div>
-                        <p class="contact-card-desc">Send me a direct message</p>
-                        <button id="open-discord-contact" class="contact-btn-large">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-                    </div>
-                    <div class="contact-card-large">
-                        <div class="contact-card-header">
-                            <i class="fas fa-envelope"></i>
                             Email
                         </div>
-                        <p class="contact-card-desc">Reach out via email</p>
-                        <a id="contact-button" href="mailto:piotrunius.v2@gmail.com" class="contact-btn-large">
-                            <i class="fas fa-envelope"></i> Send Email
+                        <a id="contact-button" href="mailto:piotrunius.v2@gmail.com" class="contact-btn">
+                            <span class="btn-label">Send Email</span>
                         </a>
                     </div>
                 </div>
@@ -489,88 +488,6 @@
         <button id="back-to-top" class="back-to-top" aria-label="Back to top">
             <i class="fas fa-arrow-up"></i>
         </button>
-
-        <!-- Terminal Emulator -->
-        <div id="terminal-overlay" class="terminal-overlay">
-            <div class="terminal-container">
-                <div class="terminal-header">
-                    <div class="terminal-title">
-                        <i class="fas fa-terminal"></i>
-                        <span>piotrunius@bazzite:~$</span>
-                    </div>
-                    <div class="terminal-controls">
-                        <button class="terminal-control minimize" title="Minimize">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                        <button class="terminal-control maximize" title="Maximize">
-                            <i class="fas fa-expand"></i>
-                        </button>
-                        <button class="terminal-control close" id="terminal-close" title="Close (Esc)">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="terminal-body">
-                    <div id="terminal-output" class="terminal-output"></div>
-                    <div class="terminal-input-line">
-                        <span class="terminal-prompt">guest@piotrunius:~$</span>
-                        <input type="text" id="terminal-input" class="terminal-input" autocomplete="off"
-                            spellcheck="false" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Discord Contact Panel -->
-        <div id="discord-contact-overlay" class="discord-contact-overlay">
-            <div class="discord-contact-container">
-                <div class="discord-contact-header">
-                    <div class="discord-contact-title">
-                        <i class="fa-brands fa-discord"></i>
-                        <span>Send me a message</span>
-                    </div>
-                    <button class="discord-contact-close" id="discord-contact-close">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="discord-contact-body">
-                    <form id="discord-contact-form">
-                        <div class="form-group">
-                            <label for="discord-name">
-                                <i class="fas fa-user"></i>
-                                Your Name
-                            </label>
-                            <input type="text" id="discord-name" name="name" placeholder="John Doe" required
-                                maxlength="50" />
-                        </div>
-                        <div class="form-group">
-                            <label for="discord-email">
-                                <i class="fas fa-envelope"></i>
-                                Your Email (optional)
-                            </label>
-                            <input type="email" id="discord-email" name="email" placeholder="john@example.com"
-                                maxlength="100" />
-                        </div>
-                        <div class="form-group">
-                            <label for="discord-message">
-                                <i class="fas fa-comment"></i>
-                                Message
-                            </label>
-                            <textarea id="discord-message" name="message" placeholder="Your message here..." required
-                                maxlength="2000" rows="6"></textarea>
-                            <div class="char-counter">
-                                <span id="char-count">0</span> / 2000
-                            </div>
-                        </div>
-                        <button type="submit" class="discord-submit-btn" id="discord-submit-btn">
-                            <i class="fas fa-paper-plane"></i>
-                            <span>Send Message</span>
-                        </button>
-                        <div id="discord-form-status" class="discord-form-status"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
         <div class="copyright-bar" id="copyright-year">© 2025 Piotrunius - All Rights Reserved</div>
 

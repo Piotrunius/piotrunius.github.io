@@ -3501,10 +3501,29 @@ const Terminal = {
         const maximizeBtn = document.getElementById('terminal-maximize');
         const clearBtn = document.getElementById('terminal-clear-btn');
         const fullscreenBtn = document.getElementById('terminal-fullscreen-btn');
+        const opacitySlider = document.getElementById('terminal-opacity-slider');
         const header = document.querySelector('.terminal-header');
         const suggestions = document.getElementById('terminal-suggestions');
 
         if (!toggle || !container || !input) return;
+
+        // Opacity slider
+        if (opacitySlider) {
+            // Load saved opacity
+            const savedOpacity = localStorage.getItem('terminalOpacity') || '98';
+            opacitySlider.value = savedOpacity;
+            this.updateOpacity(savedOpacity);
+
+            opacitySlider.addEventListener('input', (e) => {
+                const opacity = e.target.value;
+                this.updateOpacity(opacity);
+                localStorage.setItem('terminalOpacity', opacity);
+            });
+
+            // Prevent slider from triggering drag
+            opacitySlider.addEventListener('mousedown', (e) => e.stopPropagation());
+            opacitySlider.addEventListener('touchstart', (e) => e.stopPropagation());
+        }
 
         // Toggle terminal
         toggle.addEventListener('click', () => {
@@ -3739,6 +3758,15 @@ const Terminal = {
         }
 
         this.hideSuggestions();
+    },
+
+    updateOpacity: function (value) {
+        const container = document.getElementById('terminal-container');
+        if (!container) return;
+
+        const opacity = value / 100;
+        // Update the background color opacity while keeping other styles
+        container.style.background = `rgba(10, 15, 20, ${opacity})`;
     }
 };
 
