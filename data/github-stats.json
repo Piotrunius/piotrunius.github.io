@@ -108,7 +108,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 46512,
+      "stars": 46513,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93285,
+      "stars": 93287,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-02T08:17:36.199Z",
+  "lastUpdate": "2026-02-02T08:26:08.000Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-02T08:17:36.540Z"
+    "lastChecked": "2026-02-02T08:26:08.449Z"
   },
   "pullRequests": {
     "total": 5,
