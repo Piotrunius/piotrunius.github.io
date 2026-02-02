@@ -965,80 +965,6 @@ function renderSpotifyEmpty(container) {
 // --- TIME & TIMEZONE SECTION ---
 const MY_TIMEZONE = 'Europe/Warsaw'; // Your timezone
 
-function updateTimeAndTimezone() {
-    const myTimeEl = document.getElementById('my-time');
-    const myTimezoneEl = document.getElementById('my-timezone');
-    const yourTimeEl = document.getElementById('your-time');
-    const yourTimezoneEl = document.getElementById('your-timezone');
-    const timeDiffEl = document.getElementById('time-diff-text');
-
-    if (!myTimeEl || !yourTimeEl) return;
-
-    try {
-        // Get current time in both timezones
-        const now = new Date();
-
-        // My time (Warsaw)
-        const myTime = new Intl.DateTimeFormat('en-GB', {
-            timeZone: MY_TIMEZONE,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        }).format(now);
-
-        // My timezone info
-        const myTimezoneName = new Intl.DateTimeFormat('en-US', {
-            timeZone: MY_TIMEZONE,
-            timeZoneName: 'short'
-        }).formatToParts(now).find(part => part.type === 'timeZoneName')?.value || MY_TIMEZONE;
-
-        // Your time (visitor's timezone)
-        const yourTime = new Intl.DateTimeFormat('en-GB', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        }).format(now);
-
-        // Your timezone info
-        const yourTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const yourTimezoneName = new Intl.DateTimeFormat('en-US', {
-            timeZoneName: 'short'
-        }).formatToParts(now).find(part => part.type === 'timeZoneName')?.value || yourTimeZone;
-
-        // Update display
-        myTimeEl.textContent = myTime;
-        myTimezoneEl.textContent = `${MY_TIMEZONE} (${myTimezoneName})`;
-        yourTimeEl.textContent = yourTime;
-        yourTimezoneEl.textContent = `${yourTimeZone} (${yourTimezoneName})`;
-
-        // Simple timezone comparison
-        if (MY_TIMEZONE === yourTimeZone) {
-            timeDiffEl.textContent = "We're in the same timezone!";
-        } else {
-            timeDiffEl.textContent = `Your timezone: ${yourTimeZone}`;
-        }
-    } catch (error) {
-        console.error('Error updating time:', error);
-        myTimeEl.textContent = '--:--:--';
-        yourTimeEl.textContent = '--:--:--';
-    }
-}
-
-function getTimezoneOffset(timezone, date) {
-    // Get offset in minutes for a specific timezone
-    const utcDate = new Date(date.toLocaleString('en-US', { timeZone: 'UTC' }));
-    const tzDate = new Date(date.toLocaleString('en-US', { timeZone: timezone }));
-    return (tzDate.getTime() - utcDate.getTime()) / 60000; // Convert to minutes
-}
-
-function initTimeAndTimezone() {
-    updateTimeAndTimezone();
-    // Update every second for live clock
-    setInterval(updateTimeAndTimezone, 1000);
-}
-
 // --- INIT ---
 document.addEventListener('DOMContentLoaded', async () => {
     // Initialize performance monitoring
@@ -1090,9 +1016,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initThemeToggle();
     updateCopyrightYear();
     initBackToTop();
-
-    // Initialize time & timezone section
-    initTimeAndTimezone();
 
     // Auto-refresh stats with adaptive intervals
     const statsInterval = deviceCapabilities.isLowEnd ? 600000 : 300000; // 10 or 5 minutes
@@ -1518,7 +1441,7 @@ const Terminal = {
 
                 const categories = {
                     'Navigation': ['help', 'clear', 'history', 'pwd', 'cd', 'ls', 'cat', 'tree'],
-                    'Information': ['about', 'skills', 'projects', 'contact', 'social', 'stats', 'time', 'weather', 'neofetch', 'ip'],
+                    'Information': ['about', 'skills', 'projects', 'contact', 'social', 'stats', 'weather', 'neofetch'],
                     'Fun & Games': ['matrix', 'hack', 'fortune', 'joke', 'quote', 'cowsay', 'sl', 'cmatrix', 'rps', 'guess', '8ball', 'dice', 'tictactoe'],
                     'Utilities': ['calc', 'todo', 'timer', 'stopwatch', 'color', 'echo', 'date', 'whoami', 'uname', 'uptime', 'uuid', 'password', 'hash', 'base64'],
                     'Text Tools': ['ascii', 'figlet', 'banner', 'binary', 'hex', 'reverse'],
@@ -1876,27 +1799,6 @@ const Terminal = {
                     { text: `  Starred:   ${stars}` },
                     { text: '' },
                     { text: '  Data from GitHub API', class: 'system' }
-                ];
-            }
-        },
-
-        time: {
-            description: 'Show current time and timezone info',
-            usage: 'time',
-            icon: 'fa-clock',
-            fn: function () {
-                const now = new Date();
-                const myTime = now.toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw' });
-                const yourTime = now.toLocaleTimeString('en-GB');
-
-                return [
-                    { text: '+-----------------------------------------+', class: 'highlight' },
-                    { text: '|              TIME INFO                  |', class: 'highlight' },
-                    { text: '+-----------------------------------------+', class: 'highlight' },
-                    { text: '' },
-                    { text: `  My time:    ${myTime} (Europe/Warsaw)` },
-                    { text: `  Your time:  ${yourTime} (${Intl.DateTimeFormat().resolvedOptions().timeZone})` },
-                    { text: `  Date:       ${now.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}` }
                 ];
             }
         },
@@ -2994,38 +2896,6 @@ const Terminal = {
             }
         },
 
-        // New advanced commands
-        ip: {
-            description: 'Show your public IP and location info',
-            usage: 'ip',
-            icon: 'fa-network-wired',
-            fn: async function () {
-                Terminal.print([{ text: 'Fetching IP info...', class: 'system' }]);
-                try {
-                    const resp = await fetch('https://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query');
-                    const data = await resp.json();
-                    if (data.status === 'success') {
-                        return [
-                            { text: '+---------------------------------------------------+', class: 'highlight' },
-                            { text: '|                 IP INFORMATION                    |', class: 'highlight' },
-                            { text: '+---------------------------------------------------+', class: 'highlight' },
-                            { text: '' },
-                            { text: `  IP Address:  ${data.query}` },
-                            { text: `  Location:    ${data.city}, ${data.regionName}` },
-                            { text: `  Country:     ${data.country} (${data.countryCode})` },
-                            { text: `  Timezone:    ${data.timezone}` },
-                            { text: `  ISP:         ${data.isp}` },
-                            { text: `  Coords:      ${data.lat}, ${data.lon}` },
-                            { text: '' }
-                        ];
-                    }
-                    throw new Error('API error');
-                } catch (e) {
-                    return [{ text: 'Failed to fetch IP info.', class: 'error' }];
-                }
-            }
-        },
-
         ping: {
             description: 'Simulate ping to host',
             usage: 'ping <host>',
@@ -4034,6 +3904,12 @@ const KonamiEasterEgg = {
 
     handleKey: function (e) {
         if (this.activated) return;
+
+        // Don't trigger Konami code if terminal input is focused
+        const terminalInput = document.getElementById('terminal-input');
+        if (terminalInput && document.activeElement === terminalInput) {
+            return;
+        }
 
         if (e.code === this.code[this.index]) {
             this.index++;
