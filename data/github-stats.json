@@ -2,7 +2,7 @@
   "summary": {
     "projects": 2,
     "starredCount": 23,
-    "commits": 130
+    "commits": 132
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7761,
+      "stars": 7760,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18009,
+      "stars": 18010,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122617,
+      "stars": 122618,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -90,7 +90,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52662,
+      "stars": 52663,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -108,7 +108,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 46509,
+      "stars": 46508,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164551,
+      "stars": 164550,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93271,
+      "stars": 93273,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -153,7 +153,7 @@
       "name": "moodist",
       "owner": "remvze",
       "url": "https://github.com/remvze/moodist",
-      "stars": 3258,
+      "stars": 3260,
       "language": "TypeScript",
       "description": "🌲 Ambient sounds for focus and calm.",
       "starredAt": "2025-09-04T00:18:52Z"
@@ -215,6 +215,13 @@
   ],
   "recentCommits": [
     {
+      "message": "feat: restore simple GET IN TOUCH, unify button hovers, fix light mode terminal",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-02-02T06:47:26Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/ed1fc80fa69ecf867adc9c93ed8c883a24d640f4"
+    },
+    {
       "message": "feat: add advanced terminal feature with toggle button and styles",
       "repo": "piotrunius.github.io",
       "author": "Piotrunius",
@@ -262,13 +269,6 @@
       "author": "Piotrunius",
       "date": "2026-01-11T11:39:40Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/5f6b91d1872821e7ef6613e789542997e4fd2f93"
-    },
-    {
-      "message": "Fix: Resolve merge conflict in projects.json and update lastUpdate timestamp",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-01-11T11:33:41Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/5bcdca43a4ae4a717889fd929e3d8d427aececf3"
     },
     {
       "message": "Update AutoClicker.py",
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-02T06:26:14.502Z",
+  "lastUpdate": "2026-02-02T06:47:47.978Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-02T06:26:14.853Z"
+    "lastChecked": "2026-02-02T06:47:48.378Z"
   },
   "pullRequests": {
     "total": 5,
