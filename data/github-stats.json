@@ -2,7 +2,7 @@
   "summary": {
     "projects": 2,
     "starredCount": 23,
-    "commits": 138
+    "commits": 139
   },
   "starred": [
     {
@@ -189,7 +189,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 4062,
+      "stars": 4063,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python.",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -214,6 +214,13 @@
     }
   ],
   "recentCommits": [
+    {
+      "message": "Remove all emojis from terminal, simplify konami command",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-02-02T08:28:50Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/95d9727cfee2064a75caa0c332b8fa5f718e1760"
+    },
     {
       "message": "Easter egg: rm -rf * destroys the page piece by piece",
       "repo": "piotrunius.github.io",
@@ -262,13 +269,6 @@
       "author": "Piotrunius",
       "date": "2026-02-02T06:47:26Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/ed1fc80fa69ecf867adc9c93ed8c883a24d640f4"
-    },
-    {
-      "message": "feat: add advanced terminal feature with toggle button and styles",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-02-02T06:23:42Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/be3e9e5061cd72f229b3def318fdbfd210043819"
     },
     {
       "message": "Update AutoClicker.py",
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-02T08:26:08.000Z",
+  "lastUpdate": "2026-02-02T08:29:09.728Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-02T08:26:08.449Z"
+    "lastChecked": "2026-02-02T08:29:10.057Z"
   },
   "pullRequests": {
     "total": 5,
