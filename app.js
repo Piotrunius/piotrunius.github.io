@@ -2864,14 +2864,154 @@ const Terminal = {
             description: 'Remove files (simulated)',
             usage: 'rm [-rf] <file>',
             icon: 'fa-trash',
-            fn: function (args) {
-                if (args.includes('-rf') && args.includes('/')) {
+            fn: async function (args) {
+                const hasRf = args.includes('-rf');
+                const target = args.filter(a => a !== '-rf').join(' ');
+
+                // rm -rf * - nuclear option easter egg
+                if (hasRf && (target === '*' || target === '/' || target === '/*')) {
+                    Terminal.print([{ text: 'rm: descending into root filesystem...', class: 'warning' }]);
+                    await new Promise(r => setTimeout(r, 500));
+
+                    Terminal.print([{ text: 'rm: removing all files recursively...', class: 'error' }]);
+                    await new Promise(r => setTimeout(r, 300));
+
+                    // Get all page elements to "delete"
+                    const sections = document.querySelectorAll('section, .glass-card, .profile-section, .spotify-status-card, .music-player-card, .about-section, .steam-panel-section, .social-section, .stats-section, .skills-section, .activity-section, .projects-section, .gaming-section, .system-section');
+                    const header = document.querySelector('header');
+                    const footer = document.querySelector('.copyright-bar');
+                    const buttons = document.querySelectorAll('.back-to-top, .theme-toggle, .terminal-toggle');
+
+                    const allElements = [...sections, header, footer, ...buttons].filter(Boolean);
+
+                    // Shuffle for random deletion order
+                    for (let i = allElements.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [allElements[i], allElements[j]] = [allElements[j], allElements[i]];
+                    }
+
+                    // Delete elements one by one
+                    for (let i = 0; i < allElements.length; i++) {
+                        const el = allElements[i];
+                        const name = el.className.split(' ')[0] || el.tagName.toLowerCase();
+
+                        Terminal.print([{ text: `rm: removing '/${name}'...`, class: 'system' }]);
+
+                        // Glitch effect before removal
+                        el.style.transition = 'all 0.3s ease';
+                        el.style.filter = 'blur(2px) saturate(0)';
+                        el.style.transform = 'scale(0.95) skewX(2deg)';
+                        el.style.opacity = '0.5';
+
+                        await new Promise(r => setTimeout(r, 150));
+
+                        // Remove with animation
+                        el.style.transform = 'scale(0) rotate(10deg)';
+                        el.style.opacity = '0';
+
+                        await new Promise(r => setTimeout(r, 200));
+                        el.remove();
+                    }
+
+                    // Now delete the background
+                    Terminal.print([{ text: 'rm: removing /var/www/background...', class: 'system' }]);
+                    await new Promise(r => setTimeout(r, 300));
+                    document.body.style.transition = 'background 1s ease';
+                    document.body.style.background = '#000';
+
+                    // Remove particles
+                    const particles = document.getElementById('particles-js');
+                    if (particles) {
+                        particles.style.transition = 'opacity 0.5s';
+                        particles.style.opacity = '0';
+                        await new Promise(r => setTimeout(r, 500));
+                        particles.remove();
+                    }
+
+                    Terminal.print([{ text: '', class: 'system' }]);
+                    Terminal.print([{ text: '⚠️  CRITICAL: System files deleted', class: 'error' }]);
+                    await new Promise(r => setTimeout(r, 500));
+
+                    Terminal.print([{ text: 'rm: removing /usr/bin/terminal...', class: 'warning' }]);
+                    await new Promise(r => setTimeout(r, 800));
+
+                    Terminal.print([{ text: '', class: 'system' }]);
+                    Terminal.print([{ text: '💀 FATAL: No system remaining 💀', class: 'error' }]);
+                    Terminal.print([{ text: 'Goodbye...', class: 'warning' }]);
+
+                    await new Promise(r => setTimeout(r, 1500));
+
+                    // Terminal glitches out
+                    const terminalContainer = document.querySelector('.terminal-container');
+                    if (terminalContainer) {
+                        terminalContainer.style.transition = 'all 0.5s ease';
+                        terminalContainer.style.filter = 'blur(5px)';
+                        terminalContainer.style.transform = 'scale(0.9) rotate(-2deg)';
+                        terminalContainer.style.opacity = '0.5';
+
+                        await new Promise(r => setTimeout(r, 500));
+
+                        terminalContainer.style.transform = 'scale(0) rotate(15deg)';
+                        terminalContainer.style.opacity = '0';
+
+                        await new Promise(r => setTimeout(r, 600));
+                        terminalContainer.remove();
+                    }
+
+                    // Black screen with message
+                    await new Promise(r => setTimeout(r, 1000));
+
+                    const deathScreen = document.createElement('div');
+                    deathScreen.style.cssText = `
+                        position: fixed;
+                        inset: 0;
+                        background: #000;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 99999999;
+                        font-family: 'Fira Code', monospace;
+                        color: #ff3333;
+                        text-align: center;
+                        animation: fadeIn 1s ease;
+                    `;
+                    deathScreen.innerHTML = `
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">💀</div>
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">SYSTEM DESTROYED</div>
+                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 2rem;">All files have been permanently deleted.</div>
+                        <div style="font-size: 0.8rem; color: #444;">(Refresh to restore)</div>
+                        <button onclick="location.reload()" style="
+                            margin-top: 2rem;
+                            padding: 0.75rem 2rem;
+                            background: transparent;
+                            border: 1px solid #ff3333;
+                            color: #ff3333;
+                            font-family: 'Fira Code', monospace;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.background='#ff3333';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='#ff3333'">
+                            Reboot System
+                        </button>
+                    `;
+                    document.body.appendChild(deathScreen);
+
+                    return [];
+                }
+
+                // rm -rf <path>
+                if (hasRf && target) {
                     return [
-                        { text: '[!] Nice try!', class: 'warning' },
-                        { text: 'This is a simulated terminal. No files were harmed.' }
+                        { text: `Removed: ${target}`, class: 'success' }
                     ];
                 }
-                return [{ text: 'rm: permission denied', class: 'error' }];
+
+                // Regular rm without -rf
+                if (!hasRf && target) {
+                    return [{ text: `rm: cannot remove '${target}': Permission denied`, class: 'error' }];
+                }
+
+                return [{ text: 'Usage: rm [-rf] <file/path>', class: 'warning' }];
             }
         },
 
