@@ -2743,6 +2743,230 @@ const Terminal = {
             usage: 'sudo <command>',
             icon: 'fa-shield-alt',
             fn: function (args) {
+                // Check if Konami mode is active
+                if (typeof KonamiEasterEgg !== 'undefined' && KonamiEasterEgg.activated) {
+                    if (args.length === 0) {
+                        return [
+                            { text: '[ROOT] Available root commands:', class: 'success' },
+                            { text: '' },
+                            { text: '  sudo poweroff     - Initiate system shutdown', class: 'info' },
+                            { text: '  sudo reboot       - Reboot the matrix', class: 'info' },
+                            { text: '  sudo hackfbi      - Hack into FBI database', class: 'info' },
+                            { text: '  sudo hackpentagon - Access Pentagon mainframe', class: 'info' },
+                            { text: '  sudo hackcia      - Infiltrate CIA servers', class: 'info' },
+                            { text: '  sudo hacknasa     - Breach NASA systems', class: 'info' },
+                            { text: '  sudo nuke         - Launch nuclear codes', class: 'info' },
+                            { text: '  sudo selfdestruct - Initiate self-destruct', class: 'info' },
+                            { text: '  sudo matrix       - Enter the Matrix', class: 'info' },
+                            { text: '  sudo godmode      - Enable god mode', class: 'info' },
+                            { text: '  sudo unlock       - Unlock all secrets', class: 'info' },
+                            { text: '  sudo party        - Start a party', class: 'info' },
+                            { text: '  sudo rainbow      - Taste the rainbow', class: 'info' },
+                            { text: '  sudo glitch       - Maximum glitch', class: 'info' },
+                            { text: '' },
+                            { text: '[!] You have ROOT ACCESS - Use wisely!', class: 'warning' }
+                        ];
+                    }
+
+                    const cmd = args.join(' ').toLowerCase();
+
+                    if (cmd === 'poweroff' || cmd === 'shutdown') {
+                        setTimeout(() => {
+                            document.body.style.transition = 'all 2s ease';
+                            document.body.style.filter = 'brightness(0)';
+                            setTimeout(() => {
+                                document.body.style.filter = '';
+                                document.body.style.transition = '';
+                            }, 3000);
+                        }, 1000);
+                        return [
+                            { text: '[SYSTEM] Initiating shutdown sequence...', class: 'warning' },
+                            { text: '[SYSTEM] Saving session data...', class: 'system' },
+                            { text: '[SYSTEM] Terminating processes...', class: 'system' },
+                            { text: '[SYSTEM] Goodbye, root.', class: 'success' }
+                        ];
+                    }
+
+                    if (cmd === 'reboot') {
+                        setTimeout(() => location.reload(), 2000);
+                        return [
+                            { text: '[SYSTEM] Rebooting matrix...', class: 'warning' },
+                            { text: '[SYSTEM] Reconnecting in 3...2...1...', class: 'system' }
+                        ];
+                    }
+
+                    if (cmd.includes('hackfbi') || cmd.includes('hack fbi')) {
+                        return Terminal.executeHackSequence('FBI', [
+                            'Accessing FBI Criminal Database...',
+                            'Bypassing multi-factor authentication...',
+                            'Injecting SQL payload...',
+                            'Downloading classified files...',
+                            'Erasing access logs...'
+                        ]);
+                    }
+
+                    if (cmd.includes('hackpentagon') || cmd.includes('hack pentagon')) {
+                        return Terminal.executeHackSequence('PENTAGON', [
+                            'Locating Pentagon secure servers...',
+                            'Exploiting zero-day vulnerability...',
+                            'Escalating privileges...',
+                            'Accessing TOP SECRET documents...',
+                            'Mission plans downloaded!'
+                        ]);
+                    }
+
+                    if (cmd.includes('hackcia') || cmd.includes('hack cia')) {
+                        return Terminal.executeHackSequence('CIA', [
+                            'Connecting to CIA Langley servers...',
+                            'Decrypting secure channels...',
+                            'Accessing agent database...',
+                            'Downloading operation files...',
+                            'Identity: REDACTED'
+                        ]);
+                    }
+
+                    if (cmd.includes('hacknasa') || cmd.includes('hack nasa')) {
+                        return Terminal.executeHackSequence('NASA', [
+                            'Connecting to NASA JPL...',
+                            'Accessing satellite controls...',
+                            'Downloading Mars rover data...',
+                            'Accessing Area 51 files...',
+                            '[CLASSIFIED] Alien contact confirmed!'
+                        ]);
+                    }
+
+                    if (cmd === 'nuke') {
+                        Terminal.print([
+                            { text: '=======================================', class: 'error' },
+                            { text: '   NUCLEAR LAUNCH SEQUENCE INITIATED   ', class: 'error' },
+                            { text: '=======================================', class: 'error' },
+                            { text: '', class: '' },
+                            { text: '  Enter launch codes: ********', class: 'warning' },
+                            { text: '  Verifying authorization...', class: 'system' },
+                            { text: '', class: '' }
+                        ]);
+                        setTimeout(() => {
+                            Terminal.print([
+                                { text: '  [!] LAUNCH ABORTED', class: 'success' },
+                                { text: '  Reason: This is just a simulation, you monster!', class: 'info' },
+                                { text: '  No nukes were harmed in this process.', class: 'info' }
+                            ]);
+                        }, 2000);
+                        return [];
+                    }
+
+                    if (cmd === 'selfdestruct') {
+                        let countdown = 10;
+                        const interval = setInterval(() => {
+                            if (countdown > 0) {
+                                Terminal.print([{ text: `[!] SELF-DESTRUCT IN ${countdown}...`, class: 'error' }]);
+                                countdown--;
+                            } else {
+                                clearInterval(interval);
+                                Terminal.print([
+                                    { text: '[SYSTEM] Just kidding! :)', class: 'success' },
+                                    { text: 'Did you really think I would do that?', class: 'info' }
+                                ]);
+                            }
+                        }, 1000);
+                        return [{ text: '[!] INITIATING SELF-DESTRUCT SEQUENCE!', class: 'error' }];
+                    }
+
+                    if (cmd === 'matrix') {
+                        document.body.style.fontFamily = 'Fira Code, monospace';
+                        document.body.style.color = '#00ff00';
+                        return [
+                            { text: 'Wake up, Neo...', class: 'success' },
+                            { text: 'The Matrix has you...', class: 'success' },
+                            { text: 'Follow the white rabbit.', class: 'success' },
+                            { text: '', class: '' },
+                            { text: 'Knock, knock, Neo.', class: 'info' }
+                        ];
+                    }
+
+                    if (cmd === 'godmode') {
+                        document.body.classList.add('konami-godmode');
+                        return [
+                            { text: '================================', class: 'success' },
+                            { text: '      GOD MODE ACTIVATED        ', class: 'success' },
+                            { text: '================================', class: 'success' },
+                            { text: '', class: '' },
+                            { text: '  Infinite power granted!', class: 'info' },
+                            { text: '  You are now immortal.', class: 'info' },
+                            { text: '  All achievements unlocked.', class: 'info' }
+                        ];
+                    }
+
+                    if (cmd === 'unlock') {
+                        return [
+                            { text: '[SYSTEM] Unlocking all secrets...', class: 'warning' },
+                            { text: '', class: '' },
+                            { text: 'SECRET #1: The cake is a lie', class: 'success' },
+                            { text: 'SECRET #2: There is no spoon', class: 'success' },
+                            { text: 'SECRET #3: 42 is the answer', class: 'success' },
+                            { text: 'SECRET #4: Piotrunius is awesome', class: 'success' },
+                            { text: 'SECRET #5: You found this easter egg!', class: 'success' },
+                            { text: '', class: '' },
+                            { text: '[!] All secrets unlocked!', class: 'info' }
+                        ];
+                    }
+
+                    if (cmd === 'party') {
+                        // Create party effect
+                        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+                        let colorIndex = 0;
+                        const partyInterval = setInterval(() => {
+                            document.body.style.backgroundColor = colors[colorIndex % colors.length];
+                            colorIndex++;
+                        }, 200);
+                        setTimeout(() => {
+                            clearInterval(partyInterval);
+                            document.body.style.backgroundColor = '';
+                        }, 5000);
+                        return [
+                            { text: '  PARTY MODE ACTIVATED!  ', class: 'success' },
+                            { text: '', class: '' },
+                            { text: '     (*^_^*)     ', class: 'info' },
+                            { text: '    \\(^o^)/    ', class: 'info' },
+                            { text: '   <(o_o<)    ', class: 'info' }
+                        ];
+                    }
+
+                    if (cmd === 'rainbow') {
+                        document.body.classList.add('konami-rainbow');
+                        setTimeout(() => document.body.classList.remove('konami-rainbow'), 10000);
+                        return [
+                            { text: 'TASTE THE RAINBOW!', class: 'success' },
+                            { text: '', class: '' },
+                            { text: '  R E D', style: 'color: #ff0000' },
+                            { text: '  O R A N G E', style: 'color: #ff8800' },
+                            { text: '  Y E L L O W', style: 'color: #ffff00' },
+                            { text: '  G R E E N', style: 'color: #00ff00' },
+                            { text: '  B L U E', style: 'color: #0088ff' },
+                            { text: '  P U R P L E', style: 'color: #8800ff' }
+                        ];
+                    }
+
+                    if (cmd === 'glitch') {
+                        // Maximum glitch effect
+                        document.body.classList.add('konami-max-glitch');
+                        setTimeout(() => document.body.classList.remove('konami-max-glitch'), 5000);
+                        return [
+                            { text: 'M̷̨̛̤̻̈́̏̕A̷͎̾X̵̱͒I̶̙͑M̷̰̄U̷̲͋M̴̨̛ ̵͔̈́G̶̣̈́L̶̤̎I̵̲͝T̴̰̾C̴̰̈́H̵̱̄', class: 'error' },
+                            { text: '', class: '' },
+                            { text: 'R̵͙̾E̵̬͑A̶̰̽L̵̝̈I̵̥͋T̴̰̾Y̶̰̽ ̵̱͊I̵̥̋S̵̰̈ ̵̱͑B̶̰̾R̵̙͋E̵̬̎A̶̰̽K̵̝̈I̵̥̋N̵̰͝G̶̰̈', class: 'warning' },
+                            { text: '', class: '' },
+                            { text: '01001000 01000101 01001100 01010000', class: 'system' }
+                        ];
+                    }
+
+                    return [
+                        { text: `[ROOT] Executing: ${cmd}`, class: 'success' },
+                        { text: '[ROOT] Command completed successfully.', class: 'info' }
+                    ];
+                }
+
+                // Normal mode - no root access
                 if (args.length === 0) {
                     return [{ text: 'Usage: sudo <command>', class: 'warning' }];
                 }
@@ -3391,6 +3615,38 @@ const Terminal = {
         if (cwdEl) cwdEl.textContent = this.currentPath;
     },
 
+    // Execute hack sequence with typing effect
+    executeHackSequence: function (target, steps) {
+        const output = [];
+        output.push({ text: `[ROOT] Initiating hack on ${target}...`, class: 'warning' });
+        output.push({ text: '' });
+
+        let delay = 0;
+        steps.forEach((step, i) => {
+            setTimeout(() => {
+                Terminal.print([{ text: `  [${i + 1}/${steps.length}] ${step}`, class: 'info' }]);
+
+                // Progress bar
+                const progress = Math.floor(((i + 1) / steps.length) * 20);
+                const bar = '[' + '#'.repeat(progress) + '-'.repeat(20 - progress) + ']';
+                Terminal.print([{ text: `  ${bar} ${Math.floor(((i + 1) / steps.length) * 100)}%`, class: 'system' }]);
+
+                if (i === steps.length - 1) {
+                    setTimeout(() => {
+                        Terminal.print([
+                            { text: '' },
+                            { text: `[SUCCESS] ${target} HACKED SUCCESSFULLY!`, class: 'success' },
+                            { text: '[!] Remember: This is just a simulation!', class: 'warning' }
+                        ]);
+                    }, 500);
+                }
+            }, delay);
+            delay += 800;
+        });
+
+        return output;
+    },
+
     // Print output to terminal
     print: function (lines) {
         const output = document.getElementById('terminal-output');
@@ -3425,9 +3681,15 @@ const Terminal = {
         const countEl = document.getElementById('terminal-cmd-count');
         if (countEl) countEl.textContent = `${this.commandCount} commands`;
 
+        // Check if root mode (Konami active)
+        const isRoot = typeof KonamiEasterEgg !== 'undefined' && KonamiEasterEgg.activated;
+        const userName = isRoot ? 'root' : 'guest';
+        const promptSymbol = isRoot ? '#' : '$';
+        const userClass = isRoot ? 'prompt-root' : 'prompt-user';
+
         // Print command
         this.print([{
-            text: `<span class="prompt-user">guest</span><span class="prompt-at">@</span><span class="prompt-host">piotrunius.dev</span><span class="prompt-colon">:</span><span class="prompt-path">${this.currentPath}</span><span class="prompt-symbol">$</span> <span class="cmd-text">${escapeHtml(trimmed)}</span>`,
+            text: `<span class="${userClass}">${userName}</span><span class="prompt-at">@</span><span class="prompt-host">piotrunius.dev</span><span class="prompt-colon">:</span><span class="prompt-path">${this.currentPath}</span><span class="prompt-symbol">${promptSymbol}</span> <span class="cmd-text">${escapeHtml(trimmed)}</span>`,
             class: 'cmd',
             html: true
         }]);
@@ -3769,6 +4031,695 @@ const Terminal = {
         container.style.background = `rgba(10, 15, 20, ${opacity})`;
     }
 };
+
+// ==========================================
+// KONAMI CODE EASTER EGG
+// ==========================================
+const KonamiEasterEgg = {
+    code: ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'],
+    index: 0,
+    activated: false,
+    matrixCanvas: null,
+    matrixCtx: null,
+    matrixAnimationId: null,
+    glitchInterval: null,
+    shakeInterval: null,
+    colorCycleInterval: null,
+    countdownInterval: null,
+    timeLeft: 60,
+
+    init: function () {
+        document.addEventListener('keydown', (e) => this.handleKey(e));
+    },
+
+    handleKey: function (e) {
+        if (this.activated) return;
+
+        if (e.code === this.code[this.index]) {
+            this.index++;
+            this.flashScreen();
+            this.playKeySound();
+
+            if (this.index === this.code.length) {
+                this.activate();
+                this.index = 0;
+            }
+        } else {
+            if (this.index > 0) this.playErrorSound();
+            this.index = 0;
+        }
+    },
+
+    flashScreen: function () {
+        const flash = document.createElement('div');
+        flash.style.cssText = `
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 255, 136, ${0.1 + (this.index * 0.05)});
+            pointer-events: none;
+            z-index: 9999999;
+            animation: konamiFlash 0.2s ease-out forwards;
+        `;
+        document.body.appendChild(flash);
+        setTimeout(() => flash.remove(), 200);
+
+        // Progress indicator
+        const progress = document.getElementById('konami-progress') || this.createProgressIndicator();
+        progress.style.width = `${(this.index / this.code.length) * 100}%`;
+        progress.parentElement.style.opacity = '1';
+
+        clearTimeout(this.progressTimeout);
+        this.progressTimeout = setTimeout(() => {
+            if (progress.parentElement) progress.parentElement.style.opacity = '0';
+        }, 2000);
+    },
+
+    createProgressIndicator: function () {
+        const container = document.createElement('div');
+        container.id = 'konami-progress-container';
+        container.innerHTML = '<div id="konami-progress"></div>';
+        document.body.appendChild(container);
+        return document.getElementById('konami-progress');
+    },
+
+    playKeySound: function () {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.type = 'sine';
+            osc.frequency.value = 440 + (this.index * 80);
+            gain.gain.setValueAtTime(0.15, ctx.currentTime);
+            gain.gain.exponentialDecayTo && gain.gain.exponentialDecayTo(0.01, ctx.currentTime + 0.1);
+
+            osc.start();
+            osc.stop(ctx.currentTime + 0.1);
+        } catch (e) { }
+    },
+
+    playErrorSound: function () {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.type = 'sawtooth';
+            osc.frequency.value = 150;
+            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+
+            osc.start();
+            osc.stop(ctx.currentTime + 0.15);
+        } catch (e) { }
+    },
+
+    activate: function () {
+        this.activated = true;
+        this.timeLeft = 60;
+
+        document.getElementById('konami-progress-container')?.remove();
+
+        this.playActivationSound();
+        this.showHackerOverlay();
+
+        setTimeout(() => {
+            this.startMatrixRain();
+            this.startGlitchEffect();
+            this.startScreenShake();
+            this.startColorCycle();
+            this.applyHackerMode();
+            this.showSecretMessage();
+            this.invertImages();
+            this.scrambleText();
+        }, 3500);
+    },
+
+    playActivationSound: function () {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+            // Epic arpeggio
+            const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50, 1318.51];
+            notes.forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'square';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.08, ctx.currentTime + i * 0.08);
+                gain.gain.exponentialDecayTo && gain.gain.exponentialDecayTo(0.01, ctx.currentTime + i * 0.08 + 0.2);
+                osc.start(ctx.currentTime + i * 0.08);
+                osc.stop(ctx.currentTime + i * 0.08 + 0.2);
+            });
+
+            // Bass drop
+            setTimeout(() => {
+                const bass = ctx.createOscillator();
+                const bassGain = ctx.createGain();
+                bass.connect(bassGain);
+                bassGain.connect(ctx.destination);
+                bass.type = 'sine';
+                bass.frequency.setValueAtTime(80, ctx.currentTime);
+                bass.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.5);
+                bassGain.gain.setValueAtTime(0.3, ctx.currentTime);
+                bassGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                bass.start();
+                bass.stop(ctx.currentTime + 0.5);
+            }, 700);
+        } catch (e) { }
+    },
+
+    showHackerOverlay: function () {
+        const overlay = document.createElement('div');
+        overlay.id = 'konami-overlay';
+        overlay.innerHTML = `
+            <div class="konami-boot">
+                <div class="boot-terminal">
+                    <div class="boot-line">> INTERCEPTING SIGNAL...</div>
+                    <div class="boot-line">> DECRYPTING PAYLOAD... [########----] 67%</div>
+                    <div class="boot-line">> BYPASSING FIREWALL...</div>
+                    <div class="boot-line">> INJECTING SHELLCODE...</div>
+                    <div class="boot-line">> ESCALATING PRIVILEGES...</div>
+                    <div class="boot-line">> DISABLING SECURITY PROTOCOLS...</div>
+                    <div class="boot-line success">> ROOT ACCESS OBTAINED</div>
+                    <div class="boot-line hack">> INITIATING HACKER MODE...</div>
+                </div>
+                <div class="boot-ascii">
+    ██╗  ██╗ █████╗  ██████╗██╗  ██╗███████╗██████╗
+    ██║  ██║██╔══██╗██╔════╝██║ ██╔╝██╔════╝██╔══██╗
+    ███████║███████║██║     █████╔╝ █████╗  ██║  ██║
+    ██╔══██║██╔══██║██║     ██╔═██╗ ██╔══╝  ██║  ██║
+    ██║  ██║██║  ██║╚██████╗██║  ██╗███████╗██████╔╝
+    ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═════╝
+                     MODE ACTIVATED
+                </div>
+                <div class="boot-warning">
+                    <span class="warning-icon">[!]</span>
+                    <span class="warning-text">SYSTEM COMPROMISED</span>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const lines = overlay.querySelectorAll('.boot-line');
+        lines.forEach((line, i) => {
+            line.style.animation = `bootLine 0.4s ease-out ${i * 0.3}s forwards`;
+        });
+
+        const ascii = overlay.querySelector('.boot-ascii');
+        ascii.style.animation = `bootAscii 0.8s ease-out ${lines.length * 0.3 + 0.2}s forwards`;
+
+        const warning = overlay.querySelector('.boot-warning');
+        warning.style.animation = `warningBlink 0.5s ease-in-out ${lines.length * 0.3 + 1}s infinite`;
+
+        setTimeout(() => overlay.classList.add('fade-out'), 3000);
+        setTimeout(() => overlay.remove(), 3500);
+    },
+
+    startMatrixRain: function () {
+        this.matrixCanvas = document.createElement('canvas');
+        this.matrixCanvas.id = 'matrix-rain';
+        document.body.appendChild(this.matrixCanvas);
+
+        this.matrixCtx = this.matrixCanvas.getContext('2d');
+        this.matrixCanvas.width = window.innerWidth;
+        this.matrixCanvas.height = window.innerHeight;
+
+        const columns = Math.floor(this.matrixCanvas.width / 14);
+        const drops = Array(columns).fill(1);
+        const speeds = Array(columns).fill(0).map(() => Math.random() * 0.5 + 0.5);
+        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*<>?{}[]';
+
+        const draw = () => {
+            this.matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.03)';
+            this.matrixCtx.fillRect(0, 0, this.matrixCanvas.width, this.matrixCanvas.height);
+
+            for (let i = 0; i < drops.length; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                const y = drops[i] * 14;
+
+                // Gradient from bright to dim
+                const brightness = Math.max(0, 1 - (y / this.matrixCanvas.height) * 0.3);
+                this.matrixCtx.fillStyle = `rgba(0, 255, 136, ${brightness})`;
+                this.matrixCtx.font = '14px Fira Code, monospace';
+                this.matrixCtx.fillText(char, i * 14, y);
+
+                // Head of the drop is brighter
+                if (Math.random() > 0.98) {
+                    this.matrixCtx.fillStyle = '#ffffff';
+                    this.matrixCtx.fillText(char, i * 14, y);
+                }
+
+                if (y > this.matrixCanvas.height && Math.random() > 0.99) {
+                    drops[i] = 0;
+                }
+                drops[i] += speeds[i];
+            }
+
+            this.matrixAnimationId = requestAnimationFrame(draw);
+        };
+
+        draw();
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            if (this.matrixCanvas) {
+                this.matrixCanvas.width = window.innerWidth;
+                this.matrixCanvas.height = window.innerHeight;
+            }
+        });
+    },
+
+    startGlitchEffect: function () {
+        const glitchElements = document.querySelectorAll('h1, h2, h3, .section-title, .profile-name, .stat-value, .social-link');
+
+        this.glitchInterval = setInterval(() => {
+            const count = Math.floor(Math.random() * 3) + 1;
+            for (let i = 0; i < count; i++) {
+                const el = glitchElements[Math.floor(Math.random() * glitchElements.length)];
+                if (el) {
+                    el.classList.add('konami-glitch');
+                    setTimeout(() => el.classList.remove('konami-glitch'), 150 + Math.random() * 200);
+                }
+            }
+        }, 300);
+    },
+
+    startScreenShake: function () {
+        let intensity = 0;
+        this.shakeInterval = setInterval(() => {
+            intensity = Math.random() > 0.7 ? Math.random() * 3 : 0;
+            if (intensity > 0) {
+                const x = (Math.random() - 0.5) * intensity;
+                const y = (Math.random() - 0.5) * intensity;
+                document.body.style.transform = `translate(${x}px, ${y}px)`;
+            } else {
+                document.body.style.transform = '';
+            }
+        }, 50);
+    },
+
+    startColorCycle: function () {
+        let hue = 0;
+        this.colorCycleInterval = setInterval(() => {
+            hue = (hue + 2) % 360;
+            document.documentElement.style.setProperty('--konami-hue', `${hue}deg`);
+        }, 50);
+    },
+
+    applyHackerMode: function () {
+        document.body.classList.add('konami-hacker-mode');
+
+        // Force open terminal and lock it
+        const terminalContainer = document.querySelector('.terminal-container');
+        const terminalToggle = document.querySelector('.terminal-toggle');
+        if (terminalContainer && !terminalContainer.classList.contains('visible')) {
+            terminalContainer.classList.add('visible');
+            if (terminalToggle) terminalToggle.classList.add('active');
+        }
+
+        // Hide terminal close button and toggle (lock terminal open)
+        const closeBtn = document.getElementById('terminal-close');
+        if (closeBtn) closeBtn.style.display = 'none';
+        if (terminalToggle) terminalToggle.style.display = 'none';
+
+        // Disable ESC key for terminal during Konami
+        this.escKeyHandler = (e) => {
+            if (e.key === 'Escape' && this.activated) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        };
+        document.addEventListener('keydown', this.escKeyHandler, true);
+
+        // Change terminal prompt to root
+        const promptUser = document.querySelector('.terminal-prompt .prompt-user');
+        const promptSymbol = document.querySelector('.terminal-prompt .prompt-symbol');
+        if (promptUser) {
+            promptUser.textContent = 'root';
+            promptUser.classList.remove('prompt-user');
+            promptUser.classList.add('prompt-root');
+        }
+        if (promptSymbol) {
+            promptSymbol.textContent = '#';
+        }
+
+        // Display root commands in terminal
+        const terminalOutput = document.getElementById('terminal-output');
+        if (terminalOutput) {
+            const rootMessage = document.createElement('div');
+            rootMessage.className = 'terminal-line konami-root-message';
+            rootMessage.innerHTML = `<span class="output-success">[ROOT]</span> <span class="output-highlight">Available root commands:</span>
+  <span class="output-command">sudo poweroff</span>     - Initiate system shutdown
+  <span class="output-command">sudo reboot</span>       - Reboot the matrix
+  <span class="output-command">sudo hackfbi</span>      - Hack into FBI database
+  <span class="output-command">sudo hackpentagon</span> - Access Pentagon mainframe
+  <span class="output-command">sudo hackcia</span>      - Infiltrate CIA servers
+  <span class="output-command">sudo hacknasa</span>     - Breach NASA systems
+  <span class="output-command">sudo nuke</span>         - Launch nuclear codes
+  <span class="output-command">sudo selfdestruct</span> - Initiate self-destruct
+  <span class="output-command">sudo matrix</span>       - Enter the Matrix
+  <span class="output-command">sudo godmode</span>      - Enable god mode
+  <span class="output-command">sudo unlock</span>       - Unlock all secrets
+  <span class="output-command">sudo party</span>        - Start a party
+  <span class="output-command">sudo rainbow</span>      - Taste the rainbow
+  <span class="output-command">sudo glitch</span>       - Maximum glitch`;
+            terminalOutput.appendChild(rootMessage);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        // Scanlines
+        const scanlines = document.createElement('div');
+        scanlines.id = 'konami-scanlines';
+        document.body.appendChild(scanlines);
+
+        // CRT effect
+        const crt = document.createElement('div');
+        crt.id = 'konami-crt';
+        document.body.appendChild(crt);
+
+        // Vignette
+        const vignette = document.createElement('div');
+        vignette.id = 'konami-vignette';
+        document.body.appendChild(vignette);
+
+        // Random "hacked" messages
+        this.hackedMessagesInterval = setInterval(() => {
+            if (Math.random() > 0.7) {
+                this.showRandomHackedMessage();
+            }
+        }, 2000);
+    },
+
+    showRandomHackedMessage: function () {
+        const messages = [
+            'SYSTEM BREACH DETECTED',
+            'FIREWALL BYPASSED',
+            'DATA EXFILTRATION IN PROGRESS',
+            'ENCRYPTING FILES...',
+            'ACCESSING MAINFRAME',
+            'PACKET INJECTION ACTIVE',
+            'BACKDOOR INSTALLED',
+            'KEYLOGGER ACTIVE',
+            'ROOT ACCESS GRANTED',
+            'TRACE BLOCKED'
+        ];
+
+        const msg = document.createElement('div');
+        msg.className = 'konami-hacked-msg';
+        msg.textContent = `[!] ${messages[Math.floor(Math.random() * messages.length)]}`;
+        msg.style.top = `${Math.random() * 70 + 10}%`;
+        msg.style.left = `${Math.random() * 60 + 10}%`;
+        document.body.appendChild(msg);
+
+        setTimeout(() => msg.remove(), 2000);
+    },
+
+    invertImages: function () {
+        document.querySelectorAll('img').forEach(img => {
+            img.classList.add('konami-invert');
+        });
+    },
+
+    scrambleText: function () {
+        const elements = document.querySelectorAll('.section-title, .stat-label');
+        elements.forEach(el => {
+            if (!el.dataset.original) {
+                el.dataset.original = el.textContent;
+            }
+        });
+
+        this.scrambleInterval = setInterval(() => {
+            elements.forEach(el => {
+                if (Math.random() > 0.8) {
+                    const original = el.dataset.original || el.textContent;
+                    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%&*';
+                    let scrambled = '';
+                    for (let i = 0; i < original.length; i++) {
+                        scrambled += Math.random() > 0.5 ? original[i] : chars[Math.floor(Math.random() * chars.length)];
+                    }
+                    el.textContent = scrambled;
+                    setTimeout(() => {
+                        el.textContent = original;
+                    }, 100);
+                }
+            });
+        }, 500);
+    },
+
+    showSecretMessage: function () {
+        const message = document.createElement('div');
+        message.id = 'konami-secret';
+        message.innerHTML = `
+            <div class="secret-header">
+                <div class="secret-title-bar">
+                    <span class="secret-title-icon">[ROOT]</span>
+                    <span class="secret-title-text">HACKER_MODE.exe</span>
+                </div>
+                <button id="konami-minimize" class="secret-btn-min">_</button>
+            </div>
+            <div class="secret-content">
+                <div class="secret-ascii-small">
+  /\\_/\\
+ ( o.o )
+  > ^ <  MEOW!
+                </div>
+                <div class="secret-status">
+                    <div class="status-dot"></div>
+                    <span>HACKER MODE ACTIVE</span>
+                </div>
+                <div class="secret-info">
+                    <p>You cracked the Konami Code!</p>
+                    <p class="secret-code-display">^ ^ v v < > < > B A</p>
+                </div>
+                <div class="secret-stats">
+                    <div class="stat-row">
+                        <span>Packets Injected:</span>
+                        <span id="packets-count">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Data Exfiltrated:</span>
+                        <span id="data-count">0 KB</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Firewalls Bypassed:</span>
+                        <span id="firewall-count">0</span>
+                    </div>
+                </div>
+                <div class="secret-progress-section">
+                    <div class="secret-progress-label">
+                        <span>Time Remaining:</span>
+                        <span id="konami-timer">${this.timeLeft}s</span>
+                    </div>
+                    <div class="secret-progress-bar">
+                        <div class="secret-progress-fill" id="konami-progress-fill"></div>
+                    </div>
+                </div>
+                <button id="konami-deactivate">
+                    <span class="btn-icon">[X]</span>
+                    <span>TERMINATE SESSION</span>
+                </button>
+            </div>
+        `;
+        document.body.appendChild(message);
+
+        // Fake stats counter
+        let packets = 0, data = 0, firewalls = 0;
+        this.statsInterval = setInterval(() => {
+            packets += Math.floor(Math.random() * 100);
+            data += Math.random() * 50;
+            firewalls += Math.random() > 0.9 ? 1 : 0;
+            document.getElementById('packets-count').textContent = packets.toLocaleString();
+            document.getElementById('data-count').textContent = `${data.toFixed(1)} KB`;
+            document.getElementById('firewall-count').textContent = firewalls;
+        }, 200);
+
+        // Countdown timer
+        const timerEl = document.getElementById('konami-timer');
+        const progressFill = document.getElementById('konami-progress-fill');
+        this.countdownInterval = setInterval(() => {
+            this.timeLeft--;
+            if (timerEl) timerEl.textContent = `${this.timeLeft}s`;
+            if (progressFill) progressFill.style.width = `${(this.timeLeft / 60) * 100}%`;
+            if (this.timeLeft <= 0) {
+                this.deactivate();
+            }
+        }, 1000);
+
+        // Minimize button
+        let isMinimized = false;
+        document.getElementById('konami-minimize')?.addEventListener('click', () => {
+            isMinimized = !isMinimized;
+            message.classList.toggle('minimized', isMinimized);
+        });
+
+        // Deactivate button
+        document.getElementById('konami-deactivate')?.addEventListener('click', () => {
+            this.deactivate();
+        });
+
+        // Position panel next to terminal
+        this.positionPanel(message);
+
+        // Update position if terminal moves/resizes
+        this.panelPositionObserver = new MutationObserver(() => this.positionPanel(message));
+        const terminalContainer = document.querySelector('.terminal-container');
+        if (terminalContainer) {
+            this.panelPositionObserver.observe(terminalContainer, { attributes: true, attributeFilter: ['style'] });
+        }
+        window.addEventListener('resize', () => this.positionPanel(message));
+    },
+
+    positionPanel: function (panel) {
+        const terminal = document.querySelector('.terminal-container');
+        if (!terminal || !panel) return;
+
+        const termRect = terminal.getBoundingClientRect();
+        const panelWidth = 280;
+        const gap = 10;
+
+        // Check if panel fits to the right of terminal
+        if (termRect.right + gap + panelWidth < window.innerWidth) {
+            panel.style.left = `${termRect.right + gap}px`;
+            panel.style.top = `${termRect.top}px`;
+            panel.style.right = 'auto';
+            panel.style.bottom = 'auto';
+        }
+        // If not, try left side of terminal
+        else if (termRect.left - gap - panelWidth > 0) {
+            panel.style.left = `${termRect.left - gap - panelWidth}px`;
+            panel.style.top = `${termRect.top}px`;
+            panel.style.right = 'auto';
+            panel.style.bottom = 'auto';
+        }
+        // If neither, put it below terminal
+        else if (termRect.bottom + gap + 300 < window.innerHeight) {
+            panel.style.left = `${termRect.left}px`;
+            panel.style.top = `${termRect.bottom + gap}px`;
+            panel.style.right = 'auto';
+            panel.style.bottom = 'auto';
+        }
+        // Last resort - fixed bottom right
+        else {
+            panel.style.left = 'auto';
+            panel.style.top = 'auto';
+            panel.style.right = '1.5rem';
+            panel.style.bottom = '1.5rem';
+        }
+    },
+
+    deactivate: function () {
+        this.activated = false;
+
+        // Clear all intervals
+        clearInterval(this.glitchInterval);
+        clearInterval(this.shakeInterval);
+        clearInterval(this.colorCycleInterval);
+        clearInterval(this.countdownInterval);
+        clearInterval(this.statsInterval);
+        clearInterval(this.hackedMessagesInterval);
+        clearInterval(this.scrambleInterval);
+
+        // Clean up panel position observer
+        if (this.panelPositionObserver) {
+            this.panelPositionObserver.disconnect();
+        }
+
+        if (this.matrixAnimationId) {
+            cancelAnimationFrame(this.matrixAnimationId);
+        }
+
+        // Reset body transform
+        document.body.style.transform = '';
+        document.documentElement.style.removeProperty('--konami-hue');
+
+        // Remove elements
+        document.getElementById('matrix-rain')?.remove();
+        document.getElementById('konami-scanlines')?.remove();
+        document.getElementById('konami-crt')?.remove();
+        document.getElementById('konami-vignette')?.remove();
+        document.getElementById('konami-secret')?.remove();
+        document.querySelectorAll('.konami-hacked-msg').forEach(el => el.remove());
+
+        // Remove classes
+        document.body.classList.remove('konami-hacker-mode');
+        document.body.classList.remove('konami-godmode');
+        document.body.classList.remove('konami-rainbow');
+        document.body.classList.remove('konami-max-glitch');
+        document.querySelectorAll('.konami-invert').forEach(el => el.classList.remove('konami-invert'));
+        document.querySelectorAll('.konami-glitch').forEach(el => el.classList.remove('konami-glitch'));
+
+        // Restore terminal prompt
+        const promptUser = document.querySelector('.terminal-prompt .prompt-root');
+        const promptSymbol = document.querySelector('.terminal-prompt .prompt-symbol');
+        if (promptUser) {
+            promptUser.textContent = 'guest';
+            promptUser.classList.remove('prompt-root');
+            promptUser.classList.add('prompt-user');
+        }
+        if (promptSymbol) {
+            promptSymbol.textContent = '$';
+        }
+
+        // Restore terminal close button and toggle
+        const closeBtn = document.getElementById('terminal-close');
+        const terminalToggle = document.querySelector('.terminal-toggle');
+        if (closeBtn) closeBtn.style.display = '';
+        if (terminalToggle) terminalToggle.style.display = '';
+
+        // Remove ESC key block
+        if (this.escKeyHandler) {
+            document.removeEventListener('keydown', this.escKeyHandler, true);
+        }
+
+        // Restore scrambled text
+        document.querySelectorAll('[data-original]').forEach(el => {
+            el.textContent = el.dataset.original;
+            delete el.dataset.original;
+        });
+
+        // Deactivation flash
+        const flash = document.createElement('div');
+        flash.style.cssText = `
+            position: fixed;
+            inset: 0;
+            background: white;
+            pointer-events: none;
+            z-index: 9999999;
+            animation: konamiDeactivate 0.5s ease-out forwards;
+        `;
+        document.body.appendChild(flash);
+        setTimeout(() => flash.remove(), 500);
+
+        // Play deactivation sound
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.3);
+            gain.gain.setValueAtTime(0.2, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.3);
+        } catch (e) { }
+    }
+};
+
+// Initialize Konami Easter Egg
+document.addEventListener('DOMContentLoaded', () => {
+    KonamiEasterEgg.init();
+});
 
 // Initialize terminal when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
