@@ -1007,9 +1007,9 @@ function updateTimeAndTimezone() {
             timeZoneName: 'short'
         }).formatToParts(now).find(part => part.type === 'timeZoneName')?.value || yourTimeZone;
 
-        // Calculate time difference in hours
+        // Calculate time difference in minutes using proper offset calculation
         const myOffset = getTimezoneOffset(MY_TIMEZONE, now);
-        const yourOffset = new Date().getTimezoneOffset() * -1; // in minutes
+        const yourOffset = getTimezoneOffset(yourTimeZone, now);
         const diffMinutes = myOffset - yourOffset;
         const diffHours = Math.floor(Math.abs(diffMinutes) / 60);
         const diffMins = Math.abs(diffMinutes) % 60;
@@ -3022,7 +3022,7 @@ const Terminal = {
             fn: async function () {
                 Terminal.print([{ text: 'Fetching IP info...', class: 'system' }]);
                 try {
-                    const resp = await fetch('http://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query');
+                    const resp = await fetch('https://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query');
                     const data = await resp.json();
                     if (data.status === 'success') {
                         return [
