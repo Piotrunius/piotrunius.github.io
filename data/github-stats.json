@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122623,
+      "stars": 122624,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164555,
+      "stars": 164557,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93276,
+      "stars": 93278,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -153,7 +153,7 @@
       "name": "moodist",
       "owner": "remvze",
       "url": "https://github.com/remvze/moodist",
-      "stars": 3260,
+      "stars": 3261,
       "language": "TypeScript",
       "description": "🌲 Ambient sounds for focus and calm.",
       "starredAt": "2025-09-04T00:18:52Z"
@@ -207,13 +207,20 @@
       "name": "PeaZip",
       "owner": "peazip",
       "url": "https://github.com/peazip/PeaZip",
-      "stars": 6835,
+      "stars": 6836,
       "language": "Pascal",
       "description": "Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager. Features volume spanning, compression, authenticated encryption. Supports 7Z, 7-Zip sfx, ACE, ARJ, Brotli, BZ",
       "starredAt": "2023-08-09T22:42:02Z"
     }
   ],
   "recentCommits": [
+    {
+      "message": "Fix: IP API HTTPS and timezone offset calculation",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-02-02T07:48:49Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/f33136493ccac9d7651709a2375a49b3ed0768dc"
+    },
     {
       "message": "Konami: display root commands list on terminal activation",
       "repo": "piotrunius.github.io",
@@ -262,13 +269,6 @@
       "author": "Piotrek",
       "date": "2026-01-11T11:45:12Z",
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/60fab2a80705e9b8ed725bb0fcd374a1eff98e09"
-    },
-    {
-      "message": "fix",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrek",
-      "date": "2026-01-11T11:42:26Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/fe0b6569edffc720f44311e5918d8a19056669bb"
     },
     {
       "message": "Update AutoClicker.py",
@@ -327,7 +327,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-02T07:30:49.291Z",
+  "lastUpdate": "2026-02-02T07:49:10.105Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +345,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-02T07:30:49.677Z"
+    "lastChecked": "2026-02-02T07:49:10.739Z"
   },
   "pullRequests": {
     "total": 5,
