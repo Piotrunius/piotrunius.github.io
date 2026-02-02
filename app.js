@@ -962,6 +962,94 @@ function renderSpotifyEmpty(container) {
     delete container.dataset.trackId;
 }
 
+// --- TIME & TIMEZONE SECTION ---
+const MY_TIMEZONE = 'Europe/Warsaw'; // Your timezone
+
+function updateTimeAndTimezone() {
+    const myTimeEl = document.getElementById('my-time');
+    const myTimezoneEl = document.getElementById('my-timezone');
+    const yourTimeEl = document.getElementById('your-time');
+    const yourTimezoneEl = document.getElementById('your-timezone');
+    const timeDiffEl = document.getElementById('time-diff-text');
+
+    if (!myTimeEl || !yourTimeEl) return;
+
+    try {
+        // Get current time in both timezones
+        const now = new Date();
+
+        // My time (Warsaw)
+        const myTime = new Intl.DateTimeFormat('en-GB', {
+            timeZone: MY_TIMEZONE,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        }).format(now);
+
+        // My timezone info
+        const myTimezoneName = new Intl.DateTimeFormat('en-US', {
+            timeZone: MY_TIMEZONE,
+            timeZoneName: 'short'
+        }).formatToParts(now).find(part => part.type === 'timeZoneName')?.value || MY_TIMEZONE;
+
+        // Your time (visitor's timezone)
+        const yourTime = new Intl.DateTimeFormat('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        }).format(now);
+
+        // Your timezone info
+        const yourTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const yourTimezoneName = new Intl.DateTimeFormat('en-US', {
+            timeZoneName: 'short'
+        }).formatToParts(now).find(part => part.type === 'timeZoneName')?.value || yourTimeZone;
+
+        // Calculate time difference in hours
+        const myOffset = getTimezoneOffset(MY_TIMEZONE, now);
+        const yourOffset = new Date().getTimezoneOffset() * -1; // in minutes
+        const diffMinutes = myOffset - yourOffset;
+        const diffHours = Math.floor(Math.abs(diffMinutes) / 60);
+        const diffMins = Math.abs(diffMinutes) % 60;
+
+        // Update display
+        myTimeEl.textContent = myTime;
+        myTimezoneEl.textContent = `${MY_TIMEZONE} (${myTimezoneName})`;
+        yourTimeEl.textContent = yourTime;
+        yourTimezoneEl.textContent = `${yourTimeZone} (${yourTimezoneName})`;
+
+        // Update time difference
+        if (diffMinutes === 0) {
+            timeDiffEl.textContent = "We're in the same timezone!";
+        } else {
+            const ahead = diffMinutes > 0;
+            const hoursText = diffHours > 0 ? `${diffHours}h` : '';
+            const minsText = diffMins > 0 ? `${diffMins}m` : '';
+            const timeText = [hoursText, minsText].filter(Boolean).join(' ');
+            timeDiffEl.textContent = `I'm ${timeText} ${ahead ? 'ahead of' : 'behind'} you`;
+        }
+    } catch (error) {
+        console.error('Error updating time:', error);
+        myTimeEl.textContent = '--:--:--';
+        yourTimeEl.textContent = '--:--:--';
+    }
+}
+
+function getTimezoneOffset(timezone, date) {
+    // Get offset in minutes for a specific timezone
+    const utcDate = new Date(date.toLocaleString('en-US', { timeZone: 'UTC' }));
+    const tzDate = new Date(date.toLocaleString('en-US', { timeZone: timezone }));
+    return (tzDate.getTime() - utcDate.getTime()) / 60000; // Convert to minutes
+}
+
+function initTimeAndTimezone() {
+    updateTimeAndTimezone();
+    // Update every second for live clock
+    setInterval(updateTimeAndTimezone, 1000);
+}
+
 // --- INIT ---
 document.addEventListener('DOMContentLoaded', async () => {
     // Initialize performance monitoring
@@ -1013,6 +1101,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     initThemeToggle();
     updateCopyrightYear();
     initBackToTop();
+
+    // Initialize time & timezone section
+    initTimeAndTimezone();
 
     // Auto-refresh stats with adaptive intervals
     const statsInterval = deviceCapabilities.isLowEnd ? 600000 : 300000; // 10 or 5 minutes
