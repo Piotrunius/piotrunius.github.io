@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 23,
-    "commits": 185
+    "commits": 186
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7781,
+      "stars": 7782,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18079,
+      "stars": 18080,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122862,
+      "stars": 122866,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -72,7 +72,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 19680,
+      "stars": 19682,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164865,
+      "stars": 164863,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93527,
+      "stars": 93528,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -180,7 +180,7 @@
       "name": "glazewm",
       "owner": "glzr-io",
       "url": "https://github.com/glzr-io/glazewm",
-      "stars": 11268,
+      "stars": 11269,
       "language": "Rust",
       "description": "GlazeWM is a tiling window manager for Windows inspired by i3wm.",
       "starredAt": "2025-06-17T03:39:52Z"
@@ -189,7 +189,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 4084,
+      "stars": 4085,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python.",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -214,6 +214,13 @@
     }
   ],
   "recentCommits": [
+    {
+      "message": "fix: improve game logic for handling split hands and auto-standing on 21",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T11:32:20Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/64a209a57d83d8dfab0d9d3d22271182faf4fe8a"
+    },
     {
       "message": "feat: add feedback button and modal for user feedback collection",
       "repo": "Offline-Casino",
@@ -262,13 +269,6 @@
       "author": "Piotrunius",
       "date": "2026-02-04T05:56:25Z",
       "url": "https://github.com/Piotrunius/Offline-Casino/commit/c323bdea3fb3634919dd70a0f82ce166ce18cc82"
-    },
-    {
-      "message": "fix: use peaceiris/actions-gh-pages for reliable GitHub Pages deployment",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T05:53:27Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/99767a73277071a24957e118ef14f5541a24d1fe"
     },
     {
       "message": "Delete data/projects.json",
@@ -439,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-04T10:51:37.325Z",
+  "lastUpdate": "2026-02-04T11:37:39.616Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -457,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-04T10:51:37.791Z"
+    "lastChecked": "2026-02-04T11:37:39.961Z"
   },
   "pullRequests": {
     "total": 5,
