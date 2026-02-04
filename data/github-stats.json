@@ -1,8 +1,8 @@
 {
   "summary": {
-    "projects": 2,
+    "projects": 4,
     "starredCount": 23,
-    "commits": 139
+    "commits": 172
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7776,
+      "stars": 7778,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -27,7 +27,7 @@
       "name": "github-profile-readme-generator",
       "owner": "rahuldkjain",
       "url": "https://github.com/rahuldkjain/github-profile-readme-generator",
-      "stars": 23969,
+      "stars": 23970,
       "language": "TypeScript",
       "description": "🚀 Generate GitHub profile README easily with the latest add-ons like visitors count, GitHub stats, etc using minimal UI.",
       "starredAt": "2026-01-03T02:14:42Z"
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18064,
+      "stars": 18065,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122811,
+      "stars": 122821,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -72,7 +72,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 19668,
+      "stars": 19671,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -108,7 +108,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 46595,
+      "stars": 46604,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164749,
+      "stars": 164768,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93464,
+      "stars": 93475,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -189,7 +189,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 4078,
+      "stars": 4080,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python.",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -214,6 +214,83 @@
     }
   ],
   "recentCommits": [
+    {
+      "message": "Fix project badges, links, and syntax error in projects command",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrunius",
+      "date": "2026-02-04T02:22:49Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/ccdada4163b94f777ec8046f67bae9f78fcd0f8a"
+    },
+    {
+      "message": "Delete UMAMI_TRACKING.md",
+      "repo": "Broadcast-generator",
+      "author": "Piotrek",
+      "date": "2026-02-04T02:10:52Z",
+      "url": "https://github.com/Piotrunius/Broadcast-generator/commit/c860a944c25bcc19c9cc7049f466c4c36e15df22"
+    },
+    {
+      "message": "Delete IMPLEMENTATION_SUMMARY.md",
+      "repo": "Broadcast-generator",
+      "author": "Piotrek",
+      "date": "2026-02-04T02:10:43Z",
+      "url": "https://github.com/Piotrunius/Broadcast-generator/commit/dd216e0e430ce300dfaba95c91a1f79d2dae01d1"
+    },
+    {
+      "message": "feat: implement tracking engine for user interactions and game events",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T02:06:25Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/42a7d06a6592a6b70e1e8525382b84f987d3e80d"
+    },
+    {
+      "message": "refactor: remove redundant instruction from game rules in GameInfoModal",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-03T16:54:19Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/c333a4b3de34eb94b53c83c947139964f9b3edc8"
+    },
+    {
+      "message": "feat: add ScratchCardsGame component with multiple card types and win mechanics",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-03T16:52:16Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/bf20daffaa02477913d9eb3af26801d80444643d"
+    },
+    {
+      "message": "Refactor game settings for WarGame, implement stock price ticker in CasinoContext, enhance BlackjackGame logic for split hands, and update various gam",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-03T15:38:24Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/39d78f33d5ae5f73bd298aea86138b5cefbe93a6"
+    },
+    {
+      "message": "Remove emoji from tile selection prompt in TowerGame",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-03T08:39:49Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/edf46d6d9d0e2a43b48da0ca402de7ac559e2e93"
+    },
+    {
+      "message": "Update README and Dashboard to reflect 19 unique casino games",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-03T07:46:26Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/c0aadbf1114be097d732be5d8564265750d14ab1"
+    },
+    {
+      "message": "Refactor PlinkoGame peg positioning, enhance StockExchange state management, implement WarGame logic, and adjust TicTacToe multipliers based on diffic",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-03T07:45:20Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/eac5127435249cfaf2e7aadd0d4c085dbce7bf02"
+    },
+    {
+      "message": "Fix Plinko lag and odds, improve Horse Racing with dynamic odds/stats, make Stock Exchange persist state, add more news, remove emojis from buttons",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-03T06:33:40Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/d6af581f2e18609d2e6ae54437a17f63f6258507"
+    },
     {
       "message": "Remove all emojis from terminal, simplify konami command",
       "repo": "piotrunius.github.io",
@@ -264,11 +341,46 @@
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/ee89b8467d7fdab0dc99f959bee9e4bdf47cf8ad"
     },
     {
-      "message": "feat: restore simple GET IN TOUCH, unify button hovers, fix light mode terminal",
-      "repo": "piotrunius.github.io",
+      "message": "Add notice banner for broadcast feature unavailability due to Roblox regulations",
+      "repo": "Broadcast-generator",
       "author": "Piotrunius",
-      "date": "2026-02-02T06:47:26Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/ed1fc80fa69ecf867adc9c93ed8c883a24d640f4"
+      "date": "2026-01-11T21:52:32Z",
+      "url": "https://github.com/Piotrunius/Broadcast-generator/commit/97839b0232136904503952f37e34f7eae556fa5e"
+    },
+    {
+      "message": "Add Forum Discord link and improve tracking for navigation and resource toggles",
+      "repo": "Broadcast-generator",
+      "author": "Piotrunius",
+      "date": "2026-01-10T05:16:37Z",
+      "url": "https://github.com/Piotrunius/Broadcast-generator/commit/c6a65ceec6d8f555a35c04d745ab7e026a454648"
+    },
+    {
+      "message": "feat: update audio toggle labels and adjust performance toggle button text",
+      "repo": "Broadcast-generator",
+      "author": "Piotrunius",
+      "date": "2026-01-07T02:20:04Z",
+      "url": "https://github.com/Piotrunius/Broadcast-generator/commit/7c34f199d96cfb1819b0127009e002695023bedc"
+    },
+    {
+      "message": "feat: implement session ID handling in feedback system",
+      "repo": "Broadcast-generator",
+      "author": "Piotrunius",
+      "date": "2026-01-07T02:00:55Z",
+      "url": "https://github.com/Piotrunius/Broadcast-generator/commit/d592b954cbbb9e441fba3364bdb3386028a99af5"
+    },
+    {
+      "message": "Delete test-feedback.html",
+      "repo": "Broadcast-generator",
+      "author": "Piotrunius",
+      "date": "2026-01-07T01:33:12Z",
+      "url": "https://github.com/Piotrunius/Broadcast-generator/commit/1e4c5780a80a8c71fb0cde260b8368de36cd3aad"
+    },
+    {
+      "message": "Delete tmp.txt",
+      "repo": "Broadcast-generator",
+      "author": "Piotrunius",
+      "date": "2026-01-07T01:33:02Z",
+      "url": "https://github.com/Piotrunius/Broadcast-generator/commit/2e639600d1c9e11d31d15beceea4896ead99d8c3"
     },
     {
       "message": "Update AutoClicker.py",
@@ -327,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-04T00:01:04.270Z",
+  "lastUpdate": "2026-02-04T02:23:03.962Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -345,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-04T00:01:04.575Z"
+    "lastChecked": "2026-02-04T02:23:04.343Z"
   },
   "pullRequests": {
     "total": 5,
@@ -393,8 +505,16 @@
     ]
   },
   "issues": {
-    "total": 2,
+    "total": 3,
     "recent": [
+      {
+        "title": "Tagging because of 3+ numbers (advanced)",
+        "repo": "Broadcast-generator",
+        "state": "closed",
+        "url": "https://github.com/Piotrunius/Broadcast-generator/issues/1",
+        "created": "2026-01-06T09:25:39Z",
+        "updated": "2026-01-06T10:18:36Z"
+      },
       {
         "title": "Support for dark project",
         "repo": "libratbag",
@@ -416,7 +536,7 @@
   "languages": [
     {
       "name": "JavaScript",
-      "repos": 1
+      "repos": 3
     },
     {
       "name": "Python",
