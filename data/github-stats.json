@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 23,
-    "commits": 175
+    "commits": 178
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7779,
+      "stars": 7780,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18067,
+      "stars": 18068,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122829,
+      "stars": 122834,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -72,7 +72,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 19672,
+      "stars": 19674,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -90,7 +90,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52691,
+      "stars": 52692,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164807,
+      "stars": 164820,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93486,
+      "stars": 93490,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -180,7 +180,7 @@
       "name": "glazewm",
       "owner": "glzr-io",
       "url": "https://github.com/glzr-io/glazewm",
-      "stars": 11266,
+      "stars": 11267,
       "language": "Rust",
       "description": "GlazeWM is a tiling window manager for Windows inspired by i3wm.",
       "starredAt": "2025-06-17T03:39:52Z"
@@ -214,6 +214,34 @@
     }
   ],
   "recentCommits": [
+    {
+      "message": "fix: use official GitHub Pages deployment with proper environment",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T05:56:25Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/c323bdea3fb3634919dd70a0f82ce166ce18cc82"
+    },
+    {
+      "message": "fix: use peaceiris/actions-gh-pages for reliable GitHub Pages deployment",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T05:53:27Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/99767a73277071a24957e118ef14f5541a24d1fe"
+    },
+    {
+      "message": "fix: fix TypeScript build errors and configure GitHub Pages deployment",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T05:52:05Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/6ab447eb439c6a8bfa6780162bc54653218caf42"
+    },
+    {
+      "message": "feat: enhance game components with new icons and insurance mechanics",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T05:48:13Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/79f1691d25c758bd21f93a2a27092ed0260a1e2c"
+    },
     {
       "message": "Refactor game components for improved styling and consistency",
       "repo": "Offline-Casino",
@@ -269,34 +297,6 @@
       "author": "Piotrunius",
       "date": "2026-02-03T16:54:19Z",
       "url": "https://github.com/Piotrunius/Offline-Casino/commit/c333a4b3de34eb94b53c83c947139964f9b3edc8"
-    },
-    {
-      "message": "feat: add ScratchCardsGame component with multiple card types and win mechanics",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-03T16:52:16Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/bf20daffaa02477913d9eb3af26801d80444643d"
-    },
-    {
-      "message": "Refactor game settings for WarGame, implement stock price ticker in CasinoContext, enhance BlackjackGame logic for split hands, and update various gam",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-03T15:38:24Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/39d78f33d5ae5f73bd298aea86138b5cefbe93a6"
-    },
-    {
-      "message": "Remove emoji from tile selection prompt in TowerGame",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-03T08:39:49Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/edf46d6d9d0e2a43b48da0ca402de7ac559e2e93"
-    },
-    {
-      "message": "Update README and Dashboard to reflect 19 unique casino games",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-03T07:46:26Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/c0aadbf1114be097d732be5d8564265750d14ab1"
     },
     {
       "message": "Remove all emojis from terminal, simplify konami command",
@@ -439,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-04T04:51:43.297Z",
+  "lastUpdate": "2026-02-04T05:56:55.230Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -457,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-04T04:51:43.727Z"
+    "lastChecked": "2026-02-04T05:57:07.087Z"
   },
   "pullRequests": {
     "total": 5,
