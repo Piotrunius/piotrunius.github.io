@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 23,
-    "commits": 172
+    "commits": 173
   },
   "starred": [
     {
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18065,
+      "stars": 18066,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122821,
+      "stars": 122825,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -54,7 +54,7 @@
       "name": "arcraiders-data",
       "owner": "RaidTheory",
       "url": "https://github.com/RaidTheory/arcraiders-data",
-      "stars": 270,
+      "stars": 271,
       "language": "JavaScript",
       "description": "Free to use ARC Raiders game data in JSON Format.",
       "starredAt": "2025-11-30T11:02:20Z"
@@ -63,7 +63,7 @@
       "name": "RaiderCache",
       "owner": "otdavies",
       "url": "https://github.com/otdavies/RaiderCache",
-      "stars": 17,
+      "stars": 18,
       "language": "TypeScript",
       "description": "Searchable Arc Raider loot tiers",
       "starredAt": "2025-11-30T09:40:52Z"
@@ -72,7 +72,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 19671,
+      "stars": 19672,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -108,7 +108,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 46604,
+      "stars": 46607,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164768,
+      "stars": 164779,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93475,
+      "stars": 93478,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -214,6 +214,13 @@
     }
   ],
   "recentCommits": [
+    {
+      "message": "Delete data/projects.json",
+      "repo": "piotrunius.github.io",
+      "author": "Piotrek",
+      "date": "2026-02-04T02:23:53Z",
+      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/b968506e2db0696f61634353ab8f74ea2d964231"
+    },
     {
       "message": "Fix project badges, links, and syntax error in projects command",
       "repo": "piotrunius.github.io",
@@ -334,13 +341,6 @@
       "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/f33136493ccac9d7651709a2375a49b3ed0768dc"
     },
     {
-      "message": "Konami: display root commands list on terminal activation",
-      "repo": "piotrunius.github.io",
-      "author": "Piotrunius",
-      "date": "2026-02-02T07:16:31Z",
-      "url": "https://github.com/Piotrunius/piotrunius.github.io/commit/ee89b8467d7fdab0dc99f959bee9e4bdf47cf8ad"
-    },
-    {
       "message": "Add notice banner for broadcast feature unavailability due to Roblox regulations",
       "repo": "Broadcast-generator",
       "author": "Piotrunius",
@@ -439,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-04T02:23:03.962Z",
+  "lastUpdate": "2026-02-04T03:09:45.065Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -457,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-04T02:23:04.343Z"
+    "lastChecked": "2026-02-04T03:09:45.696Z"
   },
   "pullRequests": {
     "total": 5,
