@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 23,
-    "commits": 173
+    "commits": 175
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7778,
+      "stars": 7779,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -27,7 +27,7 @@
       "name": "github-profile-readme-generator",
       "owner": "rahuldkjain",
       "url": "https://github.com/rahuldkjain/github-profile-readme-generator",
-      "stars": 23970,
+      "stars": 23969,
       "language": "TypeScript",
       "description": "🚀 Generate GitHub profile README easily with the latest add-ons like visitors count, GitHub stats, etc using minimal UI.",
       "starredAt": "2026-01-03T02:14:42Z"
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18066,
+      "stars": 18067,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122825,
+      "stars": 122829,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -90,7 +90,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52689,
+      "stars": 52691,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -108,7 +108,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 46607,
+      "stars": 46609,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164779,
+      "stars": 164807,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93478,
+      "stars": 93486,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -215,6 +215,20 @@
   ],
   "recentCommits": [
     {
+      "message": "Refactor game components for improved styling and consistency",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T04:38:59Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/63fcb9ebc744d2f4f03cc4ca5801db9c2f5a5694"
+    },
+    {
+      "message": "feat: add Achievements and Daily Bonus modals with context integration",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T03:29:02Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/dd19e3a94b9bb7701d18b82dc88068f2d04044aa"
+    },
+    {
       "message": "Delete data/projects.json",
       "repo": "piotrunius.github.io",
       "author": "Piotrek",
@@ -283,20 +297,6 @@
       "author": "Piotrunius",
       "date": "2026-02-03T07:46:26Z",
       "url": "https://github.com/Piotrunius/Offline-Casino/commit/c0aadbf1114be097d732be5d8564265750d14ab1"
-    },
-    {
-      "message": "Refactor PlinkoGame peg positioning, enhance StockExchange state management, implement WarGame logic, and adjust TicTacToe multipliers based on diffic",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-03T07:45:20Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/eac5127435249cfaf2e7aadd0d4c085dbce7bf02"
-    },
-    {
-      "message": "Fix Plinko lag and odds, improve Horse Racing with dynamic odds/stats, make Stock Exchange persist state, add more news, remove emojis from buttons",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-03T06:33:40Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/d6af581f2e18609d2e6ae54437a17f63f6258507"
     },
     {
       "message": "Remove all emojis from terminal, simplify konami command",
@@ -439,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-04T03:09:45.065Z",
+  "lastUpdate": "2026-02-04T04:51:43.297Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -457,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-04T03:09:45.696Z"
+    "lastChecked": "2026-02-04T04:51:43.727Z"
   },
   "pullRequests": {
     "total": 5,
