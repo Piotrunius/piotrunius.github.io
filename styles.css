@@ -1413,6 +1413,18 @@ a:where(:not(.social-link, .contact-btn, .music-btn, .spec-item, .activity-link,
     color: var(--primary);
 }
 
+.project-badge-current {
+    background: rgba(33, 150, 243, 0.15);
+    border: 1px solid rgba(33, 150, 243, 0.3);
+    color: #2196f3;
+}
+
+.project-badge-collab {
+    background: rgba(156, 39, 176, 0.15);
+    border: 1px solid rgba(156, 39, 176, 0.3);
+    color: #9c27b0;
+}
+
 .project-badge-archive {
     background: rgba(255, 193, 7, 0.15);
     border: 1px solid rgba(255, 193, 7, 0.3);

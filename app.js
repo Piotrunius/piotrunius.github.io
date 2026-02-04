@@ -1032,20 +1032,65 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // --- PROJECTS SECTION ---
+async function fetchGitHubRepos() {
+    try {
+        const response = await fetch('https://api.github.com/users/Piotrunius/repos?per_page=100&sort=updated');
+
+        if (!response.ok) {
+            throw new Error(`GitHub API error: ${response.status}`);
+        }
+
+        const repos = await response.json();
+
+        // Filter to only public repos and sort by last update
+        const publicRepos = repos
+            .filter(repo => !repo.private && !repo.fork)
+            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+        return publicRepos.map(repo => ({
+            name: repo.name,
+            description: repo.description || 'No description available',
+            html_url: repo.html_url,
+            language: repo.language || 'Unknown',
+            private: repo.private,
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
+            updated_at: repo.updated_at,
+            topics: repo.topics || []
+        }));
+    } catch (error) {
+        console.error('Error fetching GitHub repos:', error);
+        return null;
+    }
+}
+
 async function loadProjects() {
     const container = document.getElementById('projects-container');
     if (!container) return;
 
     try {
-        // Fetch projects data from pre-generated JSON file
-        const response = await fetch(`data/projects.json?t=${Date.now()}`);
+        // Show loading state
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+                <i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.5;"></i>
+                <p>Loading projects from GitHub...</p>
+            </div>
+        `;
 
-        if (!response.ok) {
-            throw new Error(`Failed to load projects: ${response.status}`);
+        // Try to fetch from GitHub API first
+        let allRepos = await fetchGitHubRepos();
+
+        // Fallback to static JSON if GitHub API fails
+        if (!allRepos) {
+            console.warn('GitHub API failed, falling back to static projects.json');
+            const response = await fetch(`data/projects.json?t=${Date.now()}`);
+            if (response.ok) {
+                const data = await response.json();
+                allRepos = data.projects || [];
+            } else {
+                throw new Error('Both GitHub API and static fallback failed');
+            }
         }
-
-        const data = await response.json();
-        const allRepos = data.projects || [];
 
         if (allRepos.length === 0) {
             container.innerHTML = `
@@ -1075,21 +1120,26 @@ async function loadProjects() {
             let badgeClass = '';
             let projectLink = repo.html_url; // default link
 
+            // Special handling for specific projects
             if (repo.name === 'piotrunius.github.io') {
+                badge = 'this site';
+                badgeClass = 'project-badge-current';
+            } else if (repo.name === 'Broadcast-generator') {
+                badge = 'collab';
+                badgeClass = 'project-badge-collab';
+                // Use GitHub repo link, not GitHub Pages
+                projectLink = repo.html_url;
+            } else if (repo.name === 'Offline-Casino') {
                 badge = 'active';
                 badgeClass = 'project-badge-active';
-            } else if (repo.name === 'Broadcast-generator') {
-                badge = 'private';
-                badgeClass = 'project-badge-private';
-                projectLink = 'https://piotrunius.github.io/Broadcast-generator/';
+                // Use GitHub repo link
+                projectLink = repo.html_url;
+            } else if (repo.name === 'AutoClicker-AntiAFK' || repo.archived) {
+                badge = 'archive';
+                badgeClass = 'project-badge-archive';
             } else if (repo.private) {
                 badge = 'private';
                 badgeClass = 'project-badge-private';
-                // Keep default repo.html_url for other private projects
-            } else if (repo.name === 'AutoClicker-AntiAFK') {
-                badge = 'archive';
-                badgeClass = 'project-badge-archive';
-                projectLink = 'https://github.com/Piotrunius/AutoClicker-AntiAFK';
             }
 
             card.innerHTML = `
@@ -1709,23 +1759,64 @@ const Terminal = {
             description: 'List my projects',
             usage: 'projects',
             icon: 'fa-code-branch',
-            fn: function () {
-                return [
+            fn: async function () {
+                Terminal.print([{ text: 'Fetching projects from GitHub...', class: 'info' }]);
+
+                const repos = await fetchGitHubRepos();
+
+                if (!repos || repos.length === 0) {
+                    return [
+                        { text: '', class: 'system' },
+                        { text: 'Failed to fetch projects from GitHub.', class: 'error' },
+                        { text: 'Visit: https://github.com/Piotrunius', class: 'system' }
+                    ];
+                }
+
+                const output = [
                     { text: '+---------------------------------------------------+', class: 'highlight' },
                     { text: '|                   MY PROJECTS                     |', class: 'highlight' },
                     { text: '+---------------------------------------------------+', class: 'highlight' },
-                    { text: '' },
-                    { text: '  [ACTIVE] piotrunius.github.io', class: 'success' },
-                    { text: '           Personal portfolio website with terminal feature' },
-                    { text: '' },
-                    { text: '  [PRIVATE] Broadcast-generator', class: 'info' },
-                    { text: '            Tool for generating broadcast messages' },
-                    { text: '' },
-                    { text: '  [ARCHIVE] AutoClicker-AntiAFK', class: 'warning' },
-                    { text: '            Auto-clicker utility tool' },
-                    { text: '' },
-                    { text: '  Visit: https://github.com/Piotrunius', class: 'system' }
+                    { text: '' }
                 ];
+
+                // Show top projects (max 5)
+                const topProjects = repos.slice(0, 5);
+
+                topProjects.forEach((repo, index) => {
+                    let badge = '[PROJECT]';
+                    let badgeClass = 'system';
+
+                    if (repo.name === 'piotrunius.github.io') {
+                        badge = '[THIS SITE]';
+                        badgeClass = 'info';
+                    } else if (repo.name === 'Broadcast-generator') {
+                        badge = '[COLLAB]';
+                        badgeClass = 'highlight';
+                    } else if (repo.name === 'Offline-Casino') {
+                        badge = '[ACTIVE]';
+                        badgeClass = 'success';
+                    } else if (repo.name === 'AutoClicker-AntiAFK' || repo.archived) {
+                        badge = '[ARCHIVE]';
+                        badgeClass = 'warning';
+                    }
+
+                    output.push(
+                        { text: `  ${badge} ${repo.name}`, class: badgeClass },
+                        { text: `           ${repo.description}` }
+                    );
+
+                    if (index < topProjects.length - 1) {
+                        output.push({ text: '' });
+                    }
+                });
+
+                output.push(
+                    { text: '' },
+                    { text: `  Total public repos: ${repos.length}`, class: 'info' },
+                    { text: '  Visit: https://github.com/Piotrunius', class: 'system' }
+                );
+
+                return output;
             }
         },
 
@@ -4097,6 +4188,15 @@ const Terminal = {
         const countEl = document.getElementById('terminal-cmd-count');
         if (countEl) countEl.textContent = `${this.commandCount} commands`;
 
+        // Parse command for tracking
+        const parts = trimmed.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+        const cmdName = parts[0]?.toLowerCase();
+
+        // Track command execution
+        if (window.umami && cmdName) {
+            window.umami.track('Terminal Command', { command: cmdName });
+        }
+
         // Check if root mode (Konami active)
         const isRoot = typeof KonamiEasterEgg !== 'undefined' && KonamiEasterEgg.activated;
         const userName = isRoot ? 'root' : 'guest';
@@ -4111,20 +4211,20 @@ const Terminal = {
         }]);
 
         // Parse command
-        const parts = trimmed.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
-        let cmdName = parts[0]?.toLowerCase();
-        const args = parts.slice(1).map(a => a.replace(/^"|"$/g, ''));
+        const parts2 = trimmed.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
+        let cmdName2 = parts2[0]?.toLowerCase();
+        const args = parts2.slice(1).map(a => a.replace(/^"|"$/g, ''));
 
         // Check for alias
-        if (this.aliases[cmdName]) {
-            const aliasCmd = this.aliases[cmdName];
+        if (this.aliases[cmdName2]) {
+            const aliasCmd = this.aliases[cmdName2];
             const aliasParts = aliasCmd.split(' ');
-            cmdName = aliasParts[0];
+            cmdName2 = aliasParts[0];
             args.unshift(...aliasParts.slice(1));
         }
 
         // Execute command
-        const cmd = this.commands[cmdName];
+        const cmd = this.commands[cmdName2];
         if (cmd) {
             const result = cmd.fn(args);
             if (result instanceof Promise) {
@@ -4342,6 +4442,11 @@ const Terminal = {
             this.print(this.getWelcomeMessage());
         }
 
+        // Track terminal open
+        if (window.umami) {
+            window.umami.track('Terminal Opened');
+        }
+
         // Focus input
         setTimeout(() => input?.focus(), 100);
     },
@@ -4353,6 +4458,11 @@ const Terminal = {
         this.isOpen = false;
         container?.classList.remove('visible');
         toggle?.classList.remove('active');
+
+        // Track terminal close
+        if (window.umami) {
+            window.umami.track('Terminal Closed', { commandsExecuted: this.commandCount });
+        }
 
         // Stop matrix if running
         if (this.matrixInterval) {
@@ -4483,6 +4593,10 @@ const KonamiEasterEgg = {
             this.playKeySound();
 
             if (this.index === this.code.length) {
+                // Track Konami Code activation
+                if (window.umami) {
+                    window.umami.track('Konami Code Activated');
+                }
                 this.activate();
                 this.index = 0;
             }
