@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 23,
-    "commits": 184
+    "commits": 185
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7781,
+      "stars": 7782,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -27,7 +27,7 @@
       "name": "github-profile-readme-generator",
       "owner": "rahuldkjain",
       "url": "https://github.com/rahuldkjain/github-profile-readme-generator",
-      "stars": 23970,
+      "stars": 23969,
       "language": "TypeScript",
       "description": "🚀 Generate GitHub profile README easily with the latest add-ons like visitors count, GitHub stats, etc using minimal UI.",
       "starredAt": "2026-01-03T02:14:42Z"
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18076,
+      "stars": 18078,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122849,
+      "stars": 122857,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -72,7 +72,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 19678,
+      "stars": 19680,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -90,7 +90,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52693,
+      "stars": 52695,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164848,
+      "stars": 164859,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93514,
+      "stars": 93519,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -171,7 +171,7 @@
       "name": "YimMenuV2",
       "owner": "YimMenu",
       "url": "https://github.com/YimMenu/YimMenuV2",
-      "stars": 1058,
+      "stars": 1059,
       "language": "C++",
       "description": "Experimental menu for GTA 5: Enhanced",
       "starredAt": "2025-07-07T06:47:19Z"
@@ -207,13 +207,20 @@
       "name": "PeaZip",
       "owner": "peazip",
       "url": "https://github.com/peazip/PeaZip",
-      "stars": 6844,
+      "stars": 6843,
       "language": "Pascal",
       "description": "Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager. Features volume spanning, compression, authenticated encryption. Supports 7Z, 7-Zip sfx, ACE, ARJ, Brotli, BZ",
       "starredAt": "2023-08-09T22:42:02Z"
     }
   ],
   "recentCommits": [
+    {
+      "message": "feat: add feedback button and modal for user feedback collection",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T09:29:59Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/52f2e24a8dd4a455673dc2885de17abba44edc7b"
+    },
     {
       "message": "fix: update script source path for asset loading",
       "repo": "Offline-Casino",
@@ -262,13 +269,6 @@
       "author": "Piotrunius",
       "date": "2026-02-04T05:53:27Z",
       "url": "https://github.com/Piotrunius/Offline-Casino/commit/99767a73277071a24957e118ef14f5541a24d1fe"
-    },
-    {
-      "message": "fix: fix TypeScript build errors and configure GitHub Pages deployment",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T05:52:05Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/6ab447eb439c6a8bfa6780162bc54653218caf42"
     },
     {
       "message": "Delete data/projects.json",
@@ -439,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-04T08:56:06.810Z",
+  "lastUpdate": "2026-02-04T09:56:13.760Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -457,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-04T08:56:07.303Z"
+    "lastChecked": "2026-02-04T09:56:14.208Z"
   },
   "pullRequests": {
     "total": 5,
