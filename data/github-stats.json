@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 23,
-    "commits": 181
+    "commits": 184
   },
   "starred": [
     {
@@ -18,7 +18,7 @@
       "name": "bazzite",
       "owner": "ublue-os",
       "url": "https://github.com/ublue-os/bazzite",
-      "stars": 7780,
+      "stars": 7781,
       "language": "Shell",
       "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs.",
       "starredAt": "2026-01-05T20:57:12Z"
@@ -27,7 +27,7 @@
       "name": "github-profile-readme-generator",
       "owner": "rahuldkjain",
       "url": "https://github.com/rahuldkjain/github-profile-readme-generator",
-      "stars": 23969,
+      "stars": 23970,
       "language": "TypeScript",
       "description": "🚀 Generate GitHub profile README easily with the latest add-ons like visitors count, GitHub stats, etc using minimal UI.",
       "starredAt": "2026-01-03T02:14:42Z"
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18069,
+      "stars": 18071,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122840,
+      "stars": 122844,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -54,7 +54,7 @@
       "name": "arcraiders-data",
       "owner": "RaidTheory",
       "url": "https://github.com/RaidTheory/arcraiders-data",
-      "stars": 271,
+      "stars": 272,
       "language": "JavaScript",
       "description": "Free to use ARC Raiders game data in JSON Format.",
       "starredAt": "2025-11-30T11:02:20Z"
@@ -72,7 +72,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 19677,
+      "stars": 19678,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164832,
+      "stars": 164842,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93494,
+      "stars": 93502,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -180,7 +180,7 @@
       "name": "glazewm",
       "owner": "glzr-io",
       "url": "https://github.com/glzr-io/glazewm",
-      "stars": 11267,
+      "stars": 11268,
       "language": "Rust",
       "description": "GlazeWM is a tiling window manager for Windows inspired by i3wm.",
       "starredAt": "2025-06-17T03:39:52Z"
@@ -215,6 +215,27 @@
   ],
   "recentCommits": [
     {
+      "message": "fix: update script source path for asset loading",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T07:51:00Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/a73b695d31e68e94fb9cf414eadefd7cfbc9c286"
+    },
+    {
+      "message": "remove: cleanup debug logging",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T07:49:23Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/e6de91aed27df36202fb0b16b29ea5ba30601406"
+    },
+    {
+      "message": "debug: add console logging to blackjack evaluation",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-04T07:46:48Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/dc296a569171269180fc72d1ec84699dbc14a30e"
+    },
+    {
       "message": "fix: persist dailyBonus state to localStorage",
       "repo": "Offline-Casino",
       "author": "Piotrunius",
@@ -248,27 +269,6 @@
       "author": "Piotrunius",
       "date": "2026-02-04T05:52:05Z",
       "url": "https://github.com/Piotrunius/Offline-Casino/commit/6ab447eb439c6a8bfa6780162bc54653218caf42"
-    },
-    {
-      "message": "feat: enhance game components with new icons and insurance mechanics",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T05:48:13Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/79f1691d25c758bd21f93a2a27092ed0260a1e2c"
-    },
-    {
-      "message": "Refactor game components for improved styling and consistency",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T04:38:59Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/63fcb9ebc744d2f4f03cc4ca5801db9c2f5a5694"
-    },
-    {
-      "message": "feat: add Achievements and Daily Bonus modals with context integration",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T03:29:02Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/dd19e3a94b9bb7701d18b82dc88068f2d04044aa"
     },
     {
       "message": "Delete data/projects.json",
@@ -439,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-04T07:00:51.234Z",
+  "lastUpdate": "2026-02-04T07:57:05.311Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -457,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-04T07:00:51.757Z"
+    "lastChecked": "2026-02-04T07:57:05.649Z"
   },
   "pullRequests": {
     "total": 5,
