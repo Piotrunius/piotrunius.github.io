@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 23,
-    "commits": 192
+    "commits": 195
   },
   "starred": [
     {
@@ -27,7 +27,7 @@
       "name": "github-profile-readme-generator",
       "owner": "rahuldkjain",
       "url": "https://github.com/rahuldkjain/github-profile-readme-generator",
-      "stars": 23970,
+      "stars": 23969,
       "language": "TypeScript",
       "description": "🚀 Generate GitHub profile README easily with the latest add-ons like visitors count, GitHub stats, etc using minimal UI.",
       "starredAt": "2026-01-03T02:14:42Z"
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18113,
+      "stars": 18115,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 122982,
+      "stars": 122987,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -72,7 +72,7 @@
       "name": "omarchy",
       "owner": "basecamp",
       "url": "https://github.com/basecamp/omarchy",
-      "stars": 19705,
+      "stars": 19707,
       "language": "Shell",
       "description": "Beautiful, Modern & Opinionated Linux",
       "starredAt": "2025-11-14T20:28:21Z"
@@ -90,7 +90,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52707,
+      "stars": 52708,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -108,7 +108,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 46664,
+      "stars": 46665,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 164971,
+      "stars": 164974,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93643,
+      "stars": 93646,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -189,7 +189,7 @@
       "name": "yasb",
       "owner": "amnweb",
       "url": "https://github.com/amnweb/yasb",
-      "stars": 4092,
+      "stars": 4093,
       "language": "Python",
       "description": "A highly configurable Windows status bar written in Python.",
       "starredAt": "2025-06-17T03:39:25Z"
@@ -207,13 +207,34 @@
       "name": "PeaZip",
       "owner": "peazip",
       "url": "https://github.com/peazip/PeaZip",
-      "stars": 6846,
+      "stars": 6848,
       "language": "Pascal",
       "description": "Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager. Features volume spanning, compression, authenticated encryption. Supports 7Z, 7-Zip sfx, ACE, ARJ, Brotli, BZ",
       "starredAt": "2023-08-09T22:42:02Z"
     }
   ],
   "recentCommits": [
+    {
+      "message": "feat: update Open Graph and Twitter Card meta tags with new favicon and add favicon.png for improved social media sharing",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-05T10:52:12Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/1010d81efa656b0d8136b0634c7e7af28fe8a83b"
+    },
+    {
+      "message": "feat: update index.html with Open Graph and Twitter Card meta tags for improved social media sharing",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-05T10:33:42Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/77ac3e5a8746dfeb9de02f0ecebcf8ad7750fdc5"
+    },
+    {
+      "message": "feat: update manifest.json with enhanced app details, improved icons, and added shortcuts for better user experience",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-05T10:29:09Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/fffb13ecbd1c375106cfad3b7bec7d5995444c63"
+    },
     {
       "message": "feat: enhance win overlays with animations, glow effects, and particle elements for improved visual feedback",
       "repo": "Offline-Casino",
@@ -248,27 +269,6 @@
       "author": "Piotrunius",
       "date": "2026-02-04T12:33:02Z",
       "url": "https://github.com/Piotrunius/Offline-Casino/commit/7c1b33e2519536698f0420d2a98eaf48c012133c"
-    },
-    {
-      "message": "feat: enhance user experience with loading states and improved UI elements in Keno, Mines, and Blackjack games",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T11:49:35Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/913942d15a0e11b72106ce5938f18fa1befaaaaa"
-    },
-    {
-      "message": "fix: improve game logic for handling split hands and auto-standing on 21",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T11:32:20Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/64a209a57d83d8dfab0d9d3d22271182faf4fe8a"
-    },
-    {
-      "message": "feat: add feedback button and modal for user feedback collection",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T09:29:59Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/52f2e24a8dd4a455673dc2885de17abba44edc7b"
     },
     {
       "message": "Delete data/projects.json",
@@ -439,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-05T10:02:52.887Z",
+  "lastUpdate": "2026-02-05T11:03:56.611Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -457,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-05T10:02:53.427Z"
+    "lastChecked": "2026-02-05T11:03:57.087Z"
   },
   "pullRequests": {
     "total": 5,
