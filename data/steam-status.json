@@ -1,12 +1,12 @@
 {
   "steam": {
-    "personastate": 3,
+    "personastate": 4,
     "gameextrainfo": null,
     "avatar": "https://avatars.steamstatic.com/a7b85c1debc6db3cb342f4f0a14f3bbe2d564f6d_medium.jpg",
     "timecreated": 1584306745,
     "lastlogoff": 1770461960,
     "game_count": 279,
-    "total_playtime": 2783
+    "total_playtime": 2784
   },
-  "lastUpdate": "2026-02-07T11:56:03.029Z"
+  "lastUpdate": "2026-02-07T13:07:02.771Z"
 }
