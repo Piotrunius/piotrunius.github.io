@@ -1,12 +1,12 @@
 {
   "steam": {
-    "personastate": 1,
-    "gameextrainfo": null,
+    "personastate": 3,
+    "gameextrainfo": "ROUNDS",
     "avatar": "https://avatars.steamstatic.com/a7b85c1debc6db3cb342f4f0a14f3bbe2d564f6d_medium.jpg",
     "timecreated": 1584306745,
-    "lastlogoff": 1770435015,
-    "game_count": 280,
-    "total_playtime": 2776
+    "lastlogoff": 1770442618,
+    "game_count": 279,
+    "total_playtime": 2777
   },
-  "lastUpdate": "2026-02-07T05:31:35.598Z"
+  "lastUpdate": "2026-02-07T06:24:07.068Z"
 }
