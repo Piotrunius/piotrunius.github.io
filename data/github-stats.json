@@ -2,7 +2,7 @@
   "summary": {
     "projects": 4,
     "starredCount": 23,
-    "commits": 198
+    "commits": 200
   },
   "starred": [
     {
@@ -36,7 +36,7 @@
       "name": "qwen-code",
       "owner": "QwenLM",
       "url": "https://github.com/QwenLM/qwen-code",
-      "stars": 18190,
+      "stars": 18194,
       "language": "TypeScript",
       "description": "An open-source AI agent that lives in your terminal.",
       "starredAt": "2025-12-09T15:58:30Z"
@@ -45,7 +45,7 @@
       "name": "open-webui",
       "owner": "open-webui",
       "url": "https://github.com/open-webui/open-webui",
-      "stars": 123211,
+      "stars": 123212,
       "language": "Python",
       "description": "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)",
       "starredAt": "2025-12-09T13:44:06Z"
@@ -90,7 +90,7 @@
       "name": "powerlevel10k",
       "owner": "romkatv",
       "url": "https://github.com/romkatv/powerlevel10k",
-      "stars": 52738,
+      "stars": 52739,
       "language": "Shell",
       "description": "A Zsh theme",
       "starredAt": "2025-10-22T19:34:06Z"
@@ -108,7 +108,7 @@
       "name": "winutil",
       "owner": "ChrisTitusTech",
       "url": "https://github.com/ChrisTitusTech/winutil",
-      "stars": 46763,
+      "stars": 46764,
       "language": "PowerShell",
       "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
       "starredAt": "2025-09-29T20:42:42Z"
@@ -126,7 +126,7 @@
       "name": "Microsoft-Activation-Scripts",
       "owner": "massgravel",
       "url": "https://github.com/massgravel/Microsoft-Activation-Scripts",
-      "stars": 165201,
+      "stars": 165204,
       "language": "Batchfile",
       "description": "Open-source Windows and Office activator featuring HWID, Ohook, TSforge, and Online KMS activation methods, along with advanced troubleshooting.",
       "starredAt": "2025-09-29T20:41:38Z"
@@ -144,7 +144,7 @@
       "name": "gemini-cli",
       "owner": "google-gemini",
       "url": "https://github.com/google-gemini/gemini-cli",
-      "stars": 93852,
+      "stars": 93855,
       "language": "TypeScript",
       "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
       "starredAt": "2025-09-23T16:15:36Z"
@@ -215,6 +215,20 @@
   ],
   "recentCommits": [
     {
+      "message": "fix: update tokenPollIntervalRef type to number and use window.setInterval for polling fallback",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-07T13:58:15Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/ed9609170b5420f8a7015801e56deceac8fc6f9e"
+    },
+    {
+      "message": "feat: implement Turnstile captcha with polling fallback for improved verification process",
+      "repo": "Offline-Casino",
+      "author": "Piotrunius",
+      "date": "2026-02-07T13:55:59Z",
+      "url": "https://github.com/Piotrunius/Offline-Casino/commit/e3fd349d36ebc48e535b55d9abae4f4ca1d45661"
+    },
+    {
       "message": "Refactor Turnstile token handling and styling",
       "repo": "Broadcast-generator",
       "author": "Piotrek",
@@ -269,20 +283,6 @@
       "author": "Piotrunius",
       "date": "2026-02-04T13:01:53Z",
       "url": "https://github.com/Piotrunius/Offline-Casino/commit/8327720b551a1aced1c6f2e54b418f367f85ca40"
-    },
-    {
-      "message": "feat: add animations for big win and jackpot effects, enhancing visual feedback during gameplay",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T12:51:11Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/9e065e8146c492aed5ca6c88dbfd0d24c1641f83"
-    },
-    {
-      "message": "feat: enhance UI with animations and transitions for better user engagement across components",
-      "repo": "Offline-Casino",
-      "author": "Piotrunius",
-      "date": "2026-02-04T12:46:29Z",
-      "url": "https://github.com/Piotrunius/Offline-Casino/commit/c1a790b48d748494deb1990c7552ecb06e114340"
     },
     {
       "message": "Delete data/projects.json",
@@ -439,7 +439,7 @@
       "url": "https://github.com/Piotrunius/AutoClicker-AntiAFK/commit/dfe351efc4a812b9d9470d0bd532bcfdc27b2b3b"
     }
   ],
-  "lastUpdate": "2026-02-07T13:54:21.023Z",
+  "lastUpdate": "2026-02-07T14:32:12.255Z",
   "security": {
     "dependabot": {
       "open": 0,
@@ -457,7 +457,7 @@
       "alerts": []
     },
     "totalOpen": 0,
-    "lastChecked": "2026-02-07T13:54:21.452Z"
+    "lastChecked": "2026-02-07T14:32:12.855Z"
   },
   "pullRequests": {
     "total": 5,
