@@ -223,7 +223,7 @@ function getDefaultConfig() {
             { label: 'GitHub', icon: 'github', url: 'https://cloud.umami.is/q/O3Fj6wLHk', color: '#ffffff' },
             { label: 'Instagram', icon: 'instagram', url: 'https://cloud.umami.is/q/b85eLVM8c', color: '#E1306C' },
             { label: 'Spotify', icon: 'spotify', url: 'https://cloud.umami.is/q/Z53FK7OkW', color: '#1DB954' },
-            { label: 'Minecraft', icon: 'house-chimney', url: 'https://cloud.umami.is/q/C3JQxbvsd', color: '#d2d22cff' },
+            { label: 'Steam', icon: 'steam', url: 'https://steamcommunity.com/id/piotrunius', color: '#00adee' },
             { label: 'AniList', icon: 'circle-play', url: 'https://cloud.umami.is/q/UOWpL3Lis', color: '#1663ffff' },
             { label: 'Roblox', icon: 'cube', url: 'https://cloud.umami.is/q/fjiMxwjQJ', color: '#EF3340' }
         ],
@@ -412,12 +412,30 @@ async function refreshSteamStatus() {
 
     const memberSince = document.getElementById('steam-member-since');
     const gameCount = document.getElementById('steam-game-count');
+    const extraInfo = document.querySelector('.steam-extra-info');
 
-    if (s.timecreated && memberSince) {
-        memberSince.innerHTML = `<i class="fas fa-calendar-alt"></i> Since ${new Date(s.timecreated * 1000).getFullYear()}`;
+    if (memberSince) {
+        if (s.timecreated) {
+            memberSince.textContent = `Since ${new Date(s.timecreated * 1000).getFullYear()}`;
+            memberSince.style.display = '';
+        } else {
+            memberSince.textContent = '';
+            memberSince.style.display = 'none';
+        }
     }
-    if (s.game_count !== undefined && gameCount) {
-        gameCount.innerHTML = `<i class="fas fa-gamepad"></i> ${s.game_count} Games`;
+    if (gameCount) {
+        if (s.game_count !== undefined) {
+            gameCount.textContent = `${s.game_count} Games`;
+            gameCount.style.display = '';
+        } else {
+            gameCount.textContent = '';
+            gameCount.style.display = 'none';
+        }
+    }
+    if (extraInfo) {
+        const hasMember = memberSince && memberSince.textContent.trim().length > 0;
+        const hasGames = gameCount && gameCount.textContent.trim().length > 0;
+        extraInfo.style.display = (hasMember || hasGames) ? 'flex' : 'none';
     }
 
     if (!dotContainer) return;
@@ -552,12 +570,20 @@ async function refreshRobloxStatus() {
     const fallback = { status: 'Offline', game: null };
     const data = await fetchApiJson(API_ENDPOINTS.roblox, fallback, 'Roblox API');
 
-    const statusRaw = data.status || data.state || data.presence || 'Offline';
-    const status = typeof statusRaw === 'string' ? statusRaw : String(statusRaw || 'Offline');
+    const statusRaw = data.status ?? data.state ?? data.presence ?? data.presenceType ?? 'Offline';
+    const statusMap = {
+        0: 'Offline',
+        1: 'Online',
+        2: 'In Game',
+        3: 'In Studio'
+    };
+    const status = typeof statusRaw === 'number'
+        ? (statusMap[statusRaw] || 'Offline')
+        : (typeof statusRaw === 'string' ? statusRaw : String(statusRaw || 'Offline'));
     const statusLower = status.toLowerCase();
-    const username = data.username || data.name || 'Piotrunius';
+    const username = typeof (data.username || data.name) === 'string' ? (data.username || data.name).trim() : null;
     const game = data.game || data.gameName || data.place || null;
-    const avatar = data.avatar || data.avatarUrl || data.thumbnail || null;
+    const avatar = data.avatarUrl || data.avatar || data.thumbnail || null;
 
     const statusText = document.getElementById('roblox-status-text');
     const gameInfo = document.getElementById('roblox-game-info');
@@ -566,11 +592,15 @@ async function refreshRobloxStatus() {
     const robloxPfp = document.getElementById('roblox-pfp');
 
     if (statusText) statusText.textContent = status;
-    if (usernameEl) usernameEl.textContent = username;
+    if (usernameEl && username) usernameEl.textContent = username;
 
-    if (avatar && robloxPfp) {
+    if (robloxPfp && typeof avatar === 'string' && avatar.trim()) {
+        const prevSrc = robloxPfp.src;
+        robloxPfp.onerror = () => {
+            robloxPfp.src = prevSrc;
+            robloxPfp.onerror = null;
+        };
         robloxPfp.src = avatar;
-        robloxPfp.onerror = () => { robloxPfp.src = 'assets/pfp.png'; };
     }
 
     if (avatarWrapper) {
