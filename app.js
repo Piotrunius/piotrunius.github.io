@@ -311,9 +311,19 @@ async function refreshGitHubStats() {
     const commitsCount = summary.commits ?? commits.length;
     const starredCount = summary.starredCount ?? starred.length;
 
-    if (projectsEl) projectsEl.textContent = projectsCount || '0';
-    if (starsEl) starsEl.textContent = starredCount || '0';
-    if (commitsEl) commitsEl.textContent = commitsCount || '0';
+    // Reset to 0 and animate
+    if (projectsEl) {
+        projectsEl.textContent = '0';
+        animateCounter('stat-projects', projectsCount || 0, 1500);
+    }
+    if (starsEl) {
+        starsEl.textContent = '0';
+        animateCounter('stat-stars', starredCount || 0, 1500);
+    }
+    if (commitsEl) {
+        commitsEl.textContent = '0';
+        animateCounter('stat-commits', commitsCount || 0, 1500);
+    }
     if (lastUpdateEl) {
         const lastUpdate = stats.lastUpdate || new Date().toISOString();
         lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(lastUpdate)}`;
@@ -380,6 +390,35 @@ async function refreshGitHubStats() {
     } else if (activityCommitsEl) {
         activityCommitsEl.innerHTML = '<div class="activity-item">No recent commits</div>';
     }
+}
+
+// Animate number counting for stats
+function animateCounter(elementId, targetValue, duration = 1500) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+
+    const startValue = 0;
+    const startTime = Date.now();
+
+    const updateValue = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Easing function for smooth animation
+        const easeOutQuad = progress => 1 - (1 - progress) * (1 - progress);
+        const easedProgress = easeOutQuad(progress);
+
+        const currentValue = Math.floor(startValue + (targetValue - startValue) * easedProgress);
+        element.textContent = currentValue;
+
+        if (progress < 1) {
+            requestAnimationFrame(updateValue);
+        } else {
+            element.textContent = targetValue;
+        }
+    };
+
+    requestAnimationFrame(updateValue);
 }
 
 // Helper to hide loading spinner with smooth fade
