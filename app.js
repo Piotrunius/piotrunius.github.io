@@ -382,15 +382,20 @@ async function refreshGitHubStats() {
     }
 }
 
-
+// Helper to hide loading spinner with smooth fade
+function hideLoadingSpinner(panelId) {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    const spinner = panel.querySelector('.status-loading-spinner');
+    if (spinner) {
+        spinner.classList.add('hidden');
+    }
+}
 
 // --- CORE FUNCTION: Render Steam Status ---
 async function refreshSteamStatus() {
     const steamPanel = document.getElementById('steam-status-panel');
     if (!steamPanel) return;
-
-    // Hide panel initially to prevent showing default values
-    steamPanel.style.display = 'none';
 
     const fallback = { steam: { personastate: 0, gameextrainfo: null } };
     const stats = await fetchApiJson(API_ENDPOINTS.steam, fallback, 'Steam API');
@@ -488,8 +493,8 @@ async function refreshSteamStatus() {
         }
     }
 
-    // Show panel after data is loaded
-    steamPanel.style.display = 'flex';
+    // Hide loading spinner
+    hideLoadingSpinner('steam-status-panel');
 }
 
 // --- DISCORD STATUS ---
@@ -500,9 +505,6 @@ async function refreshDiscordStatus() {
     const discordAvatarWrapper = document.querySelector('.discord-avatar-wrapper');
     const discordUsernameEl = document.querySelector('.discord-username');
     const discordPanel = document.getElementById('discord-status-panel');
-
-    // Hide panel initially
-    if (discordPanel) discordPanel.style.display = 'none';
 
     try {
         const response = await fetch(API_ENDPOINTS.discord);
@@ -586,8 +588,6 @@ async function refreshRobloxStatus() {
     const robloxPanel = document.getElementById('roblox-status-panel');
     if (!robloxPanel) return;
 
-    // Hide panel initially
-    robloxPanel.style.display = 'none';
 
     const fallback = { status: 'Offline', game: null };
     const data = await fetchApiJson(API_ENDPOINTS.roblox, fallback, 'Roblox API');

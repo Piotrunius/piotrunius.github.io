@@ -5986,5 +5986,58 @@ body.light-mode .profile-stat-item:hover {
 #steam-status-panel,
 #discord-status-panel,
 #roblox-status-panel {
-    display: none;
+    display: flex;
+}
+
+/* Loading spinner styles */
+.status-loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    color: var(--primary);
+    opacity: 1;
+    transition: opacity 0.4s ease;
+    pointer-events: all;
+}
+
+.status-loading-spinner.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 255, 136, 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Content fade-in animation */
+.steam-user-info,
+.discord-user-info,
+.roblox-user-info {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
