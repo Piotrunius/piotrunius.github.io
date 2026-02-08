@@ -1262,7 +1262,7 @@ async function loadProjects() {
             card.style.animationDelay = `${index * 0.1}s`;
 
             const description = repo.description || 'No description available';
-            const language = repo.language || 'Unknown';
+            const language = repo.lang || repo.language || 'Unknown';
             const author = repo.owner?.login || 'Unknown';
 
             // Determine badge based on repo name
