@@ -1228,14 +1228,6 @@ async function loadProjects() {
     if (!container) return;
 
     try {
-        // Show loading state
-        container.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
-                <i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.5;"></i>
-                <p>Loading projects from GitHub...</p>
-            </div>
-        `;
-
         // Fetch from GitHub Worker API
         const allRepos = await fetchGitHubRepos();
         if (!allRepos) {
