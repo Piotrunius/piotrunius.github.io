@@ -693,7 +693,6 @@ a:where(:not(.social-link, .contact-btn, .music-btn, .spec-item, .activity-link,
     border-radius: 50%;
     border: 2px solid var(--primary);
     opacity: 0.3;
-    animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {
@@ -5731,7 +5730,6 @@ body.konami-hacker-mode {
     height: 8px;
     background: var(--primary);
     border-radius: 50%;
-    animation: statusPulse 1s ease-in-out infinite;
     box-shadow: 0 0 10px var(--primary);
 }
 

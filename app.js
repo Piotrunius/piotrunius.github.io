@@ -10,7 +10,9 @@ const githubUsername = 'Piotrunius';
 const API_ENDPOINTS = {
     github: 'https://github-api.piotrunius.workers.dev/',
     roblox: 'https://roblox-api.piotrunius.workers.dev/',
-    steam: 'https://steam-api.piotrunius.workers.dev/'
+    steam: 'https://steam-api.piotrunius.workers.dev/',
+    discord: 'https://discord-api.piotrunius.workers.dev',
+    spotify: 'https://spotify-api.piotrunius.workers.dev'
 };
 
 const githubCache = {
@@ -492,14 +494,15 @@ async function refreshDiscordStatus() {
     const discordAvatarWrapper = document.querySelector('.discord-avatar-wrapper');
     const discordUsernameEl = document.querySelector('.discord-username');
 
-    // Your Discord User ID
-    const discordUserId = '1166309729371439104';
-
     try {
-        const response = await fetch(`https://api.lanyard.rest/v1/users/${discordUserId}`);
+        const response = await fetch(API_ENDPOINTS.discord);
         if (response.ok) {
             const data = await response.json();
-            const user = data.data;
+            console.log('Discord API response:', data);
+
+            const user = data.user;
+            const presence = data.presence;
+            const activities = data.activities || [];
 
             // Update status
             const statusMap = {
@@ -509,9 +512,9 @@ async function refreshDiscordStatus() {
                 'offline': 'Offline'
             };
 
-            const statusText = statusMap[user.discord_status] || user.discord_status;
-            const statusClass = user.discord_status || 'offline';
-            const username = (user.discord_user && user.discord_user.username) ? user.discord_user.username : 'Piotrunius';
+            const statusText = statusMap[presence.status] || presence.status;
+            const statusClass = presence.status || 'offline';
+            const username = user.username || 'Piotrunius';
 
             if (discordStatus) {
                 discordStatus.textContent = statusText;
@@ -523,16 +526,20 @@ async function refreshDiscordStatus() {
 
             if (discordAvatarWrapper) {
                 discordAvatarWrapper.className = `discord-avatar-wrapper ${statusClass}`;
+                const avatarImg = discordAvatarWrapper.querySelector('img');
+                if (avatarImg && user.avatar) {
+                    avatarImg.src = user.avatar;
+                }
             }
 
             if (discordDot) {
-                discordDot.className = `status-dot`;
+                discordDot.className = `status-dot ${statusClass}`;
             }
 
             // Update activity info
             if (discordActivityInfo) {
-                if (user.activities && user.activities.length > 0) {
-                    const activity = user.activities.find(a => a.type !== 4); // Exclude custom status
+                if (activities && activities.length > 0) {
+                    const activity = activities.find(a => a.type !== 4); // Exclude custom status
                     if (activity) {
                         const activityTypeMap = {
                             0: 'Playing',
@@ -945,20 +952,30 @@ function initVisibilityOptimization() {
     });
 }
 
-// --- SPOTIFY HUB LOGIC (Lanyard API) ---
+// --- SPOTIFY HUB LOGIC ---
 let lastSpotifyData = null;
 let spotifyPredictorInterval = null;
 
 async function updateSpotifyStatus() {
     const container = document.getElementById('spotify-content');
-    const discordId = '1166309729371439104';
 
     try {
-        const response = await fetch(`https://api.lanyard.rest/v1/users/${discordId}`);
+        const response = await fetch(API_ENDPOINTS.spotify);
         const data = await response.json();
+        console.log('Spotify API response:', data);
 
-        if (data.success && data.data.spotify) {
-            const spotify = data.data.spotify;
+        if (data && data.isPlaying) {
+            const spotify = {
+                song: data.title,
+                artist: data.artist,
+                album: data.album,
+                album_art_url: data.albumArt,
+                track_id: data.songUrl.split('/').pop(),
+                timestamps: {
+                    start: Date.now() - data.progressMs,
+                    end: Date.now() - data.progressMs + data.durationMs
+                }
+            };
 
             // Render initial or updated state
             renderSpotifyActive(container, spotify);
