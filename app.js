@@ -7,6 +7,47 @@ let analyser = null;
 let audioPlaying = false;
 let wasAudioPlaying = false; // Track audio state before tab switch
 const githubUsername = 'Piotrunius';
+const API_ENDPOINTS = {
+    github: 'https://github-api.piotrunius.workers.dev/',
+    roblox: 'https://roblox-api.piotrunius.workers.dev/',
+    steam: 'https://steam-api.piotrunius.workers.dev/'
+};
+
+const githubCache = {
+    data: null,
+    ts: 0
+};
+
+async function fetchApiJson(url, fallback, label) {
+    try {
+        const resp = await fetch(url, { cache: 'no-store' });
+        if (!resp.ok) {
+            throw new Error(`${label} request failed: ${resp.status}`);
+        }
+        return await resp.json();
+    } catch (e) {
+        console.warn(`${label} error:`, e.message);
+        return fallback;
+    }
+}
+
+async function getGitHubData(force = false) {
+    const now = Date.now();
+    if (!force && githubCache.data && (now - githubCache.ts) < 60000) {
+        return githubCache.data;
+    }
+    const fallback = {
+        summary: { projects: 0, starredCount: 0, commits: 0 },
+        recentCommits: [],
+        starred: [],
+        projects: [],
+        lastUpdate: new Date().toISOString()
+    };
+    const data = await fetchApiJson(API_ENDPOINTS.github, fallback, 'GitHub API');
+    githubCache.data = data;
+    githubCache.ts = now;
+    return data;
+}
 
 // Performance detection and adaptive configuration
 const deviceCapabilities = {
@@ -260,51 +301,26 @@ async function refreshGitHubStats() {
     const activityStarsEl = document.getElementById('starred-list');
     const activityCommitsEl = document.getElementById('commits-list');
 
-    const fallback = {
-        "summary": { "projects": 0, "starredCount": 0, "commits": 0 },
-        "recentCommits": [],
-        "starred": [],
-        "lastUpdate": new Date().toISOString()
-    };
-
-    let stats = fallback;
-    try {
-        const resp = await fetch(`data/github-stats.json?t=${Date.now()}`);
-        if (resp.ok) {
-            stats = await resp.json();
-        } else {
-            console.warn('GitHub stats request failed:', resp.status);
-        }
-    } catch (e) {
-        console.warn('Error loading GitHub stats:', e.message);
-    }
-
+    const stats = await getGitHubData();
     const summary = stats.summary || {};
-    if (projectsEl) projectsEl.textContent = summary.projects || '0';
-    if (starsEl) starsEl.textContent = summary.starredCount || '0';
+    const starred = Array.isArray(stats.starred) ? stats.starred : [];
+    const commits = Array.isArray(stats.recentCommits) ? stats.recentCommits : [];
+    const projectsCount = summary.projects ?? (Array.isArray(stats.projects) ? stats.projects.length : 0);
+    const commitsCount = summary.commits ?? commits.length;
+    const starredCount = summary.starredCount ?? starred.length;
 
-    // Fetch all commits from GitHub API
-    let allCommits = [];
-    try {
-        const userName = 'Piotrunius';
-        const commitsResp = await fetch(`https://api.github.com/search/commits?q=author:${userName}&sort=committer-date&order=desc&per_page=100`);
-        if (commitsResp.ok) {
-            const commitsData = await commitsResp.json();
-            allCommits = commitsData.items || [];
-        }
-    } catch (e) {
-        console.warn('Error fetching commits from GitHub API:', e.message);
-    }
-
-    if (commitsEl) commitsEl.textContent = allCommits.length || '0';
+    if (projectsEl) projectsEl.textContent = projectsCount || '0';
+    if (starsEl) starsEl.textContent = starredCount || '0';
+    if (commitsEl) commitsEl.textContent = commitsCount || '0';
     if (lastUpdateEl) {
-        lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(new Date().toISOString())}`;
+        const lastUpdate = stats.lastUpdate || new Date().toISOString();
+        lastUpdateEl.textContent = `Last updated: ${formatPLDateTime(lastUpdate)}`;
     }
 
     // Use DocumentFragment for better performance
-    if (activityStarsEl && Array.isArray(stats.starred)) {
+    if (activityStarsEl && starred.length > 0) {
         const fragment = document.createDocumentFragment();
-        stats.starred.slice(0, 20).forEach((star, index) => {
+        starred.slice(0, 20).forEach((star, index) => {
             const item = document.createElement('div');
             item.className = 'activity-item';
             item.style.animationDelay = `${index * 0.05}s`;
@@ -324,24 +340,26 @@ async function refreshGitHubStats() {
         });
         activityStarsEl.innerHTML = '';
         activityStarsEl.appendChild(fragment);
+    } else if (activityStarsEl) {
+        activityStarsEl.innerHTML = '<div class="activity-item">No recent stars</div>';
     }
 
-    // Display all commits from GitHub API
-    if (activityCommitsEl && allCommits.length > 0) {
+    // Display recent commits from GitHub Worker API
+    if (activityCommitsEl && commits.length > 0) {
         const fragment = document.createDocumentFragment();
-        allCommits
+        commits
             .slice(0, 50) // Show up to 50 commits
             .forEach((commit, index) => {
                 const item = document.createElement('div');
                 item.className = 'activity-item';
                 item.style.animationDelay = `${index * 0.05}s`;
 
-                const message = commit.commit?.message?.split('\n')[0] || 'No message';
-                const author = commit.commit?.author?.name || 'Unknown';
-                const date = commit.commit?.author?.date || new Date().toISOString();
-                const repoName = commit.repository?.name || 'Unknown';
-                const repoUrl = commit.repository?.html_url || '#';
-                const commitUrl = commit.html_url || '#';
+                const message = commit.message?.split('\n')[0] || commit.commit?.message?.split('\n')[0] || 'No message';
+                const author = commit.author || commit.commit?.author?.name || 'Unknown';
+                const date = commit.date || commit.commit?.author?.date || new Date().toISOString();
+                const repoName = commit.repo || commit.repository?.name || commit.repo?.name || 'Unknown';
+                const repoUrl = commit.repoUrl || commit.repository?.html_url || commit.repo?.html_url || '#';
+                const commitUrl = commit.url || commit.html_url || '#';
 
                 item.innerHTML = `
                     <div class="activity-header">
@@ -357,6 +375,8 @@ async function refreshGitHubStats() {
             });
         activityCommitsEl.innerHTML = '';
         activityCommitsEl.appendChild(fragment);
+    } else if (activityCommitsEl) {
+        activityCommitsEl.innerHTML = '<div class="activity-item">No recent commits</div>';
     }
 }
 
@@ -367,19 +387,9 @@ async function refreshSteamStatus() {
     const steamPanel = document.getElementById('steam-status-panel');
     if (!steamPanel) return;
 
-    let stats = { steam: { personastate: 0, gameextrainfo: null } };
-    try {
-        const resp = await fetch(`data/steam-status.json?t=${Date.now()}`);
-        if (resp.ok) {
-            stats = await resp.json();
-        } else {
-            console.warn('Steam status request failed:', resp.status);
-        }
-    } catch (e) {
-        console.warn('Error loading Steam status:', e.message);
-    }
-
-    const s = stats.steam || {};
+    const fallback = { steam: { personastate: 0, gameextrainfo: null } };
+    const stats = await fetchApiJson(API_ENDPOINTS.steam, fallback, 'Steam API');
+    const s = stats.steam || stats || {};
     const statusText = document.getElementById('steam-status-text');
     const gameInfo = document.getElementById('steam-game-info');
     const dotContainer = document.getElementById('steam-dot')?.parentElement;
@@ -413,11 +423,16 @@ async function refreshSteamStatus() {
     if (!dotContainer) return;
 
     dotContainer.className = 'steam-avatar-wrapper';
-    if (s.gameextrainfo) {
+    const gameName = s.gameextrainfo || s.game || s.gameName || null;
+    const personaState = typeof s.personastate === 'number'
+        ? s.personastate
+        : (typeof s.status === 'number' ? s.status : (s.online ? 1 : 0));
+
+    if (gameName) {
         dotContainer.classList.add('in-game');
         if (statusText) statusText.textContent = 'In-game';
         if (gameInfo) {
-            gameInfo.textContent = `Playing: ${s.gameextrainfo}`;
+            gameInfo.textContent = `Playing: ${gameName}`;
             gameInfo.style.color = '#43b581';
             gameInfo.style.display = 'block';
         }
@@ -425,7 +440,7 @@ async function refreshSteamStatus() {
         if (gameInfo) gameInfo.style.display = 'none';
         // Map personastate values properly:
         // 0 = Offline, 1 = Online, 2 = Busy, 3 = Away, 4 = Snooze, 5 = Looking to trade, 6 = Looking to play
-        switch (s.personastate) {
+        switch (personaState) {
             case 1:
                 dotContainer.classList.add('online');
                 if (statusText) statusText.textContent = 'Online';
@@ -526,6 +541,63 @@ async function refreshDiscordStatus() {
         if (discordStatus) discordStatus.textContent = 'Offline';
         if (discordAvatarWrapper) discordAvatarWrapper.className = 'discord-avatar-wrapper offline';
         if (discordDot) discordDot.className = 'status-dot';
+    }
+}
+
+// --- ROBLOX STATUS ---
+async function refreshRobloxStatus() {
+    const robloxPanel = document.getElementById('roblox-status-panel');
+    if (!robloxPanel) return;
+
+    const fallback = { status: 'Offline', game: null };
+    const data = await fetchApiJson(API_ENDPOINTS.roblox, fallback, 'Roblox API');
+
+    const statusRaw = data.status || data.state || data.presence || 'Offline';
+    const status = typeof statusRaw === 'string' ? statusRaw : String(statusRaw || 'Offline');
+    const statusLower = status.toLowerCase();
+    const username = data.username || data.name || 'Piotrunius';
+    const game = data.game || data.gameName || data.place || null;
+    const avatar = data.avatar || data.avatarUrl || data.thumbnail || null;
+
+    const statusText = document.getElementById('roblox-status-text');
+    const gameInfo = document.getElementById('roblox-game-info');
+    const avatarWrapper = document.querySelector('.roblox-avatar-wrapper');
+    const usernameEl = document.querySelector('.roblox-username');
+    const robloxPfp = document.getElementById('roblox-pfp');
+
+    if (statusText) statusText.textContent = status;
+    if (usernameEl) usernameEl.textContent = username;
+
+    if (avatar && robloxPfp) {
+        robloxPfp.src = avatar;
+        robloxPfp.onerror = () => { robloxPfp.src = 'assets/pfp.png'; };
+    }
+
+    if (avatarWrapper) {
+        avatarWrapper.className = 'roblox-avatar-wrapper';
+        if (statusLower.includes('in game')) {
+            avatarWrapper.classList.add('in-game');
+        } else if (statusLower.includes('in studio')) {
+            avatarWrapper.classList.add('busy');
+        } else if (statusLower.includes('online')) {
+            avatarWrapper.classList.add('online');
+        } else if (statusLower.includes('away')) {
+            avatarWrapper.classList.add('away');
+        } else {
+            avatarWrapper.classList.add('offline');
+        }
+    }
+
+    if (gameInfo) {
+        if (statusLower.includes('in game') && game) {
+            gameInfo.textContent = `Playing: ${game}`;
+            gameInfo.style.display = 'block';
+        } else if (statusLower.includes('in studio')) {
+            gameInfo.textContent = 'Creating games in Studio';
+            gameInfo.style.display = 'block';
+        } else {
+            gameInfo.style.display = 'none';
+        }
     }
 }
 
@@ -1002,6 +1074,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     refreshGitHubStats();
     refreshSteamStatus();
     refreshDiscordStatus();
+    refreshRobloxStatus();
     updateSpotifyStatus();
     initControls();
 
@@ -1025,6 +1098,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setInterval(refreshGitHubStats, statsInterval);
     setInterval(refreshSteamStatus, steamInterval);
     setInterval(refreshDiscordStatus, 15000); // Update Discord status every 15 seconds
+    setInterval(refreshRobloxStatus, steamInterval);
     setInterval(updateSpotifyStatus, spotifyInterval);
 
     // Load projects
@@ -1034,30 +1108,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 // --- PROJECTS SECTION ---
 async function fetchGitHubRepos() {
     try {
-        const response = await fetch('https://api.github.com/users/Piotrunius/repos?per_page=100&sort=updated');
+        const data = await getGitHubData();
+        const repos = data.projects || data.repos || data.repositories || [];
+        if (!Array.isArray(repos)) return null;
 
-        if (!response.ok) {
-            throw new Error(`GitHub API error: ${response.status}`);
-        }
-
-        const repos = await response.json();
-
-        // Filter to only public repos and sort by last update
-        const publicRepos = repos
+        return repos
             .filter(repo => !repo.private && !repo.fork)
-            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-
-        return publicRepos.map(repo => ({
-            name: repo.name,
-            description: repo.description || 'No description available',
-            html_url: repo.html_url,
-            language: repo.language || 'Unknown',
-            private: repo.private,
-            stars: repo.stargazers_count,
-            forks: repo.forks_count,
-            updated_at: repo.updated_at,
-            topics: repo.topics || []
-        }));
+            .sort((a, b) => new Date(b.updated_at || 0) - new Date(a.updated_at || 0));
     } catch (error) {
         console.error('Error fetching GitHub repos:', error);
         return null;
@@ -1077,19 +1134,10 @@ async function loadProjects() {
             </div>
         `;
 
-        // Try to fetch from GitHub API first
-        let allRepos = await fetchGitHubRepos();
-
-        // Fallback to static JSON if GitHub API fails
+        // Fetch from GitHub Worker API
+        const allRepos = await fetchGitHubRepos();
         if (!allRepos) {
-            console.warn('GitHub API failed, falling back to static projects.json');
-            const response = await fetch(`data/projects.json?t=${Date.now()}`);
-            if (response.ok) {
-                const data = await response.json();
-                allRepos = data.projects || [];
-            } else {
-                throw new Error('Both GitHub API and static fallback failed');
-            }
+            throw new Error('GitHub Worker API failed');
         }
 
         if (allRepos.length === 0) {
@@ -1320,10 +1368,7 @@ async function loadGitHubTimeline() {
     if (!timeline) return;
 
     try {
-        const resp = await fetch(`data/github-stats.json?t=${Date.now()}`);
-        if (!resp.ok) throw new Error('Failed to load stats');
-
-        const stats = await resp.json();
+        const stats = await getGitHubData();
         const activities = [];
 
         // Add commits
@@ -1449,7 +1494,7 @@ const Terminal = {
             children: {
                 'about.txt': { type: 'file', content: 'Hi! I\'m Piotrunius - a developer and tech enthusiast from Poland.\nI love tinkering with Linux, writing scripts, and exploring new technologies.\nMy daily driver is Bazzite (Fedora Atomic) with KDE Plasma.' },
                 'contact.txt': { type: 'file', content: 'Email: piotrunius.v2@gmail.com\nDiscord: Piotrunius\nGitHub: github.com/Piotrunius' },
-                'skills.txt': { type: 'file', content: 'Languages: Python, JavaScript, HTML/CSS, Go\nFrameworks: React, Node.js\nTools: Docker, Git, Linux\nLearning: Always something new!' },
+                'skills.txt': { type: 'file', content: 'Languages: Python, JavaScript, HTML/CSS, TypeScript\nFrameworks: React, Node.js\nTools: Docker, Git, Linux\nLearning: Always something new!' },
                 'projects': {
                     type: 'dir',
                     children: {
@@ -1731,7 +1776,7 @@ const Terminal = {
                     { name: 'JavaScript', level: 75 },
                     { name: 'HTML/CSS', level: 85 },
                     { name: 'React', level: 60 },
-                    { name: 'Go', level: 40 },
+                    { name: 'TypeScript', level: 40 },
                     { name: 'Docker', level: 55 },
                     { name: 'Linux', level: 90 },
                     { name: 'Git', level: 70 }
@@ -1889,7 +1934,7 @@ const Terminal = {
                     { text: `  Commits:   ${commits}` },
                     { text: `  Starred:   ${stars}` },
                     { text: '' },
-                    { text: '  Data from GitHub API', class: 'system' }
+                    { text: '  Data from GitHub Worker API', class: 'system' }
                 ];
             }
         },
