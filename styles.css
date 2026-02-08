@@ -5981,3 +5981,10 @@ body.konami-max-glitch {
 body.light-mode .profile-stat-item:hover {
     background: rgba(0, 168, 89, 0.1);
 }
+
+/* Hide status panels initially to prevent showing default values while loading */
+#steam-status-panel,
+#discord-status-panel,
+#roblox-status-panel {
+    display: none;
+}
