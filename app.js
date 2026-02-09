@@ -373,7 +373,8 @@ async function refreshGitHubStats() {
     const summary = stats.summary || {};
     const starred = Array.isArray(stats.starred) ? stats.starred : [];
     const commits = Array.isArray(stats.recentCommits) ? stats.recentCommits : [];
-    const projectsCount = summary.projects ?? (Array.isArray(stats.projects) ? stats.projects.length : 0);
+    const totalProjects = Array.isArray(stats.projects) ? stats.projects.length : undefined;
+    const projectsCount = totalProjects ?? summary.projects ?? 0;
     const commitsCount = summary.commits ?? commits.length;
     const gistsCount = summary.gists ?? summary.gistsCount ?? summary.publicGists ?? stats.publicGists ?? 0;
 
@@ -1280,8 +1281,8 @@ async function fetchGitHubRepos() {
         if (!Array.isArray(repos)) return null;
 
         return repos
-            .filter(repo => !repo.private && !repo.fork)
-            .sort((a, b) => new Date(b.updated_at || 0) - new Date(a.updated_at || 0));
+            .filter(repo => !repo.isPrivate && !repo.private && !repo.fork)
+            .sort((a, b) => new Date(b.updated_at || b.pushed_at || 0) - new Date(a.updated_at || a.pushed_at || 0));
     } catch (error) {
         console.error('Error fetching GitHub repos:', error);
         return null;
