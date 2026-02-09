@@ -1664,7 +1664,7 @@ const Terminal = {
                     type: 'dir',
                     children: {
                         '.hidden': { type: 'file', content: 'You found the secret!\nType "konami" for a surprise!' },
-                        'easter_eggs.txt': { type: 'file', content: '=== EASTER EGGS ===\n\nTry these hidden commands:\n\n[FUN]\n  - thanos      (snap half the page away)\n  - flip        (flip the entire page)\n  - party       (party mode!)\n  - nyan        (nyan cat)\n  - rickroll    (you know what this does)\n\n[DEV JOKES]\n  - vim         (good luck exiting)\n  - emacs       (the other editor)\n  - bsod        (Windows experience)\n  - make me a sandwich\n\n[DANGEROUS]\n  - rm -rf *    (WARNING: destroys everything)\n\n[CLASSICS]\n  - matrix      (enter the matrix)\n  - hack        (hack the mainframe)\n  - starwars    (a long time ago...)\n  - cowsay      (moo!)\n  - fortune     (wisdom awaits)\n\n[OTHER]\n  - coffee      (get some coffee)\n  - yes         (infinite yes)\n  - konami      (the code)' }
+                        'easter_eggs.txt': { type: 'file', content: '=== EASTER EGGS ===\n\nTry these hidden commands:\n\n[FUN]\n  - thanos      (snap half the page away)\n  - flip        (flip the entire page)\n  - party       (party mode!)\n  - nyan        (nyan cat)\n  - rickroll    (you know what this does)\n\n[DEV JOKES]\n  - emacs       (the other editor)\n  - bsod        (Windows experience)\n  - make me a sandwich\n\n[DANGEROUS]\n  - rm -rf *    (WARNING: destroys everything)\n\n[CLASSICS]\n  - matrix      (enter the matrix)\n  - starwars    (a long time ago...)\n  - cowsay      (moo!)\n\n[OTHER]\n  - coffee      (get some coffee)\n  - yes         (infinite yes)\n  - konami      (the code)' }
                     }
                 }
             }
@@ -1694,11 +1694,11 @@ const Terminal = {
                 const categories = {
                     'Navigation': ['help', 'clear', 'history', 'pwd', 'cd', 'ls', 'cat', 'tree'],
                     'Information': ['about', 'skills', 'projects', 'contact', 'social', 'stats', 'weather', 'neofetch'],
-                    'Fun & Games': ['matrix', 'hack', 'fortune', 'joke', 'quote', 'cowsay', 'sl', 'cmatrix', 'rps', 'guess', '8ball', 'dice', 'tictactoe'],
+                    'Fun & Games': ['matrix', 'cowsay', 'sl', 'rps', 'guess', '8ball', 'dice', 'tictactoe'],
                     'Utilities': ['calc', 'todo', 'timer', 'stopwatch', 'color', 'echo', 'date', 'whoami', 'uname', 'uptime', 'uuid', 'password', 'hash', 'base64'],
                     'Text Tools': ['ascii', 'figlet', 'banner', 'binary', 'hex', 'reverse'],
-                    'Network': ['ping', 'curl', 'speedtest', 'qr'],
-                    'Customization': ['theme', 'alias', 'export', 'motd', 'prompt'],
+                    'Network': ['ping', 'curl', 'qr'],
+                    'Customization': ['theme', 'alias', 'export', 'motd'],
                     'System': ['reboot', 'exit', 'sudo', 'rm', 'man', 'hostname']
                 };
 
@@ -2260,121 +2260,6 @@ const Terminal = {
             }
         },
 
-        hack: {
-            description: 'Simulate a "hacking" sequence',
-            usage: 'hack [target]',
-            icon: 'fa-skull',
-            fn: async function (args) {
-                const target = args.join(' ') || 'mainframe';
-                const output = document.getElementById('terminal-output');
-
-                const hackLines = [
-                    `Initializing hack sequence on ${target}...`,
-                    'Connecting to proxy servers...',
-                    'Bypassing firewall [####............] 40%',
-                    'Bypassing firewall [########........] 60%',
-                    'Bypassing firewall [############....] 80%',
-                    'Bypassing firewall [################] 100%',
-                    'Firewall bypassed!',
-                    'Injecting payload...',
-                    'Accessing secure database...',
-                    'Decrypting files [................]',
-                    'Decrypting files [########........]',
-                    'Decrypting files [############....]',
-                    'Decrypting files [################]',
-                    'Files decrypted!',
-                    'Downloading data...',
-                    '',
-                    '[!] JUST KIDDING! [!]',
-                    'This is just a visual effect.',
-                    'No actual hacking occurred.'
-                ];
-
-                for (const line of hackLines) {
-                    Terminal.print([{ text: line, class: line.includes('KIDDING') ? 'warning' : 'success' }]);
-                    await new Promise(r => setTimeout(r, 200 + Math.random() * 300));
-                }
-
-                return [];
-            }
-        },
-
-        fortune: {
-            description: 'Get a random fortune',
-            usage: 'fortune',
-            icon: 'fa-crystal-ball',
-            fn: function () {
-                const fortunes = [
-                    'You will write bug-free code today! (Just kidding)',
-                    'A Stack Overflow answer will save your day.',
-                    'Your next git commit will be legendary.',
-                    'Today is a good day to refactor that legacy code.',
-                    'A wild bug appears! It\'s super effective!',
-                    'You will discover a new favorite npm package.',
-                    'Your code will compile on the first try. Probably.',
-                    'A mysterious segfault awaits you.',
-                    'You will finally understand that regex.',
-                    'Documentation? Where we\'re going, we don\'t need documentation.',
-                    'Keep calm and git push --force',
-                    'May your builds be fast and your bugs be few.'
-                ];
-
-                return [
-                    { text: '[*] ' + fortunes[Math.floor(Math.random() * fortunes.length)], class: 'highlight' }
-                ];
-            }
-        },
-
-        joke: {
-            description: 'Tell a programming joke',
-            usage: 'joke',
-            icon: 'fa-laugh',
-            fn: function () {
-                const jokes = [
-                    { q: 'Why do programmers prefer dark mode?', a: 'Because light attracts bugs!' },
-                    { q: 'Why do Java developers wear glasses?', a: 'Because they can\'t C#!' },
-                    { q: 'What\'s a programmer\'s favorite hangout place?', a: 'Foo Bar!' },
-                    { q: 'Why was the JavaScript developer sad?', a: 'Because he didn\'t Node how to Express himself!' },
-                    { q: 'How many programmers does it take to change a light bulb?', a: 'None, that\'s a hardware problem!' },
-                    { q: 'Why do programmers hate nature?', a: 'It has too many bugs!' },
-                    { q: 'What\'s a computer\'s least favorite food?', a: 'Spam!' },
-                    { q: '["hip","hip"]', a: '(hip hip array!)' }
-                ];
-
-                const joke = jokes[Math.floor(Math.random() * jokes.length)];
-                return [
-                    { text: joke.q, class: 'info' },
-                    { text: '' },
-                    { text: joke.a, class: 'success' }
-                ];
-            }
-        },
-
-        quote: {
-            description: 'Get an inspirational quote',
-            usage: 'quote',
-            icon: 'fa-quote-left',
-            fn: function () {
-                const quotes = [
-                    { text: 'Code is like humor. When you have to explain it, it\'s bad.', author: 'Cory House' },
-                    { text: 'First, solve the problem. Then, write the code.', author: 'John Johnson' },
-                    { text: 'Experience is the name everyone gives to their mistakes.', author: 'Oscar Wilde' },
-                    { text: 'The best error message is the one that never shows up.', author: 'Thomas Fuchs' },
-                    { text: 'Simplicity is the soul of efficiency.', author: 'Austin Freeman' },
-                    { text: 'Make it work, make it right, make it fast.', author: 'Kent Beck' },
-                    { text: 'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.', author: 'Martin Fowler' },
-                    { text: 'Programming isn\'t about what you know; it\'s about what you can figure out.', author: 'Chris Pine' }
-                ];
-
-                const quote = quotes[Math.floor(Math.random() * quotes.length)];
-                return [
-                    { text: `"${quote.text}"`, class: 'highlight' },
-                    { text: '' },
-                    { text: `  — ${quote.author}`, class: 'system' }
-                ];
-            }
-        },
-
         cowsay: {
             description: 'Make a cow say something',
             usage: 'cowsay <message>',
@@ -2415,15 +2300,6 @@ const Terminal = {
                 ];
 
                 return frames.map(line => ({ text: line, class: 'highlight' }));
-            }
-        },
-
-        cmatrix: {
-            description: 'Alias for matrix command',
-            usage: 'cmatrix',
-            icon: 'fa-code',
-            fn: function (args) {
-                return Terminal.commands.matrix.fn(args);
             }
         },
 
@@ -2867,23 +2743,6 @@ const Terminal = {
             }
         },
 
-        prompt: {
-            description: 'Customize prompt',
-            usage: 'prompt [user] [host]',
-            icon: 'fa-terminal',
-            fn: function (args) {
-                if (args[0]) {
-                    const userEl = document.querySelector('.prompt-user');
-                    if (userEl) userEl.textContent = args[0];
-                }
-                if (args[1]) {
-                    const hostEl = document.querySelector('.prompt-host');
-                    if (hostEl) hostEl.textContent = args[1];
-                }
-                return [{ text: 'Prompt updated!', class: 'success' }];
-            }
-        },
-
         reboot: {
             description: 'Reboot the terminal',
             usage: 'reboot',
@@ -2926,10 +2785,6 @@ const Terminal = {
                             { text: '' },
                             { text: '  sudo poweroff     - Initiate system shutdown', class: 'info' },
                             { text: '  sudo reboot       - Reboot the matrix', class: 'info' },
-                            { text: '  sudo hackfbi      - Hack into FBI database', class: 'info' },
-                            { text: '  sudo hackpentagon - Access Pentagon mainframe', class: 'info' },
-                            { text: '  sudo hackcia      - Infiltrate CIA servers', class: 'info' },
-                            { text: '  sudo hacknasa     - Breach NASA systems', class: 'info' },
                             { text: '  sudo nuke         - Launch nuclear codes', class: 'info' },
                             { text: '  sudo selfdestruct - Initiate self-destruct', class: 'info' },
                             { text: '  sudo matrix       - Enter the Matrix', class: 'info' },
@@ -2968,46 +2823,6 @@ const Terminal = {
                             { text: '[SYSTEM] Rebooting matrix...', class: 'warning' },
                             { text: '[SYSTEM] Reconnecting in 3...2...1...', class: 'system' }
                         ];
-                    }
-
-                    if (cmd.includes('hackfbi') || cmd.includes('hack fbi')) {
-                        return Terminal.executeHackSequence('FBI', [
-                            'Accessing FBI Criminal Database...',
-                            'Bypassing multi-factor authentication...',
-                            'Injecting SQL payload...',
-                            'Downloading classified files...',
-                            'Erasing access logs...'
-                        ]);
-                    }
-
-                    if (cmd.includes('hackpentagon') || cmd.includes('hack pentagon')) {
-                        return Terminal.executeHackSequence('PENTAGON', [
-                            'Locating Pentagon secure servers...',
-                            'Exploiting zero-day vulnerability...',
-                            'Escalating privileges...',
-                            'Accessing TOP SECRET documents...',
-                            'Mission plans downloaded!'
-                        ]);
-                    }
-
-                    if (cmd.includes('hackcia') || cmd.includes('hack cia')) {
-                        return Terminal.executeHackSequence('CIA', [
-                            'Connecting to CIA Langley servers...',
-                            'Decrypting secure channels...',
-                            'Accessing agent database...',
-                            'Downloading operation files...',
-                            'Identity: REDACTED'
-                        ]);
-                    }
-
-                    if (cmd.includes('hacknasa') || cmd.includes('hack nasa')) {
-                        return Terminal.executeHackSequence('NASA', [
-                            'Connecting to NASA JPL...',
-                            'Accessing satellite controls...',
-                            'Downloading Mars rover data...',
-                            'Accessing Area 51 files...',
-                            '[CLASSIFIED] Alien contact confirmed!'
-                        ]);
                     }
 
                     if (cmd === 'nuke') {
@@ -3453,33 +3268,6 @@ const Terminal = {
             }
         },
 
-        // Easter egg: vim (can't exit)
-        vim: {
-            description: 'Open vim editor',
-            usage: 'vim [file]',
-            icon: 'fa-code',
-            hidden: true,
-            fn: async function () {
-                Terminal.print([{ text: '~', class: 'system' }]);
-                Terminal.print([{ text: '~', class: 'system' }]);
-                Terminal.print([{ text: '~', class: 'system' }]);
-                Terminal.print([{ text: '~  VIM - Vi IMproved', class: 'highlight' }]);
-                Terminal.print([{ text: '~', class: 'system' }]);
-                Terminal.print([{ text: '~  How do I exit this thing?!', class: 'warning' }]);
-                Terminal.print([{ text: '~', class: 'system' }]);
-                Terminal.print([{ text: '~  Try: :q! (just kidding, you\'re stuck forever)', class: 'error' }]);
-                Terminal.print([{ text: '~', class: 'system' }]);
-
-                await new Promise(r => setTimeout(r, 2000));
-
-                return [
-                    { text: '', class: 'system' },
-                    { text: 'E492: Not an editor command: escape', class: 'error' },
-                    { text: '(Hint: This is a fake vim. You\'re free!)', class: 'info' }
-                ];
-            }
-        },
-
         // Easter egg: emacs
         emacs: {
             description: 'Open emacs',
@@ -3493,7 +3281,7 @@ const Terminal = {
                     { text: 'Eight Megs And Constantly Swapping', class: 'warning' },
                     { text: 'Eventually Mangles All Computer Storage', class: 'warning' },
                     { text: '', class: 'system' },
-                    { text: 'Just use vim... wait, no. Use VSCode.', class: 'info' }
+                    { text: 'Just use VSCode.', class: 'info' }
                 ];
             }
         },
@@ -3709,41 +3497,6 @@ const Terminal = {
             }
         },
 
-        // Easter egg: Fake hacking
-        hack: {
-            description: 'Hack the mainframe',
-            usage: 'hack [target]',
-            icon: 'fa-user-secret',
-            hidden: true,
-            fn: async function (args) {
-                const target = args[0] || 'mainframe';
-                const messages = [
-                    `Initializing hack on ${target}...`,
-                    'Bypassing firewall...',
-                    'Injecting SQL...',
-                    'Decrypting passwords...',
-                    'Accessing root...',
-                    'Downloading secret files...',
-                    'Covering tracks...',
-                    'Installing backdoor...',
-                ];
-
-                for (const msg of messages) {
-                    Terminal.print([{ text: `[*] ${msg}`, class: 'warning' }]);
-                    await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
-                    Terminal.print([{ text: `[✓] Done`, class: 'success' }]);
-                }
-
-                return [
-                    { text: '', class: 'system' },
-                    { text: '[+] HACK COMPLETE! [+]', class: 'highlight' },
-                    { text: '', class: 'system' },
-                    { text: 'Just kidding. This is all fake.', class: 'info' },
-                    { text: 'Please don\'t actually hack things.', class: 'warning' }
-                ];
-            }
-        },
-
         // Easter egg: Exit
         exit: {
             description: 'Exit terminal',
@@ -3911,50 +3664,6 @@ const Terminal = {
                     { text: '  +-----------------------------------------------+' },
                     { text: '' },
                     { text: '  Visit the URL above to get your QR code image.', class: 'system' }
-                ];
-            }
-        },
-
-        speedtest: {
-            description: 'Simulate internet speed test',
-            usage: 'speedtest',
-            icon: 'fa-tachometer-alt',
-            fn: async function () {
-                Terminal.print([{ text: 'Running speed test...', class: 'info' }]);
-
-                const stages = [
-                    { text: 'Testing download speed... [##........] 20%', delay: 400 },
-                    { text: 'Testing download speed... [####......] 40%', delay: 400 },
-                    { text: 'Testing download speed... [######....] 60%', delay: 400 },
-                    { text: 'Testing download speed... [########..] 80%', delay: 400 },
-                    { text: 'Testing download speed... [##########] 100%', delay: 200 },
-                    { text: 'Testing upload speed... [##........] 20%', delay: 400 },
-                    { text: 'Testing upload speed... [####......] 40%', delay: 400 },
-                    { text: 'Testing upload speed... [######....] 60%', delay: 400 },
-                    { text: 'Testing upload speed... [########..] 80%', delay: 400 },
-                    { text: 'Testing upload speed... [##########] 100%', delay: 200 },
-                ];
-
-                for (const stage of stages) {
-                    Terminal.print([{ text: stage.text, class: 'system' }]);
-                    await new Promise(r => setTimeout(r, stage.delay));
-                }
-
-                const download = (Math.random() * 500 + 100).toFixed(2);
-                const upload = (Math.random() * 200 + 50).toFixed(2);
-                const ping = (Math.random() * 30 + 5).toFixed(0);
-
-                return [
-                    { text: '' },
-                    { text: '+-------------------------------------------+', class: 'highlight' },
-                    { text: '|           SPEED TEST RESULTS              |', class: 'highlight' },
-                    { text: '+-------------------------------------------+', class: 'highlight' },
-                    { text: '' },
-                    { text: `  Download:  ${download} Mbps`, class: 'success' },
-                    { text: `  Upload:    ${upload} Mbps`, class: 'success' },
-                    { text: `  Ping:      ${ping} ms`, class: 'info' },
-                    { text: '' },
-                    { text: '  [*] Simulated results', class: 'system' }
                 ];
             }
         },
@@ -4261,29 +3970,6 @@ const Terminal = {
                 return displayBoard();
             }
         },
-
-        snake: {
-            description: 'Play Snake game info',
-            usage: 'snake',
-            icon: 'fa-worm',
-            fn: function () {
-                return [
-                    { text: '+-------------------------------------------+', class: 'highlight' },
-                    { text: '|              SNAKE GAME                   |', class: 'highlight' },
-                    { text: '+-------------------------------------------+', class: 'highlight' },
-                    { text: '' },
-                    { text: '  Unfortunately, Snake requires a canvas.', class: 'system' },
-                    { text: '  But try these terminal games instead:', class: 'info' },
-                    { text: '' },
-                    { text: '  - guess        Number guessing game' },
-                    { text: '  - rps          Rock Paper Scissors' },
-                    { text: '  - tictactoe    Tic Tac Toe' },
-                    { text: '  - 8ball        Magic 8 Ball' },
-                    { text: '  - dice         Roll dice' },
-                    { text: '' }
-                ];
-            }
-        }
     },
 
     // Helper methods
@@ -4531,7 +4217,7 @@ const Terminal = {
             { text: '    - Type "skills" to view my tech stack' },
             { text: '' },
             { text: '  Tips: Use Tab for autocomplete, UP/DOWN for history', class: 'system' },
-            { text: '        Try "matrix", "hack", or "neofetch" for fun!', class: 'system' },
+            { text: '        Try "matrix" or "neofetch" for fun!', class: 'system' },
             { text: '' }
         ];
     },
@@ -5180,10 +4866,6 @@ const KonamiEasterEgg = {
             rootMessage.innerHTML = `<span class="output-success">[ROOT]</span> <span class="output-highlight">Available root commands:</span>
   <span class="output-command">sudo poweroff</span>     - Initiate system shutdown
   <span class="output-command">sudo reboot</span>       - Reboot the matrix
-  <span class="output-command">sudo hackfbi</span>      - Hack into FBI database
-  <span class="output-command">sudo hackpentagon</span> - Access Pentagon mainframe
-  <span class="output-command">sudo hackcia</span>      - Infiltrate CIA servers
-  <span class="output-command">sudo hacknasa</span>     - Breach NASA systems
   <span class="output-command">sudo nuke</span>         - Launch nuclear codes
   <span class="output-command">sudo selfdestruct</span> - Initiate self-destruct
   <span class="output-command">sudo matrix</span>       - Enter the Matrix
@@ -5583,9 +5265,4 @@ document.addEventListener('DOMContentLoaded', () => {
     ToastManager.init();
     initThemeDetection();
     initFAQ();
-
-    // Show welcome toast after a short delay (DISABLED - user preference)
-    // setTimeout(() => {
-    //     ToastManager.info('Welcome! Click the terminal icon to explore interactive commands.');
-    // }, 2000);
 });
