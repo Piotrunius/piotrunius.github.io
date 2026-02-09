@@ -49,7 +49,7 @@ Then visit http://localhost:8000
 
 ## License
 
-[MIT](LICENSE) - License.
+[MIT](LICENSE) - License
 
 ## Contact
 
