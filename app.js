@@ -1,11 +1,11 @@
 let config = {};
 let bgAnimationFrame = null;
-let visualizerAnimationFrame = null; // New variable to control visualizer loop
-let particlesAnimationFrame = null; // New variable to control particle loop
+let visualizerAnimationFrame = null;
+let particlesAnimationFrame = null;
 let audioContext = null;
 let analyser = null;
 let audioPlaying = false;
-let wasAudioPlaying = false; // Track audio state before tab switch
+let wasAudioPlaying = false;
 const githubUsername = 'Piotrunius';
 const API_ENDPOINTS = {
     github: 'https://github-api.piotrunius.workers.dev/',
@@ -15,10 +15,14 @@ const API_ENDPOINTS = {
     spotify: 'https://spotify-api.piotrunius.workers.dev'
 };
 
+const logPerf = (...args) => console.log('[perf]', ...args);
+
 const githubCache = {
     data: null,
     ts: 0
 };
+
+const GITHUB_CACHE_MS = 60_000;
 
 async function fetchApiJson(url, fallback, label) {
     try {
@@ -35,7 +39,7 @@ async function fetchApiJson(url, fallback, label) {
 
 async function getGitHubData(force = false) {
     const now = Date.now();
-    if (!force && githubCache.data && (now - githubCache.ts) < 60000) {
+    if (!force && githubCache.data && (now - githubCache.ts) < GITHUB_CACHE_MS) {
         return githubCache.data;
     }
     const fallback = {
@@ -51,7 +55,6 @@ async function getGitHubData(force = false) {
     return data;
 }
 
-// Performance detection and adaptive configuration
 const deviceCapabilities = {
     isLowEnd: false,
     isMobile: false,
@@ -60,22 +63,18 @@ const deviceCapabilities = {
     connectionSpeed: 'fast'
 };
 
-// Particle count constants
 const PARTICLE_COUNTS = {
     LOW_END: 40,
     MOBILE: 60,
     DESKTOP: 120
 };
 
-// Performance monitoring
 function initPerformanceMonitoring() {
     if (!window.performance || !window.PerformanceObserver) return;
 
     try {
-        // Monitor long tasks (tasks taking >50ms)
         const observer = new PerformanceObserver((list) => {
             for (const entry of list.getEntries()) {
-                // Only check duration for measure entries
                 if (entry.entryType === 'measure' && entry.duration > 50) {
                     console.warn('Long task detected:', entry.name, `${entry.duration.toFixed(2)}ms`);
                 }
@@ -84,12 +83,11 @@ function initPerformanceMonitoring() {
 
         observer.observe({ entryTypes: ['measure'] });
 
-        // Log initial load performance separately
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const perfData = performance.getEntriesByType('navigation')[0];
                 if (perfData) {
-                    console.log('Performance Metrics:', {
+                    logPerf('metrics', {
                         'DOM Content Loaded': `${(perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart).toFixed(2)}ms`,
                         'Load Complete': `${(perfData.loadEventEnd - perfData.loadEventStart).toFixed(2)}ms`,
                         'Total Load Time': `${(perfData.loadEventEnd - perfData.fetchStart).toFixed(2)}ms`
@@ -103,25 +101,20 @@ function initPerformanceMonitoring() {
 }
 
 function detectDeviceCapabilities() {
-    // Detect mobile devices
     deviceCapabilities.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
         window.innerWidth <= 768;
 
-    // Detect hardware concurrency (CPU cores)
     const cores = navigator.hardwareConcurrency || 2;
 
-    // Detect device memory (if available)
-    const memory = navigator.deviceMemory || 4; // Default to 4GB if not available
+    const memory = navigator.deviceMemory || 4; // fallback
     deviceCapabilities.memoryLimit = memory;
 
-    // Detect connection speed
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (connection) {
         const effectiveType = connection.effectiveType || '4g';
         deviceCapabilities.connectionSpeed = effectiveType;
     }
 
-    // Detect WebGL support
     try {
         const canvas = document.createElement('canvas');
         deviceCapabilities.supportsWebGL = !!(window.WebGLRenderingContext &&
@@ -130,7 +123,7 @@ function detectDeviceCapabilities() {
         deviceCapabilities.supportsWebGL = false;
     }
 
-    // Determine if device is low-end based on multiple factors
+    // TODO: tune thresholds if needed
     deviceCapabilities.isLowEnd = (
         cores <= 2 ||
         memory <= 2 ||
@@ -138,21 +131,18 @@ function detectDeviceCapabilities() {
         (deviceCapabilities.isMobile && memory <= 4)
     );
 
-    console.log('Device capabilities detected:', deviceCapabilities);
+    logPerf('caps', deviceCapabilities);
     return deviceCapabilities;
 }
 
-// Apply performance optimizations based on device
 function applyPerformanceOptimizations() {
     const caps = deviceCapabilities;
 
     if (caps.isLowEnd) {
-        console.log('Low-end device detected - applying optimizations');
+        logPerf('low-end, applying optimizations');
 
-        // Reduce particle count
         document.body.classList.add('low-performance');
 
-        // Disable heavy animations
         const style = document.createElement('style');
         style.id = 'perf-optimizations';
         style.textContent = `
@@ -185,15 +175,12 @@ function applyPerformanceOptimizations() {
         document.head.appendChild(style);
     }
 
-    // Reduce quality for slow connections
     if (caps.connectionSpeed === 'slow-2g' || caps.connectionSpeed === '2g') {
-        // Defer non-critical resource loading
-        console.log('Slow connection detected - deferring heavy resources');
+        logPerf('slow connection, deferring heavy resources');
     }
 }
 
-// --- DATA: Setup & Gear (Hardcoded - FIX FOR INVISIBLE BUTTONS) ---
-// Dane są tutaj, renderujemy je dynamicznie, aby mieć pełną kontrolę nad ich wyglądem i klasami.
+// Setup & gear data
 const setupData = {
     pc: [
         { icon: 'microchip', label: 'CPU', value: 'Intel Core i5-13400F', url: 'https://www.google.com/search?q=Intel+Core+i5-13400F' },
@@ -213,7 +200,6 @@ const setupData = {
     ]
 };
 
-// --- CONFIG DEFAULTS ---
 function getDefaultConfig() {
     return {
         profile: {
@@ -4261,6 +4247,33 @@ const Terminal = {
         if (cwdEl) cwdEl.textContent = this.currentPath;
     },
 
+    // Validate command arguments
+    validateArgs: function (args, minRequired = 0, maxAllowed = Infinity) {
+        if (args.length < minRequired) {
+            return { valid: false, error: `Expected at least ${minRequired} argument(s), got ${args.length}` };
+        }
+        if (args.length > maxAllowed) {
+            return { valid: false, error: `Expected at most ${maxAllowed} argument(s), got ${args.length}` };
+        }
+        return { valid: true };
+    },
+
+    // Safely parse numbers from arguments
+    parseNumber: function (value, defaultVal = 0) {
+        const num = parseInt(value, 10);
+        return isNaN(num) ? defaultVal : num;
+    },
+
+    // Safely handle async command results
+    executeAsyncCommand: async function (commandFn, args) {
+        try {
+            const result = await commandFn(args);
+            return result || [];
+        } catch (error) {
+            return [{ text: `Error executing command: ${error.message}`, class: 'error' }];
+        }
+    },
+
     // Execute hack sequence with typing effect
     executeHackSequence: function (target, steps) {
         const output = [];
@@ -4296,21 +4309,37 @@ const Terminal = {
     // Print output to terminal
     print: function (lines) {
         const output = document.getElementById('terminal-output');
-        if (!output) return;
+        if (!output || !Array.isArray(lines)) return;
+
+        // Use DocumentFragment for better performance
+        const fragment = document.createDocumentFragment();
 
         lines.forEach(line => {
+            if (!line) return;
+
             const div = document.createElement('div');
             div.className = `terminal-line ${line.class || 'output'}`;
-            if (line.html) {
-                div.innerHTML = line.text;
-            } else {
-                div.textContent = line.text;
+
+            try {
+                if (line.html) {
+                    div.innerHTML = line.text || '';
+                } else {
+                    div.textContent = String(line.text || '');
+                }
+            } catch (e) {
+                div.textContent = '[Error rendering line]';
             }
-            output.appendChild(div);
+
+            fragment.appendChild(div);
         });
 
-        // Scroll to bottom
-        output.scrollTop = output.scrollHeight;
+        output.appendChild(fragment);
+
+        // Scroll to bottom with smooth behavior
+        requestAnimationFrame(() => {
+            output.scrollTop = output.scrollHeight;
+        });
+
     },
 
     // Execute command
@@ -4327,13 +4356,17 @@ const Terminal = {
         const countEl = document.getElementById('terminal-cmd-count');
         if (countEl) countEl.textContent = `${this.commandCount} commands`;
 
-        // Parse command for tracking
+        // Parse command with better regex
         const parts = trimmed.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
         const cmdName = parts[0]?.toLowerCase();
 
         // Track command execution
         if (window.umami && cmdName) {
-            window.umami.track('Terminal Command', { command: cmdName });
+            try {
+                window.umami.track('Terminal Command', { command: cmdName });
+            } catch (e) {
+                // Umami tracking failed silently
+            }
         }
 
         // Check if root mode (Konami active)
@@ -4349,32 +4382,50 @@ const Terminal = {
             html: true
         }]);
 
-        // Parse command
-        const parts2 = trimmed.match(/(?:[^\s"]+|"[^"]*")+/g) || [];
-        let cmdName2 = parts2[0]?.toLowerCase();
-        const args = parts2.slice(1).map(a => a.replace(/^"|"$/g, ''));
+        // Parse command and arguments
+        let actualCmdName = parts[0]?.toLowerCase();
+        const args = parts.slice(1).map(a => a.replace(/^"|"$/g, ''));
 
-        // Check for alias
-        if (this.aliases[cmdName2]) {
-            const aliasCmd = this.aliases[cmdName2];
+        // Check for alias expansion
+        if (this.aliases[actualCmdName]) {
+            const aliasCmd = this.aliases[actualCmdName];
             const aliasParts = aliasCmd.split(' ');
-            cmdName2 = aliasParts[0];
+            actualCmdName = aliasParts[0];
             args.unshift(...aliasParts.slice(1));
         }
 
-        // Execute command
-        const cmd = this.commands[cmdName2];
-        if (cmd) {
-            const result = cmd.fn(args);
-            if (result instanceof Promise) {
-                result.then(lines => {
-                    if (lines && lines.length > 0) this.print(lines);
-                });
-            } else if (result && result.length > 0) {
-                this.print(result);
+        // Execute command with better error handling
+        const cmd = this.commands[actualCmdName];
+        if (cmd && typeof cmd.fn === 'function') {
+            try {
+                const result = cmd.fn(args);
+                if (result instanceof Promise) {
+                    result
+                        .then(lines => {
+                            if (lines && Array.isArray(lines) && lines.length > 0) {
+                                this.print(lines);
+                            }
+                        })
+                        .catch(error => {
+                            this.print([{
+                                text: `Command error: ${error.message || 'Unknown error'}`,
+                                class: 'error'
+                            }]);
+                        });
+                } else if (result && Array.isArray(result) && result.length > 0) {
+                    this.print(result);
+                }
+            } catch (error) {
+                this.print([{
+                    text: `Error executing command: ${error.message || 'Unknown error'}`,
+                    class: 'error'
+                }]);
             }
-        } else {
-            this.print([{ text: `Command not found: ${cmdName}. Type "help" for available commands.`, class: 'error' }]);
+        } else if (cmdName) {
+            this.print([{
+                text: `Command not found: ${cmdName}. Type "help" for available commands.`,
+                class: 'error'
+            }]);
         }
     },
 
@@ -4616,13 +4667,14 @@ const Terminal = {
         const suggestionsEl = document.getElementById('terminal-suggestions');
         if (!suggestionsEl) return;
 
-        if (!input.trim()) {
+        const trimmedInput = input.trim().toLowerCase();
+        if (!trimmedInput) {
             this.hideSuggestions();
             return;
         }
 
         const matches = Object.entries(this.commands)
-            .filter(([name, cmd]) => !cmd.hidden && name.startsWith(input.toLowerCase()))
+            .filter(([name, cmd]) => !cmd.hidden && name.startsWith(trimmedInput))
             .slice(0, 8);
 
         if (matches.length === 0) {
@@ -4630,27 +4682,23 @@ const Terminal = {
             return;
         }
 
-        suggestionsEl.innerHTML = matches.map(([name, cmd]) => `
-            <div class="suggestion-item" data-cmd="${name}">
+        // Use fragment for better performance
+        const fragment = document.createDocumentFragment();
+        matches.forEach(([name, cmd]) => {
+            const item = document.createElement('div');
+            item.className = 'suggestion-item';
+            item.dataset.cmd = name;
+            item.innerHTML = `
                 <i class="fas ${cmd.icon || 'fa-terminal'}"></i>
-                <span class="suggestion-cmd">${name}</span>
-                <span class="suggestion-desc">${cmd.description.substring(0, 30)}...</span>
-            </div>
-        `).join('');
-
-        suggestionsEl.classList.add('visible');
-
-        // Click to select suggestion
-        suggestionsEl.querySelectorAll('.suggestion-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const inputEl = document.getElementById('terminal-input');
-                if (inputEl) {
-                    inputEl.value = item.dataset.cmd + ' ';
-                    inputEl.focus();
-                }
-                this.hideSuggestions();
-            });
+                <span class="suggestion-cmd">${escapeHtml(name)}</span>
+                <span class="suggestion-desc">${escapeHtml(cmd.description.substring(0, 30))}...</span>
+            `;
+            fragment.appendChild(item);
         });
+
+        suggestionsEl.innerHTML = '';
+        suggestionsEl.appendChild(fragment);
+        suggestionsEl.classList.add('visible');
     },
 
     hideSuggestions: function () {
@@ -4789,9 +4837,9 @@ const KonamiEasterEgg = {
             osc.type = 'sine';
             osc.frequency.value = 440 + (this.index * 80);
             gain.gain.setValueAtTime(0.15, ctx.currentTime);
-            gain.gain.exponentialDecayTo && gain.gain.exponentialDecayTo(0.01, ctx.currentTime + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
 
-            osc.start();
+            osc.start(ctx.currentTime);
             osc.stop(ctx.currentTime + 0.1);
         } catch (e) { }
     },
@@ -4808,8 +4856,9 @@ const KonamiEasterEgg = {
             osc.type = 'sawtooth';
             osc.frequency.value = 150;
             gain.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
 
-            osc.start();
+            osc.start(ctx.currentTime);
             osc.stop(ctx.currentTime + 0.15);
         } catch (e) { }
     },
@@ -4865,7 +4914,7 @@ const KonamiEasterEgg = {
                 bass.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.5);
                 bassGain.gain.setValueAtTime(0.3, ctx.currentTime);
                 bassGain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
-                bass.start();
+                bass.start(ctx.currentTime);
                 bass.stop(ctx.currentTime + 0.5);
             }, 700);
         } catch (e) { }
@@ -5385,7 +5434,7 @@ const KonamiEasterEgg = {
             osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.3);
             gain.gain.setValueAtTime(0.2, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-            osc.start();
+            osc.start(ctx.currentTime);
             osc.stop(ctx.currentTime + 0.3);
         } catch (e) { }
     }
