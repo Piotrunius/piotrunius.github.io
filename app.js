@@ -410,8 +410,7 @@ async function refreshGitHubStats() {
                 <div class="activity-desc">${star.description || 'No description.'}</div>
                 <div class="activity-meta-row">
                     <div class="meta-badge"><i class="fas fa-user"></i> ${star.owner || 'Unknown'}</div>
-                    <div class="meta-badge"><i class="fas fa-code"></i> ${star.language || 'Code'}</div>
-                    <span class="meta-date">${formatPLDateTime(star.starredAt, true)}</span>
+                    <div class="meta-badge"><i class="fas fa-code"></i> ${star.language || 'Unknown'}</div>
                 </div>
             `;
             fragment.appendChild(item);
@@ -432,12 +431,12 @@ async function refreshGitHubStats() {
                 item.className = 'activity-item';
                 item.style.animationDelay = `${index * 0.05}s`;
 
-                const message = commit.message?.split('\n')[0] || commit.commit?.message?.split('\n')[0] || 'No message';
-                const author = commit.author || commit.commit?.author?.name || 'Unknown';
-                const date = commit.date || commit.commit?.author?.date || new Date().toISOString();
-                const repoName = commit.repo || commit.repository?.name || commit.repo?.name || 'Unknown';
-                const repoUrl = commit.repoUrl || commit.repository?.html_url || commit.repo?.html_url || '#';
-                const commitUrl = commit.url || commit.html_url || '#';
+                const message = commit.message?.split('\n')[0] || 'No message';
+                const author = commit.author || githubUsername;
+                const date = commit.date || new Date().toISOString();
+                const repoName = commit.repo || 'Unknown';
+                const repoUrl = `https://github.com/${githubUsername}/${repoName}`;
+                const commitUrl = commit.url || '#';
 
                 item.innerHTML = `
                     <div class="activity-header">
@@ -1326,7 +1325,7 @@ async function loadProjects() {
             // Determine badge based on repo name
             let badge = '';
             let badgeClass = '';
-            let projectLink = repo.html_url; // default link
+            let projectLink = repo.url;
 
             // Special handling for specific projects
             if (repo.name === 'piotrunius.github.io') {
@@ -1335,13 +1334,11 @@ async function loadProjects() {
             } else if (repo.name === 'Broadcast-generator') {
                 badge = 'collab';
                 badgeClass = 'project-badge-collab';
-                // Use GitHub repo link, not GitHub Pages
-                projectLink = repo.html_url;
+                projectLink = repo.url;
             } else if (repo.name === 'Offline-Casino') {
                 badge = 'active';
                 badgeClass = 'project-badge-active';
-                // Use GitHub repo link
-                projectLink = repo.html_url;
+                projectLink = repo.url;
             } else if (repo.name === 'AutoClicker-AntiAFK' || repo.archived) {
                 badge = 'archive';
                 badgeClass = 'project-badge-archive';
