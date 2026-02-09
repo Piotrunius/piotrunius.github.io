@@ -1693,9 +1693,9 @@ const Terminal = {
 
                 const categories = {
                     'Navigation': ['help', 'clear', 'history', 'pwd', 'cd', 'ls', 'cat', 'tree'],
-                    'Information': ['about', 'skills', 'projects', 'contact', 'social', 'stats', 'weather', 'neofetch'],
+                    'Information': ['about', 'skills', 'projects', 'contact', 'social', 'github', 'spotify', 'stats', 'weather', 'neofetch'],
                     'Fun & Games': ['matrix', 'cowsay', 'sl', 'rps', 'guess', '8ball', 'dice', 'tictactoe'],
-                    'Utilities': ['calc', 'todo', 'timer', 'stopwatch', 'color', 'echo', 'date', 'whoami', 'uname', 'uptime', 'uuid', 'password', 'hash', 'base64'],
+                    'Utilities': ['calc', 'todo', 'timer', 'stopwatch', 'color', 'echo', 'date', 'whoami', 'uname', 'uptime', 'uuid', 'password', 'hash', 'base64', 'shortcuts'],
                     'Text Tools': ['ascii', 'figlet', 'banner', 'binary', 'hex', 'reverse'],
                     'Network': ['ping', 'curl', 'qr'],
                     'Customization': ['theme', 'alias', 'export', 'motd'],
@@ -2038,6 +2038,58 @@ const Terminal = {
                     { text: '  Insta:    @piotrunius' },
                     { text: '' },
                     { text: '  Feel free to reach out!', class: 'success' }
+                ];
+            }
+        },
+
+        github: {
+            description: 'Open GitHub profile',
+            usage: 'github [repo]',
+            icon: 'fa-github',
+            fn: function (args) {
+                if (args[0]) {
+                    window.open(`https://github.com/Piotrunius/${args[0]}`, '_blank');
+                    return [{ text: `Opening repository: ${args[0]}`, class: 'success' }];
+                }
+                window.open('https://github.com/Piotrunius', '_blank');
+                return [{ text: 'Opening GitHub profile...', class: 'success' }];
+            }
+        },
+
+        spotify: {
+            description: 'Open Spotify profile',
+            usage: 'spotify',
+            icon: 'fa-music',
+            fn: function () {
+                window.open('https://open.spotify.com/user/Piotrunius', '_blank');
+                return [{ text: 'Opening Spotify profile...', class: 'success' }];
+            }
+        },
+
+        shortcuts: {
+            description: 'Show keyboard shortcuts',
+            usage: 'shortcuts',
+            icon: 'fa-keyboard',
+            fn: function () {
+                return [
+                    { text: 'Keyboard Shortcuts:', class: 'highlight' },
+                    { text: '' },
+                    { text: 'Terminal Control:', class: 'info' },
+                    { text: '  Ctrl + `      Open/Close terminal' },
+                    { text: '  Escape        Close terminal (if open)' },
+                    { text: '  Enter         Execute command' },
+                    { text: '' },
+                    { text: 'History Navigation:', class: 'info' },
+                    { text: '  UP/DOWN       Navigate command history' },
+                    { text: '  Tab           Auto-complete command' },
+                    { text: '' },
+                    { text: 'Easter Eggs:', class: 'info' },
+                    { text: '  ↑ ↑ ↓ ↓ ← → ← → B A    Konami code!' },
+                    { text: '' },
+                    { text: 'Tips:', class: 'system' },
+                    { text: '  - Type "help" for all commands' },
+                    { text: '  - Type "help <command>" for command info' },
+                    { text: '  - Type "history" to see past commands' }
                 ];
             }
         },
@@ -3494,17 +3546,6 @@ const Terminal = {
                     { text: '', class: 'system' },
                     { text: 'May the Force be with you.', class: 'success' }
                 ];
-            }
-        },
-
-        // Easter egg: Exit
-        exit: {
-            description: 'Exit terminal',
-            usage: 'exit',
-            icon: 'fa-door-open',
-            fn: function () {
-                Terminal.close();
-                return [];
             }
         },
 
