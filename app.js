@@ -123,7 +123,7 @@ async function getGitHubData(force = false) {
         return githubCache.data;
     }
     const fallback = {
-        summary: { projects: 0, starredCount: 0, commits: 0 },
+        summary: { projects: 0, starredCount: 0, gistsCount: 0, commits: 0 },
         recentCommits: [],
         starred: [],
         projects: [],
@@ -364,7 +364,7 @@ function initMusicMeta() {
 async function refreshGitHubStats() {
     const projectsEl = document.getElementById('stat-projects');
     const commitsEl = document.getElementById('stat-commits');
-    const starsEl = document.getElementById('stat-stars');
+    const gistsEl = document.getElementById('stat-gists');
     const lastUpdateEl = document.getElementById('stats-last-update');
     const activityStarsEl = document.getElementById('starred-list');
     const activityCommitsEl = document.getElementById('commits-list');
@@ -375,16 +375,16 @@ async function refreshGitHubStats() {
     const commits = Array.isArray(stats.recentCommits) ? stats.recentCommits : [];
     const projectsCount = summary.projects ?? (Array.isArray(stats.projects) ? stats.projects.length : 0);
     const commitsCount = summary.commits ?? commits.length;
-    const starredCount = summary.starredCount ?? starred.length;
+    const gistsCount = summary.gists ?? summary.gistsCount ?? summary.publicGists ?? stats.publicGists ?? 0;
 
     // Reset to 0 and animate
     if (projectsEl) {
         projectsEl.textContent = '0';
         animateCounter('stat-projects', projectsCount || 0, 1500);
     }
-    if (starsEl) {
-        starsEl.textContent = '0';
-        animateCounter('stat-stars', starredCount || 0, 1500);
+    if (gistsEl) {
+        gistsEl.textContent = '0';
+        animateCounter('stat-gists', gistsCount || 0, 1500);
     }
     if (commitsEl) {
         commitsEl.textContent = '0';
@@ -2132,7 +2132,7 @@ const Terminal = {
             fn: async function () {
                 const projects = document.getElementById('stat-projects')?.textContent || '?';
                 const commits = document.getElementById('stat-commits')?.textContent || '?';
-                const stars = document.getElementById('stat-stars')?.textContent || '?';
+                const gists = document.getElementById('stat-gists')?.textContent || '?';
 
                 return [
                     { text: '+-----------------------------------------+', class: 'highlight' },
@@ -2141,7 +2141,7 @@ const Terminal = {
                     { text: '' },
                     { text: `  Projects:  ${projects}` },
                     { text: `  Commits:   ${commits}` },
-                    { text: `  Starred:   ${stars}` },
+                    { text: `  Gists:     ${gists}` },
                     { text: '' },
                     { text: '  Data from GitHub Worker API', class: 'system' }
                 ];
