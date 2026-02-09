@@ -24,15 +24,95 @@ const githubCache = {
 
 const GITHUB_CACHE_MS = 60_000;
 
+// Toast notification system
+const ToastManager = {
+    container: null,
+    init() {
+        this.container = document.getElementById('toast-container');
+    },
+    show(message, type = 'info', duration = 5000) {
+        if (!this.container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-exclamation-circle',
+            info: 'fa-info-circle'
+        };
+
+        toast.innerHTML = `
+            <i class="fas ${icons[type] || icons.info} toast-icon"></i>
+            <div class="toast-message">${message}</div>
+        `;
+
+        this.container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, duration);
+    },
+    success(message) {
+        this.show(message, 'success');
+    },
+    error(message) {
+        this.show(message, 'error');
+    },
+    info(message) {
+        this.show(message, 'info');
+    }
+};
+
+// Auto detect dark mode preference
+function initThemeDetection() {
+    const savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+        ToastManager.info('Auto-detecting system theme preference...');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (!prefersDark) {
+            document.body.classList.add('light-mode');
+        }
+    }
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+                document.body.classList.remove('light-mode');
+            } else {
+                document.body.classList.add('light-mode');
+            }
+        }
+    });
+}
+
+// Enhanced fetch with retry logic and exponential backoff
+async function fetchWithRetry(url, options = {}, maxRetries = 3) {
+    let lastError;
+    for (let i = 0; i < maxRetries; i++) {
+        try {
+            const response = await fetch(url, options);
+            if (response.ok) return response;
+            throw new Error(`HTTP ${response.status}`);
+        } catch (error) {
+            lastError = error;
+            if (i < maxRetries - 1) {
+                const delay = Math.min(1000 * Math.pow(2, i), 5000);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+    }
+    throw lastError;
+}
+
 async function fetchApiJson(url, fallback, label) {
     try {
-        const resp = await fetch(url, { cache: 'no-store' });
-        if (!resp.ok) {
-            throw new Error(`${label} request failed: ${resp.status}`);
-        }
+        const resp = await fetchWithRetry(url, { cache: 'no-store' }, 2);
         return await resp.json();
     } catch (e) {
         console.warn(`${label} error:`, e.message);
+        ToastManager.error(`Failed to load ${label.toLowerCase()}`);
         return fallback;
     }
 }
@@ -5450,3 +5530,65 @@ document.addEventListener('DOMContentLoaded', () => {
     Terminal.init();
 });
 
+// FAQ accordion functionality
+function initFAQ() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const isExpanded = question.getAttribute('aria-expanded') === 'true';
+
+            // Close all other FAQs
+            faqQuestions.forEach(q => {
+                if (q !== question) {
+                    q.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Toggle current FAQ
+            question.setAttribute('aria-expanded', !isExpanded);
+        });
+    });
+}
+
+// Service Worker update notification
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+        registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    ToastManager.info('New version available! Refresh to update.');
+                }
+            });
+        });
+    }).catch(err => {
+        console.warn('SW registration failed:', err);
+    });
+}
+
+// Smooth scroll for anchor links
+document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (anchor && anchor.hash) {
+        const target = document.querySelector(anchor.hash);
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Don't push hash to history - prevents Umami spam
+            // history.pushState(null, '', anchor.hash);
+        }
+    }
+});
+
+// Initialize all new features
+document.addEventListener('DOMContentLoaded', () => {
+    ToastManager.init();
+    initThemeDetection();
+    initFAQ();
+
+    // Show welcome toast after a short delay (DISABLED - user preference)
+    // setTimeout(() => {
+    //     ToastManager.info('Welcome! Click the terminal icon to explore interactive commands.');
+    // }, 2000);
+});

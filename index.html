@@ -4,13 +4,64 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Piotrunius - Bio</title>
-        <meta name="description" content="Developer & tech enthusiast from Poland.">
-        <meta name="theme-color" content="#00ff88">
+        <title>Piotrunius - Developer & Tech Enthusiast</title>
+        <meta name="description"
+            content="Personal portfolio of Piotrunius - a developer from Poland who builds projects, experiments with code, and shares tech insights. Check out my projects, skills, and real-time activity.">
+        <meta name="keywords"
+            content="Piotrunius, developer, portfolio, Poland, web development, programming, tech, projects">
+        <meta name="author" content="Piotrunius">
+        <meta name="theme-color" content="#00ff88" media="(prefers-color-scheme: dark)">
+        <meta name="theme-color" content="#00a859" media="(prefers-color-scheme: light)">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://piotrunius.github.io/">
+        <meta property="og:title" content="Piotrunius - Developer & Tech Enthusiast">
+        <meta property="og:description"
+            content="Personal portfolio showcasing projects, skills, and real-time activity from Poland.">
+        <meta property="og:image" content="https://piotrunius.github.io/assets/pfp.png">
+        <meta property="og:site_name" content="Piotrunius Portfolio">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:url" content="https://piotrunius.github.io/">
+        <meta name="twitter:title" content="Piotrunius - Developer & Tech Enthusiast">
+        <meta name="twitter:description"
+            content="Personal portfolio showcasing projects, skills, and real-time activity.">
+        <meta name="twitter:image" content="https://piotrunius.github.io/assets/pfp.png">
+
+        <!-- Schema.org structured data -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Piotrunius",
+          "url": "https://piotrunius.github.io",
+          "image": "https://piotrunius.github.io/assets/pfp.png",
+          "jobTitle": "Developer",
+          "description": "Developer & tech enthusiast from Poland",
+          "sameAs": [
+            "https://github.com/Piotrunius",
+            "https://steamcommunity.com/id/piotrunius"
+          ]
+        }
+        </script>
+
         <link rel="icon" type="image/png" href="assets/pfp.png">
+        <link rel="apple-touch-icon" href="assets/pfp.png">
         <link rel="manifest" href="manifest.json">
-        <link rel="stylesheet" href="styles.css">
+
+        <!-- Resource hints -->
         <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+        <link rel="dns-prefetch" href="https://github-api.piotrunius.workers.dev">
+        <link rel="dns-prefetch" href="https://spotify-api.piotrunius.workers.dev">
+        <link rel="dns-prefetch" href="https://steam-api.piotrunius.workers.dev">
+        <link rel="dns-prefetch" href="https://discord-api.piotrunius.workers.dev">
+        <link rel="dns-prefetch" href="https://roblox-api.piotrunius.workers.dev">
+        <link rel="preload" href="styles.css" as="style">
+        <link rel="preload" href="app.js" as="script">
+
+        <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
             media="print" onload="this.media='all'">
         <noscript>
@@ -21,6 +72,9 @@
     </head>
 
     <body>
+        <!-- Skip to content for accessibility -->
+        <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
         <div class="bg-layer"></div>
         <canvas id="bg-canvas" class="bg-canvas"></canvas>
 
@@ -111,7 +165,10 @@
             <source src="assets/audio.mp3" type="audio/mpeg">
         </audio>
 
-        <main class="main-container">
+        <!-- Toast notification container -->
+        <div id="toast-container" class="toast-container" role="alert" aria-live="polite"></div>
+
+        <main class="main-container" id="main-content">
             <!-- LEFT: Spotify Status -->
             <section class="spotify-status-card glass-card animate-slide-right">
                 <div class="music-label spotify-brand">
@@ -475,6 +532,127 @@
                     </div>
                     <p class="system-desc">Fedora Atomic base with KDE Plasma tuned for gaming and workstation
                         stability.</p>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq-section glass-card animate-fade-in">
+                <h3 class="section-title">
+                    <i class="fas fa-question-circle"></i>
+                    FAQ
+                </h3>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>What technologies do you work with?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>I mainly work with Python, JavaScript, HTML/CSS, and I'm learning Go. I also mess around
+                                with Docker, React, and Node.js. Check out the Skills section above for the full list.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Do you charge for your work?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>I do most of my projects out of passion and boredom. If I'm the one proposing or
+                                initiating something, I never ask for anything in return, just a credit/mention that
+                                the project was made by me or with my help. Gotta build that portfolio for the future,
+                                you know ;P</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Are you available for collaborations?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Always open to interesting projects and collaborations! Hit me up via Discord or email
+                                and let's chat about what you have in mind. I'm especially interested in open-source
+                                contributions and learning opportunities.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Why do you code?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Honestly? Passion and boredom. I love building stuff, solving problems, and seeing ideas
+                                come to life. Coding gives me an outlet to create things that are useful (or just fun)
+                                while constantly learning something new :D</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Why Linux/Bazzite?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Bazzite gives me the stability of Fedora Atomic with gaming optimizations out of the box.
+                                Plus, KDE Plasma lets me tweak everything exactly how I want it. It's the best of both
+                                worlds for development and gaming (personal opinion :P)</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>How did you build this website?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Plain HTML, CSS, and JavaScript with custom APIs on Cloudflare Workers for real-time
+                                status updates. Made by a human with about 20-30% AI assistance for ideation and small
+                                refinements. Check the GitHub repo for the source code.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>What's your experience level?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>I'm still relatively early in my coding journey, but I've been steadily building projects
+                                and learning by doing. I believe in hands-on experience and contributing to open-source
+                                whenever I can. Every project is a learning opportunity.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>What's the terminal for?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>It's a functional terminal emulator built into the site. Click the terminal icon to open
+                                it and type 'help' to see available commands. You can navigate through the site, view
+                                stats, and it even has an easteregg! 80's people know :P</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Can I use your code?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sure! Most of my projects are open-source. Just give credit where it's due and let me
+                                know if you build something cool with it. I'd love to see what you create ;D</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>What are you currently learning?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Right now I'm diving deeper into Go, improving my React skills, and exploring more
+                                backend development (hate it). I'm also learning about system administration and
+                                containerization
+                                with Docker. Always something new to learn :D</p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
