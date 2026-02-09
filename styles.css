@@ -40,10 +40,12 @@ body {
     min-height: 100vh;
     scrollbar-width: thin;
     scrollbar-color: var(--primary) var(--bg);
+    overflow-anchor: none;
 }
 
 html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
+    /* Disabled - causes stuttering when scrolling up from bottom */
 }
 
 body::-webkit-scrollbar {
@@ -208,8 +210,6 @@ body::-webkit-scrollbar-thumb {
     transform-style: preserve-3d;
     perspective: 1000px;
     will-change: transform, box-shadow;
-    content-visibility: auto;
-    contain-intrinsic-size: 560px;
     overflow: hidden;
 }
 
