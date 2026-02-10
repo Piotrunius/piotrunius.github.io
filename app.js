@@ -129,6 +129,12 @@ async function getGitHubData(force = false) {
         lastUpdate: new Date().toISOString()
     };
     const data = await fetchApiJson(API_ENDPOINTS.github, fallback, 'GitHub API');
+
+    // Check for Privacy Mode - don't cache privacy mode responses
+    if (data.privacyMode) {
+        return data;
+    }
+
     githubCache.data = data;
     githubCache.ts = now;
     return data;
@@ -369,6 +375,19 @@ async function refreshGitHubStats() {
     const activityCommitsEl = document.getElementById('commits-list');
 
     const stats = await getGitHubData();
+
+    // Check for Privacy Mode
+    if (stats.privacyMode) {
+        const privacyMessage = '<div class="activity-item privacy-placeholder"><i class="fas fa-lock"></i> <span>Privacy Mode Active</span></div>';
+        if (activityStarsEl) activityStarsEl.innerHTML = privacyMessage;
+        if (activityCommitsEl) activityCommitsEl.innerHTML = privacyMessage;
+        if (projectsEl) projectsEl.textContent = '?';
+        if (commitsEl) commitsEl.textContent = '?';
+        if (gistsEl) gistsEl.textContent = '?';
+        if (lastUpdateEl) lastUpdateEl.textContent = 'Privacy Mode Active';
+        return;
+    }
+
     const summary = stats.summary || {};
     const starred = Array.isArray(stats.starred) ? stats.starred : [];
     const commits = Array.isArray(stats.recentCommits) ? stats.recentCommits : [];
@@ -503,6 +522,45 @@ async function refreshSteamStatus() {
 
     const fallback = { steam: { personastate: 0, gameextrainfo: null } };
     const stats = await fetchApiJson(API_ENDPOINTS.steam, fallback, 'Steam API');
+
+    // Check for Privacy Mode
+    if (stats.privacyMode) {
+        const statusText = document.getElementById('steam-status-text');
+        const gameInfo = document.getElementById('steam-game-info');
+        const memberSince = document.getElementById('steam-member-since');
+        const gameCount = document.getElementById('steam-game-count');
+        const extraInfo = document.querySelector('.steam-extra-info');
+        const steamUsernameEl = document.querySelector('.steam-username');
+        const steamPfp = document.getElementById('steam-pfp');
+        const steamDot = document.getElementById('steam-dot');
+        const avatarWrapper = document.querySelector('.steam-avatar-wrapper');
+
+        if (statusText) statusText.textContent = 'Privacy Mode';
+        if (gameInfo) gameInfo.style.display = 'none';
+        if (memberSince) memberSince.style.display = 'none';
+        if (gameCount) gameCount.style.display = 'none';
+        if (extraInfo) extraInfo.style.display = 'none';
+        if (steamUsernameEl) steamUsernameEl.textContent = 'Hidden';
+        if (steamPfp) steamPfp.style.display = 'none';
+        if (steamDot) steamDot.style.display = 'none';
+
+        // Add lock icon to avatar wrapper
+        if (avatarWrapper) {
+            const lockIcon = document.createElement('i');
+            lockIcon.className = 'fas fa-lock';
+            lockIcon.style.fontSize = '2rem';
+            lockIcon.style.color = 'var(--primary)';
+            lockIcon.style.position = 'absolute';
+            lockIcon.style.top = '50%';
+            lockIcon.style.left = '50%';
+            lockIcon.style.transform = 'translate(-50%, -50%)';
+            avatarWrapper.style.position = 'relative';
+            avatarWrapper.innerHTML = '';
+            avatarWrapper.appendChild(lockIcon);
+        }
+
+        return;
+    }
     const s = stats.steam || stats || {};
     const statusText = document.getElementById('steam-status-text');
     const gameInfo = document.getElementById('steam-game-info');
@@ -616,6 +674,39 @@ async function refreshDiscordStatus() {
             const data = await response.json();
             console.log('Discord API response:', data);
 
+            // Check for Privacy Mode
+            if (data.privacyMode) {
+                if (discordStatus) discordStatus.textContent = 'Privacy Mode';
+                if (discordUsernameEl) discordUsernameEl.textContent = 'Hidden';
+                if (discordActivityInfo) discordActivityInfo.style.display = 'none';
+
+                // Replace avatar with lock icon and hide dot
+                if (discordAvatarWrapper) {
+                    discordAvatarWrapper.className = 'discord-avatar-wrapper offline';
+                    const avatarImg = discordAvatarWrapper.querySelector('img');
+                    if (avatarImg) {
+                        avatarImg.style.display = 'none';
+                    }
+                    const dotEl = discordAvatarWrapper.querySelector('.status-dot');
+                    if (dotEl) dotEl.style.display = 'none';
+
+                    // Add lock icon
+                    const lockIcon = document.createElement('i');
+                    lockIcon.className = 'fas fa-lock';
+                    lockIcon.style.fontSize = '2rem';
+                    lockIcon.style.color = 'var(--primary)';
+                    lockIcon.style.position = 'absolute';
+                    lockIcon.style.top = '50%';
+                    lockIcon.style.left = '50%';
+                    lockIcon.style.transform = 'translate(-50%, -50%)';
+                    discordAvatarWrapper.style.position = 'relative';
+                    discordAvatarWrapper.appendChild(lockIcon);
+                }
+
+                if (discordPanel) discordPanel.style.display = 'flex';
+                return;
+            }
+
             const user = data.user;
             const presence = data.presence;
             const activities = data.activities || [];
@@ -695,6 +786,38 @@ async function refreshRobloxStatus() {
 
     const fallback = { status: 'Offline', game: null };
     const data = await fetchApiJson(API_ENDPOINTS.roblox, fallback, 'Roblox API');
+
+    // Check for Privacy Mode
+    if (data.privacyMode) {
+        const statusText = document.getElementById('roblox-status-text');
+        const gameInfo = document.getElementById('roblox-game-info');
+        const avatarWrapper = document.querySelector('.roblox-avatar-wrapper');
+        const usernameEl = document.querySelector('.roblox-username');
+        const robloxPfp = document.getElementById('roblox-pfp');
+
+        if (statusText) statusText.textContent = 'Privacy Mode';
+        if (usernameEl) usernameEl.textContent = 'Hidden';
+        if (gameInfo) gameInfo.style.display = 'none';
+        if (robloxPfp) {
+            robloxPfp.style.display = 'none';
+        }
+        if (avatarWrapper) {
+            avatarWrapper.className = 'roblox-avatar-wrapper offline';
+            const lockIcon = document.createElement('i');
+            lockIcon.className = 'fas fa-lock';
+            lockIcon.style.fontSize = '2rem';
+            lockIcon.style.color = 'var(--primary)';
+            lockIcon.style.position = 'absolute';
+            lockIcon.style.top = '50%';
+            lockIcon.style.left = '50%';
+            lockIcon.style.transform = 'translate(-50%, -50%)';
+            avatarWrapper.style.position = 'relative';
+            avatarWrapper.innerHTML = '';
+            avatarWrapper.appendChild(lockIcon);
+        }
+        robloxPanel.style.display = 'flex';
+        return;
+    }
 
     const statusRaw = data.status ?? data.state ?? data.presence ?? data.presenceType ?? 'Offline';
     const statusMap = {
@@ -1084,6 +1207,17 @@ async function updateSpotifyStatus() {
         const data = await response.json();
         console.log('Spotify API response:', data);
 
+        // Check for Privacy Mode
+        if (data.privacyMode) {
+            renderSpotifyPrivacyMode(container);
+            lastSpotifyData = null;
+            if (spotifyPredictorInterval) {
+                clearInterval(spotifyPredictorInterval);
+                spotifyPredictorInterval = null;
+            }
+            return;
+        }
+
         if (data && data.isPlaying) {
             const spotify = {
                 song: data.title,
@@ -1201,6 +1335,18 @@ function renderSpotifyEmpty(container) {
     delete container.dataset.trackId;
 }
 
+function renderSpotifyPrivacyMode(container) {
+    if (container.classList.contains('privacy')) return;
+    container.innerHTML = `
+        <div class="spotify-placeholder">
+            <i class="fas fa-lock"></i>
+            <span>Privacy Mode Active</span>
+        </div>
+    `;
+    container.className = 'spotify-content privacy';
+    delete container.dataset.trackId;
+}
+
 // --- TIME & TIMEZONE SECTION ---
 const MY_TIMEZONE = 'Europe/Warsaw'; // Your timezone
 
@@ -1276,6 +1422,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function fetchGitHubRepos() {
     try {
         const data = await getGitHubData();
+
+        // If Privacy Mode, return full data object to preserve privacyMode flag
+        if (data.privacyMode) {
+            return data;
+        }
+
         const repos = data.projects || data.repos || data.repositories || [];
         if (!Array.isArray(repos)) return null;
 
@@ -1299,7 +1451,19 @@ async function loadProjects() {
             throw new Error('GitHub Worker API failed');
         }
 
-        if (allRepos.length === 0) {
+        // Check for Privacy Mode - check before using as array
+        if (allRepos.privacyMode || allRepos.privacyMode === true) {
+            container.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
+                    <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.7;"></i>
+                    <p>Privacy Mode Active</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Now safely check if it's an array with repos
+        if (!Array.isArray(allRepos) || allRepos.length === 0) {
             container.innerHTML = `
                 <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-secondary);">
                     <i class="fas fa-code" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.5;"></i>
@@ -2821,6 +2985,77 @@ const Terminal = {
                 Terminal.print([{ text: 'Goodbye!', class: 'success' }]);
                 setTimeout(() => Terminal.close(), 500);
                 return [];
+            }
+        },
+
+        admin: {
+            description: 'Access admin mode with password verification',
+            usage: 'admin',
+            icon: 'fa-lock',
+            fn: async function () {
+                // Track admin command execution
+                if (typeof umami !== 'undefined') {
+                    umami.track('admin_command_executed');
+                }
+
+                // Prompt for password
+                const password = window.prompt('Enter Admin Password:');
+
+                // If user cancelled the prompt
+                if (password === null) {
+                    if (typeof umami !== 'undefined') {
+                        umami.track('admin_cancelled');
+                    }
+                    return [{ text: 'Admin access cancelled.', class: 'warning' }];
+                }
+
+                try {
+                    // Send POST request to Cloudflare Worker
+                    const response = await fetch('https://admin-control.piotrunius.workers.dev', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            password: password,
+                            action: 'toggle'
+                        })
+                    });
+
+                    // Parse JSON response
+                    const data = await response.json();
+
+                    // Handle response based on success flag
+                    if (data.success) {
+                        if (typeof umami !== 'undefined') {
+                            umami.track('admin_password_success', {
+                                message: data.message,
+                                action: 'toggle'
+                            });
+                        }
+                        Terminal.print([
+                            { text: data.message, class: 'success' },
+                            { text: 'Reloading page...', class: 'info' }
+                        ]);
+                        setTimeout(() => window.location.reload(), 1000);
+                        return [];
+                    } else {
+                        if (typeof umami !== 'undefined') {
+                            umami.track('admin_password_failed', {
+                                error: data.message || 'Admin command failed'
+                            });
+                        }
+                        return [{ text: data.message || 'Admin command failed', class: 'error' }];
+                    }
+                } catch (error) {
+                    if (typeof umami !== 'undefined') {
+                        umami.track('admin_connection_error', {
+                            error: error.message
+                        });
+                    }
+                    console.error('Admin command error:', error);
+                    return [{ text: 'Connection Failed', class: 'error' }];
+                }
             }
         },
 
