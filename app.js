@@ -68,7 +68,6 @@ const ToastManager = {
 function initThemeDetection() {
     const savedTheme = localStorage.getItem('theme');
     if (!savedTheme) {
-        ToastManager.info('Auto-detecting system theme preference...');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (!prefersDark) {
             document.body.classList.add('light-mode');
