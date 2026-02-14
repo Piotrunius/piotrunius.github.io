@@ -18,6 +18,8 @@ Personal portfolio site with a focus on real-time presence, a local audio player
 - Umami analytics
 - Custom worker APIs (GitHub, Spotify, Steam, Discord and Roblox)
 
+- Install: Omarchy (https://omarchy.org)
+
 ## Live
 
 https://piotrunius.github.io/
@@ -33,7 +35,7 @@ https://piotrunius.github.io/
 ├── assets/
 │   ├── pfp.png
 │   ├── audio.mp3
-│   └── Bazzite_Logo.png
+│   └── Arcj_Logo.png
 ├── projects.json
 ```
 

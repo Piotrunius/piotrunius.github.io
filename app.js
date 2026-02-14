@@ -1813,7 +1813,7 @@ const Terminal = {
         '~': {
             type: 'dir',
             children: {
-                'about.txt': { type: 'file', content: 'Hi! I\'m Piotrunius - a developer and tech enthusiast from Poland.\nI love tinkering with Linux, writing scripts, and exploring new technologies.\nMy daily driver is Bazzite (Fedora Atomic) with KDE Plasma.' },
+                'about.txt': { type: 'file', content: 'Hi! I\'m Piotrunius - a developer and tech enthusiast from Poland.\nI love tinkering with Linux, writing scripts, and exploring new technologies.\nMy daily driver is Arch Linux (rolling) with Hyprland. Installed via Omarchy (https://omarchy.org).' },
                 'contact.txt': { type: 'file', content: 'Email: piotrunius.v2@gmail.com\nDiscord: Piotrunius\nGitHub: github.com/Piotrunius' },
                 'skills.txt': { type: 'file', content: 'Languages: Python, JavaScript, HTML/CSS, TypeScript\nFrameworks: React, Node.js\nTools: Docker, Git, Linux\nLearning: Always something new!' },
                 'projects': {
@@ -2075,8 +2075,9 @@ const Terminal = {
                     { text: '  [*] Name:      Piotrunius' },
                     { text: '  [*] Location:  Poland' },
                     { text: '  [*] Role:      Developer & Tech Enthusiast' },
-                    { text: '  [*] OS:        Bazzite (Fedora Atomic)' },
-                    { text: '  [*] DE:        KDE Plasma' },
+                    { text: '  [*] OS:        Arch Linux (rolling)' },
+                    { text: '  [*] DE:        Hyprland' },
+                    { text: '  [*] Install:   Omarchy (https://omarchy.org)' },
                     { text: '' },
                     { text: '  Curious tinkerer who loves to explore how things work.', class: 'system' },
                     { text: '  I write small scripts, keep a clean Linux workflow,', class: 'system' },
