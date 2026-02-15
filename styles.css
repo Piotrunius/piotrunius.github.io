@@ -2337,7 +2337,7 @@ i:not(.social-link i) {
     scrollbar-color: #00ff99 rgba(255, 255, 255, 0.05);
 }
 
-/* Customowy Scrollbar dla Bazzite/Chrome */
+/* Customowy Scrollbar dla Nobara/Chrome */
 .scrollable-content::-webkit-scrollbar {
     width: 4px;
 }

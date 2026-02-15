@@ -7,7 +7,7 @@ const urlsToCache = [
   '/app.js',
   '/manifest.json',
   '/assets/pfp.png',
-  '/assets/Bazzite_Logo.png'
+  '/assets/nobara-icon.png'
 ];
 
 self.addEventListener('install', (event) => {

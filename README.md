@@ -33,7 +33,7 @@ https://piotrunius.github.io/
 ├── assets/
 │   ├── pfp.png
 │   ├── audio.mp3
-│   └── Bazzite_Logo.png
+│   └── nobara-icon.png
 ├── projects.json
 ```
 
