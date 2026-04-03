@@ -1,5 +1,5 @@
 // Service Worker
-const CACHE_NAME = 'piotrunius-bio-v1';
+const CACHE_NAME = 'piotrunius-bio-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -64,6 +64,19 @@ self.addEventListener('fetch', (event) => {
             );
           });
         })
+    );
+    return;
+  }
+
+  if (request.mode === 'navigate' || request.destination === 'document') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
+          return response;
+        })
+        .catch(() => caches.match(request).then((cachedResponse) => cachedResponse || new Response('Offline', { status: 503 })))
     );
     return;
   }
