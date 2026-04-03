@@ -1,0 +1,36 @@
+{
+  "projects": [
+    {
+      "name": "AutoClicker-AntiAFK",
+      "description": "Piotrunius AutoClicker & More",
+      "html_url": "https://github.com/Piotrunius/AutoClicker-AntiAFK",
+      "language": "Python",
+      "private": false,
+      "stars": 0,
+      "forks": 0,
+      "updated_at": "2025-12-10T09:51:26Z"
+    },
+    {
+      "name": "Broadcast-generator",
+      "description": "Tools for Roblox SCP Site Roleplay",
+      "html_url": "https://piotrunius.github.io/Broadcast-generator/",
+      "language": "JavaScript",
+      "private": true,
+      "stars": 0,
+      "forks": 0,
+      "updated_at": "2025-12-10T09:51:26Z"
+    },
+    {
+      "name": "piotrunius.github.io",
+      "description": "Personal Bio Page",
+      "html_url": "https://github.com/Piotrunius/piotrunius.github.io",
+      "language": "CSS",
+      "private": false,
+      "stars": 0,
+      "forks": 0,
+      "updated_at": "2026-01-11T11:24:31Z"
+    }
+  ],
+  "lastUpdate": "2026-01-11T11:24:57.470Z"
+}
+
