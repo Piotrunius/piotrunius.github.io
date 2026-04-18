@@ -1,74 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
-
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Piotrunius - Developer & Tech Enthusiast</title>
-        <meta name="description"
-            content="Personal portfolio of Piotrunius - a developer from Poland who builds projects, experiments with code, and shares tech insights. Check out my projects, skills, and real-time activity.">
-        <meta name="keywords"
-            content="Piotrunius, developer, portfolio, Poland, web development, programming, tech, projects">
-        <meta name="author" content="Piotrunius">
-        <meta name="theme-color" content="#00ff88" media="(prefers-color-scheme: dark)">
-        <meta name="theme-color" content="#00a859" media="(prefers-color-scheme: light)">
+        <meta
+            name="description"
+            content="Personal portfolio of Piotrunius - a developer from Poland who builds projects, experiments with code, and shares tech insights. Check out my projects, skills, and real-time activity."
+        />
+        <meta
+            name="keywords"
+            content="Piotrunius, developer, portfolio, Poland, web development, programming, tech, projects"
+        />
+        <meta name="author" content="Piotrunius" />
+        <meta
+            name="theme-color"
+            content="#00ff88"
+            media="(prefers-color-scheme: dark)"
+        />
+        <meta
+            name="theme-color"
+            content="#00a859"
+            media="(prefers-color-scheme: light)"
+        />
 
         <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://piotrunius.github.io/">
-        <meta property="og:title" content="Piotrunius - Developer & Tech Enthusiast">
-        <meta property="og:description"
-            content="Personal portfolio showcasing projects, skills, and real-time activity from Poland.">
-        <meta property="og:image" content="https://piotrunius.github.io/assets/pfp.png">
-        <meta property="og:site_name" content="Piotrunius Portfolio">
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://piotrunius.github.io/" />
+        <meta
+            property="og:title"
+            content="Piotrunius - Developer & Tech Enthusiast"
+        />
+        <meta
+            property="og:description"
+            content="Personal portfolio showcasing projects, skills, and real-time activity from Poland."
+        />
+        <meta
+            property="og:image"
+            content="https://piotrunius.github.io/assets/pfp.png"
+        />
+        <meta property="og:site_name" content="Piotrunius Portfolio" />
 
         <!-- Twitter Card -->
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:url" content="https://piotrunius.github.io/">
-        <meta name="twitter:title" content="Piotrunius - Developer & Tech Enthusiast">
-        <meta name="twitter:description"
-            content="Personal portfolio showcasing projects, skills, and real-time activity.">
-        <meta name="twitter:image" content="https://piotrunius.github.io/assets/pfp.png">
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:url" content="https://piotrunius.github.io/" />
+        <meta
+            name="twitter:title"
+            content="Piotrunius - Developer & Tech Enthusiast"
+        />
+        <meta
+            name="twitter:description"
+            content="Personal portfolio showcasing projects, skills, and real-time activity."
+        />
+        <meta
+            name="twitter:image"
+            content="https://piotrunius.github.io/assets/pfp.png"
+        />
 
         <!-- Schema.org structured data -->
         <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "Person",
-          "name": "Piotrunius",
-          "url": "https://piotrunius.github.io",
-          "image": "https://piotrunius.github.io/assets/pfp.png",
-          "jobTitle": "Developer",
-          "description": "Developer & tech enthusiast from Poland",
-          "sameAs": [
-            "https://github.com/Piotrunius",
-            "https://steamcommunity.com/id/piotrunius"
-          ]
-        }
+            {
+                "@context": "https://schema.org",
+                "@type": "Person",
+                "name": "Piotrunius",
+                "url": "https://piotrunius.github.io",
+                "image": "https://piotrunius.github.io/assets/pfp.png",
+                "jobTitle": "Developer",
+                "description": "Developer & tech enthusiast from Poland",
+                "sameAs": [
+                    "https://github.com/Piotrunius",
+                    "https://steamcommunity.com/id/piotrunius"
+                ]
+            }
         </script>
 
-        <link rel="icon" type="image/png" href="assets/pfp.png">
-        <link rel="apple-touch-icon" href="assets/pfp.png">
-        <link rel="manifest" href="manifest.json">
+        <link rel="icon" type="image/png" href="assets/pfp.png" />
+        <link rel="apple-touch-icon" href="assets/pfp.png" />
+        <link rel="manifest" href="manifest.json" />
 
         <!-- Resource hints -->
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-        <link rel="dns-prefetch" href="https://github-api.piotrunius.workers.dev">
-        <link rel="dns-prefetch" href="https://spotify-api.piotrunius.workers.dev">
-        <link rel="dns-prefetch" href="https://steam-api.piotrunius.workers.dev">
-        <link rel="dns-prefetch" href="https://discord-api.piotrunius.workers.dev">
-        <link rel="dns-prefetch" href="https://roblox-api.piotrunius.workers.dev">
-        <link rel="preload" href="styles.css" as="style">
-        <link rel="preload" href="app.js" as="script">
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+        <link
+            rel="dns-prefetch"
+            href="https://github-api.piotrunius.workers.dev"
+        />
+        <link
+            rel="dns-prefetch"
+            href="https://spotify-api.piotrunius.workers.dev"
+        />
+        <link
+            rel="dns-prefetch"
+            href="https://steam-api.piotrunius.workers.dev"
+        />
+        <link
+            rel="dns-prefetch"
+            href="https://discord-api.piotrunius.workers.dev"
+        />
+        <link
+            rel="dns-prefetch"
+            href="https://roblox-api.piotrunius.workers.dev"
+        />
+        <link rel="preload" href="styles.css" as="style" />
+        <link rel="preload" href="app.js" as="script" />
 
-        <link rel="stylesheet" href="styles.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-            media="print" onload="this.media='all'">
+        <link rel="stylesheet" href="styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            media="print"
+            onload="this.media = 'all'"
+        />
         <noscript>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+            <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            />
         </noscript>
-        <script defer src="https://umami-proxy.piotrunius.workers.dev/script.js"
-            data-website-id="6fe44ce6-f537-41a6-9f7f-227556b3ba84"></script>
+        <script
+            defer
+            src="https://umami-proxy.piotrunius.workers.dev/script.js"
+            data-website-id="6fe44ce6-f537-41a6-9f7f-227556b3ba84"
+        ></script>
     </head>
 
     <body>
@@ -86,10 +138,16 @@
                 </div>
                 <div class="wip-text-content">
                     <span class="wip-title">Work in Progress</span>
-                    <span class="wip-description">This site is actively being developed. Expect updates,
-                        tweaks and occasional rough edges.</span>
+                    <span class="wip-description"
+                        >This site is actively being developed. Expect updates,
+                        tweaks and occasional rough edges.</span
+                    >
                 </div>
-                <button class="wip-close" id="wip-close" aria-label="Close notice">
+                <button
+                    class="wip-close"
+                    id="wip-close"
+                    aria-label="Close notice"
+                >
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -101,16 +159,25 @@
         </div>
 
         <!-- Theme Toggle Button -->
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">
+        <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Toggle dark/light mode"
+        >
             <i class="fas fa-sun"></i>
         </button>
 
         <audio id="bg-audio" loop>
-            <source src="assets/audio.mp3" type="audio/mpeg">
+            <source src="assets/audio.mp3" type="audio/mpeg" />
         </audio>
 
         <!-- Toast notification container -->
-        <div id="toast-container" class="toast-container" role="alert" aria-live="polite"></div>
+        <div
+            id="toast-container"
+            class="toast-container"
+            role="alert"
+            aria-live="polite"
+        ></div>
 
         <main class="main-container" id="main-content">
             <!-- LEFT: Spotify Status -->
@@ -130,12 +197,21 @@
             <!-- CENTER: Profile Section -->
             <section class="profile-section glass-card animate-fade-in">
                 <div class="avatar-container">
-                    <img id="avatar" src="assets/pfp.png" alt="Avatar" class="avatar" loading="lazy" width="180"
-                        height="180">
+                    <img
+                        id="avatar"
+                        src="assets/pfp.png"
+                        alt="Avatar"
+                        class="avatar"
+                        loading="lazy"
+                        width="180"
+                        height="180"
+                    />
                     <div class="avatar-ring"></div>
                 </div>
                 <h2 id="profile-name" class="profile-name">Piotrunius</h2>
-                <p id="profile-bio" class="profile-bio">Developer & tech tinkerer</p>
+                <p id="profile-bio" class="profile-bio">
+                    Developer & tech tinkerer
+                </p>
             </section>
 
             <!-- RIGHT: Local Player -->
@@ -146,7 +222,9 @@
                 </div>
                 <canvas id="visualizer" class="visualizer-canvas"></canvas>
                 <div class="music-meta">
-                    <span id="music-title" class="music-link">Smoking Alone</span>
+                    <span id="music-title" class="music-link"
+                        >Smoking Alone</span
+                    >
                     <div id="music-artist">BackDrop</div>
                 </div>
                 <div class="music-controls">
@@ -165,39 +243,53 @@
                 <div class="about-grid">
                     <div class="about-card">
                         <div class="about-title">Who am I?</div>
-                        <div class="about-value">Just a guy from Poland who likes building stuff and figuring out how
-                            things work.
-                            I mess around with code, play games, listen to way too much music, and occasionally break
-                            things
-                            (then fix them... usually). Still learning, still experimenting. I run Linux because it lets
-                            me
-                            tweak everything, and I share what I figure out with friends when it actually works.
-                            I try to keep things chill and stay emotionally balanced, life's too short for unnecessary
-                            stress.
-                            I value a relaxed vibe, good conversations, and not taking everything too seriously.</div>
+                        <div class="about-value">
+                            Just a guy from Poland who likes building stuff and
+                            figuring out how things work. I mess around with
+                            code, play games, listen to way too much music, and
+                            occasionally break things (then fix them...
+                            usually). Still learning, still experimenting. I run
+                            Linux because it lets me tweak everything, and I
+                            share what I figure out with friends when it
+                            actually works. I try to keep things chill and stay
+                            emotionally balanced, life's too short for
+                            unnecessary stress. I value a relaxed vibe, good
+                            conversations, and not taking everything too
+                            seriously.
+                        </div>
                     </div>
                     <div class="about-card">
                         <div class="about-title">Languages</div>
                         <div class="lang-slider" data-level="100">
-                            <div class="lang-label"><span>Polish</span><span class="lvl">Native</span></div>
+                            <div class="lang-label">
+                                <span>Polish</span
+                                ><span class="lvl">Native</span>
+                            </div>
                             <div class="lang-track">
                                 <div class="lang-fill"></div>
                             </div>
                         </div>
                         <div class="lang-slider" data-level="90">
-                            <div class="lang-label"><span>English</span><span class="lvl">C1/C2</span></div>
+                            <div class="lang-label">
+                                <span>English</span
+                                ><span class="lvl">C1/C2</span>
+                            </div>
                             <div class="lang-track">
                                 <div class="lang-fill"></div>
                             </div>
                         </div>
                         <div class="lang-slider" data-level="35">
-                            <div class="lang-label"><span>German</span><span class="lvl">A2</span></div>
+                            <div class="lang-label">
+                                <span>German</span><span class="lvl">A2</span>
+                            </div>
                             <div class="lang-track">
                                 <div class="lang-fill"></div>
                             </div>
                         </div>
                         <div class="lang-slider" data-level="20">
-                            <div class="lang-label"><span>Spanish</span><span class="lvl">A1</span></div>
+                            <div class="lang-label">
+                                <span>Spanish</span><span class="lvl">A1</span>
+                            </div>
                             <div class="lang-track">
                                 <div class="lang-fill"></div>
                             </div>
@@ -221,16 +313,36 @@
                         <div id="steam-status-panel" class="steam-status-panel">
                             <div class="steam-user-info">
                                 <div class="steam-avatar-wrapper">
-                                    <img id="steam-pfp" src="assets/pfp.png" alt="Steam Avatar" class="steam-avatar"
-                                        loading="lazy" width="80" height="80">
-                                    <span id="steam-dot" class="status-dot"></span>
+                                    <img
+                                        id="steam-pfp"
+                                        src="assets/pfp.png"
+                                        alt="Steam Avatar"
+                                        class="steam-avatar"
+                                        loading="lazy"
+                                        width="80"
+                                        height="80"
+                                    />
+                                    <span
+                                        id="steam-dot"
+                                        class="status-dot"
+                                    ></span>
                                 </div>
                                 <div class="steam-details">
                                     <div class="steam-name-row">
-                                        <span class="steam-username">Piotrunius</span>
-                                        <span id="steam-status-text" class="steam-status-text">Offline</span>
+                                        <span class="steam-username"
+                                            >Piotrunius</span
+                                        >
+                                        <span
+                                            id="steam-status-text"
+                                            class="steam-status-text"
+                                            >Offline</span
+                                        >
                                     </div>
-                                    <div id="steam-game-info" class="steam-game-info" style="display: none;"></div>
+                                    <div
+                                        id="steam-game-info"
+                                        class="steam-game-info"
+                                        style="display: none"
+                                    ></div>
                                     <div class="steam-extra-info">
                                         <span id="steam-member-since"></span>
                                         <span id="steam-game-count"></span>
@@ -246,20 +358,42 @@
                             <i class="fa-brands fa-discord"></i>
                             Discord
                         </div>
-                        <div id="discord-status-panel" class="discord-status-panel">
+                        <div
+                            id="discord-status-panel"
+                            class="discord-status-panel"
+                        >
                             <div class="discord-user-info">
                                 <div class="discord-avatar-wrapper offline">
-                                    <img id="discord-pfp" src="assets/pfp.png" alt="Discord Avatar"
-                                        class="discord-avatar" loading="lazy" width="80" height="80">
-                                    <span id="discord-dot" class="status-dot"></span>
+                                    <img
+                                        id="discord-pfp"
+                                        src="assets/pfp.png"
+                                        alt="Discord Avatar"
+                                        class="discord-avatar"
+                                        loading="lazy"
+                                        width="80"
+                                        height="80"
+                                    />
+                                    <span
+                                        id="discord-dot"
+                                        class="status-dot"
+                                    ></span>
                                 </div>
                                 <div class="discord-details">
                                     <div class="discord-name-row">
-                                        <span class="discord-username">Piotrunius</span>
-                                        <span id="discord-status-text" class="discord-status-text">Offline</span>
+                                        <span class="discord-username"
+                                            >Piotrunius</span
+                                        >
+                                        <span
+                                            id="discord-status-text"
+                                            class="discord-status-text"
+                                            >Offline</span
+                                        >
                                     </div>
-                                    <div id="discord-activity-info" class="discord-activity-info"
-                                        style="display: none;"></div>
+                                    <div
+                                        id="discord-activity-info"
+                                        class="discord-activity-info"
+                                        style="display: none"
+                                    ></div>
                                 </div>
                             </div>
                         </div>
@@ -271,19 +405,42 @@
                             <i class="fas fa-cube"></i>
                             Roblox
                         </div>
-                        <div id="roblox-status-panel" class="roblox-status-panel">
+                        <div
+                            id="roblox-status-panel"
+                            class="roblox-status-panel"
+                        >
                             <div class="roblox-user-info">
                                 <div class="roblox-avatar-wrapper offline">
-                                    <img id="roblox-pfp" src="assets/pfp.png" alt="Roblox Avatar" class="roblox-avatar"
-                                        loading="lazy" width="80" height="80">
-                                    <span id="roblox-dot" class="status-dot"></span>
+                                    <img
+                                        id="roblox-pfp"
+                                        src="assets/pfp.png"
+                                        alt="Roblox Avatar"
+                                        class="roblox-avatar"
+                                        loading="lazy"
+                                        width="80"
+                                        height="80"
+                                    />
+                                    <span
+                                        id="roblox-dot"
+                                        class="status-dot"
+                                    ></span>
                                 </div>
                                 <div class="roblox-details">
                                     <div class="roblox-name-row">
-                                        <span class="roblox-username">pioterson2000</span>
-                                        <span id="roblox-status-text" class="roblox-status-text">Offline</span>
+                                        <span class="roblox-username"
+                                            >pioterson2000</span
+                                        >
+                                        <span
+                                            id="roblox-status-text"
+                                            class="roblox-status-text"
+                                            >Offline</span
+                                        >
                                     </div>
-                                    <div id="roblox-game-info" class="roblox-game-info" style="display: none;"></div>
+                                    <div
+                                        id="roblox-game-info"
+                                        class="roblox-game-info"
+                                        style="display: none"
+                                    ></div>
                                 </div>
                             </div>
                         </div>
@@ -323,47 +480,90 @@
                 </div>
             </section>
 
-
             <section class="skills-section glass-card animate-slide-right">
                 <h3 class="section-title">
                     <i class="fas fa-code"></i>
                     SKILLS & TECH STACK
                 </h3>
                 <div class="skills-grid">
-                    <a href="https://www.python.org" target="_blank" rel="noreferrer" class="skill-badge"
-                        data-skill="python">
+                    <a
+                        href="https://www.python.org"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="skill-badge"
+                        data-skill="python"
+                    >
                         <i class="fab fa-python"></i>
                         <span>Python</span>
                     </a>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"
-                        class="skill-badge" data-skill="javascript">
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="skill-badge"
+                        data-skill="javascript"
+                    >
                         <i class="fab fa-js"></i>
                         <span>JavaScript</span>
                     </a>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noreferrer"
-                        class="skill-badge" data-skill="html">
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/HTML"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="skill-badge"
+                        data-skill="html"
+                    >
                         <i class="fab fa-html5"></i>
                         <span>HTML5</span>
                     </a>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank" rel="noreferrer"
-                        class="skill-badge" data-skill="css">
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/CSS"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="skill-badge"
+                        data-skill="css"
+                    >
                         <i class="fab fa-css3-alt"></i>
                         <span>CSS3</span>
                     </a>
-                    <a href="https://react.dev" target="_blank" rel="noreferrer" class="skill-badge" data-skill="react">
+                    <a
+                        href="https://react.dev"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="skill-badge"
+                        data-skill="react"
+                    >
                         <i class="fab fa-react"></i>
                         <span>React</span>
                     </a>
-                    <a href="https://go.dev" target="_blank" rel="noreferrer" class="skill-badge" data-skill="go" z>
+                    <a
+                        href="https://go.dev"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="skill-badge"
+                        data-skill="go"
+                        z
+                    >
                         <i class="fab fa-golang"></i>
                         <span>Go</span>
                     </a>
-                    <a href="https://www.docker.com" target="_blank" rel="noreferrer" class="skill-badge"
-                        data-skill="docker">
+                    <a
+                        href="https://www.docker.com"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="skill-badge"
+                        data-skill="docker"
+                    >
                         <i class="fab fa-docker"></i>
                         <span>Docker</span>
                     </a>
-                    <a href="https://nodejs.org" target="_blank" rel="noreferrer" class="skill-badge" data-skill="node">
+                    <a
+                        href="https://nodejs.org"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="skill-badge"
+                        data-skill="node"
+                    >
                         <i class="fab fa-node-js"></i>
                         <span>Node.js</span>
                     </a>
@@ -392,7 +592,6 @@
                     </div>
                 </div>
             </section>
-
 
             <section class="projects-section glass-card animate-slide-up">
                 <h3 class="section-title">
@@ -431,7 +630,10 @@
                 </div>
             </section>
 
-            <section id="contact-section" class="contact-section glass-card animate-fade-in">
+            <section
+                id="contact-section"
+                class="contact-section glass-card animate-fade-in"
+            >
                 <h3 class="section-title">
                     <i class="fas fa-envelope"></i>
                     GET IN TOUCH
@@ -442,8 +644,13 @@
                             <i class="fa-brands fa-discord"></i>
                             Discord
                         </div>
-                        <a id="discord-button" href="https://cloud.umami.is/q/jYQ24LLk0" class="contact-btn"
-                            target="_blank" rel="noreferrer">
+                        <a
+                            id="discord-button"
+                            href="https://cloud.umami.is/q/jYQ24LLk0"
+                            class="contact-btn"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
                             <span class="btn-label">Add me</span>
                         </a>
                     </div>
@@ -452,7 +659,11 @@
                             <i class="fas fa-paper-plane"></i>
                             Email
                         </div>
-                        <a id="contact-button" href="mailto:piotrunius.v2@gmail.com" class="contact-btn">
+                        <a
+                            id="contact-button"
+                            href="mailto:piotrunius.v2@gmail.com"
+                            class="contact-btn"
+                        >
                             <span class="btn-label">Send Email</span>
                         </a>
                     </div>
@@ -466,16 +677,29 @@
                 </h3>
                 <div class="system-card">
                     <div class="system-left">
-                        <img src="assets/nobara-icon.png" alt="Nobara" class="system-logo" loading="lazy" width="52"
-                            height="52">
+                        <img
+                            src="assets/nobara-icon.png"
+                            alt="Nobara"
+                            class="system-logo"
+                            loading="lazy"
+                            width="52"
+                            height="52"
+                        />
                         <div>
                             <div class="system-name">Nobara (KDE Plasma)</div>
-                            <a class="system-link" href="https://nobaraproject.org" target="_blank"
-                                rel="noreferrer">nobaraproject.org</a>
+                            <a
+                                class="system-link"
+                                href="https://nobaraproject.org"
+                                target="_blank"
+                                rel="noreferrer"
+                                >nobaraproject.org</a
+                            >
                         </div>
                     </div>
-                    <p class="system-desc">Fedora base with KDE Plasma tuned for gaming and workstation
-                        stability.</p>
+                    <p class="system-desc">
+                        Fedora base with KDE Plasma tuned for gaming and
+                        workstation stability.
+                    </p>
                 </div>
             </section>
 
@@ -492,8 +716,11 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>I mainly work with Python, JavaScript, HTML/CSS, and I'm learning Go. I also mess around
-                                with Docker, React, and Node.js. Check out the Skills section above for the full list.
+                            <p>
+                                I mainly work with Python, JavaScript, HTML/CSS,
+                                and I'm learning Go. I also mess around with
+                                Docker, React, and Node.js. Check out the Skills
+                                section above for the full list.
                             </p>
                         </div>
                     </div>
@@ -503,10 +730,14 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>I do most of my projects out of passion and boredom. If I'm the one proposing or
-                                initiating something, I never ask for anything in return, just a credit/mention that
-                                the project was made by me or with my help. Gotta build that portfolio for the future,
-                                you know ;P</p>
+                            <p>
+                                I do most of my projects out of passion and
+                                boredom. If I'm the one proposing or initiating
+                                something, I never ask for anything in return,
+                                just a credit/mention that the project was made
+                                by me or with my help. Gotta build that
+                                portfolio for the future, you know ;P
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -515,9 +746,13 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Always open to interesting projects and collaborations! Hit me up via Discord or email
-                                and let's chat about what you have in mind. I'm especially interested in open-source
-                                contributions and learning opportunities.</p>
+                            <p>
+                                Always open to interesting projects and
+                                collaborations! Hit me up via Discord or email
+                                and let's chat about what you have in mind. I'm
+                                especially interested in open-source
+                                contributions and learning opportunities.
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -526,9 +761,13 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Honestly? Passion and boredom. I love building stuff, solving problems, and seeing ideas
-                                come to life. Coding gives me an outlet to create things that are useful (or just fun)
-                                while constantly learning something new :D</p>
+                            <p>
+                                Honestly? Passion and boredom. I love building
+                                stuff, solving problems, and seeing ideas come
+                                to life. Coding gives me an outlet to create
+                                things that are useful (or just fun) while
+                                constantly learning something new :D
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -537,9 +776,13 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Nobara gives me the stability of Fedora with gaming optimizations out of the box.
-                                Plus, KDE Plasma lets me tweak everything exactly how I want it. It's the best of both
-                                worlds for development and gaming (personal opinion :P)</p>
+                            <p>
+                                Nobara gives me the stability of Fedora with
+                                gaming optimizations out of the box. Plus, KDE
+                                Plasma lets me tweak everything exactly how I
+                                want it. It's the best of both worlds for
+                                development and gaming (personal opinion :P)
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -548,9 +791,13 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Plain HTML, CSS, and JavaScript with custom APIs on Cloudflare Workers for real-time
-                                status updates. Made by a human with about 20-30% AI assistance for ideation and small
-                                refinements. Check the GitHub repo for the source code.</p>
+                            <p>
+                                Plain HTML, CSS, and JavaScript with custom APIs
+                                on Cloudflare Workers for real-time status
+                                updates. Made by a human with about 20-30% AI
+                                assistance for ideation and small refinements.
+                                Check the GitHub repo for the source code.
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -559,9 +806,14 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>I'm still relatively early in my coding journey, but I've been steadily building projects
-                                and learning by doing. I believe in hands-on experience and contributing to open-source
-                                whenever I can. Every project is a learning opportunity.</p>
+                            <p>
+                                I'm still relatively early in my coding journey,
+                                but I've been steadily building projects and
+                                learning by doing. I believe in hands-on
+                                experience and contributing to open-source
+                                whenever I can. Every project is a learning
+                                opportunity.
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -570,8 +822,12 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Sure! Most of my projects are open-source. Just give credit where it's due and let me
-                                know if you build something cool with it. I'd love to see what you create ;D</p>
+                            <p>
+                                Sure! Most of my projects are open-source. Just
+                                give credit where it's due and let me know if
+                                you build something cool with it. I'd love to
+                                see what you create ;D
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -580,10 +836,13 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Right now I'm diving deeper into Go, improving my React skills, and exploring more
-                                backend development (hate it). I'm also learning about system administration and
-                                containerization
-                                with Docker. Always something new to learn :D</p>
+                            <p>
+                                Right now I'm diving deeper into Go, improving
+                                my React skills, and exploring more backend
+                                development (hate it). I'm also learning about
+                                system administration and containerization with
+                                Docker. Always something new to learn :D
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -592,11 +851,16 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Privacy Mode is a toggle-able feature that hides sensitive real-time data across my
-                                portfolio when enabled. When active, status cards show 'Privacy Mode Active' instead of
-                                live Discord, Steam, Spotify, and Roblox updates. GitHub projects and activity feeds
-                                also get hidden. It's useful when I want to limit what's publicly visible while keeping
-                                the site running.</p>
+                            <p>
+                                Privacy Mode is a toggle-able feature that hides
+                                sensitive real-time data across my portfolio
+                                when enabled. When active, status cards show
+                                'Privacy Mode Active' instead of live Discord,
+                                Steam, Spotify, and Roblox updates. GitHub
+                                projects and activity feeds also get hidden.
+                                It's useful when I want to limit what's publicly
+                                visible while keeping the site running.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -608,9 +872,10 @@
             <i class="fas fa-arrow-up"></i>
         </button>
 
-        <div class="copyright-bar" id="copyright-year">© 2025 Piotrunius - All Rights Reserved</div>
+        <div class="copyright-bar" id="copyright-year">
+            © 2025 Piotrunius - All Rights Reserved
+        </div>
 
         <script src="app.js"></script>
     </body>
-
 </html>
