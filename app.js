@@ -1687,9 +1687,9 @@ async function loadProjects() {
         badgeClass = "project-badge-collab";
         projectLink = repo.url;
       } else if (repo.name === "NexVid") {
-        badge = "private";
-        badgeClass = "project-badge-private";
-        projectLink = "https://nexvid.online/";
+        badge = "archive";
+        badgeClass = "project-badge-archive";
+        projectLink = repo.url;
       } else if (repo.name === "AutoClicker-AntiAFK" || repo.archived) {
         badge = "archive";
         badgeClass = "project-badge-archive";
