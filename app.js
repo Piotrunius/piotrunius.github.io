@@ -508,12 +508,10 @@ async function refreshGitHubStats() {
     : undefined;
   const projectsCount = totalProjects ?? summary.projects ?? 0;
   const commitsCount = summary.commits ?? commits.length;
-  const gistsCount =
-    summary.gists ??
-    summary.gistsCount ??
-    summary.publicGists ??
-    stats.publicGists ??
-    0;
+  // Use total stars received (provided by proxy as "starsReceived") instead of gists count
+  const starsReceived =
+    // prefer a top-level value from the API proxy, fall back to common summary fields
+    stats.starsReceived ?? summary.starsReceived ?? summary.starredCount ?? 0;
 
   // Reset to 0 and animate
   if (projectsEl) {
@@ -521,8 +519,9 @@ async function refreshGitHubStats() {
     animateCounter("stat-projects", projectsCount || 0, 1500);
   }
   if (gistsEl) {
+    // The "gists" stat card is repurposed to show total stars received
     gistsEl.textContent = "0";
-    animateCounter("stat-gists", gistsCount || 0, 1500);
+    animateCounter("stat-gists", starsReceived || 0, 1500);
   }
   if (commitsEl) {
     commitsEl.textContent = "0";
