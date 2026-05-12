@@ -1608,6 +1608,7 @@ async function fetchGitHubRepos() {
           ((!repo.isPrivate && !repo.private && !repo.fork) ||
             repo.name === "NexVid") &&
           repo.name !== "Offline-Casino" &&
+          repo.name !== "AutoClicker-AntiAFK" &&
           repo.name !== "Piotrunius",
       )
       .sort(
@@ -1679,7 +1680,7 @@ async function loadProjects() {
 
       // Special handling for specific projects
       if (repo.name === "piotrunius.github.io") {
-        badge = "this site";
+        badge = "current";
         badgeClass = "project-badge-current";
       } else if (repo.name === "Broadcast-generator") {
         badge = "collab";
@@ -1689,12 +1690,12 @@ async function loadProjects() {
         badge = "archive";
         badgeClass = "project-badge-archive";
         projectLink = repo.url;
-      } else if (repo.name === "AutoClicker-AntiAFK" || repo.archived) {
-        badge = "archive";
-        badgeClass = "project-badge-archive";
       } else if (repo.private) {
         badge = "private";
         badgeClass = "project-badge-private";
+      } else {
+        badge = "active";
+        badgeClass = "project-badge-active";
       }
 
       card.innerHTML = `
@@ -2030,11 +2031,6 @@ const Terminal = {
               type: "file",
               content:
                 "# Broadcast Generator\nA tool for generating broadcast messages.\nStatus: Active Development",
-            },
-            "autoclicker.md": {
-              type: "file",
-              content:
-                "# AutoClicker-AntiAFK\nAn auto-clicker utility.\nStatus: Archived",
             },
           },
         },
@@ -2515,9 +2511,6 @@ const Terminal = {
             badgeClass = "highlight";
           } else if (repo.name === "NexVid") {
             badge = "[PRIVATE]";
-            badgeClass = "warning";
-          } else if (repo.name === "AutoClicker-AntiAFK" || repo.archived) {
-            badge = "[ARCHIVE]";
             badgeClass = "warning";
           }
 
