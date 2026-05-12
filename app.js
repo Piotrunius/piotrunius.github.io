@@ -377,13 +377,13 @@ function getDefaultConfig() {
       {
         label: "GitHub",
         icon: "github",
-        url: "https://cloud.umami.is/q/O3Fj6wLHk",
+        url: "https://github.com/Piotrunius",
         color: "#ffffff",
       },
       {
         label: "Spotify",
         icon: "spotify",
-        url: "https://cloud.umami.is/q/Z53FK7OkW",
+        url: "https://stats.fm/piotrunius",
         color: "#1DB954",
       },
       {
@@ -395,13 +395,13 @@ function getDefaultConfig() {
       {
         label: "AniList",
         icon: "circle-play",
-        url: "https://cloud.umami.is/q/UOWpL3Lis",
+        url: "https://anilist.co/user/Piotrunius",
         color: "#1663ffff",
       },
       {
         label: "Roblox",
         icon: "cube",
-        url: "https://cloud.umami.is/q/fjiMxwjQJ",
+        url: "https://www.roblox.com/users/962249141/profile",
         color: "#EF3340",
       },
     ],
@@ -412,7 +412,7 @@ function getDefaultConfig() {
     },
     audio: {
       src: "assets/audio.mp3",
-      volume: 0.4,
+      volume: 0.1,
     },
   };
 }

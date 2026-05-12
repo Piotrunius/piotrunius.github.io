@@ -53,6 +53,6 @@ Then visit http://localhost:8000
 
 ## Contact
 
-- Discord: [alciaforlife](https://cloud.umami.is/q/jYQ24LLk0)
-- GitHub: [Piotrunius](https://cloud.umami.is/q/O3Fj6wLHk)
+- Discord: [alciaforlife](https://discord.com/users/1166309729371439104)
+- GitHub: [Piotrunius](https://github.com/Piotrunius)
 - Email: piotrunius.v2@gmail.com
