@@ -35,6 +35,13 @@ https://piotrunius.github.io/
 │   ├── audio.mp3
 │   └── nobara-icon.png
 ├── projects.json
+├── api/
+│   ├── spotify.js      # Spotify Worker
+│   ├── github.js       # GitHub Worker
+│   ├── steam.js        # Steam Worker
+│   ├── discord.js      # Discord (Lanyard) Worker
+│   ├── roblox.js       # Roblox Worker
+│   └── README.md       # API Documentation
 ```
 
 ## Local development
@@ -46,6 +53,52 @@ python -m http.server 8000
 ```
 
 Then visit http://localhost:8000
+
+## API Setup
+
+The portfolio uses **Cloudflare Workers** to fetch real-time data from various services. Each worker requires specific environment variables and secrets.
+
+### Workers
+
+All API workers are located in the `api/` folder:
+
+- **`spotify.js`** - Currently playing song
+  - Requires: `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`
+  
+- **`github.js`** - Profile stats, repositories, gists, and commits
+  - Requires: `GITHUB_TOKEN`, `GITHUB_USERNAME` (optional)
+  
+- **`steam.js`** - Player status and current game
+  - Requires: `STEAM_API_KEY`, `STEAM_ID`
+  
+- **`discord.js`** - Status and activities (via Lanyard API)
+  - Requires: `DISCORD_ID`
+  
+- **`roblox.js`** - Presence status and avatar
+  - Requires: `ROBLOX_USER_ID`
+
+### Privacy Mode
+
+All workers respect a **privacy mode** flag stored in KV namespace `STATE`:
+
+```
+KEY: PRIVACY_MODE
+VALUE: "true" | "false"
+```
+
+When enabled, all APIs return `{ privacyMode: true, message: "Privacy Mode Active" }`
+
+### Getting Started
+
+For detailed setup instructions, environment variables, and how to obtain API credentials, see **[`api/README.md`](api/README.md)**
+
+**Quick steps:**
+
+1. Create a Cloudflare Workers project
+2. Create a KV namespace named `STATE`
+3. Deploy each `.js` file from the `api/` folder
+4. Set all required secrets in Cloudflare Dashboard
+5. Update API endpoint URLs in `app.js` to match your deployed workers
 
 ## License
 
