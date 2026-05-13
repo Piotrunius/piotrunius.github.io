@@ -1,111 +1,281 @@
 # Piotrunius Portfolio
 
-Personal portfolio site with a focus on real-time presence, a local audio player, and a glassmorphism UI. Built with plain HTML, CSS, and JavaScript.
+A beautiful, modern portfolio website showcasing real-time presence across multiple platforms. Features live status panels from Spotify, Steam, GitHub, Discord, and Roblox, combined with a glassmorphism design and interactive audio player.
 
-**Authorship note:** this project was made by a human, with about 20–30% AI assistance (ideation, wording, and small refinements).
+> **Authorship Note:** This project was created by a human with approximately 20–30% AI assistance for ideation, wording, and refinements.
 
-## Highlights
+---
 
-- Animated background and theme toggle
-- Local music player + visualizer
-- Live status panels (Spotify, Steam, Discord, GitHub and Roblox)
-- PWA install + offline caching
+## ✨ Key Features
 
-## Tech
+- 🎨 **Glassmorphism UI** - Modern frosted-glass aesthetic with smooth animations
+- 🌙 **Theme Toggle** - Switch between light and dark modes
+- 🎵 **Local Audio Player** - Built-in music player with visualizer
+- 📊 **Live Status Panels** - Real-time data from:
+  - 🎵 Spotify (currently playing song)
+  - 🐙 GitHub (profile stats & repositories)
+  - 🎮 Steam (player status & game)
+  - 💬 Discord (status & activities via Lanyard)
+  - 🎮 Roblox (presence status)
+- 📱 **PWA Support** - Install as app + offline caching
+- 📊 **Responsive Design** - Works on desktop, tablet, mobile
+- 🔐 **Privacy Mode** - Global kill-switch for all data
 
-- HTML5, CSS3, JavaScript (ES6+)
-- Font Awesome 6.5.1
-- Umami analytics
-- Custom worker APIs (GitHub, Spotify, Steam, Discord and Roblox)
+---
 
-## Live
+## 🛠 Tech Stack
 
-https://piotrunius.github.io/
+| Technology | Purpose |
+|-----------|---------|
+| **HTML5** | Semantic markup |
+| **CSS3** | Modern styling & animations |
+| **JavaScript (ES6+)** | Interactivity & API calls |
+| **Cloudflare Workers** | Serverless API layer |
+| **KV Storage** | Token caching & settings |
+| **Font Awesome 6.5.1** | Icon library |
+| **Umami Analytics** | Privacy-friendly analytics |
 
-## Project structure
+---
+
+## 📂 Project Structure
 
 ```
-├── index.html
-├── styles.css
-├── app.js
-├── sw.js
-├── manifest.json
-├── assets/
-│   ├── pfp.png
-│   ├── audio.mp3
-│   └── nobara-icon.png
-├── projects.json
-├── api/
-│   ├── spotify.js      # Spotify Worker
-│   ├── github.js       # GitHub Worker
-│   ├── steam.js        # Steam Worker
-│   ├── discord.js      # Discord (Lanyard) Worker
-│   ├── roblox.js       # Roblox Worker
-│   └── README.md       # API Documentation
+.
+├── 📄 index.html           # Main HTML
+├── 🎨 styles.css           # Global styles
+├── ⚙️  app.js              # Main JavaScript
+├── 🔧 sw.js                # Service Worker (PWA)
+├── 📋 manifest.json        # PWA manifest
+├── 📚 projects.json        # Project data
+├── 🎼 assets/
+│   ├── pfp.png            # Profile picture
+│   ├── audio.mp3          # Background music
+│   └── nobara-icon.png    # App icon
+└── 🔌 api/
+    ├── spotify.js         # Spotify Worker
+    ├── github.js          # GitHub Worker
+    ├── steam.js           # Steam Worker
+    ├── discord.js         # Discord Worker
+    ├── roblox.js          # Roblox Worker
+    └── README.md          # API Documentation
 ```
 
-## Local development
+---
 
-Open index.html directly, or run a local server:
+## 🚀 Getting Started
 
+### Local Development
+
+#### Option 1: Direct File
+Simply open `index.html` in your browser.
+
+#### Option 2: Local Server
 ```bash
+# Python 3
 python -m http.server 8000
+
+# Or Node.js
+npx http-server
 ```
 
-Then visit http://localhost:8000
+Then visit: **http://localhost:8000**
 
-## API Setup
+### API Configuration
 
-The portfolio uses **Cloudflare Workers** to fetch real-time data from various services. Each worker requires specific environment variables and secrets.
+The live status panels require Cloudflare Workers to fetch real-time data.
 
-### Workers
+#### Quick Setup
 
-All API workers are located in the `api/` folder:
+1. **Create Cloudflare Workers Project**
+   - Visit [dash.cloudflare.com](https://dash.cloudflare.com/)
+   - Create a new Workers project
 
-- **`spotify.js`** - Currently playing song
-  - Requires: `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`
-  
-- **`github.js`** - Profile stats, repositories, gists, and commits
-  - Requires: `GITHUB_TOKEN`, `GITHUB_USERNAME` (optional)
-  
-- **`steam.js`** - Player status and current game
-  - Requires: `STEAM_API_KEY`, `STEAM_ID`
-  
-- **`discord.js`** - Status and activities (via Lanyard API)
-  - Requires: `DISCORD_ID`
-  
-- **`roblox.js`** - Presence status and avatar
-  - Requires: `ROBLOX_USER_ID`
+2. **Create KV Namespace**
+   ```bash
+   wrangler kv:namespace create "STATE"
+   ```
+
+3. **Deploy Workers**
+   - Copy each `.js` file from `api/` folder
+   - Deploy to Cloudflare (or use Wrangler CLI)
+
+4. **Add Secrets to Dashboard**
+   ```
+   SPOTIFY_CLIENT_ID = "..."
+   SPOTIFY_CLIENT_SECRET = "..."
+   SPOTIFY_REFRESH_TOKEN = "..."
+   GITHUB_TOKEN = "..."
+   STEAM_API_KEY = "..."
+   STEAM_ID = "..."
+   DISCORD_ID = "..."
+   ROBLOX_USER_ID = "..."
+   ```
+
+5. **Update API URLs**
+   - Edit `app.js` to point to your deployed workers
+   - Example: `https://workers.example.com/spotify`
+
+---
+
+## 🔌 API Workers
+
+Each worker requires specific environment variables and API credentials.
+
+### Available Workers
+
+| Worker | Data | Secrets |
+|--------|------|---------|
+| **spotify.js** | 🎵 Playing song | `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN` |
+| **github.js** | 🐙 Profile & repos | `GITHUB_TOKEN`, `GITHUB_USERNAME` (optional) |
+| **steam.js** | 🎮 Player status | `STEAM_API_KEY`, `STEAM_ID` |
+| **discord.js** | 💬 Status & activities | `DISCORD_ID` |
+| **roblox.js** | 🎮 Presence status | `ROBLOX_USER_ID` |
 
 ### Privacy Mode
 
-All workers respect a **privacy mode** flag stored in KV namespace `STATE`:
+All workers respect a global **Privacy Mode** flag:
 
 ```
-KEY: PRIVACY_MODE
-VALUE: "true" | "false"
+KV Namespace: STATE
+Key: PRIVACY_MODE
+Value: "true" | "false"
 ```
 
-When enabled, all APIs return `{ privacyMode: true, message: "Privacy Mode Active" }`
+When enabled, all APIs return:
+```json
+{
+  "privacyMode": true,
+  "message": "Privacy Mode Active"
+}
+```
 
-### Getting Started
+### Full Documentation
 
-For detailed setup instructions, environment variables, and how to obtain API credentials, see **[`api/README.md`](api/README.md)**
+👉 **[See `api/README.md`](api/README.md)** for:
+- How to obtain each API credential
+- Detailed deployment instructions
+- Response formats & examples
+- Security best practices
+- Troubleshooting guide
 
-**Quick steps:**
+---
 
-1. Create a Cloudflare Workers project
-2. Create a KV namespace named `STATE`
-3. Deploy each `.js` file from the `api/` folder
-4. Set all required secrets in Cloudflare Dashboard
-5. Update API endpoint URLs in `app.js` to match your deployed workers
+## 🎨 Customization
 
-## License
+### Change Colors & Theme
 
-[MIT](LICENSE) - License
+Edit `styles.css` to customize:
+- Primary colors: `--color-primary`, `--color-secondary`
+- Backgrounds: `--bg-light`, `--bg-dark`
+- Fonts: `:root` CSS variables
 
-## Contact
+### Update Profile Info
 
-- Discord: [alciaforlife](https://discord.com/users/1166309729371439104)
-- GitHub: [Piotrunius](https://github.com/Piotrunius)
-- Email: piotrunius.v2@gmail.com
+Edit `index.html`:
+- Name, bio, links in the hero section
+- Social media URLs
+- Contact information
+
+### Modify Project Data
+
+Edit `projects.json` to add/remove projects:
+```json
+{
+  "projects": [
+    {
+      "name": "Project Name",
+      "description": "Brief description",
+      "technologies": ["Tech1", "Tech2"],
+      "link": "https://..."
+    }
+  ]
+}
+```
+
+---
+
+## 📱 Features in Detail
+
+### 🎵 Audio Player
+
+- Local music playback with visualizer
+- Play/pause controls
+- Volume adjustment
+- Progress bar
+
+### 📊 Status Panels
+
+Real-time data updates (configurable interval):
+- **Spotify:** Album art, song title, artist, progress
+- **GitHub:** Profile picture, repos, followers, stats
+- **Steam:** Avatar, username, current game, status
+- **Discord:** Status indicator, current activity, avatar
+- **Roblox:** Presence status, avatar, game location
+
+### 🔐 Privacy Controls
+
+Disable all data fetching with one setting:
+- Set `PRIVACY_MODE = "true"` in KV
+- All endpoints return privacy notice
+- No data leakage
+
+### 🌙 Dark/Light Mode
+
+Automatic detection + manual toggle:
+- Respects system preference
+- Toggle button in header
+- Persists to localStorage
+
+---
+
+## 📊 Analytics
+
+Uses **Umami Analytics** for privacy-friendly statistics:
+- No cookies or identifiers
+- Respects user privacy
+- Basic traffic metrics only
+
+---
+
+## 🌐 Live Site
+
+**https://piotrunius.github.io/**
+
+---
+
+## 📖 Documentation
+
+- [API Workers Guide](api/README.md) - Complete API documentation
+- [Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)
+- [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+
+---
+
+## 🔗 Contact & Links
+
+| Platform | Link |
+|----------|------|
+| **Discord** | [@alciaforlife](https://discord.com/users/1166309729371439104) |
+| **GitHub** | [@Piotrunius](https://github.com/Piotrunius) |
+| **Email** | [piotrunius.v2@gmail.com](mailto:piotrunius.v2@gmail.com) |
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+Feel free to use, modify, and distribute this code as long as you include the original license.
+
+---
+
+## 🙏 Acknowledgments
+
+- [Font Awesome](https://fontawesome.com/) - Icon library
+- [Cloudflare](https://www.cloudflare.com/) - Workers & KV storage
+- [Lanyard](https://lanyard.rest/) - Discord status API
+- The open-source community
+
+---
+
+**Made with ❤️ by Piotrunius**

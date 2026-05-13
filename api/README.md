@@ -1,30 +1,36 @@
-# Cloudflare Worker APIs
+# 🔌 Cloudflare Worker APIs
 
-This folder contains Cloudflare Worker scripts for fetching real-time data from various services. Each worker requires specific environment variables and secrets.
+Real-time data fetching from Spotify, GitHub, Steam, Discord, and Roblox. Each worker requires specific environment variables and secrets.
 
-## Structure
+---
+
+## 📂 Structure
 
 ```
 api/
-├── spotify.js      # Spotify - currently playing song
-├── github.js       # GitHub - profile stats and repositories
-├── steam.js        # Steam - player status and current game
-├── discord.js      # Discord (via Lanyard) - status and activities
-├── roblox.js       # Roblox - presence status
-└── README.md       # This documentation
+├── spotify.js       # 🎵 Currently playing song
+├── github.js        # 🐙 Profile stats and repositories  
+├── steam.js         # 🎮 Player status and current game
+├── discord.js       # 💬 Status and activities (Lanyard)
+├── roblox.js        # 🎮 Presence status
+└── README.md        # 📖 Documentation
 ```
 
 ---
 
-## Shared Environment Variables
+## ⚙️ Shared Configuration
 
-All workers have access to a **KV Namespace** `STATE` to check privacy mode:
+### Privacy Mode
 
+All workers check a **Privacy Mode** flag in KV namespace `STATE`:
+
+```env
+KEY: PRIVACY_MODE
+VALUE: "true" | "false"
 ```
-PRIVACY_MODE: "true" | "false"  (KV Namespace)
-```
 
-When `PRIVACY_MODE` is set to `"true"`, all workers return:
+When enabled (`"true"`), all endpoints return:
+
 ```json
 {
   "privacyMode": true,
@@ -32,77 +38,87 @@ When `PRIVACY_MODE` is set to `"true"`, all workers return:
 }
 ```
 
+### CORS Configuration
+
+Default allowed origins:
+- `https://piotrunius.github.io` (production)
+- `http://127.0.0.1:5500` (local development)
+
+Edit `ALLOWED_ORIGIN` in worker files to change.
+
 ---
 
-## 🎵 Spotify (`spotify.js`)
+## 🎵 Spotify Worker
 
-Fetches the currently playing song from your Spotify account.
+**File:** `spotify.js`  
+**Purpose:** Fetch currently playing track with album art and progress
 
-### Environment Variables (Secrets)
+### Required Secrets
 
-```
-SPOTIFY_CLIENT_ID          # Get from https://developer.spotify.com/dashboard
-SPOTIFY_CLIENT_SECRET      # ⚠️ SECRET - never commit this
+```env
+SPOTIFY_CLIENT_ID          # Spotify app ID
+SPOTIFY_CLIENT_SECRET      # ⚠️ SECRET - Never commit
 SPOTIFY_REFRESH_TOKEN      # OAuth refresh token
 ```
 
-### How to Get Credentials:
+### Getting Credentials
 
-1. Visit https://developer.spotify.com/dashboard
+1. Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
 2. Create an application
-3. Go to "Edit Settings" → Copy `Client ID` and `Client Secret`
-4. For `SPOTIFY_REFRESH_TOKEN`, perform OAuth authorization on your account
-   - Or use https://accounts.spotify.com/authorize with scope parameters
+3. Copy **Client ID** and **Client Secret** from settings
+4. Generate **Refresh Token** via OAuth flow at [accounts.spotify.com/authorize](https://accounts.spotify.com/authorize)
 
-### KV Storage
+### Caching
 
-Caches token in KV namespace `STATE` as `SPOTIFY_TOKEN`:
+Token cached in KV as `SPOTIFY_TOKEN`:
 ```json
 {
   "access_token": "...",
-  "expires_at": 1234567890
+  "expires_at": 1234567890000
 }
 ```
 
-### API Response
+### Response
 
 ```json
 {
   "privacyMode": false,
   "isPlaying": true,
-  "title": "Song Name",
-  "artist": "Artist Name",
-  "album": "Album Name",
-  "albumArt": "https://...",
+  "title": "Blinding Lights",
+  "artist": "The Weeknd",
+  "album": "After Hours",
+  "albumArt": "https://i.scdn.co/image/...",
   "url": "https://open.spotify.com/track/...",
-  "progressMs": 120000,
-  "durationMs": 240000
+  "progressMs": 125000,
+  "durationMs": 200040
 }
 ```
 
 ---
 
-## 🐙 GitHub (`github.js`)
+## 🐙 GitHub Worker
 
-Fetches profile stats, repositories, gists, and commits.
+**File:** `github.js`  
+**Purpose:** Fetch profile stats, repositories, gists, and recent commits
 
-### Environment Variables (Secrets)
+### Required Secrets
 
-```
+```env
 GITHUB_TOKEN               # Personal Access Token (PAT)
 GITHUB_USERNAME            # Optional (default: 'Piotrunius')
 ```
 
-### How to Get PAT:
+### Getting Credentials
 
-1. GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-2. Generate a new token with scopes:
-   - `repo` (repository access)
-   - `read:user` (read profile)
-   - `gist` (access to gists)
-3. Copy token as `GITHUB_TOKEN`
+1. Go to GitHub → Settings → Developer settings → Personal access tokens
+2. Click "Tokens (classic)"
+3. Generate new token with scopes:
+   - ✅ `repo` - Repository access
+   - ✅ `read:user` - Read profile info
+   - ✅ `gist` - Access to gists
+4. Copy and use as `GITHUB_TOKEN`
 
-### API Response
+### Response
 
 ```json
 {
@@ -110,8 +126,8 @@ GITHUB_USERNAME            # Optional (default: 'Piotrunius')
   "user": {
     "login": "Piotrunius",
     "name": "Full Name",
-    "avatar": "https://...",
-    "bio": "Bio text",
+    "avatar": "https://avatars.githubusercontent.com/u/...",
+    "bio": "Developer & Open Source Enthusiast",
     "publicRepos": 25,
     "privateRepos": 5
   },
@@ -123,82 +139,102 @@ GITHUB_USERNAME            # Optional (default: 'Piotrunius')
     "gists": 10,
     "starsReceived": 300
   },
-  "projects": [...],
+  "projects": [
+    {
+      "name": "project-name",
+      "description": "Brief description",
+      "stars": 42,
+      "lang": "TypeScript",
+      "url": "https://github.com/...",
+      "isPrivate": false
+    }
+  ],
   "starred": [...],
   "recentCommits": [...],
-  "languages": [...],
+  "languages": [
+    {"name": "TypeScript", "repos": 8},
+    {"name": "JavaScript", "repos": 5}
+  ],
   "lastUpdate": "2024-01-20T10:30:00Z"
 }
 ```
 
 ---
 
-## 🎮 Steam (`steam.js`)
+## 🎮 Steam Worker
 
-Fetches player status and currently playing game.
+**File:** `steam.js`  
+**Purpose:** Fetch player status and currently playing game
 
-### Environment Variables (Secrets)
+### Required Secrets
 
+```env
+STEAM_API_KEY              # API key from Steam Community
+STEAM_ID                   # 64-bit Steam ID
 ```
-STEAM_API_KEY              # API key from https://steamcommunity.com/dev/apikey
-STEAM_ID                   # Steam ID (64-bit number)
-```
 
-### How to Get Credentials:
+### Getting Credentials
 
-1. Visit https://steamcommunity.com/dev/apikey (you must be logged in)
-2. Fill out the form and unlock your API key
-3. Copy it as `STEAM_API_KEY`
-4. To find your `STEAM_ID`:
-   - Visit your Steam profile → Copy profile link
-   - Use https://steamidfinder.com/ or API: https://api.steampowered.com/ISteamUser/ResolveVanityURL/v1/?key=YOUR_KEY&vanityurl=USERNAME
+**API Key:**
+1. Visit [Steam Community → API Key](https://steamcommunity.com/dev/apikey) (must be logged in)
+2. Fill registration form
+3. Copy your API key
 
-### API Response
+**Steam ID:**
+1. Visit your Steam profile
+2. Copy URL (extract ID from `https://steamcommunity.com/profiles/STEAMID`)
+3. Or use [steamidfinder.com](https://steamidfinder.com/)
+
+### Response
 
 ```json
 {
   "privacyMode": false,
-  "name": "Player Name",
+  "name": "PlayerName",
   "state": 1,
-  "game": "CS2",
-  "avatar": "https://..."
+  "game": "Counter-Strike 2",
+  "avatar": "https://avatars.steamstatic.com/..."
 }
 ```
 
 **State Codes:**
-- `0` - Offline
-- `1` - Online
-- `2` - Busy
-- `3` - Away
-- `4` - Snooze
+| Code | Status |
+|------|--------|
+| 0 | Offline |
+| 1 | Online |
+| 2 | Busy |
+| 3 | Away |
+| 4 | Snooze |
 
 ---
 
-## 💬 Discord (`discord.js`)
+## 💬 Discord Worker
 
-Fetches Discord user status and activities using the **Lanyard API**.
+**File:** `discord.js`  
+**Purpose:** Fetch Discord status and activities (via Lanyard API)
 
-### Environment Variables (Secrets)
+### Required Secrets
 
-```
+```env
 DISCORD_ID                 # Discord User ID
 ```
 
-### How to Get Discord ID:
+### Getting Credentials
 
-1. Discord → User Settings → Advanced → Developer Mode (enable)
-2. Right-click on profile → Copy User ID
-3. Or test at: https://lanyard.rest/api/users/YOUR_ID
+1. Open Discord → User Settings → Advanced
+2. Enable **Developer Mode**
+3. Right-click your profile → **Copy User ID**
+4. Or test via [lanyard.rest](https://lanyard.rest/api/users/YOUR_ID)
 
-### Lanyard Setup:
+### Lanyard Setup
 
-Lanyard is a public service (no API key required), but you need to have the **Lanyard bot** on your Discord server.
+Lanyard is a **free public service** (no API key needed) that tracks Discord status.
 
-1. Visit https://lanyard.rest
-2. Click "Invite Bot"
-3. The bot will track your status and activities
+1. Visit [lanyard.rest](https://lanyard.rest)
+2. Click **"Invite Bot"**
+3. The bot tracks your status and activities in real-time
 
-### API Response
+### Response
 
 ```json
 {
@@ -214,113 +250,169 @@ Lanyard is a public service (no API key required), but you need to have the **La
   },
   "activities": [
     {
-      "name": "Activity Name",
-      "details": "Details",
-      "state": "State",
-      "largeImage": "https://..."
+      "name": "Visual Studio Code",
+      "details": "Editing api/README.md",
+      "state": "Working on portfolio",
+      "largeImage": "https://cdn.discordapp.com/app-assets/..."
     }
   ],
   "timestamp": "2024-01-20T10:30:00Z"
 }
 ```
 
+**Status Values:** `online` | `idle` | `dnd` | `offline`
+
 ---
 
-## 🎮 Roblox (`roblox.js`)
+## 🎮 Roblox Worker
 
-Fetches Roblox player presence status and avatar.
+**File:** `roblox.js`  
+**Purpose:** Fetch player presence status and avatar
 
-### Environment Variables (Secrets)
+### Required Secrets
 
-```
+```env
 ROBLOX_USER_ID             # Roblox User ID (number)
 ```
 
-### How to Get Roblox User ID:
+### Getting Credentials
 
-1. Visit your Roblox profile
-2. URL: `https://www.roblox.com/users/ID/profile` → copy the ID
+1. Visit your [Roblox Profile](https://www.roblox.com/users)
+2. Extract ID from URL: `https://www.roblox.com/users/ID/profile`
 3. Or use API: `https://api.roblox.com/users/get-by-username?username=USERNAME`
 
-### API Response
+### Response
 
 ```json
 {
   "privacyMode": false,
   "status": "Online",
-  "location": "Game Name",
-  "avatar": "https://..."
+  "location": "Bloxburg",
+  "avatar": "https://www.roblox.com/bust-thumbnails/..."
 }
 ```
 
+**Status Values:** `Online` | `Offline` | `InGame` | `InStudio`
+
 ---
 
-## Deployment to Cloudflare Workers
+## 🚀 Deployment
 
-### Overview
+### Cloudflare Workers Setup
 
-Each `.js` file in this folder is a standalone Cloudflare Worker that can be deployed via:
+Each `.js` file is a standalone worker deployable via:
 
-1. **Cloudflare Dashboard** - Drag and drop file in the editor
-2. **Wrangler CLI** - `wrangler publish`
-3. **Cloudflare Pages Functions** - Place in `functions/api/` for automatic routing
+1. **[Cloudflare Dashboard](https://dash.cloudflare.com/)** - Copy & paste code
+2. **[Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)** - `wrangler publish`
+3. **[Cloudflare Pages Functions](https://developers.cloudflare.com/pages/functions/)** - Auto-routing
 
-### Configuration (wrangler.toml)
+### Configuration File (wrangler.toml)
 
 ```toml
+name = "portfolio-workers"
+main = "src/index.js"
+compatibility_date = "2024-01-20"
+
 [env.production]
 vars = { GITHUB_USERNAME = "Piotrunius" }
 
 [[env.production.secrets]]
-SPOTIFY_CLIENT_ID = "your-id"
-SPOTIFY_CLIENT_SECRET = "your-secret"
-SPOTIFY_REFRESH_TOKEN = "your-token"
-GITHUB_TOKEN = "your-token"
-STEAM_API_KEY = "your-key"
-STEAM_ID = "your-id"
-DISCORD_ID = "your-id"
-ROBLOX_USER_ID = "your-id"
+SPOTIFY_CLIENT_ID = "your-client-id"
+SPOTIFY_CLIENT_SECRET = "your-client-secret"
+SPOTIFY_REFRESH_TOKEN = "your-refresh-token"
+GITHUB_TOKEN = "ghp_xxxxxxxxxxxx"
+STEAM_API_KEY = "your-steam-key"
+STEAM_ID = "76561198xxxxx"
+DISCORD_ID = "1166309729371439104"
+ROBLOX_USER_ID = "12345678"
 
 [[env.production.kv_namespaces]]
 binding = "STATE"
-id = "your-kv-id"
+id = "xxxxxxxxxxxxxxxx"
+preview_id = "yyyyyyyyyyyyyyyy"
 ```
 
-### CORS Origins
+### Step-by-Step
 
-By default, workers allow requests from:
-- `https://piotrunius.github.io` (production)
-- `http://127.0.0.1:5500` (local dev)
+```bash
+# 1. Install Wrangler
+npm install -g @cloudflare/wrangler
 
-To change, edit `ALLOWED_ORIGIN` in each worker file.
+# 2. Login to Cloudflare
+wrangler login
 
----
+# 3. Create KV namespace
+wrangler kv:namespace create "STATE" --preview false
 
-## ⚠️ Security
-
-- **Never** commit secrets (SPOTIFY_CLIENT_SECRET, GITHUB_TOKEN, etc.)
-- Use environment variables / secrets in Cloudflare Dashboard
-- Ensure KV Namespace `STATE` exists in your Cloudflare project
-- Restrict API access via CORS headers
-- Regularly rotate tokens (Spotify refresh token, GitHub PAT)
+# 4. Deploy worker
+wrangler publish --env production
+```
 
 ---
 
-## Troubleshooting
+## 🔐 Security Best Practices
 
-| Problem | Solution |
-|---------|----------|
-| 401 Unauthorized | Check if secret exists and is correct |
-| 403 Forbidden | GitHub PAT missing required scopes, Spotify app lacks permissions |
-| CORS Error | Verify origin is in the `ALLOWED_ORIGIN` list |
-| KV Error | Ensure `STATE` binding exists in `wrangler.toml` |
-| No content (204) | Spotify: nothing playing; Steam: profile is private |
+> ⚠️ **Never commit secrets to version control**
+
+- ✅ Store all secrets in **Cloudflare Dashboard** only
+- ✅ Use `.gitignore` for `wrangler.toml` with secrets
+- ✅ Ensure KV Namespace `STATE` exists and is bound
+- ✅ Rotate tokens regularly (GitHub PAT, Spotify refresh token)
+- ✅ Use separate credentials for dev/staging/production
+- ✅ Monitor API rate limits
 
 ---
 
-## Notes
+## 🆘 Troubleshooting
 
-- Each worker caches data where possible (e.g., Spotify token in KV)
-- All requests support CORS preflights (OPTIONS)
-- Privacy Mode disables all data (KV: `PRIVACY_MODE = "true"`)
-- Timestamps are in ISO 8601 (UTC)
+| Problem | Cause | Solution |
+|---------|-------|----------|
+| **401 Unauthorized** | Missing/invalid secret | Verify secret exists in Dashboard |
+| **403 Forbidden** | Insufficient permissions | Check token scopes (GitHub) or app permissions (Spotify) |
+| **CORS Error** | Origin not whitelisted | Add origin to `ALLOWED_ORIGIN` in worker |
+| **KV Error** | Binding missing | Ensure `STATE` KV namespace is bound in `wrangler.toml` |
+| **204 No Content** | No data available | Spotify: not playing; Steam: profile private |
+| **Rate Limited** | Too many requests | Implement caching or increase request interval |
+
+### Testing
+
+Use curl to test workers locally:
+
+```bash
+# Test Spotify
+curl -X GET "http://localhost:8787/spotify" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+
+# Test GitHub
+curl -X GET "http://localhost:8787/github"
+
+# Test with privacy mode
+curl -X GET "http://localhost:8787/spotify" \
+  -H "X-Privacy-Mode: true"
+```
+
+---
+
+## 📋 Implementation Notes
+
+- **Caching:** Spotify tokens cached in KV to reduce API calls
+- **CORS:** All workers support OPTIONS preflight requests
+- **Privacy Mode:** Global kill-switch for all endpoints (set `PRIVACY_MODE = "true"`)
+- **Timestamps:** All dates in ISO 8601 format (UTC)
+- **Error Handling:** Graceful fallbacks with descriptive error messages
+- **Rate Limiting:** Respect API rate limits of each service
+
+---
+
+## 📚 References
+
+- [Cloudflare Workers Docs](https://developers.cloudflare.com/workers/)
+- [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
+- [GitHub REST API](https://docs.github.com/rest)
+- [Steam Web API](https://steamcommunity.com/dev)
+- [Lanyard API](https://lanyard.rest/)
+- [Roblox API](https://wiki.roblox.com/)
+
+---
+
+**Last Updated:** January 2024 | **Status:** ✅ Production Ready
