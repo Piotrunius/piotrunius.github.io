@@ -743,11 +743,13 @@ async function refreshSteamStatus() {
   const personaState =
     typeof s.personastate === "number"
       ? s.personastate
-      : typeof s.status === "number"
-        ? s.status
-        : s.online
-          ? 1
-          : 0;
+      : typeof s.state === "number"
+        ? s.state
+        : typeof s.status === "number"
+          ? s.status
+          : s.online
+            ? 1
+            : 0;
 
   if (gameName) {
     dotContainer.classList.add("in-game");
@@ -2791,7 +2793,7 @@ const Terminal = {
           `<span class="info">guest</span>@<span class="highlight">piotrunius.dev</span>`,
           "-".repeat(25),
           `<span class="info">OS:</span> Web Browser`,
-          `<span class="info">Host:</span> piotrunius.github.io`,
+          `<span class="info">Host:</span> piotrunius.dev`,
           `<span class="info">Kernel:</span> JavaScript ES2024`,
           `<span class="info">Uptime:</span> ${Math.floor(performance.now() / 1000)}s`,
           `<span class="info">Shell:</span> Piotrunius Terminal v2.0`,
@@ -4470,7 +4472,7 @@ const Terminal = {
       usage: "ping <host>",
       icon: "fa-satellite-dish",
       fn: async function (args) {
-        const host = args[0] || "piotrunius.github.io";
+        const host = args[0] || "piotrunius.dev";
         const results = [];
         results.push({ text: `PING ${host}`, class: "info" });
 

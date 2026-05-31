@@ -239,7 +239,7 @@ Uses **Umami Analytics** for privacy-friendly statistics:
 
 ## 🌐 Live Site
 
-**https://piotrunius.github.io/**
+**https://piotrunius.dev/**
 
 ---
 

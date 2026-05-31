@@ -1,7 +1,7 @@
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin");
-    const ALLOWED_ORIGIN = "https://piotrunius.github.io";
+    const ALLOWED_ORIGIN = "https://piotrunius.dev";
     const corsHeaders = {
       "Access-Control-Allow-Origin": origin === "http://127.0.0.1:5500" ? origin : ALLOWED_ORIGIN,
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",

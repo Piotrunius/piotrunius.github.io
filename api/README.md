@@ -41,7 +41,7 @@ When enabled (`"true"`), all endpoints return:
 ### CORS Configuration
 
 Default allowed origins:
-- `https://piotrunius.github.io` (production)
+- `https://piotrunius.dev` (production)
 - `http://127.0.0.1:5500` (local development)
 
 Edit `ALLOWED_ORIGIN` in worker files to change.
