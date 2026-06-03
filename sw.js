@@ -1,5 +1,5 @@
 // Service Worker
-const CACHE_NAME = "piotrunius-bio-v2";
+const CACHE_NAME = "piotrunius-bio-v3";
 const urlsToCache = [
   "/",
   "/index.html",
