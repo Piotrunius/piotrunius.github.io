@@ -327,9 +327,9 @@ const setupData = {
     {
       icon: "display",
       label: "Displays",
-      value: "Lenovo L2251p (75Hz) + AOC 27G2G8 (240Hz)",
+      value: "AOC C27G2Z3/BK (280Hz) + AOC 27G2G8 (240Hz)",
       urls: [
-        "https://www.google.com/search?q=Lenovo+L2251p",
+        "https://www.google.com/search?q=AOC+C27G2Z3/BK+280Hz",
         "https://www.google.com/search?q=AOC+27G2G8+240Hz",
       ],
     },
