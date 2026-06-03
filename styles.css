@@ -399,7 +399,8 @@ svg.svg-inline--fa:not(.social-link svg) {
     box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
 }
 
-.music-btn i , .music-btn svg.svg-inline--fa{
+.music-btn i,
+.music-btn svg.svg-inline--fa {
     color: #000 !important;
     background: none !important;
     -webkit-text-fill-color: initial !important;
@@ -519,7 +520,8 @@ svg.svg-inline--fa:not(.social-link svg) {
     height: 100%;
 }
 
-.spotify-placeholder i , .spotify-placeholder svg.svg-inline--fa{
+.spotify-placeholder i,
+.spotify-placeholder svg.svg-inline--fa {
     font-size: 4rem;
     color: #1db954;
 }
@@ -683,7 +685,8 @@ a:where(
     box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
 }
 
-.steam-profile-link:hover i , .steam-profile-link:hover svg.svg-inline--fa{
+.steam-profile-link:hover i,
+.steam-profile-link:hover svg.svg-inline--fa {
     background: none !important;
     -webkit-text-fill-color: initial !important;
     color: #000 !important;
@@ -858,7 +861,8 @@ a:where(
     box-shadow: 0 6px 20px rgba(0, 255, 136, 0.2);
 }
 
-.profile-stat-item i , .profile-stat-item svg.svg-inline--fa{
+.profile-stat-item i,
+.profile-stat-item svg.svg-inline--fa {
     font-size: 1.3rem;
     color: var(--primary);
 }
@@ -928,7 +932,8 @@ a:where(
     filter: brightness(1.05);
 }
 
-.music-btn i , .music-btn svg.svg-inline--fa{
+.music-btn i,
+.music-btn svg.svg-inline--fa {
     background: none !important;
     -webkit-text-fill-color: initial !important;
     color: #000 !important;
@@ -1074,7 +1079,8 @@ a:where(
     /* Keep subtle bg */
 }
 
-.social-link i , .social-link svg.svg-inline--fa{
+.social-link i,
+.social-link svg.svg-inline--fa {
     font-size: 1.3rem;
     /* Default Unified Look: Primary Gradient */
     background: linear-gradient(135deg, #00ff88, #00b8ff);
@@ -1112,7 +1118,8 @@ a:where(
     }
 }
 
-.social-link:hover i , .social-link:hover svg.svg-inline--fa{
+.social-link:hover i,
+.social-link:hover svg.svg-inline--fa {
     transform: scale(1.2) rotate(10deg);
     /* On Hover: Reveal Brand Color */
     background: none;
@@ -1302,7 +1309,8 @@ a:where(
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.meta-badge i , .meta-badge svg.svg-inline--fa{
+.meta-badge i,
+.meta-badge svg.svg-inline--fa {
     font-size: 0.7rem;
     color: var(--primary);
 }
@@ -1419,7 +1427,8 @@ a:where(
     box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
 }
 
-.stat-card i , .stat-card svg.svg-inline--fa{
+.stat-card i,
+.stat-card svg.svg-inline--fa {
     font-size: 2.2rem;
     color: var(--primary);
     margin-bottom: 0.75rem;
@@ -1428,7 +1437,8 @@ a:where(
     transition: all 0.4s ease;
 }
 
-.stat-card:hover i , .stat-card:hover svg.svg-inline--fa{
+.stat-card:hover i,
+.stat-card:hover svg.svg-inline--fa {
     transform: scale(1.1) rotate(5deg);
 }
 
@@ -1602,7 +1612,8 @@ a:where(
     color: var(--primary);
 }
 
-.project-stat i , .project-stat svg.svg-inline--fa{
+.project-stat i,
+.project-stat svg.svg-inline--fa {
     font-size: 0.9rem;
 }
 
@@ -1623,7 +1634,8 @@ a:where(
     position: relative;
 }
 
-.project-link i, .project-link svg.svg-inline--fa,
+.project-link i,
+.project-link svg.svg-inline--fa,
 .project-link .fa-external-link-alt {
     color: #000 !important;
     filter: brightness(0) !important;
@@ -1891,7 +1903,8 @@ a:where(
     gap: 0.35rem;
 }
 
-.meta-item i , .meta-item svg.svg-inline--fa{
+.meta-item i,
+.meta-item svg.svg-inline--fa {
     font-size: 0.75rem;
     opacity: 0.8;
 }
@@ -2402,7 +2415,8 @@ a:where(
     line-height: 1.4;
 }
 
-.contact-btn i , .contact-btn svg.svg-inline--fa{
+.contact-btn i,
+.contact-btn svg.svg-inline--fa {
     font-size: 1.2rem;
     position: relative;
     z-index: 1;
@@ -2618,7 +2632,8 @@ a:where(
     color: var(--primary);
 }
 
-.time-difference i , .time-difference svg.svg-inline--fa{
+.time-difference i,
+.time-difference svg.svg-inline--fa {
     font-size: 1.2rem;
 }
 
@@ -2905,7 +2920,8 @@ a:where(
         height: 40px;
     }
 
-    .wip-icon-wrapper i ,     .wip-icon-wrapper svg.svg-inline--fa{
+    .wip-icon-wrapper i,
+    .wip-icon-wrapper svg.svg-inline--fa {
         font-size: 1.2rem;
     }
 
@@ -3058,7 +3074,8 @@ a:where(
     opacity: 0.7;
 }
 
-.discord-last-seen i , .discord-last-seen svg.svg-inline--fa{
+.discord-last-seen i,
+.discord-last-seen svg.svg-inline--fa {
     font-size: 0.75rem;
 }
 
@@ -3151,7 +3168,8 @@ a:where(
     box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
 }
 
-.steam-profile-link:hover i , .steam-profile-link:hover svg.svg-inline--fa{
+.steam-profile-link:hover i,
+.steam-profile-link:hover svg.svg-inline--fa {
     background: none !important;
     -webkit-text-fill-color: initial !important;
     color: #000 !important;
@@ -3562,7 +3580,8 @@ a:where(
     flex-shrink: 0;
 }
 
-.wip-icon-wrapper i , .wip-icon-wrapper svg.svg-inline--fa{
+.wip-icon-wrapper i,
+.wip-icon-wrapper svg.svg-inline--fa {
     font-size: 1.5rem;
     background: linear-gradient(135deg, #00ff88, #00b8ff);
     -webkit-background-clip: text;
@@ -3608,7 +3627,8 @@ a:where(
     flex-shrink: 0;
 }
 
-.wip-close i , .wip-close svg.svg-inline--fa{
+.wip-close i,
+.wip-close svg.svg-inline--fa {
     background: none !important;
     -webkit-text-fill-color: currentColor !important;
     color: rgba(255, 255, 255, 0.8);
@@ -3623,7 +3643,8 @@ a:where(
     box-shadow: 0 4px 12px rgba(0, 255, 136, 0.4);
 }
 
-.wip-close:hover i , .wip-close:hover svg.svg-inline--fa{
+.wip-close:hover i,
+.wip-close:hover svg.svg-inline--fa {
     color: #000;
     -webkit-text-fill-color: #000 !important;
 }
@@ -3850,13 +3871,15 @@ a:where(
     box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
 }
 
-.skill-badge i , .skill-badge svg.svg-inline--fa{
+.skill-badge i,
+.skill-badge svg.svg-inline--fa {
     font-size: 2.5rem;
     color: var(--primary);
     transition: all 0.3s ease;
 }
 
-.skill-badge:hover i , .skill-badge:hover svg.svg-inline--fa{
+.skill-badge:hover i,
+.skill-badge:hover svg.svg-inline--fa {
     transform: scale(1.1) rotate(5deg);
 }
 
@@ -4032,7 +4055,8 @@ a:where(
     box-shadow: 0 12px 40px rgba(0, 255, 136, 0.3);
 }
 
-.visitor-counter-floating i , .visitor-counter-floating svg.svg-inline--fa{
+.visitor-counter-floating i,
+.visitor-counter-floating svg.svg-inline--fa {
     color: var(--primary);
     font-size: 1rem;
 }
@@ -4064,7 +4088,8 @@ a:where(
         padding: 1rem 0.75rem;
     }
 
-    .skill-badge i ,     .skill-badge svg.svg-inline--fa{
+    .skill-badge i,
+    .skill-badge svg.svg-inline--fa {
         font-size: 2rem;
     }
 
@@ -4119,12 +4144,14 @@ a:where(
     box-shadow: 0 12px 40px rgba(0, 255, 136, 0.3);
 }
 
-.terminal-toggle i , .terminal-toggle svg.svg-inline--fa{
+.terminal-toggle i,
+.terminal-toggle svg.svg-inline--fa {
     color: var(--primary);
     transition: all 0.3s ease;
 }
 
-.terminal-toggle:hover i , .terminal-toggle:hover svg.svg-inline--fa{
+.terminal-toggle:hover i,
+.terminal-toggle:hover svg.svg-inline--fa {
     transform: scale(1.15);
 }
 
@@ -4134,7 +4161,8 @@ a:where(
     box-shadow: 0 12px 40px rgba(0, 255, 136, 0.3);
 }
 
-.terminal-toggle.active i , .terminal-toggle.active svg.svg-inline--fa{
+.terminal-toggle.active i,
+.terminal-toggle.active svg.svg-inline--fa {
     transform: scale(1.15);
 }
 
@@ -4268,7 +4296,8 @@ a:where(
     justify-content: center;
 }
 
-.terminal-title i , .terminal-title svg.svg-inline--fa{
+.terminal-title i,
+.terminal-title svg.svg-inline--fa {
     color: var(--primary);
 }
 
@@ -4281,7 +4310,8 @@ a:where(
     border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.terminal-opacity-control i , .terminal-opacity-control svg.svg-inline--fa{
+.terminal-opacity-control i,
+.terminal-opacity-control svg.svg-inline--fa {
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.5);
 }
@@ -4671,7 +4701,8 @@ a:where(
     background: rgba(0, 255, 136, 0.15);
 }
 
-.suggestion-item i , .suggestion-item svg.svg-inline--fa{
+.suggestion-item i,
+.suggestion-item svg.svg-inline--fa {
     color: var(--primary);
     font-size: 0.8rem;
     width: 20px;
@@ -4719,7 +4750,8 @@ a:where(
     gap: 0.35rem;
 }
 
-.status-item i , .status-item svg.svg-inline--fa{
+.status-item i,
+.status-item svg.svg-inline--fa {
     color: var(--primary);
     font-size: 0.7rem;
 }
@@ -6077,13 +6109,15 @@ body.konami-max-glitch {
     outline-offset: -2px;
 }
 
-.faq-question i , .faq-question svg.svg-inline--fa{
+.faq-question i,
+.faq-question svg.svg-inline--fa {
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     color: var(--primary);
     flex-shrink: 0;
 }
 
-.faq-question[aria-expanded="true"] i , .faq-question[aria-expanded="true"] svg.svg-inline--fa{
+.faq-question[aria-expanded="true"] i,
+.faq-question[aria-expanded="true"] svg.svg-inline--fa {
     transform: rotate(180deg);
 }
 
