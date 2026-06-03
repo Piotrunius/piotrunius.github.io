@@ -293,8 +293,8 @@ const setupData = {
     {
       icon: "video",
       label: "GPU",
-      value: "Nvidia GeForce RTX 4060 Ti",
-      url: "https://www.google.com/search?q=Nvidia+GeForce+RTX+4060+Ti+16GB",
+      value: "MSI GeForce RTX 4060 Ti",
+      url: "https://www.google.com/search?q=MSI+GeForce+RTX+4060+Ti+16GB",
       specs: ["16GB GDDR6", "3rd Gen RT"],
     },
     {
@@ -309,7 +309,7 @@ const setupData = {
       label: "RAM",
       value: "Kingston Fury Beast RGB",
       url: "https://www.google.com/search?q=Kingston+Fury+Beast+RGB+DDR4",
-      specs: ["32GB", "3200MHz"],
+      specs: ["32GB", "DDR4", "3200MHz"],
     },
     {
       icon: "hard-drive",
@@ -323,7 +323,7 @@ const setupData = {
       label: "Secondary Storage",
       value: "Seagate Barracuda",
       url: "https://www.google.com/search?q=Seagate+Barracuda+2TB+HDD",
-      specs: ["2TB", "HDD", "7200RPM"],
+      specs: ["2TB", "HDD"],
     },
     {
       icon: "bolt",
@@ -339,14 +339,14 @@ const setupData = {
       label: "Primary Display",
       value: "AOC C27G2Z3/BK",
       url: "https://www.google.com/search?q=AOC+C27G2Z3/BK+280Hz",
-      specs: ["280Hz", "0.5ms", '27" Curved'],
+      specs: ["280Hz", '27" Curved'],
     },
     {
       icon: "display",
       label: "Secondary Display",
       value: "AOC C27G2ZE",
       url: "https://www.google.com/search?q=AOC+C27G2ZE+240Hz",
-      specs: ["240Hz", "0.5ms", '27" Curved'],
+      specs: ["240Hz", '27" Curved'],
     },
     {
       icon: "keyboard",
