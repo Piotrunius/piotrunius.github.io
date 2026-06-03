@@ -288,80 +288,100 @@ const setupData = {
       label: "CPU",
       value: "Intel Core i5-13400F",
       url: "https://www.google.com/search?q=Intel+Core+i5-13400F",
+      specs: ["10C/16T", "4.6GHz"],
     },
     {
       icon: "video",
       label: "GPU",
-      value: "Nvidia GeForce RTX 4060 Ti (16GB)",
-      url: "https://www.google.com/search?q=Nvidia+GeForce+RTX+4060+Ti",
+      value: "Nvidia GeForce RTX 4060 Ti",
+      url: "https://www.google.com/search?q=Nvidia+GeForce+RTX+4060+Ti+16GB",
+      specs: ["16GB GDDR6", "3rd Gen RT"],
     },
     {
       icon: "network-wired",
       label: "Motherboard",
       value: "Gigabyte B760 GAMING X DDR4",
       url: "https://www.google.com/search?q=Gigabyte+B760+GAMING+X+DDR4",
+      specs: ["LGA 1700", "ATX"],
     },
     {
       icon: "memory",
       label: "RAM",
-      value: "Kingston Fury Beast RGB (32GB DDR4)",
+      value: "Kingston Fury Beast RGB",
       url: "https://www.google.com/search?q=Kingston+Fury+Beast+RGB+DDR4",
+      specs: ["32GB", "3200MHz"],
     },
     {
       icon: "hard-drive",
-      label: "Storage",
-      value: "Samsung 980 NVMe (1TB) + Seagate (2TB HDD)",
-      urls: [
-        "https://www.google.com/search?q=Samsung+980+NVMe+SSD",
-        "https://www.google.com/search?q=Seagate+2TB+HDD",
-      ],
+      label: "Primary Storage",
+      value: "Samsung 980 NVMe",
+      url: "https://www.google.com/search?q=Samsung+980+NVMe+SSD+1TB",
+      specs: ["1TB", "SSD", "NVMe M.2"],
+    },
+    {
+      icon: "hard-drive",
+      label: "Secondary Storage",
+      value: "Seagate Barracuda",
+      url: "https://www.google.com/search?q=Seagate+Barracuda+2TB+HDD",
+      specs: ["2TB", "HDD", "7200RPM"],
     },
     {
       icon: "bolt",
       label: "PSU",
-      value: "Endorfy Vero L5 Bronze (700W)",
+      value: "Endorfy Vero L5 Bronze",
       url: "https://www.google.com/search?q=Endorfy+Vero+L5+Bronze+700W",
+      specs: ["700W", "80+ Bronze"],
     },
   ],
   gear: [
     {
       icon: "display",
-      label: "Displays",
-      value: "AOC C27G2Z3/BK (280Hz) + AOC 27G2G8 (240Hz)",
-      urls: [
-        "https://www.google.com/search?q=AOC+C27G2Z3/BK+280Hz",
-        "https://www.google.com/search?q=AOC+27G2G8+240Hz",
-      ],
+      label: "Primary Display",
+      value: "AOC C27G2Z3/BK",
+      url: "https://www.google.com/search?q=AOC+C27G2Z3/BK+280Hz",
+      specs: ["280Hz", "0.5ms", '27" Curved'],
+    },
+    {
+      icon: "display",
+      label: "Secondary Display",
+      value: "AOC C27G2ZE",
+      url: "https://www.google.com/search?q=AOC+C27G2ZE+240Hz",
+      specs: ["240Hz", "0.5ms", '27" Curved'],
     },
     {
       icon: "keyboard",
       label: "Keyboard",
-      value: "Dark Project Terra Nova (Wireless)",
-      url: "https://www.google.com/search?q=Dark+Project+Terra+Nova+keyboard",
+      value: "Dark Project Terra Nova",
+      url: "https://www.google.com/search?q=Dark+Project+Terra+Nova",
+      specs: ["75%", "Wireless"],
     },
     {
       icon: "mouse",
       label: "Mouse",
-      value: "Dark Project Novus (Wireless)",
-      url: "https://www.google.com/search?q=Dark+Project+Novus+mouse",
+      value: "Dark Project Novus",
+      url: "https://www.google.com/search?q=Dark+Project+Novus",
+      specs: ["~55g", "Wireless"],
+    },
+    {
+      icon: "headset",
+      label: "Headphones",
+      value: "HyperX Cloud III",
+      url: "https://www.google.com/search?q=HyperX+Cloud+III+Wireless",
+      specs: ["53mm Drivers", "Wireless"],
     },
     {
       icon: "microphone",
       label: "Microphone",
       value: "Fifine AM8 RGB",
-      url: "https://www.google.com/search?q=Fifine+AM8+RGB+microphone",
-    },
-    {
-      icon: "headset",
-      label: "Headphones",
-      value: "HyperX Cloud III (Wireless)",
-      url: "https://www.google.com/search?q=HyperX+Cloud+III+Wireless",
+      url: "https://www.google.com/search?q=Fifine+AM8+RGB",
+      specs: ["Dynamic", "USB/XLR"],
     },
     {
       icon: "vr-cardboard",
       label: "VR",
-      value: "Meta Quest 3 (128GB)",
+      value: "Meta Quest 3",
       url: "https://www.google.com/search?q=Meta+Quest+3+128GB",
+      specs: ["128GB", "120Hz"],
     },
   ],
 };
@@ -1039,26 +1059,32 @@ function initSetup() {
     container.innerHTML = "";
     items.forEach((item, index) => {
       const el = document.createElement("a");
-      el.className = "spec-item"; // Ta klasa musi mieć opacity: 1 !important w CSS jeśli są problemy
+      el.className = "spec-item-v2";
       el.style.animationDelay = `${index * 0.05}s`;
+      el.href = item.url || "#";
+      el.target = "_blank";
+      el.rel = "noreferrer";
 
-      // Handle multiple URLs or single URL
-      if (item.urls && Array.isArray(item.urls)) {
-        el.href = "#";
-        el.addEventListener("click", (e) => {
-          e.preventDefault();
-          item.urls.forEach((url) => window.open(url, "_blank"));
-        });
-      } else {
-        el.href = item.url || "#";
-        el.target = "_blank";
-        el.rel = "noreferrer";
+      // Render tags if present
+      let tagsHtml = "";
+      if (item.specs && item.specs.length > 0) {
+        tagsHtml = `<div class="spec-v2-tags">
+          ${item.specs.map((s) => `<span class="spec-v2-tag">${s}</span>`).join("")}
+        </div>`;
       }
 
       el.innerHTML = `
-                <i class="fas fa-${item.icon}"></i>
-                <span>${item.label}${item.value ? `<small> - ${item.value}</small>` : ""}</span>
-            `;
+        <div class="spec-v2-icon">
+          <i class="fas fa-${item.icon}"></i>
+        </div>
+        <div class="spec-v2-content">
+          <div class="spec-v2-info">
+            <span class="spec-v2-label">${item.label}</span>
+            <span class="spec-v2-value">${item.value}</span>
+          </div>
+          ${tagsHtml}
+        </div>
+      `;
       container.appendChild(el);
     });
   };
@@ -5765,7 +5791,7 @@ const KonamiEasterEgg = {
 
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.1);
-    } catch (e) {}
+    } catch (e) { }
   },
 
   playErrorSound: function () {
@@ -5784,7 +5810,7 @@ const KonamiEasterEgg = {
 
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.15);
-    } catch (e) {}
+    } catch (e) { }
   },
 
   activate: function () {
@@ -5844,7 +5870,7 @@ const KonamiEasterEgg = {
         bass.start(ctx.currentTime);
         bass.stop(ctx.currentTime + 0.5);
       }, 700);
-    } catch (e) {}
+    } catch (e) { }
   },
 
   showHackerOverlay: function () {
@@ -6403,7 +6429,7 @@ const KonamiEasterEgg = {
       gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.3);
-    } catch (e) {}
+    } catch (e) { }
   },
 };
 
