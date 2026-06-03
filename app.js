@@ -426,7 +426,7 @@ function getDefaultConfig() {
       },
       {
         label: "Ko-Fi",
-        icon: "ko-fi",
+        icon: "mug-hot",
         url: "https://ko-fi.com/piotrunius",
         color: "#6F4E37",
       },
