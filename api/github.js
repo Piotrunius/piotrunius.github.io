@@ -3,45 +3,58 @@ export default {
     const origin = request.headers.get("Origin");
     const ALLOWED_ORIGIN = "https://piotrunius.dev";
     const corsHeaders = {
-      "Access-Control-Allow-Origin": origin === "http://127.0.0.1:5500" ? origin : ALLOWED_ORIGIN,
+      "Access-Control-Allow-Origin":
+        origin === "http://127.0.0.1:5500" ? origin : ALLOWED_ORIGIN,
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
     };
 
-    if (request.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+    if (request.method === "OPTIONS")
+      return new Response(null, { headers: corsHeaders });
 
     try {
       // 1. Sprawdzenie trybu prywatności (Privacy Mode) z bazy KV
       const privacyStatus = await env.STATE.get("PRIVACY_MODE");
 
       if (privacyStatus === "true") {
-        return new Response(JSON.stringify({
-          privacyMode: true,
-          message: "Privacy Mode Active"
-        }), {
-          status: 200,
-          headers: { ...corsHeaders, "Content-Type": "application/json" }
-        });
+        return new Response(
+          JSON.stringify({
+            privacyMode: true,
+            message: "Privacy Mode Active",
+          }),
+          {
+            status: 200,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
       }
 
-      const gUser = env.GITHUB_USERNAME || 'Piotrunius';
+      const gUser = env.GITHUB_USERNAME || "Piotrunius";
       const gHeaders = {
-        "Authorization": `token ${env.GITHUB_TOKEN}`,
+        Authorization: `token ${env.GITHUB_TOKEN}`,
         "User-Agent": "Cloudflare-Worker",
-        "Accept": "application/vnd.github.v3+json"
+        Accept: "application/vnd.github.v3+json",
       };
 
       // 2. Pobieranie zasobów
       const [uR, reposR, starredR, searchCommitsR, gistsR] = await Promise.all([
         fetch(`https://api.github.com/user`, { headers: gHeaders }),
-        fetch(`https://api.github.com/user/repos?per_page=50&sort=updated&visibility=all`, { headers: gHeaders }),
+        fetch(
+          `https://api.github.com/user/repos?per_page=50&sort=updated&visibility=all`,
+          { headers: gHeaders },
+        ),
         fetch(`https://api.github.com/user/starred?per_page=30`, {
-          headers: { ...gHeaders, "Accept": "application/vnd.github.star+json" }
+          headers: { ...gHeaders, Accept: "application/vnd.github.star+json" },
         }),
         fetch(`https://api.github.com/search/commits?q=author:${gUser}`, {
-          headers: { ...gHeaders, "Accept": "application/vnd.github.cloak-preview" }
+          headers: {
+            ...gHeaders,
+            Accept: "application/vnd.github.cloak-preview",
+          },
         }),
-        fetch(`https://api.github.com/gists?per_page=100`, { headers: gHeaders })
+        fetch(`https://api.github.com/gists?per_page=100`, {
+          headers: gHeaders,
+        }),
       ]);
 
       const uJ = await uR.json();
@@ -51,25 +64,38 @@ export default {
       const gists = await gistsR.json();
 
       // 3. Obliczenia na podstawie rzeczywistych danych
-      const publicReposCount = Array.isArray(repos) ? repos.filter(r => !r.private).length : 0;
-      const privateReposCount = Array.isArray(repos) ? repos.filter(r => r.private).length : 0;
+      const publicReposCount = Array.isArray(repos)
+        ? repos.filter((r) => !r.private).length
+        : 0;
+      const privateReposCount = Array.isArray(repos)
+        ? repos.filter((r) => r.private).length
+        : 0;
       const totalGists = Array.isArray(gists) ? gists.length : 0;
-      const totalStarsReceived = Array.isArray(repos) ? repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0) : 0;
+      const totalStarsReceived = Array.isArray(repos)
+        ? repos.reduce((acc, r) => acc + (r.stargazers_count || 0), 0)
+        : 0;
 
       // 4. Pobieranie ostatnich commitów
-      const commitPromises = (Array.isArray(repos) ? repos.slice(0, 5) : []).map(async (repo) => {
+      const commitPromises = (
+        Array.isArray(repos) ? repos.slice(0, 5) : []
+      ).map(async (repo) => {
         try {
-          const res = await fetch(`https://api.github.com/repos/${repo.owner.login}/${repo.name}/commits?author=${gUser}&per_page=5`, { headers: gHeaders });
+          const res = await fetch(
+            `https://api.github.com/repos/${repo.owner.login}/${repo.name}/commits?author=${gUser}&per_page=5`,
+            { headers: gHeaders },
+          );
           if (!res.ok) return [];
           const commits = await res.json();
-          return commits.map(c => ({
-            message: c.commit.message.split('\n')[0],
+          return commits.map((c) => ({
+            message: c.commit.message.split("\n")[0],
             repo: repo.name,
             author: gUser,
             date: c.commit.author.date,
-            url: c.html_url
+            url: c.html_url,
           }));
-        } catch (e) { return []; }
+        } catch (e) {
+          return [];
+        }
       });
 
       const allCommitsArrays = await Promise.all(commitPromises);
@@ -87,49 +113,57 @@ export default {
           avatar: uJ.avatar_url,
           bio: uJ.bio,
           privateRepos: privateReposCount,
-          publicRepos: publicReposCount
+          publicRepos: publicReposCount,
         },
         summary: {
-          projects: (Array.isArray(repos) ? repos.length : 0),
+          projects: Array.isArray(repos) ? repos.length : 0,
           starredCount: Array.isArray(starred) ? starred.length : 0,
           followers: uJ.followers || 0,
           commits: searchCommits.total_count || 0,
           gists: totalGists,
-          starsReceived: totalStarsReceived
+          starsReceived: totalStarsReceived,
         },
-        projects: Array.isArray(repos) ? repos.map(r => ({
-          name: r.name,
-          description: r.description || "No description provided.",
-          stars: r.stargazers_count,
-          lang: r.language || "Mixed",
-          url: r.html_url,
-          isPrivate: r.private
-        })) : [],
-        starred: Array.isArray(starred) ? starred.map(i => ({
-          name: i.repo?.name,
-          owner: i.repo?.owner?.login,
-          description: i.repo?.description,
-          stars: i.repo?.stargazers_count,
-          language: i.repo?.language || "Code",
-          url: i.repo?.html_url
-        })) : [],
+        projects: Array.isArray(repos)
+          ? repos.map((r) => ({
+              name: r.name,
+              description: r.description || "No description provided.",
+              stars: r.stargazers_count,
+              lang: r.language || "Mixed",
+              url: r.html_url,
+              isPrivate: r.private,
+            }))
+          : [],
+        starred: Array.isArray(starred)
+          ? starred.map((i) => ({
+              name: i.repo?.name,
+              owner: i.repo?.owner?.login,
+              description: i.repo?.description,
+              stars: i.repo?.stargazers_count,
+              language: i.repo?.language || "Code",
+              url: i.repo?.html_url,
+            }))
+          : [],
         recentCommits: recentCommitsList,
-        languages: Object.entries((Array.isArray(repos) ? repos : []).reduce((acc, r) => {
-          if (r.language) acc[r.language] = (acc[r.language] || 0) + 1;
-          return acc;
-        }, {})).map(([name, count]) => ({ name, repos: count })),
-        lastUpdate: new Date().toISOString()
+        languages: Object.entries(
+          (Array.isArray(repos) ? repos : []).reduce((acc, r) => {
+            if (r.language) acc[r.language] = (acc[r.language] || 0) + 1;
+            return acc;
+          }, {}),
+        ).map(([name, count]) => ({ name, repos: count })),
+        lastUpdate: new Date().toISOString(),
       };
 
       return new Response(JSON.stringify(payload), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" }
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
-
     } catch (err) {
-      return new Response(JSON.stringify({ error: "GitHub Worker Error", details: err.message }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" }
-      });
+      return new Response(
+        JSON.stringify({ error: "GitHub Worker Error", details: err.message }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
     }
-  }
+  },
 };

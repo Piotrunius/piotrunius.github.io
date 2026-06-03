@@ -24,13 +24,15 @@ export default {
           }),
           {
             headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
+          },
         );
       }
 
       // Helper: base64 for Basic auth (btoa exists in Workers)
       const base64 = (str) =>
-        typeof btoa === "function" ? btoa(str) : Buffer.from(str).toString("base64");
+        typeof btoa === "function"
+          ? btoa(str)
+          : Buffer.from(str).toString("base64");
 
       // 2) Get cached token from KV if valid
       let tokenData = null;
@@ -49,9 +51,13 @@ export default {
       }
 
       const now = Date.now();
-      let accessToken = tokenData && tokenData.access_token && tokenData.expires_at && tokenData.expires_at > now + 5000
-        ? tokenData.access_token
-        : null;
+      let accessToken =
+        tokenData &&
+        tokenData.access_token &&
+        tokenData.expires_at &&
+        tokenData.expires_at > now + 5000
+          ? tokenData.access_token
+          : null;
 
       // 3) Refresh token if we don't have a valid one
       if (!accessToken) {
@@ -64,21 +70,26 @@ export default {
         }
 
         const auth = base64(`${clientId}:${clientSecret}`);
-        const tokenResponse = await fetch("https://accounts.spotify.com/api/token", {
-          method: "POST",
-          headers: {
-            Authorization: `Basic ${auth}`,
-            "Content-Type": "application/x-www-form-urlencoded",
+        const tokenResponse = await fetch(
+          "https://accounts.spotify.com/api/token",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Basic ${auth}`,
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              grant_type: "refresh_token",
+              refresh_token: refreshToken,
+            }),
           },
-          body: new URLSearchParams({
-            grant_type: "refresh_token",
-            refresh_token: refreshToken,
-          }),
-        });
+        );
 
         const tokenText = await tokenResponse.text();
         if (!tokenResponse.ok) {
-          throw new Error(`Token fetch failed [${tokenResponse.status}]: ${tokenText}`);
+          throw new Error(
+            `Token fetch failed [${tokenResponse.status}]: ${tokenText}`,
+          );
         }
 
         const fresh = JSON.parse(tokenText);
@@ -107,20 +118,22 @@ export default {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
-        }
+        },
       );
 
       // 204 = no content (not currently playing)
       if (nowPlayingRes.status === 204) {
         return new Response(
           JSON.stringify({ isPlaying: false, privacyMode: false }),
-          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } },
         );
       }
 
       const songText = await nowPlayingRes.text();
       if (!nowPlayingRes.ok) {
-        throw new Error(`Spotify API failed [${nowPlayingRes.status}]: ${songText}`);
+        throw new Error(
+          `Spotify API failed [${nowPlayingRes.status}]: ${songText}`,
+        );
       }
 
       const song = JSON.parse(songText);
@@ -130,19 +143,28 @@ export default {
       if (!item) {
         return new Response(
           JSON.stringify({ isPlaying: false, privacyMode: false }),
-          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } },
         );
       }
 
       const title = item.name || "";
       const artist = Array.isArray(item.artists)
-        ? item.artists.map((a) => a.name).filter(Boolean).join(", ")
+        ? item.artists
+            .map((a) => a.name)
+            .filter(Boolean)
+            .join(", ")
         : item.artists && item.artists.name
-        ? item.artists.name
-        : "";
+          ? item.artists.name
+          : "";
       const album = (item.album && item.album.name) || "";
-      const albumArt = (item.album && item.album.images && item.album.images[0] && item.album.images[0].url) || "";
-      const externalUrl = (item.external_urls && item.external_urls.spotify) || "";
+      const albumArt =
+        (item.album &&
+          item.album.images &&
+          item.album.images[0] &&
+          item.album.images[0].url) ||
+        "";
+      const externalUrl =
+        (item.external_urls && item.external_urls.spotify) || "";
       const trackUrl = externalUrl || item.uri || "";
 
       const progressMs = song.progress_ms ?? song.progressMs ?? 0;

@@ -135,18 +135,22 @@ i:not(.social-link i) {
 .bg-layer::before {
     left: -15vmax;
     top: -20vmax;
-    background: radial-gradient(circle at 30% 30%,
-            rgba(0, 255, 136, 0.5),
-            transparent 60%);
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(0, 255, 136, 0.5),
+        transparent 60%
+    );
     animation: blobMove1 28s ease-in-out infinite alternate;
 }
 
 .bg-layer::after {
     right: -18vmax;
     bottom: -22vmax;
-    background: radial-gradient(circle at 70% 70%,
-            rgba(0, 180, 255, 0.4),
-            transparent 60%);
+    background: radial-gradient(
+        circle at 70% 70%,
+        rgba(0, 180, 255, 0.4),
+        transparent 60%
+    );
     animation: blobMove2 32s ease-in-out infinite alternate;
 }
 
@@ -205,10 +209,12 @@ i:not(.social-link i) {
 
 .glass-card {
     position: relative;
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.05) 0%,
-            rgba(255, 255, 255, 0.02) 50%,
-            rgba(255, 255, 255, 0.05) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
     backdrop-filter: blur(16px) saturate(180%) brightness(1.05);
     -webkit-backdrop-filter: blur(16px) saturate(180%) brightness(1.05);
     border: 1px solid var(--glass-border);
@@ -236,10 +242,12 @@ i:not(.social-link i) {
     left: 0;
     right: 0;
     height: 100%;
-    background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.12) 0%,
-            rgba(255, 255, 255, 0.02) 30%,
-            transparent 60%);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.02) 30%,
+        transparent 60%
+    );
     pointer-events: none;
     opacity: 0.6;
     transition: opacity 0.35s ease;
@@ -252,9 +260,11 @@ i:not(.social-link i) {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle,
-            rgba(255, 255, 255, 0.08) 0%,
-            transparent 50%);
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.08) 0%,
+        transparent 50%
+    );
     opacity: 0;
     transition:
         opacity 0.5s ease,
@@ -263,10 +273,12 @@ i:not(.social-link i) {
 }
 
 .glass-card:hover {
-    background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.08) 0%,
-            rgba(255, 255, 255, 0.04) 50%,
-            rgba(255, 255, 255, 0.08) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.04) 50%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
     box-shadow:
         0 20px 48px rgba(0, 0, 0, 0.45),
         0 4px 12px rgba(0, 0, 0, 0.25),
@@ -331,7 +343,6 @@ i:not(.social-link i) {
 }
 
 @media (max-width: 1200px) {
-
     .spotify-status-card,
     .profile-section,
     .music-player-card {
@@ -529,7 +540,6 @@ i:not(.social-link i) {
 }
 
 @keyframes float {
-
     0%,
     100% {
         transform: translateY(0px) rotate(0deg);
@@ -557,28 +567,36 @@ i:not(.social-link i) {
 }
 
 /* Enhanced Link Underline - Universal (using :where for lower specificity) */
-a:where( :not(.social-link,
+a:where(
+    :not(
+        .social-link,
         .contact-btn,
         .music-btn,
         .spec-sub-link,
         .spec-more-link,
         .activity-link,
         .steam-profile-link,
-        .status-view-link)) {
+        .status-view-link
+    )
+) {
     position: relative;
     text-decoration: none;
     color: var(--primary);
     font-weight: 600;
 }
 
-a:where( :not(.social-link,
-        .contact-btn,
-        .music-btn,
-        .spec-sub-link,
-        .spec-more-link,
-        .activity-link,
-        .steam-profile-link,
-        .status-view-link))::after {
+a:where(
+        :not(
+            .social-link,
+            .contact-btn,
+            .music-btn,
+            .spec-sub-link,
+            .spec-more-link,
+            .activity-link,
+            .steam-profile-link,
+            .status-view-link
+        )
+    )::after {
     content: "";
     position: absolute;
     width: 0;
@@ -590,14 +608,18 @@ a:where( :not(.social-link,
     box-shadow: 0 0 8px var(--primary);
 }
 
-a:where( :not(.social-link,
-        .contact-btn,
-        .music-btn,
-        .spec-sub-link,
-        .spec-more-link,
-        .activity-link,
-        .steam-profile-link,
-        .status-view-link)):hover::after {
+a:where(
+        :not(
+            .social-link,
+            .contact-btn,
+            .music-btn,
+            .spec-sub-link,
+            .spec-more-link,
+            .activity-link,
+            .steam-profile-link,
+            .status-view-link
+        )
+    ):hover::after {
     width: 100%;
 }
 
@@ -670,7 +692,6 @@ a:where( :not(.social-link,
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
-
     .steam-status-panel,
     .discord-status-panel {
         flex-direction: column;
@@ -749,7 +770,6 @@ a:where( :not(.social-link,
 }
 
 @keyframes avatarGlow {
-
     0%,
     100% {
         box-shadow:
@@ -783,7 +803,6 @@ a:where( :not(.social-link,
 }
 
 @keyframes pulse {
-
     0%,
     100% {
         transform: scale(1);
@@ -1034,9 +1053,11 @@ a:where( :not(.social-link,
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center,
-            var(--social-color, var(--primary)) 0%,
-            transparent 70%);
+    background: radial-gradient(
+        circle at center,
+        var(--social-color, var(--primary)) 0%,
+        transparent 70%
+    );
     opacity: 0;
     transition: opacity 0.4s ease;
 }
@@ -1065,7 +1086,6 @@ a:where( :not(.social-link,
 }
 
 @keyframes iconPulse {
-
     0%,
     100% {
         transform: scale(1);
@@ -1121,9 +1141,11 @@ a:where( :not(.social-link,
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 20% 20%,
-            rgba(0, 255, 136, 0.1),
-            transparent 60%);
+    background: radial-gradient(
+        circle at 20% 20%,
+        rgba(0, 255, 136, 0.1),
+        transparent 60%
+    );
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -1388,7 +1410,6 @@ a:where( :not(.social-link,
 }
 
 @keyframes bounce {
-
     0%,
     100% {
         transform: translateY(0) rotate(0deg);
@@ -1462,10 +1483,12 @@ a:where( :not(.social-link,
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(0, 255, 136, 0.1),
-            transparent);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 255, 136, 0.1),
+        transparent
+    );
     transition: left 0.6s ease;
 }
 
@@ -1661,7 +1684,6 @@ a:where( :not(.social-link,
 }
 
 @keyframes pulse {
-
     0%,
     100% {
         opacity: 1;
@@ -1817,7 +1839,6 @@ a:where( :not(.social-link,
 }
 
 @keyframes blink {
-
     0%,
     100% {
         opacity: 1;
@@ -1833,9 +1854,11 @@ a:where( :not(.social-link,
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 20% 0%,
-            rgba(255, 255, 255, 0.04),
-            transparent 50%);
+    background: radial-gradient(
+        circle at 20% 0%,
+        rgba(255, 255, 255, 0.04),
+        transparent 50%
+    );
     opacity: 0;
     transition: opacity 0.6s ease;
     pointer-events: none;
@@ -1923,10 +1946,14 @@ a:where( :not(.social-link,
 }
 
 .spec-item-v2::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+    background: radial-gradient(
+        circle at center,
+        rgba(0, 255, 136, 0.1) 0%,
+        transparent 70%
+    );
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -2038,7 +2065,6 @@ a:where( :not(.social-link,
     transform: translateX(0);
 }
 
-
 /* --- SETUP SPEC MODAL --- */
 .spec-modal-overlay {
     position: fixed;
@@ -2071,7 +2097,9 @@ a:where( :not(.social-link,
     transform: scale(0.95) translateY(20px);
     opacity: 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     overflow: hidden;
 }
 
@@ -2081,13 +2109,17 @@ a:where( :not(.social-link,
 }
 
 .spec-modal-content::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 150px;
-    background: radial-gradient(ellipse at top, rgba(0, 255, 136, 0.15), transparent 70%);
+    background: radial-gradient(
+        ellipse at top,
+        rgba(0, 255, 136, 0.15),
+        transparent 70%
+    );
     pointer-events: none;
 }
 
@@ -2128,7 +2160,11 @@ a:where( :not(.social-link,
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.05));
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.2),
+        rgba(0, 255, 136, 0.05)
+    );
     border: 1px solid rgba(0, 255, 136, 0.3);
     display: flex;
     align-items: center;
@@ -2487,7 +2523,6 @@ a:where( :not(.social-link,
 }
 
 @keyframes thumbPulse {
-
     0%,
     100% {
         box-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
@@ -2738,9 +2773,7 @@ a:where( :not(.social-link,
 }
 
 /* Performance optimizations for low-end devices */
-@media (max-width: 768px),
-(max-height: 600px) {
-
+@media (max-width: 768px), (max-height: 600px) {
     .bg-layer::before,
     .bg-layer::after {
         filter: blur(40px) saturate(120%) !important;
@@ -3484,9 +3517,11 @@ a:where( :not(.social-link,
     transform: translateX(-50%);
     max-width: 600px;
     width: calc(100% - 2rem);
-    background: linear-gradient(135deg,
-            rgba(0, 255, 136, 0.1),
-            rgba(0, 184, 255, 0.1));
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.1),
+        rgba(0, 184, 255, 0.1)
+    );
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(0, 255, 136, 0.3);
@@ -3517,9 +3552,11 @@ a:where( :not(.social-link,
     justify-content: center;
     width: 48px;
     height: 48px;
-    background: linear-gradient(135deg,
-            rgba(0, 255, 136, 0.2),
-            rgba(0, 184, 255, 0.2));
+    background: linear-gradient(
+        135deg,
+        rgba(0, 255, 136, 0.2),
+        rgba(0, 184, 255, 0.2)
+    );
     border-radius: 12px;
     border: 1px solid rgba(0, 255, 136, 0.3);
     flex-shrink: 0;
@@ -3616,7 +3653,6 @@ a:where( :not(.social-link,
 }
 
 @keyframes iconBounce {
-
     0%,
     100% {
         transform: translateY(0);
@@ -3765,21 +3801,27 @@ body.light-mode .theme-toggle i {
 
 /* Light mode specific adjustments for better visibility */
 body.light-mode .bg-layer::before {
-    background: radial-gradient(circle at 30% 30%,
-            rgba(0, 204, 112, 0.3),
-            transparent 60%);
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(0, 204, 112, 0.3),
+        transparent 60%
+    );
 }
 
 body.light-mode .bg-layer::after {
-    background: radial-gradient(circle at 70% 70%,
-            rgba(0, 150, 255, 0.25),
-            transparent 60%);
+    background: radial-gradient(
+        circle at 70% 70%,
+        rgba(0, 150, 255, 0.25),
+        transparent 60%
+    );
 }
 
 body.light-mode .wip-notice {
-    background: linear-gradient(135deg,
-            rgba(0, 168, 89, 0.08),
-            rgba(0, 184, 255, 0.08));
+    background: linear-gradient(
+        135deg,
+        rgba(0, 168, 89, 0.08),
+        rgba(0, 184, 255, 0.08)
+    );
     border: 1px solid rgba(0, 168, 89, 0.3);
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.1),
@@ -3788,9 +3830,11 @@ body.light-mode .wip-notice {
 }
 
 body.light-mode .wip-icon-wrapper {
-    background: linear-gradient(135deg,
-            rgba(0, 168, 89, 0.15),
-            rgba(0, 184, 255, 0.15));
+    background: linear-gradient(
+        135deg,
+        rgba(0, 168, 89, 0.15),
+        rgba(0, 184, 255, 0.15)
+    );
     border: 1px solid rgba(0, 168, 89, 0.3);
 }
 
@@ -3897,9 +3941,11 @@ body.light-mode .spec-v2-value {
 }
 
 body.light-mode .spec-item-v2 {
-    background: linear-gradient(120deg,
-            rgba(0, 168, 89, 0.04),
-            rgba(0, 0, 0, 0.02));
+    background: linear-gradient(
+        120deg,
+        rgba(0, 168, 89, 0.04),
+        rgba(0, 0, 0, 0.02)
+    );
     border: 1px solid rgba(0, 168, 89, 0.15);
 }
 
@@ -3918,7 +3964,9 @@ body.light-mode .spec-modal-overlay {
 body.light-mode .spec-modal-content {
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(0, 168, 89, 0.2);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 body.light-mode .spec-modal-close {
@@ -4085,16 +4133,20 @@ body.light-mode .avatar:hover {
 
 /* Light Mode: Background adjustments for better contrast */
 body.light-mode .bg-layer::before {
-    background: radial-gradient(circle at 30% 30%,
-            rgba(0, 168, 89, 0.15),
-            transparent 60%);
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(0, 168, 89, 0.15),
+        transparent 60%
+    );
     opacity: 0.5;
 }
 
 body.light-mode .bg-layer::after {
-    background: radial-gradient(circle at 70% 70%,
-            rgba(0, 120, 200, 0.12),
-            transparent 60%);
+    background: radial-gradient(
+        circle at 70% 70%,
+        rgba(0, 120, 200, 0.12),
+        transparent 60%
+    );
     opacity: 0.5;
 }
 
@@ -4360,10 +4412,12 @@ body.light-mode .language-bar-container {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(0, 255, 136, 0.1),
-            transparent);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 255, 136, 0.1),
+        transparent
+    );
     transition: left 0.5s ease;
 }
 
@@ -4800,9 +4854,11 @@ body.light-mode .profile-stat-item:hover {
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 1rem;
-    background: linear-gradient(180deg,
-            rgba(30, 40, 50, 0.95),
-            rgba(20, 28, 35, 0.95));
+    background: linear-gradient(
+        180deg,
+        rgba(30, 40, 50, 0.95),
+        rgba(20, 28, 35, 0.95)
+    );
     border-bottom: 1px solid rgba(0, 255, 136, 0.2);
     cursor: move;
     user-select: none;
@@ -5172,7 +5228,6 @@ body.light-mode .profile-stat-item:hover {
 }
 
 @keyframes rootPulse {
-
     0%,
     100% {
         opacity: 1;
@@ -5209,7 +5264,6 @@ body.light-mode .profile-stat-item:hover {
 }
 
 @keyframes cursorBlink {
-
     0%,
     100% {
         opacity: 1;
@@ -5311,9 +5365,11 @@ body.light-mode .profile-stat-item:hover {
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem 1rem;
-    background: linear-gradient(180deg,
-            rgba(20, 28, 35, 0.95),
-            rgba(15, 22, 28, 0.95));
+    background: linear-gradient(
+        180deg,
+        rgba(20, 28, 35, 0.95),
+        rgba(15, 22, 28, 0.95)
+    );
     border-top: 1px solid rgba(0, 255, 136, 0.15);
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.5);
@@ -5377,7 +5433,6 @@ body.light-mode .profile-stat-item:hover {
 }
 
 @keyframes typingBorder {
-
     0%,
     100% {
         border-color: var(--primary);
@@ -5623,9 +5678,11 @@ body.light-mode .terminal-container {
 }
 
 body.light-mode .terminal-header {
-    background: linear-gradient(180deg,
-            rgba(235, 240, 245, 0.95),
-            rgba(225, 232, 240, 0.95));
+    background: linear-gradient(
+        180deg,
+        rgba(235, 240, 245, 0.95),
+        rgba(225, 232, 240, 0.95)
+    );
     border-color: rgba(0, 168, 89, 0.2);
 }
 
@@ -5677,9 +5734,11 @@ body.light-mode .suggestion-cmd {
 }
 
 body.light-mode .terminal-statusbar {
-    background: linear-gradient(180deg,
-            rgba(235, 240, 245, 0.95),
-            rgba(225, 232, 240, 0.95));
+    background: linear-gradient(
+        180deg,
+        rgba(235, 240, 245, 0.95),
+        rgba(225, 232, 240, 0.95)
+    );
     border-color: rgba(0, 168, 89, 0.15);
     color: rgba(0, 0, 0, 0.5);
 }
@@ -5834,7 +5893,6 @@ body.light-mode .terminal-statusbar {
 }
 
 @keyframes hackBlink {
-
     0%,
     100% {
         opacity: 1;
@@ -5916,7 +5974,6 @@ body.light-mode .terminal-statusbar {
 }
 
 @keyframes warningBlink {
-
     0%,
     100% {
         opacity: 1;
@@ -5942,11 +5999,13 @@ body.light-mode .terminal-statusbar {
     inset: 0;
     z-index: 999991;
     pointer-events: none;
-    background: repeating-linear-gradient(0deg,
-            rgba(0, 0, 0, 0.15) 0px,
-            rgba(0, 0, 0, 0.15) 1px,
-            transparent 1px,
-            transparent 3px);
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 3px
+    );
     animation: scanlineMove 0.08s linear infinite;
 }
 
@@ -5992,9 +6051,11 @@ body.light-mode .terminal-statusbar {
     inset: 0;
     z-index: 999989;
     pointer-events: none;
-    background: radial-gradient(ellipse at center,
-            transparent 40%,
-            rgba(0, 0, 0, 0.6) 100%);
+    background: radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
 }
 
 /* Hacker mode body modifications */
@@ -6178,9 +6239,11 @@ body.konami-hacker-mode {
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 1rem;
-    background: linear-gradient(180deg,
-            rgba(0, 255, 136, 0.15),
-            rgba(0, 255, 136, 0.05));
+    background: linear-gradient(
+        180deg,
+        rgba(0, 255, 136, 0.15),
+        rgba(0, 255, 136, 0.05)
+    );
     border-bottom: 1px solid rgba(0, 255, 136, 0.3);
 }
 
@@ -6259,7 +6322,6 @@ body.konami-hacker-mode {
 }
 
 @keyframes statusPulse {
-
     0%,
     100% {
         opacity: 1;
@@ -6415,7 +6477,6 @@ body.konami-godmode {
 }
 
 @keyframes godmodeGlow {
-
     0%,
     100% {
         box-shadow: inset 0 0 100px rgba(255, 215, 0, 0.2);
@@ -6664,10 +6725,12 @@ body.light-mode .profile-stat-item:hover {
 
 /* Skeleton loader styles */
 .skeleton {
-    background: linear-gradient(90deg,
-            rgba(255, 255, 255, 0.05) 25%,
-            rgba(255, 255, 255, 0.08) 50%,
-            rgba(255, 255, 255, 0.05) 75%);
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 25%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.05) 75%
+    );
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     border-radius: 8px;
@@ -6784,7 +6847,7 @@ body.light-mode .profile-stat-item:hover {
     will-change: max-height, opacity;
 }
 
-.faq-question[aria-expanded="true"]+.faq-answer {
+.faq-question[aria-expanded="true"] + .faq-answer {
     max-height: 600px;
     padding: 0 1.5rem 1.25rem 1.5rem;
     opacity: 1;
@@ -6816,7 +6879,7 @@ input:focus-visible,
         padding: 0 1rem;
     }
 
-    .faq-question[aria-expanded="true"]+.faq-answer {
+    .faq-question[aria-expanded="true"] + .faq-answer {
         padding: 0 1rem 1rem 1rem;
     }
 

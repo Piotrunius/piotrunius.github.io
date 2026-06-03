@@ -112,7 +112,7 @@ self.addEventListener("fetch", (event) => {
                   console.warn("[SW] Cache update failed:", error);
                 });
             })
-            .catch(() => { }); // Silently fail if network is unavailable
+            .catch(() => {}); // Silently fail if network is unavailable
 
           return cachedResponse;
         }

@@ -424,6 +424,12 @@ function getDefaultConfig() {
         url: "https://www.roblox.com/users/962249141/profile",
         color: "#EF3340",
       },
+      {
+        label: "Ko-Fi",
+        icon: "ko-fi",
+        url: "https://ko-fi.com/piotrunius",
+        color: "#6F4E37",
+      },
     ],
     music: {
       title: "Smoking Alone",
@@ -5791,7 +5797,7 @@ const KonamiEasterEgg = {
 
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.1);
-    } catch (e) { }
+    } catch (e) {}
   },
 
   playErrorSound: function () {
@@ -5810,7 +5816,7 @@ const KonamiEasterEgg = {
 
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.15);
-    } catch (e) { }
+    } catch (e) {}
   },
 
   activate: function () {
@@ -5870,7 +5876,7 @@ const KonamiEasterEgg = {
         bass.start(ctx.currentTime);
         bass.stop(ctx.currentTime + 0.5);
       }, 700);
-    } catch (e) { }
+    } catch (e) {}
   },
 
   showHackerOverlay: function () {
@@ -6429,7 +6435,7 @@ const KonamiEasterEgg = {
       gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.3);
-    } catch (e) { }
+    } catch (e) {}
   },
 };
 
