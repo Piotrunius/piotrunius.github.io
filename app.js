@@ -396,37 +396,37 @@ function getDefaultConfig() {
     socials: [
       {
         label: "GitHub",
-        icon: "github",
+        svg: "assets/github.svg",
         url: "https://github.com/Piotrunius",
         color: "#ffffff",
       },
       {
         label: "Spotify",
-        icon: "spotify",
+        svg: "assets/spotify.svg",
         url: "https://stats.fm/piotrunius",
         color: "#1DB954",
       },
       {
         label: "Steam",
-        icon: "steam",
+        svg: "assets/steam.svg",
         url: "https://steamcommunity.com/id/piotrunius",
         color: "#00adee",
       },
       {
         label: "AniList",
-        icon: "circle-play",
+        svg: "assets/anilist.svg",
         url: "https://anilist.co/user/Piotrunius",
         color: "#1663ffff",
       },
       {
         label: "Roblox",
-        icon: "cube",
+        svg: "assets/roblox.svg",
         url: "https://www.roblox.com/users/962249141/profile",
         color: "#EF3340",
       },
       {
         label: "Ko-Fi",
-        icon: "mug-hot",
+        svg: "assets/ko-fi.svg",
         url: "https://ko-fi.com/piotrunius",
         color: "#6F4E37",
       },
@@ -471,15 +471,18 @@ function initSocials() {
     a.rel = "noreferrer";
     a.style.setProperty("--social-color", s.color || "#00ff88");
     a.style.animationDelay = `${index * 0.05}s`;
-    const isBrand = [
-      "github",
-      "discord",
-      "spotify",
-      "steam",
-      "twitch",
-    ].includes((s.icon || "").toLowerCase());
+    const iconHtml = s.svg
+      ? `<span class="social-custom-svg" style="--svg-url: url('${s.svg}')"></span>`
+      : `<i class="${
+          ["github", "discord", "spotify", "steam", "twitch"].includes(
+            (s.icon || "").toLowerCase(),
+          )
+            ? "fa-brands"
+            : "fas"
+        } fa-${s.icon || "link"}"></i>`;
+
     a.innerHTML = `
-            <i class="${isBrand ? "fa-brands" : "fas"} fa-${s.icon || "link"}"></i>
+            ${iconHtml}
             <span>${s.label}</span>
         `;
     // Track social link clicks
@@ -1604,9 +1607,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initMouseEffects();
   initVisibilityOptimization();
   initWipNotice();
-  initThemeToggle();
   updateCopyrightYear();
-  initBackToTop();
 
   // Auto-refresh stats with adaptive intervals
   const statsInterval = deviceCapabilities.isLowEnd ? 600000 : 300000; // 10 or 5 minutes
@@ -1713,7 +1714,7 @@ async function loadProjects() {
       let projectLink = repo.url;
 
       // Special handling for specific projects
-      if (repo.name === "piotrunius.github.io") {
+      if (repo.name === "Biography") {
         badge = "current";
         badgeClass = "project-badge-current";
       } else if (repo.name === "Broadcast-generator") {
@@ -1837,75 +1838,11 @@ function initWipNotice() {
   });
 }
 
-// --- Theme Toggle Handler ---
-// Initializes the theme toggle button for switching between dark and light modes
-// Uses localStorage to persist user's theme preference
-function initThemeToggle() {
-  const themeToggle = document.getElementById("theme-toggle");
-  if (!themeToggle) return;
-
-  // Check saved theme preference or default to dark mode
-  const savedTheme = localStorage.getItem("theme") || "dark";
-
-  // Apply saved theme
-  if (savedTheme === "light") {
-    document.body.classList.add("light-mode");
-    updateThemeIcon(themeToggle, "light");
-  }
-
-  // Handle theme toggle
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("light-mode");
-    const isLight = document.body.classList.contains("light-mode");
-    const theme = isLight ? "light" : "dark";
-
-    // Save preference
-    localStorage.setItem("theme", theme);
-
-    // Update icon
-    updateThemeIcon(themeToggle, theme);
-  });
-}
-
-function updateThemeIcon(button, theme) {
-  const icon = button.querySelector("i");
-  if (!icon) return;
-
-  if (theme === "light") {
-    icon.className = "fas fa-moon";
-  } else {
-    icon.className = "fas fa-sun";
-  }
-}
-
 function updateCopyrightYear() {
   const copyrightEl = document.getElementById("copyright-year");
   if (!copyrightEl) return;
   const currentYear = new Date().getFullYear();
   copyrightEl.textContent = `© ${currentYear} Piotrunius - All Rights Reserved`;
-}
-
-// --- BACK TO TOP BUTTON ---
-function initBackToTop() {
-  const backToTopBtn = document.getElementById("back-to-top");
-  if (!backToTopBtn) return;
-
-  // Show/hide button on scroll
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 500) {
-      backToTopBtn.classList.add("visible");
-    } else {
-      backToTopBtn.classList.remove("visible");
-    }
-  });
-
-  // Scroll to top on click
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  });
 }
 
 // --- GITHUB ACTIVITY TIMELINE ---
@@ -2537,7 +2474,7 @@ const Terminal = {
           let badge = "[PROJECT]";
           let badgeClass = "system";
 
-          if (repo.name === "piotrunius.github.io") {
+          if (repo.name === "Biography") {
             badge = "[THIS SITE]";
             badgeClass = "info";
           } else if (repo.name === "Broadcast-generator") {
@@ -3908,9 +3845,7 @@ const Terminal = {
           );
           const header = document.querySelector("header");
           const footer = document.querySelector(".copyright-bar");
-          const buttons = document.querySelectorAll(
-            ".back-to-top, .theme-toggle, .terminal-toggle",
-          );
+          const buttons = document.querySelectorAll(".terminal-toggle");
 
           const allElements = [...sections, header, footer, ...buttons].filter(
             Boolean,
